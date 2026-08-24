@@ -64,9 +64,10 @@
   // 첫 점(=공시 진입가)에 마커, 마지막 점에 현재가 표시. 색은 등락에 따라.
   FT.lineChartSVG = function (history, opts) {
     opts = opts || {};
-    var W = opts.w || 640, H = opts.h || 180, P = 28;
+    var compact = !!opts.compact;
+    var W = opts.w || 640, H = opts.h || (compact ? 56 : 180), P = compact ? 6 : 28;
     if (!history || history.length < 2) {
-      return '<div class="chart-empty">추적 데이터가 아직 없습니다.</div>';
+      return compact ? "" : '<div class="chart-empty">추적 데이터가 아직 없습니다.</div>';
     }
     var ys = history.map(function (p) { return p[1]; });
     var min = Math.min.apply(null, ys), max = Math.max.apply(null, ys);
@@ -83,28 +84,32 @@
       " L" + X(n - 1) + "," + (H - P) + " Z";
 
     var entry = history[0], last = history[n - 1];
-    // 가로 그리드 4줄 — 선만 있으면 값의 높낮이를 가늠할 수 없다.
+    // 가로 그리드 4줄 — 선만 있으면 값의 높낮이를 가늠할 수 없다. (compact는 생략)
     var grid = "";
-    for (var g = 0; g <= 3; g++) {
+    for (var g = 0; !compact && g <= 3; g++) {
       var gy = P + (g / 3) * (H - 2 * P);
       grid += '<line x1="' + P + '" x2="' + (W - P) + '" y1="' + gy + '" y2="' + gy +
         '" stroke="var(--border)" stroke-width="1" stroke-dasharray="3 4"/>';
     }
 
+    var gid = "ftg" + (FT._gid = (FT._gid || 0) + 1);
     var svg =
       '<svg class="linechart" viewBox="0 0 ' + W + " " + H + '" preserveAspectRatio="none" role="img" aria-label="공시 후 주가 추적">' +
-        '<defs><linearGradient id="ftg" x1="0" x2="0" y1="0" y2="1">' +
+        '<defs><linearGradient id="' + gid + '" x1="0" x2="0" y1="0" y2="1">' +
           '<stop offset="0%" stop-color="' + stroke + '" stop-opacity="0.25"/>' +
           '<stop offset="100%" stop-color="' + stroke + '" stop-opacity="0"/>' +
         '</linearGradient></defs>' +
         grid +
-        '<path d="' + area + '" fill="url(#ftg)"/>' +
+        '<path d="' + area + '" fill="url(#' + gid + ')"/>' +
         '<polyline points="' + pts + '" fill="none" stroke="' + stroke + '" stroke-width="2.5" stroke-linejoin="round"/>' +
         '<circle cx="' + X(0) + '" cy="' + Y(entry[1]) + '" r="4" fill="var(--accent)"/>' +
         '<circle cx="' + X(n - 1) + '" cy="' + Y(last[1]) + '" r="4" fill="' + stroke + '"/>' +
       "</svg>";
 
     var pct = ((last[1] - entry[1]) / entry[1]) * 100;
+    if (compact) {
+      return '<div class="chart-wrap compact"><div class="chart-body">' + svg + "</div></div>";
+    }
     // 축 라벨은 SVG 밖(HTML)에 둔다 — preserveAspectRatio="none"이 SVG 내부 글자를 늘려버린다.
     var scale =
       '<div class="chart-scale">' +

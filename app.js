@@ -43,13 +43,14 @@
           '<span class="tag ' + t.action + '">' + (t.action === "buy" ? "매수" : "매도") + " " + F.fmtAmount(t.amountRange) + "</span>" +
         "</div></div>" +
         timelineHTML(t) +
+        F.lineChartSVG(t.priceHistory, { compact: true }) +
         '<div class="tc-metrics">' +
           metric("공시 시점가", F.fmtUsd(t.priceAtDisclosure), "당신이 살 수 있던 값") +
           metricPct("2개월 규칙", hr, "공시 후 2개월") +
           metricPct("공시 후 지금까지", tr, "D+" + dsince + " 추적중") +
         "</div>" +
-        '<div class="tc-catalyst"><b>이후 사건:</b> ' + (t.catalyst || "—") +
-          '<span class="see-more">상세 보기 →</span></div>' +
+        '<div class="tc-catalyst"><b>이후 사건:</b> ' + (t.catalyst || "—") + "</div>" +
+        '<div class="tc-more"><span class="see-more">상세 보기 →</span></div>' +
       "</a>"
     );
   }
