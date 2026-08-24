@@ -10,7 +10,8 @@
       "공시 원본에는 분기당 수천 건의 거래가 있고 대부분 ETF·머니마켓·채권입니다. 이 사이트는 그 노이즈를 걷어내고 개별 종목만 보여줍니다.",
       "공시는 거래 후 최대 45일(실제로는 그 이상 지연되기도 함) 뒤에 공개됩니다."
     ],
-    "lastUpdated": "2026-08-24"
+    "lastUpdated": "2026-08-24",
+    "pricesRefreshedAt": "2026-08-24"
   },
   "trades": [
     {
@@ -21,22 +22,43 @@
       "sector": "바이오/제약",
       "instrumentType": "stock",
       "action": "buy",
-      "amountRange": [15001, 50000],
+      "amountRange": [
+        15001,
+        50000
+      ],
       "transactionDate": "2026-03-02",
       "disclosureDate": "2026-05-12",
       "priceAtTransaction": 27.85,
-      "priceAtDisclosure": 26.40,
-      "priceAfter2mFromDisclosure": 34.10,
+      "priceAtDisclosure": 26.4,
+      "priceAfter2mFromDisclosure": 34.1,
       "priceLatest": 174.38,
       "priceLatestDate": "2026-08-19",
       "trackingReturnPct": 560.5,
       "priceHistory": [
-        ["2026-05-12", 26.40],
-        ["2026-06-01", 30.10],
-        ["2026-07-01", 34.10],
-        ["2026-08-01", 42.00],
-        ["2026-08-18", 63.00],
-        ["2026-08-19", 174.38]
+        [
+          "2026-05-12",
+          26.4
+        ],
+        [
+          "2026-06-01",
+          30.1
+        ],
+        [
+          "2026-07-01",
+          34.1
+        ],
+        [
+          "2026-08-01",
+          42.0
+        ],
+        [
+          "2026-08-18",
+          63.0
+        ],
+        [
+          "2026-08-19",
+          174.38
+        ]
       ],
       "catalyst": "2026-08-19 모더나·머크 개인 맞춤형 mRNA 암 백신(흑색종) 3상 성공 발표, 하루 +177%. 3월 매수 대비 누적 +225% 이상",
       "closed": true,
@@ -52,21 +74,39 @@
       "sector": "미디어/통신",
       "instrumentType": "stock",
       "action": "buy",
-      "amountRange": [1001, 15000],
+      "amountRange": [
+        1001,
+        15000
+      ],
       "transactionDate": "2026-02-10",
       "disclosureDate": "2026-05-12",
-      "priceAtTransaction": 36.20,
-      "priceAtDisclosure": 34.90,
+      "priceAtTransaction": 36.2,
+      "priceAtDisclosure": 34.9,
       "priceAfter2mFromDisclosure": 33.15,
-      "priceLatest": 35.40,
+      "priceLatest": 35.4,
       "priceLatestDate": "2026-08-19",
       "trackingReturnPct": 1.4,
       "priceHistory": [
-        ["2026-05-12", 34.90],
-        ["2026-06-01", 34.20],
-        ["2026-07-01", 33.15],
-        ["2026-08-01", 34.60],
-        ["2026-08-19", 35.40]
+        [
+          "2026-05-12",
+          34.9
+        ],
+        [
+          "2026-06-01",
+          34.2
+        ],
+        [
+          "2026-07-01",
+          33.15
+        ],
+        [
+          "2026-08-01",
+          34.6
+        ],
+        [
+          "2026-08-19",
+          35.4
+        ]
       ],
       "catalyst": "특별한 촉매 없음 — 개별주 매수지만 이후 완만한 하락",
       "closed": false,
@@ -82,21 +122,39 @@
       "sector": "소프트웨어",
       "instrumentType": "stock",
       "action": "buy",
-      "amountRange": [1001, 15000],
+      "amountRange": [
+        1001,
+        15000
+      ],
       "transactionDate": "2026-02-24",
       "disclosureDate": "2026-05-12",
-      "priceAtTransaction": 168.40,
-      "priceAtDisclosure": 172.10,
-      "priceAfter2mFromDisclosure": 181.90,
+      "priceAtTransaction": 168.4,
+      "priceAtDisclosure": 172.1,
+      "priceAfter2mFromDisclosure": 181.9,
       "priceLatest": 190.25,
       "priceLatestDate": "2026-08-19",
       "trackingReturnPct": 10.5,
       "priceHistory": [
-        ["2026-05-12", 172.10],
-        ["2026-06-01", 176.30],
-        ["2026-07-01", 181.90],
-        ["2026-08-01", 187.40],
-        ["2026-08-19", 190.25]
+        [
+          "2026-05-12",
+          172.1
+        ],
+        [
+          "2026-06-01",
+          176.3
+        ],
+        [
+          "2026-07-01",
+          181.9
+        ],
+        [
+          "2026-08-01",
+          187.4
+        ],
+        [
+          "2026-08-19",
+          190.25
+        ]
       ],
       "catalyst": "산업용 소프트웨어 수요, 공시 이후 완만한 상승",
       "closed": false,
