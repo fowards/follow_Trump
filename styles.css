@@ -58,6 +58,17 @@ a { color: inherit; text-decoration: none; }
 .stat-box .num { font-size: 24px; font-weight: 900; letter-spacing: -.5px; }
 .stat-box .lab { font-size: 12px; color: var(--muted); margin-top: 4px; }
 
+/* Caveats (정직한 전제) */
+.caveats { margin: 24px 0 0; background: var(--bg-card); border: 1px solid var(--border);
+  border-left: 3px solid var(--accent); border-radius: 10px; padding: 14px 18px; }
+.caveats .cav-title { font-size: 13px; font-weight: 700; color: var(--accent); margin-bottom: 8px; }
+.caveats ul { margin: 0; padding-left: 18px; }
+.caveats li { font-size: 13px; color: var(--muted); margin-bottom: 4px; }
+
+.only-stock { font-size: 11px; vertical-align: middle; margin-left: 8px; padding: 3px 9px;
+  border-radius: 999px; background: rgba(212,160,23,.15); color: var(--accent);
+  border: 1px solid rgba(212,160,23,.4); font-weight: 700; }
+
 /* Ad */
 .ad-slot { margin: 28px auto; }
 .ad-placeholder {

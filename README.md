@@ -33,23 +33,50 @@ python3 -m http.server 8000
 2. Source: `Deploy from a branch`, Branch: `main` (또는 기본 브랜치), 폴더 `/ (root)`
 3. 몇 분 뒤 `https://<user>.github.io/follow_Trump/` 에서 확인
 
-## 실제 데이터 연결 (다음 단계)
+## 실제 데이터 연결 (`scripts/build_data.py`)
 
-현재 `data.json`은 구조 확인용 **예시 데이터**입니다. 실제 서비스 시 공시 API로 교체합니다.
+트럼프 **개인** 매매는 무료 의회 API(House/Senate Stock Watcher)에 **없습니다**(트럼프는 의원이 아님).
+데이터 소스는 사실상 아래 세 등급입니다.
 
-- 공시 원본: House Clerk / SEC (PDF 기반, 파싱 필요)
-- 정제 API 후보: EODHD, CongressInvests 등 (거래일·공시일·금액 구간·지연 일수 필드 제공)
+| 소스 | 비용 | 형태 | 비고 |
+|------|------|------|------|
+| **OGE Form 278-T (whitehouse.gov / OGE)** | 무료 | PDF | 1차 원본. 분기당 수천 건, 대부분 ETF·머니마켓·채권 |
+| **Stooq 일별 시세** | 무료·키 불필요 | CSV | 가격 보강용 (`?s=<ticker>.us&i=d`) |
+| Quiver *Trump Stock Trades API* | 유료 (Hobbyist $30/월~, **상업용은 별도 견적**) | JSON | 정제돼 있으나 광고 사이트는 Commercial 티어 필요 |
 
-`data.json`의 스키마만 유지하면 프론트엔드는 그대로 재사용됩니다. 필수 필드:
+`build_data.py`는 무료 경로(278-T PDF + Stooq)로 `data.json`을 생성합니다.
+**차별화 로직 두 가지가 여기 들어 있습니다:** ① ETF·채권 노이즈를 걷어내고 **개별 종목만** 남기고,
+② 내부자 매수가가 아니라 **공시 시점가** 기준으로 수익률을 계산합니다.
+
+```bash
+pip install -r scripts/requirements.txt
+
+# 로직 검증 (네트워크 불필요)
+python3 scripts/build_data.py --self-test
+
+# 실제 PDF에서 생성 (egress 제한 없는 로컬/서버에서)
+python3 scripts/build_data.py \
+  --ptr "https://www.whitehouse.gov/wp-content/uploads/2025/11/President-Donald-J.-Trump-Periodic-Transaction-Report-11.14.25.pdf" \
+  --out data.json
+```
+
+> 278-T 서식은 판마다 조금씩 달라, 실제 배포 전 대상 PDF 몇 개로 파싱 결과를 한 번 검증·보정하세요.
+> `catalyst`(호재/악재)·매도 연결 같은 맥락은 자동 파싱으로 다 채워지지 않아 수동 보완을 권장합니다.
+
+`data.json` 스키마(필수 필드):
 
 ```
-ticker, companyKo, companyEn, sector, action(buy|sell),
+ticker, companyKo, companyEn, sector, instrumentType, action(buy|sell),
 amountRange[min,max], transactionDate, disclosureDate,
 priceAtTransaction, priceAtDisclosure, priceAfter2mFromDisclosure,
 priceLatest, catalyst, note
 ```
 
-> ⚠️ 라이선스 주의: 정부 원본 데이터를 **광고 수익 목적으로 재배포**하는 것은 데이터 소스별 이용약관에 따라 제한될 수 있습니다(예: House Clerk 약관). 상업화 전 각 소스의 라이선스를 반드시 확인하세요.
+> ⚠️ **라이선스 주의:** 정부 원본을 **광고 수익 목적으로 재배포**하는 것은 소스별 약관에 따라 제한될 수 있습니다.
+> 상업화 전 각 소스(OGE, Stooq, Quiver)의 이용약관을 반드시 확인하세요.
+>
+> ⚠️ **블라인드 트러스트:** 백악관은 트럼프 자산이 블라인드 트러스트로 관리되어 본인은 개별 종목을 모른다고 주장합니다.
+> 사이트는 이 전제를 상단에 명시합니다.
 
 ## AdSense
 

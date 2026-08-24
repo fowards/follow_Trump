@@ -173,6 +173,13 @@
       note.textContent = "데이터: " + (data.meta.dataSource === "sample" ? "예시 데이터 — " : "") +
         (data.meta.note || "") + " (최종 업데이트: " + (data.meta.lastUpdated || "-") + ")";
     }
+
+    var cav = document.getElementById("caveats");
+    if (cav && data.meta && data.meta.caveats && data.meta.caveats.length) {
+      cav.innerHTML = '<div class="cav-title">읽기 전에 — 정직한 전제</div><ul>' +
+        data.meta.caveats.map(function (c) { return "<li>" + c + "</li>"; }).join("") +
+        "</ul>";
+    }
   }
 
   fetch("data.json")
