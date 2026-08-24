@@ -336,7 +336,13 @@ def write_sitemap(records, base_url, out_path="sitemap.xml"):
     """홈·용어집·종목 상세 URL로 sitemap.xml 생성(SEO)."""
     base = base_url.rstrip("/")
     today = datetime.utcnow().strftime("%Y-%m-%d")
-    urls = [f"{base}/", f"{base}/glossary.html", f"{base}/privacy.html"]
+    urls = [
+        f"{base}/",
+        f"{base}/about.html",
+        f"{base}/guide.html",
+        f"{base}/glossary.html",
+        f"{base}/privacy.html",
+    ]
     for tk in sorted({r["ticker"] for r in records}):
         urls.append(f"{base}/stock.html?ticker={tk}")
     body = "\n".join(

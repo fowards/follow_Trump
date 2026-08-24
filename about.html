@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>사이트 소개와 계산 방법 | 트럼프 팔로우</title>
+  <meta name="description" content="트럼프 팔로우가 어떤 데이터를 어디서 가져오고, 수익률을 어떤 기준으로 계산하는지 공개합니다. 공시 시점가 기준, ETF 노이즈 제거, 전체 거래 통계 공개 원칙." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="index.html">
+        <span class="brand-mark">FT</span>
+        <div class="brand-text">
+          <h1>트럼프 팔로우</h1>
+          <p>트럼프는 지금 뭘 샀나 · 공시 지연까지 정직하게</p>
+        </div>
+      </a>
+      <nav class="top-nav">
+        <a href="index.html">홈</a>
+        <a href="guide.html">따라하기 가이드</a>
+        <a href="glossary.html">용어 풀이</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap glossary">
+    <a class="back-link" href="index.html">← 홈으로</a>
+    <h2 class="glossary-title">사이트 소개와 계산 방법</h2>
+    <p class="glossary-intro">
+      트럼프의 주식 매매를 보여주는 사이트는 이미 여럿 있습니다. 대부분 영어이고,
+      대부분 “트럼프가 무엇을 샀다”까지만 알려줍니다.
+      이 사이트는 거기서 한 걸음 더 들어가 <b>“그래서 당신이 따라 샀다면 실제로 어땠는가”</b>를 계산해 보여줍니다.
+    </p>
+
+    <article class="term">
+      <h3>1. 무엇을 보여주는 사이트인가</h3>
+      <p>
+        미국 대통령 도널드 트럼프의 <b>개별 종목</b> 매매 공시를 한국어로 정리합니다.
+        의회 의원 전체가 아니라 트럼프 한 사람만 다룹니다. 범위를 좁힌 대신,
+        거래 하나하나에 공시 지연·진입 가능 시점·이후 주가 추적을 붙입니다.
+      </p>
+    </article>
+
+    <article class="term">
+      <h3>2. 데이터는 어디서 오는가</h3>
+      <p>
+        1차 출처는 미국 정부윤리청(OGE)에 제출되는 <b>정기 거래 보고서(Form 278-T)</b>입니다.
+        이 문서는 whitehouse.gov와 OGE에 PDF로 공개되며, 누구나 열람할 수 있는 공적 자료입니다.
+        주가는 공개 일별 시세 데이터를 사용합니다.
+      </p>
+      <p style="margin-top:10px">
+        중요한 점은 이것이 <b>유료 독점 데이터가 아니라는</b> 것입니다.
+        같은 원본을 누구나 볼 수 있고, 이 사이트의 가치는 데이터 자체가 아니라
+        <b>그것을 어떻게 해석해 보여주느냐</b>에 있습니다.
+      </p>
+    </article>
+
+    <article class="term">
+      <h3>3. 수익률 계산 기준 — 공시 시점가</h3>
+      <p>
+        이 사이트가 다른 트래커와 가장 크게 갈라지는 지점입니다.
+        수익률을 <b>트럼프가 산 가격이 아니라, 공시가 공개된 날의 주가</b>로 계산합니다.
+      </p>
+      <p style="margin-top:10px">
+        이유는 단순합니다. 일반 투자자가 그 거래를 알게 되는 최초 시점이 공시일이고,
+        따라서 실제로 “따라 살 수 있던” 첫 가격도 공시일 종가이기 때문입니다.
+        내부자 매수가를 기준으로 삼으면, 아무도 얻을 수 없었던 구간의 수익까지 성과에 섞여 숫자가 부풀려집니다.
+        이 사이트는 두 가격을 <b>나란히</b> 보여줘서 그 차이를 직접 확인할 수 있게 합니다.
+      </p>
+    </article>
+
+    <article class="term">
+      <h3>4. 두 가지 수익률을 함께 보여주는 이유</h3>
+      <p>
+        각 거래마다 두 숫자를 병기합니다.
+      </p>
+      <p style="margin-top:10px">
+        <b>① 2개월 규칙</b> — 공시일에 사서 정확히 2개월 뒤 파는 기계적 전략의 결과.<br />
+        <b>② 공시 후 지금까지</b> — 공시일에 사서 계속 들고 있는 경우의 누적 결과.
+      </p>
+      <p style="margin-top:10px">
+        둘은 자주 어긋납니다. 호재가 늦게 터지면 2개월 규칙은 그 상승을 놓치고,
+        반대로 급등 후 하락하는 종목이라면 2개월 규칙이 더 낫습니다.
+        하나만 보여주면 전략을 유리하게 포장할 수 있어서, 둘 다 공개합니다.
+      </p>
+    </article>
+
+    <article class="term">
+      <h3>5. ETF·머니마켓을 걸러내는 이유</h3>
+      <p>
+        트럼프의 분기 공시에는 수천 건의 거래가 들어 있습니다.
+        실제로 2026년 1분기 보고서에는 11주 동안 <b>3,711건</b>의 거래가 기재됐습니다.
+        그러나 그 대부분은 지수 ETF, 머니마켓 펀드, 국채 같은 <b>패시브 자산</b>입니다.
+      </p>
+      <p style="margin-top:10px">
+        “트럼프가 어떤 종목을 골랐나”라는 질문에 이 항목들은 답이 되지 않습니다.
+        그래서 자동 필터로 ETF·펀드·채권·머니마켓을 제외하고 <b>개별 상장 주식만</b> 남깁니다.
+        걸러낸 건수는 사이트 하단에 함께 표기해, 무엇을 제외했는지 감출 수 있게 하지 않았습니다.
+      </p>
+    </article>
+
+    <article class="term">
+      <h3>6. 성공 사례만 보여주지 않는다</h3>
+      <p>
+        따라하기 전략을 소개하는 곳들이 흔히 저지르는 잘못이 있습니다.
+        크게 오른 종목 하나를 앞세우는 것입니다. 이것을 <b>사후편향</b>이라고 합니다.
+      </p>
+      <p style="margin-top:10px">
+        이 사이트는 손실이 난 거래를 빼지 않고, <b>전체 거래 기준</b>의 승률·평균 수익률·최고·최악을 함께 공개합니다.
+        평균이 마이너스로 나오면 마이너스로 표시합니다. 그것이 이 사이트를 볼 이유라고 생각합니다.
+      </p>
+    </article>
+
+    <article class="term">
+      <h3>7. 하지 않는 것</h3>
+      <p>
+        이 사이트는 <b>매수·매도 신호를 주지 않습니다.</b>
+        “지금 사세요”, “2개월 뒤 파세요” 같은 알림을 보내지 않고, 종목을 추천하지도 않습니다.
+        보여주는 것은 공시된 사실과 그 이후의 가격 흐름이며, 판단은 전적으로 보는 사람의 몫입니다.
+      </p>
+      <p style="margin-top:10px">
+        이는 법적인 이유이기도 하고, 애초에 이 데이터가 신호로 쓰기에 부적합하다는
+        판단 때문이기도 합니다. 그 이유는 <a href="guide.html" style="color:var(--accent)">따라하기 가이드</a>에서 자세히 설명합니다.
+      </p>
+    </article>
+
+    <article class="term">
+      <h3>8. 알아두어야 할 한계</h3>
+      <p>
+        백악관은 트럼프의 자산이 <b>블라인드 트러스트</b>로 관리되어 본인은 개별 종목을 알지 못한다고 밝히고 있습니다.
+        이 설명이 맞다면, 공시된 거래는 트럼프 본인의 판단이 아니라 수탁자의 운용 결과입니다.
+        사이트는 이 전제를 첫 화면에 명시합니다.
+      </p>
+      <p style="margin-top:10px">
+        또한 공시는 금액을 <b>구간</b>으로만 밝히기 때문에 정확한 투자 규모는 알 수 없고,
+        원본 PDF의 파싱 과정에서 오류가 있을 수 있습니다.
+        오류를 발견하시면 <a href="privacy.html" style="color:var(--accent)">문의</a>로 알려주시면 정정하겠습니다.
+      </p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <nav class="footer-nav">
+        <a href="index.html">홈</a>
+        <a href="about.html">소개</a>
+        <a href="guide.html">따라하기 가이드</a>
+        <a href="glossary.html">용어 풀이</a>
+        <a href="privacy.html">개인정보처리방침</a>
+      </nav>
+      <p class="legal">
+        본 사이트는 공개된 정부 공시 정보를 정리해 <b>정보 제공</b> 목적으로만 보여줍니다.
+        특정 종목의 매수·매도를 권유하지 않으며, 투자 자문이나 매매 신호가 아닙니다.
+      </p>
+      <p class="copy">© 2026 트럼프 팔로우 (Follow Trump).</p>
+    </div>
+  </footer>
+</body>
+</html>
