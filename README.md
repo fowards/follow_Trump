@@ -30,11 +30,38 @@
 - 공시 이후 주가를 계속 따라가며 두 가지 수익률을 보여줍니다:
   **① 2개월 규칙**(공시 후 2개월 보유) vs **② 공시 후 지금까지**(계속 보유, `trackingReturnPct`).
 - 상세 페이지의 라인차트는 `priceHistory`(공시일→현재 종가열)로 그립니다.
-- **운영**: `build_data.py`를 주기적으로(예: 매일) 다시 돌리면 `priceHistory`·수익률이 갱신됩니다.
-  ```bash
-  # 예: 매일 08:00 갱신 (crontab -e)
-  0 8 * * *  cd /path/to/follow_Trump && python3 scripts/build_data.py --ptr "<PTR-URL>" --out data.json && git add -A && git commit -m "data: daily refresh" && git push
-  ```
+- **운영**: GitHub Actions가 매일 자동 갱신합니다(아래 참조).
+
+## 자동 갱신 (GitHub Actions)
+
+`.github/workflows/update-data.yml` 이 **매일 06:00 KST**(21:00 UTC)에 실행됩니다.
+러너는 외부 네트워크가 열려 있어 whitehouse.gov·Stooq에 직접 접근합니다. public 저장소라 Actions는 무료입니다.
+
+갱신은 성격이 다른 두 단계로 나뉩니다.
+
+| 단계 | 하는 일 | 안정성 |
+|------|---------|--------|
+| ① 새 공시(PTR) 확인 | `--from-sources` — `scripts/sources.json`의 URL 목록 + 목록 페이지 자동 탐색 | 원본 사이트 구조에 의존 → **실패 가능**. `continue-on-error`로 감싸 ②를 막지 않음 |
+| ② 가격·추적 갱신 | `--refresh-prices` — 티커를 이미 아니까 PDF 없이 시세만 갱신 | 안정적. 매일 '공시 후 지금까지' 수익률이 최신화됨 |
+
+data.json / sitemap.xml 이 **실제로 바뀐 경우에만** 커밋하며, 커밋이 나가면 Pages가 자동 재배포합니다.
+
+```bash
+# 로컬에서 같은 동작 확인
+python3 scripts/build_data.py --refresh-prices --out data.json          # 가격만
+python3 scripts/build_data.py --from-sources --refresh-prices --out data.json  # 공시 탐색 + 가격
+```
+
+### 새 공시를 확실히 반영하는 방법
+
+자동 탐색은 원본 사이트가 바뀌면 놓칠 수 있습니다. 확실한 경로는 두 가지입니다.
+
+1. **URL을 목록에 추가** — `scripts/sources.json`의 `ptrUrls`에 PDF 주소를 넣고 커밋하면 다음 실행부터 반영됩니다.
+2. **수동 실행** — 저장소 Actions 탭 → "데이터 자동 갱신" → *Run workflow* → `ptr_url` 칸에 PDF 주소를 넣고 실행.
+
+> 병합은 `id` 기준이며, 자동 파싱이 채우지 못하는 **수동 보완 필드(`catalyst`·`note`·`companyKo`·`sector`)는 덮어쓰지 않습니다.**
+> 따라서 손으로 다듬은 해설이 자동 갱신으로 사라지지 않습니다.
+
 
 ## 로컬 실행
 

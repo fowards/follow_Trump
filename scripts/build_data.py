@@ -24,6 +24,12 @@ data.json 스키마로 변환합니다. 핵심 차별화 로직 두 가지가 �
   # 여러 PDF를 합쳐서 생성
   python3 scripts/build_data.py --ptr a.pdf --ptr b.pdf --out data.json
 
+  # 가격·추적 수익률만 매일 갱신 (PDF 불필요)
+  python3 scripts/build_data.py --refresh-prices --out data.json
+
+  # sources.json의 목록/자동탐색으로 새 공시까지 반영 (GitHub Actions용)
+  python3 scripts/build_data.py --from-sources --refresh-prices --out data.json
+
   # 네트워크 없이 파서/분류/포맷 로직만 검증
   python3 scripts/build_data.py --self-test
 
@@ -37,6 +43,7 @@ import io
 import json
 import re
 import sys
+import urllib.parse
 import urllib.request
 from datetime import datetime, timedelta
 
@@ -332,6 +339,111 @@ def write_data_json(records, stats, out_path):
     print(f"✓ {out_path} 작성 완료 — 개별종목 {len(records)}건", file=sys.stderr)
 
 
+def merge_records(existing, fresh):
+    """새로 파싱한 레코드를 기존과 병합.
+
+    자동 파싱이 채우지 못하는 수동 보완 필드(촉매·메모·한글명 등)는 기존 값을 지킨다.
+    새 PTR에 없는 과거 거래도 버리지 않는다.
+    """
+    keep = ("catalyst", "note", "companyKo", "sector", "closed", "closeDate")
+    by_id = {r.get("id"): r for r in existing if r.get("id")}
+    out = []
+    for r in fresh:
+        old = by_id.pop(r.get("id"), None)
+        if old:
+            for k in keep:
+                if old.get(k):
+                    r[k] = old[k]
+        out.append(r)
+    out.extend(by_id.values())
+    out.sort(key=lambda x: x.get("disclosureDate") or "", reverse=True)
+    return out
+
+
+def refresh_prices(path):
+    """거래 내역은 그대로 두고 가격·추적 수익률만 최신화한다.
+
+    새 공시가 없어도 매일 돌릴 수 있는 경로. 티커를 이미 알고 있으므로
+    PDF 없이 Stooq 시세만으로 '공시 후 지금까지' 수익률이 갱신된다.
+    """
+    with open(path, encoding="utf-8") as f:
+        doc = json.load(f)
+    trades = doc.get("trades", [])
+    cache, updated, failed = {}, 0, []
+
+    for t in trades:
+        tk = t.get("ticker")
+        if not tk:
+            continue
+        if tk not in cache:
+            cache[tk] = fetch_stooq_daily(tk)
+        series = cache[tk]
+        if not series:
+            failed.append(tk)
+            continue
+        disc = t.get("disclosureDate") or t.get("transactionDate")
+        px_tx = close_on_or_after(series, t.get("transactionDate") or disc)
+        px_disc = close_on_or_after(series, disc)
+        if px_tx:
+            t["priceAtTransaction"] = px_tx
+        if px_disc:
+            t["priceAtDisclosure"] = px_disc
+        t["priceAfter2mFromDisclosure"] = close_on_or_after(series, add_days(disc, 60))
+        t["priceLatest"] = series[-1][1]
+        t["priceLatestDate"] = series[-1][0]
+        if px_disc and t["priceLatest"]:
+            t["trackingReturnPct"] = round(
+                ((t["priceLatest"] - px_disc) / px_disc) * 100, 1)
+        t["priceHistory"] = history_since(series, disc)
+        # 실제 시세로 덮였으므로 '예시 값' 표기를 지운다.
+        t.pop("priceValues", None)
+        updated += 1
+
+    meta = doc.setdefault("meta", {})
+    meta["lastUpdated"] = datetime.utcnow().strftime("%Y-%m-%d")
+    meta["pricesRefreshedAt"] = datetime.utcnow().strftime("%Y-%m-%d")
+    if updated and not failed:
+        meta["priceSource"] = "stooq"
+
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(doc, f, ensure_ascii=False, indent=2)
+    print(f"✓ 가격 갱신 {updated}건" + (f" / 실패 {failed}" if failed else ""), file=sys.stderr)
+    return doc.get("trades", [])
+
+
+def load_sources(path="scripts/sources.json"):
+    try:
+        with open(path, encoding="utf-8") as f:
+            return json.load(f)
+    except FileNotFoundError:
+        return {"ptrUrls": [], "discover": []}
+
+
+def discover_ptr_urls(discover_cfg):
+    """공시 목록 페이지에서 새 278-T PDF 링크를 찾아본다.
+
+    페이지 구조가 바뀌면 못 찾을 수 있으므로 실패해도 예외를 던지지 않는다.
+    (가격 갱신은 이것과 무관하게 계속 돌아가야 한다.)
+    """
+    found = []
+    for cfg in discover_cfg or []:
+        url = cfg.get("listUrl")
+        pat = cfg.get("linkPattern", r'href="([^"]+\.pdf)"')
+        if not url:
+            continue
+        try:
+            html = fetch_bytes(url).decode("utf-8", "replace")
+        except Exception as e:  # noqa: BLE001
+            print(f"  ! 목록 페이지 조회 실패 {url}: {e}", file=sys.stderr)
+            continue
+        for m in re.findall(pat, html, flags=re.I):
+            link = m if m.startswith("http") else urllib.parse.urljoin(url, m)
+            if link not in found:
+                found.append(link)
+    print(f"· 발견된 PTR 후보 {len(found)}건", file=sys.stderr)
+    return found
+
+
 def write_sitemap(records, base_url, out_path="sitemap.xml"):
     """홈·용어집·종목 상세 URL로 sitemap.xml 생성(SEO)."""
     base = base_url.rstrip("/")
@@ -416,6 +528,23 @@ def self_test():
     check(f"추적 이력 2점 (실제 {len(hist)})", len(hist) == 2)
     check("추적 이력 시작 = 공시일", hist[0][0] == "2026-05-12")
 
+    # 병합: 자동 파싱이 못 채우는 수동 필드를 덮어쓰지 않아야 한다
+    existing = [
+        {"id": "a", "ticker": "AAA", "catalyst": "수동 촉매", "companyKo": "에이"},
+        {"id": "old", "ticker": "OLD", "disclosureDate": "2020-01-01"},
+    ]
+    fresh = [{"id": "a", "ticker": "AAA", "catalyst": "", "companyKo": "AAA",
+              "disclosureDate": "2026-01-01"}]
+    merged = merge_records(existing, fresh)
+    got = [x for x in merged if x["id"] == "a"][0]
+    check("병합 시 수동 catalyst 보존", got["catalyst"] == "수동 촉매")
+    check("병합 시 수동 한글명 보존", got["companyKo"] == "에이")
+    check("병합 시 기존 거래 유지", any(x["id"] == "old" for x in merged))
+
+    # 소스 목록 로딩(파일 없어도 죽지 않아야 함)
+    cfg = load_sources("scripts/does-not-exist.json")
+    check("소스 파일 없으면 빈 설정 반환", cfg.get("ptrUrls") == [])
+
     print("\n" + ("전체 통과 ✅" if ok else "실패 있음 ❌"))
     return 0 if ok else 1
 
@@ -433,16 +562,43 @@ def main():
                     help="sitemap.xml 생성용 사이트 기본 URL")
     ap.add_argument("--sitemap", default="sitemap.xml", help="sitemap 출력 경로")
     ap.add_argument("--self-test", action="store_true", help="네트워크 없이 로직 검증")
+    ap.add_argument("--refresh-prices", action="store_true",
+                    help="거래 내역은 두고 가격·추적 수익률만 최신화 (PDF 불필요, 매일 실행용)")
+    ap.add_argument("--from-sources", action="store_true",
+                    help="scripts/sources.json의 PTR 목록/자동탐색으로 갱신")
+    ap.add_argument("--sources", default="scripts/sources.json", help="소스 목록 경로")
     args = ap.parse_args()
 
     if args.self_test:
         return self_test()
 
-    if not args.ptr:
-        ap.error("--ptr 를 최소 1개 주거나 --self-test 를 사용하세요.")
+    # 1) 새 공시 파싱 (선택) — 기존 수동 보완 내용은 병합으로 보존
+    ptrs = list(args.ptr)
+    if args.from_sources:
+        cfg = load_sources(args.sources)
+        ptrs += [u for u in cfg.get("ptrUrls", []) if u not in ptrs]
+        ptrs += [u for u in discover_ptr_urls(cfg.get("discover")) if u not in ptrs]
 
-    records, stats = build_from_ptrs(args.ptr, enrich=not args.no_price)
-    write_data_json(records, stats, args.out)
+    if ptrs:
+        fresh, stats = build_from_ptrs(ptrs, enrich=not args.no_price)
+        existing = []
+        try:
+            with open(args.out, encoding="utf-8") as f:
+                existing = json.load(f).get("trades", [])
+        except (FileNotFoundError, ValueError):
+            pass
+        merged = merge_records(existing, fresh)
+        write_data_json(merged, stats, args.out)
+
+    # 2) 가격 갱신 (선택) — 새 공시가 없어도 매일 돌릴 수 있는 경로
+    if args.refresh_prices:
+        refresh_prices(args.out)
+
+    if not ptrs and not args.refresh_prices:
+        ap.error("--ptr / --from-sources / --refresh-prices / --self-test 중 하나가 필요합니다.")
+
+    with open(args.out, encoding="utf-8") as f:
+        records = json.load(f).get("trades", [])
     write_sitemap(records, args.base_url, args.sitemap)
     return 0
 

@@ -1,0 +1,61 @@
+name: 데이터 자동 갱신
+
+# 매일 21:00 UTC = 06:00 KST. 수동 실행도 가능(workflow_dispatch).
+on:
+  schedule:
+    - cron: "0 21 * * *"
+  workflow_dispatch:
+    inputs:
+      ptr_url:
+        description: "이번 실행에만 추가로 파싱할 278-T PDF URL (선택)"
+        required: false
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-data
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: 의존성 설치
+        run: pip install -r scripts/requirements.txt
+
+      - name: 파서 자체 검증
+        run: python3 scripts/build_data.py --self-test
+
+      # 새 공시 탐색은 원본 사이트 구조에 의존해 실패할 수 있다.
+      # 실패해도 가격 갱신은 계속되어야 하므로 여기서 막지 않는다.
+      - name: 새 공시(PTR) 확인
+        continue-on-error: true
+        run: |
+          if [ -n "${{ inputs.ptr_url }}" ]; then
+            python3 scripts/build_data.py --from-sources --ptr "${{ inputs.ptr_url }}" --out data.json
+          else
+            python3 scripts/build_data.py --from-sources --out data.json
+          fi
+
+      - name: 가격·추적 수익률 갱신
+        run: python3 scripts/build_data.py --refresh-prices --out data.json
+
+      - name: 변경분만 커밋
+        run: |
+          if git diff --quiet -- data.json sitemap.xml; then
+            echo "변경 없음 — 커밋 건너뜀"
+            exit 0
+          fi
+          git config user.name "follow-trump-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data.json sitemap.xml
+          git commit -m "data: 자동 갱신 $(date -u +%Y-%m-%d)"
+          git push

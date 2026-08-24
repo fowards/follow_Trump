@@ -1,0 +1,11 @@
+{
+  "_comment": "PTR(278-T) 공시 원본 소스. ptrUrls에 확인된 PDF URL을 추가하면 다음 실행부터 자동 반영됩니다. discover는 목록 페이지에서 새 PDF 링크를 찾아보는 시도이며, 페이지 구조가 바뀌면 실패할 수 있고 그 경우에도 가격 갱신은 계속 동작합니다.",
+  "ptrUrls": [],
+  "discover": [
+    {
+      "_note": "whitehouse.gov 공시 게시 위치. 실제 목록 페이지 URL이 확인되면 listUrl을 교체하세요.",
+      "listUrl": "https://www.whitehouse.gov/disclosures/",
+      "linkPattern": "href=\"([^\"]*Periodic-Transaction-Report[^\"]*\\.pdf)\""
+    }
+  ]
+}
