@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://fowards.github.io/follow_Trump/sitemap.xml

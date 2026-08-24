@@ -96,9 +96,14 @@ section { margin: 40px 0; }
 /* Trade cards */
 .trade-list { display: grid; gap: 16px; }
 .trade-card {
+  display: block; color: inherit; text-decoration: none;
   background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
-  padding: 20px; overflow: hidden;
+  padding: 20px; overflow: hidden; transition: border-color .15s, transform .15s;
 }
+.trade-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+.new-badge { font-size: 10px; font-weight: 900; letter-spacing: .5px; padding: 3px 7px;
+  border-radius: 5px; background: var(--up); color: #fff; margin-left: 8px; }
+.see-more { color: var(--accent); font-size: 13px; margin-left: 8px; white-space: nowrap; }
 .tc-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
 .tc-id { display: flex; align-items: center; gap: 12px; }
 .tc-ticker {
@@ -133,7 +138,7 @@ section { margin: 40px 0; }
 .blackbox-note b { color: var(--accent); }
 
 /* Metrics row */
-.tc-metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 6px; }
+.tc-metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; margin-top: 6px; }
 .metric { background: var(--bg-soft); border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; }
 .metric .m-lab { font-size: 11px; color: var(--muted); }
 .metric .m-val { font-size: 15px; font-weight: 700; margin-top: 2px; }
@@ -153,6 +158,49 @@ section { margin: 40px 0; }
 .how-list { padding-left: 18px; color: var(--muted); font-size: 14px; }
 .how-list li { margin-bottom: 8px; }
 .how-list b { color: var(--text); }
+
+/* Line chart (공시 후 추적) */
+.chart-wrap { margin: 14px 0 4px; }
+.linechart { width: 100%; height: 180px; display: block; }
+.chart-legend { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; font-size: 12px;
+  color: var(--muted); margin-top: 6px; }
+.chart-legend .dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 5px; vertical-align: middle; }
+.chart-legend .dot.accent { background: var(--accent); }
+.chart-legend .dot.up { background: var(--up); }
+.chart-legend .dot.down { background: var(--down); }
+.chart-ret { margin-left: auto; font-weight: 900; font-size: 15px; }
+.chart-empty { font-size: 13px; color: var(--muted); padding: 20px; text-align: center;
+  border: 1px dashed var(--border); border-radius: 10px; }
+
+/* Detail page */
+.back-link { display: inline-block; color: var(--muted); font-size: 14px; margin: 8px 0 20px; }
+.back-link:hover { color: var(--accent); }
+.detail-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px;
+  flex-wrap: wrap; border-bottom: 1px solid var(--border); padding-bottom: 18px; }
+.dh-title { display: flex; align-items: center; gap: 14px; }
+.dh-title h2 { margin: 0; font-size: 24px; font-weight: 900; letter-spacing: -.5px; }
+.dh-title .en { display: block; font-size: 13px; color: var(--muted); font-weight: 400; }
+.dh-meta { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.dh-price { font-size: 14px; color: var(--muted); }
+.dh-ret { font-size: 18px; font-weight: 900; }
+.detail-sub { font-size: 14px; color: var(--muted); margin: 16px 0 24px; }
+.detail-sub b { color: var(--text); }
+.detail-trade { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 20px; margin-bottom: 18px; }
+.dt-head { display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  flex-wrap: wrap; margin-bottom: 10px; }
+.dt-dates { font-size: 12px; color: var(--muted); }
+.dt-note { font-size: 12px; color: var(--muted); margin-top: 12px; border-top: 1px solid var(--border); padding-top: 10px; }
+
+/* Glossary */
+.glossary { padding-bottom: 40px; }
+.glossary-title { font-size: 26px; font-weight: 900; margin: 8px 0 8px; letter-spacing: -.5px; }
+.glossary-intro { color: var(--muted); font-size: 15px; max-width: 640px; margin-bottom: 24px; }
+.term { background: var(--bg-card); border: 1px solid var(--border); border-left: 3px solid var(--accent);
+  border-radius: 12px; padding: 18px 20px; margin-bottom: 14px; }
+.term h3 { margin: 0 0 8px; font-size: 17px; font-weight: 700; }
+.term p { margin: 0; font-size: 14px; color: var(--muted); }
+.term b { color: var(--text); }
 
 /* Footer */
 .site-footer { border-top: 1px solid var(--border); padding: 32px 0 48px; background: var(--bg-soft); }

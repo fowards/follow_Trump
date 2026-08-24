@@ -13,10 +13,25 @@
 
 | 파일 | 역할 |
 |------|------|
-| `index.html` | 페이지 골격 (한국어, 모바일 대응) |
+| `index.html` | 홈 — 매매 카드·정직한 통계·정직한 전제 배너 |
+| `stock.html` + `stock.js` | **개별 종목 상세** (`stock.html?ticker=MRNA`) — 종목별 이력 + 공시 후 추적 차트 |
+| `glossary.html` | **한국어 용어 풀이** (278-T·블라인드 트러스트·STOCK법 등, SEO용 정적 콘텐츠) |
+| `common.js` | 홈/상세 공유 유틸 + SVG 라인차트 |
+| `app.js` | 홈 렌더링 (카드→상세 링크, D+n 추적 배지) |
 | `styles.css` | 다크 테마, 한국식 색(상승=빨강/하락=파랑) |
-| `app.js` | `data.json`을 읽어 카드·타임라인·통계 렌더링 |
 | `data.json` | 매매 데이터 (**현재 예시 데이터**) |
+| `sitemap.xml`, `robots.txt` | 검색엔진 색인용 (파이프라인이 sitemap 자동 생성) |
+
+### 지속 추적 (공시일 공개 + 이후 수익률 갱신)
+- 각 거래는 `disclosureDate`에 공개되고, 최근 14일 내 공시는 홈에서 **NEW** 배지가 붙습니다.
+- 공시 이후 주가를 계속 따라가며 두 가지 수익률을 보여줍니다:
+  **① 2개월 규칙**(공시 후 2개월 보유) vs **② 공시 후 지금까지**(계속 보유, `trackingReturnPct`).
+- 상세 페이지의 라인차트는 `priceHistory`(공시일→현재 종가열)로 그립니다.
+- **운영**: `build_data.py`를 주기적으로(예: 매일) 다시 돌리면 `priceHistory`·수익률이 갱신됩니다.
+  ```bash
+  # 예: 매일 08:00 갱신 (crontab -e)
+  0 8 * * *  cd /path/to/follow_Trump && python3 scripts/build_data.py --ptr "<PTR-URL>" --out data.json && git add -A && git commit -m "data: daily refresh" && git push
+  ```
 
 ## 로컬 실행
 

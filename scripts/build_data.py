@@ -220,6 +220,18 @@ def add_days(date_str: str, days: int) -> str:
 # 4) 레코드 조립
 # ---------------------------------------------------------------------------
 
+def history_since(series, start_date, max_points=30):
+    """공시일 이후 (date, close) 이력을 추려서 최대 max_points개로 다운샘플."""
+    pts = [[d, c] for d, c in series if d >= start_date]
+    if len(pts) <= max_points:
+        return pts
+    step = len(pts) / float(max_points)
+    out = [pts[int(i * step)] for i in range(max_points)]
+    if out[-1] != pts[-1]:
+        out.append(pts[-1])
+    return out
+
+
 def build_record(row, series):
     ticker = row["ticker"]
     disc = row["disclosureDate"] or row["transactionDate"]
@@ -228,6 +240,11 @@ def build_record(row, series):
     price_2m = close_on_or_after(series, add_days(disc, 60)) if series else None
     price_latest = series[-1][1] if series else None
     price_latest_date = series[-1][0] if series else None
+    # 공시 후 지금까지 계속 추적한 누적 수익률 + 추적 차트용 이력
+    tracking = None
+    if price_disc and price_latest:
+        tracking = round(((price_latest - price_disc) / price_disc) * 100, 1)
+    price_history = history_since(series, disc) if series else []
     return {
         "id": f"{ticker.lower()}-{row['transactionDate']}",
         "ticker": ticker,
@@ -244,6 +261,8 @@ def build_record(row, series):
         "priceAfter2mFromDisclosure": price_2m,
         "priceLatest": price_latest,
         "priceLatestDate": price_latest_date,
+        "trackingReturnPct": tracking,
+        "priceHistory": price_history,
         "catalyst": "",
         "closed": False,
         "closeDate": None,
@@ -313,6 +332,24 @@ def write_data_json(records, stats, out_path):
     print(f"✓ {out_path} 작성 완료 — 개별종목 {len(records)}건", file=sys.stderr)
 
 
+def write_sitemap(records, base_url, out_path="sitemap.xml"):
+    """홈·용어집·종목 상세 URL로 sitemap.xml 생성(SEO)."""
+    base = base_url.rstrip("/")
+    today = datetime.utcnow().strftime("%Y-%m-%d")
+    urls = [f"{base}/", f"{base}/glossary.html"]
+    for tk in sorted({r["ticker"] for r in records}):
+        urls.append(f"{base}/stock.html?ticker={tk}")
+    body = "\n".join(
+        f"  <url><loc>{u}</loc><lastmod>{today}</lastmod></url>" for u in urls
+    )
+    xml = ('<?xml version="1.0" encoding="UTF-8"?>\n'
+           '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+           f"{body}\n</urlset>\n")
+    with open(out_path, "w", encoding="utf-8") as f:
+        f.write(xml)
+    print(f"✓ {out_path} 작성 완료 — URL {len(urls)}개", file=sys.stderr)
+
+
 # ---------------------------------------------------------------------------
 # 5) 셀프 테스트 (네트워크 불필요)
 # ---------------------------------------------------------------------------
@@ -368,6 +405,11 @@ def self_test():
     check("공시일 종가 26.4", close_on_or_after(series, "2026-05-12") == 26.4)
     check("+60일 종가 34.1", close_on_or_after(series, add_days("2026-05-12", 60)) == 34.1)
 
+    # 추적 이력: 공시일 이후만 남김 (05-11은 제외, 05-12/07-11만)
+    hist = history_since(series, "2026-05-12")
+    check(f"추적 이력 2점 (실제 {len(hist)})", len(hist) == 2)
+    check("추적 이력 시작 = 공시일", hist[0][0] == "2026-05-12")
+
     print("\n" + ("전체 통과 ✅" if ok else "실패 있음 ❌"))
     return 0 if ok else 1
 
@@ -381,6 +423,9 @@ def main():
     ap.add_argument("--ptr", action="append", default=[], help="278-T PDF URL 또는 로컬 경로 (반복 가능)")
     ap.add_argument("--out", default="data.json", help="출력 경로 (기본 data.json)")
     ap.add_argument("--no-price", action="store_true", help="가격 보강 생략(구조만)")
+    ap.add_argument("--base-url", default="https://fowards.github.io/follow_Trump",
+                    help="sitemap.xml 생성용 사이트 기본 URL")
+    ap.add_argument("--sitemap", default="sitemap.xml", help="sitemap 출력 경로")
     ap.add_argument("--self-test", action="store_true", help="네트워크 없이 로직 검증")
     args = ap.parse_args()
 
@@ -392,6 +437,7 @@ def main():
 
     records, stats = build_from_ptrs(args.ptr, enrich=not args.no_price)
     write_data_json(records, stats, args.out)
+    write_sitemap(records, args.base_url, args.sitemap)
     return 0
 
 
