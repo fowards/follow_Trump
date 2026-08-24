@@ -1,0 +1,2 @@
+# AdSense 승인 후 아래 한 줄을 발급받은 퍼블리셔 ID로 교체하세요.
+# google.com, pub-0000000000000000, DIRECT, f08c47fec0942fa0
