@@ -17,9 +17,10 @@
     return "$" + Number(v).toFixed(2);
   };
   FT.fmtAmount = function (r) {
-    function k(n) { return n >= 1000 ? (n / 1000) + "K" : String(n); }
     if (!r) return "—";
-    return "$" + k(r[0]) + "–$" + k(r[1]);
+    // 공시 원문의 금액 구간을 그대로(콤마) 표기한다. 반올림하면 구간 경계가 흐려진다.
+    function c(n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ","); }
+    return "$" + c(r[0]) + "–$" + c(r[1]);
   };
   FT.daysBetween = function (a, b) {
     return Math.round((new Date(b) - new Date(a)) / 86400000);
@@ -82,12 +83,21 @@
       " L" + X(n - 1) + "," + (H - P) + " Z";
 
     var entry = history[0], last = history[n - 1];
+    // 가로 그리드 4줄 — 선만 있으면 값의 높낮이를 가늠할 수 없다.
+    var grid = "";
+    for (var g = 0; g <= 3; g++) {
+      var gy = P + (g / 3) * (H - 2 * P);
+      grid += '<line x1="' + P + '" x2="' + (W - P) + '" y1="' + gy + '" y2="' + gy +
+        '" stroke="var(--border)" stroke-width="1" stroke-dasharray="3 4"/>';
+    }
+
     var svg =
       '<svg class="linechart" viewBox="0 0 ' + W + " " + H + '" preserveAspectRatio="none" role="img" aria-label="공시 후 주가 추적">' +
         '<defs><linearGradient id="ftg" x1="0" x2="0" y1="0" y2="1">' +
           '<stop offset="0%" stop-color="' + stroke + '" stop-opacity="0.25"/>' +
           '<stop offset="100%" stop-color="' + stroke + '" stop-opacity="0"/>' +
         '</linearGradient></defs>' +
+        grid +
         '<path d="' + area + '" fill="url(#ftg)"/>' +
         '<polyline points="' + pts + '" fill="none" stroke="' + stroke + '" stroke-width="2.5" stroke-linejoin="round"/>' +
         '<circle cx="' + X(0) + '" cy="' + Y(entry[1]) + '" r="4" fill="var(--accent)"/>' +
@@ -95,13 +105,18 @@
       "</svg>";
 
     var pct = ((last[1] - entry[1]) / entry[1]) * 100;
+    // 축 라벨은 SVG 밖(HTML)에 둔다 — preserveAspectRatio="none"이 SVG 내부 글자를 늘려버린다.
+    var scale =
+      '<div class="chart-scale">' +
+        "<span>" + FT.fmtUsd(max) + "</span><span>" + FT.fmtUsd(min) + "</span>" +
+      "</div>";
     var legend =
       '<div class="chart-legend">' +
         '<span><i class="dot accent"></i>공시 진입 ' + FT.fmtUsd(entry[1]) + " (" + FT.fmtYmd(entry[0]) + ")</span>" +
         '<span><i class="dot ' + FT.pctClass(pct) + '"></i>현재 ' + FT.fmtUsd(last[1]) + " (" + FT.fmtYmd(last[0]) + ")</span>" +
         '<span class="chart-ret ' + FT.pctClass(pct) + '">' + FT.fmtPct(pct) + "</span>" +
       "</div>";
-    return '<div class="chart-wrap">' + svg + legend + "</div>";
+    return '<div class="chart-wrap"><div class="chart-body">' + svg + scale + "</div>" + legend + "</div>";
   };
 
   FT.loadData = function (cb, err) {

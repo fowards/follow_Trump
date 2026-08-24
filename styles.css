@@ -16,6 +16,8 @@
 html { scroll-behavior: smooth; }
 body {
   margin: 0;
+  word-break: keep-all;   /* 한글은 어절 단위로 줄바꿈 */
+  overflow-wrap: anywhere; /* 단, 긴 영문/URL은 넘치지 않게 */
   font-family: "Noto Sans KR", system-ui, -apple-system, sans-serif;
   background: var(--bg);
   color: var(--text);
@@ -55,6 +57,8 @@ a { color: inherit; text-decoration: none; }
 .hero-sub b { color: var(--text); }
 .hero-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; max-width: 640px; }
 .stat-box { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; }
+.stat-box.is-key { border-color: rgba(212,160,23,.5); background: rgba(212,160,23,.07); }
+.stat-box.is-key .num { color: var(--accent); }
 .stat-box .num { font-size: 24px; font-weight: 900; letter-spacing: -.5px; }
 .stat-box .lab { font-size: 12px; color: var(--muted); margin-top: 4px; }
 
@@ -127,6 +131,11 @@ section { margin: 40px 0; }
   background: var(--blackbox); border-radius: 4px; border: 1px solid var(--border);
 }
 .tl-point { position: absolute; top: 50%; transform: translate(-50%, -50%); text-align: center; }
+/* 양 끝점: 중앙정렬하면 라벨 절반이 카드 밖으로 나가 잘린다 → 안쪽으로 붙인다 */
+.tl-point.at-start { transform: translate(0, -50%); text-align: left; }
+.tl-point.at-end   { transform: translate(-100%, -50%); text-align: right; }
+.tl-point.at-start .tl-dot { margin: 0; }
+.tl-point.at-end .tl-dot { margin-right: 0; margin-left: auto; }
 .tl-dot { width: 12px; height: 12px; border-radius: 50%; margin: 0 auto; border: 2px solid var(--bg-card); }
 .tl-dot.buy { background: var(--up); }
 .tl-dot.sell { background: var(--down); }
@@ -161,7 +170,13 @@ section { margin: 40px 0; }
 
 /* Line chart (공시 후 추적) */
 .chart-wrap { margin: 14px 0 4px; }
+.chart-body { position: relative; }
 .linechart { width: 100%; height: 180px; display: block; }
+/* 축 라벨은 SVG 밖에 — preserveAspectRatio="none"이 SVG 내부 글자를 늘려버린다 */
+.chart-scale { position: absolute; inset: 0; display: flex; flex-direction: column;
+  justify-content: space-between; padding: 22px 0; pointer-events: none; }
+.chart-scale span { font-size: 11px; color: var(--muted); background: var(--bg-card);
+  padding: 0 4px; align-self: flex-start; }
 .chart-legend { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; font-size: 12px;
   color: var(--muted); margin-top: 6px; }
 .chart-legend .dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 5px; vertical-align: middle; }
@@ -216,7 +231,14 @@ section { margin: 40px 0; }
 /* Responsive */
 @media (max-width: 680px) {
   .top-nav { display: none; }
-  .hero-stats, .honest-grid { grid-template-columns: repeat(2, 1fr); }
+  /* 3개짜리 통계를 2열로 두면 마지막 하나가 외톨이가 된다 → 3열 유지 */
+  .hero-stats { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .hero-stats .stat-box { padding: 12px 10px; }
+  .hero-stats .num { font-size: 19px; }
+  .hero-stats .lab { font-size: 11px; }
+  .honest-grid { grid-template-columns: repeat(2, 1fr); }
   .tc-metrics { grid-template-columns: repeat(2, 1fr); }
   .tc-top { flex-direction: column; align-items: flex-start; }
+  .tl-label { font-size: 10px; }
+  .detail-header { flex-direction: column; }
 }

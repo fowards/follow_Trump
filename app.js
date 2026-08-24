@@ -21,7 +21,9 @@
     );
   }
   function point(left, cls, lab, sub) {
-    return '<div class="tl-point" style="left:' + left + '%;"><div class="tl-dot ' + cls +
+    // 양 끝점은 라벨 절반이 카드 밖으로 나가 잘린다 → 시작/끝은 안쪽 정렬로 고정.
+    var edge = left <= 0 ? " at-start" : (left >= 100 ? " at-end" : "");
+    return '<div class="tl-point' + edge + '" style="left:' + left + '%;"><div class="tl-dot ' + cls +
       '"></div><div class="tl-label"><b>' + lab + "</b>" + sub + "</div></div>";
   }
 
@@ -61,16 +63,23 @@
   }
 
   function renderHeroStats(trades) {
-    var buys = trades.filter(function (t) { return t.action === "buy"; }).length;
     var tickers = {};
     trades.forEach(function (t) { tickers[t.ticker] = 1; });
+    // 이 사이트의 핵심 주장을 숫자로 — '건수'보다 '얼마나 늦게 알려졌나'가 중요하다.
+    var delays = trades.map(function (t) {
+      return F.daysBetween(t.transactionDate, t.disclosureDate);
+    });
+    var avg = delays.length
+      ? Math.round(delays.reduce(function (a, b) { return a + b; }, 0) / delays.length) : null;
+    var max = delays.length ? Math.max.apply(null, delays) : null;
     document.getElementById("heroStats").innerHTML =
-      statBox(trades.length + "건", "추적된 공시") +
-      statBox(Object.keys(tickers).length + "개", "종목") +
-      statBox(buys + "건", "매수 공시");
+      statBox(Object.keys(tickers).length + "개", "추적 종목") +
+      statBox(avg === null ? "—" : avg + "일", "평균 공시 지연", true) +
+      statBox(max === null ? "—" : max + "일", "최장 지연");
   }
-  function statBox(num, lab) {
-    return '<div class="stat-box"><div class="num">' + num + '</div><div class="lab">' + lab + "</div></div>";
+  function statBox(num, lab, highlight) {
+    return '<div class="stat-box' + (highlight ? " is-key" : "") + '"><div class="num">' + num +
+      '</div><div class="lab">' + lab + "</div></div>";
   }
 
   function renderHonest(trades) {

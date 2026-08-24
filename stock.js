@@ -21,7 +21,9 @@
     );
   }
   function pt(left, cls, lab, sub) {
-    return '<div class="tl-point" style="left:' + left + '%;"><div class="tl-dot ' + cls +
+    // 양 끝점은 라벨 절반이 카드 밖으로 나가 잘린다 → 시작/끝은 안쪽 정렬로 고정.
+    var edge = left <= 0 ? " at-start" : (left >= 100 ? " at-end" : "");
+    return '<div class="tl-point' + edge + '" style="left:' + left + '%;"><div class="tl-dot ' + cls +
       '"></div><div class="tl-label"><b>' + lab + "</b>" + sub + "</div></div>";
   }
 
