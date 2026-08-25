@@ -1,8 +1,17 @@
 {
-  "_comment": "PTR(278-T) 공시 소스. oge 항목이 자동 탐색이며, ptrUrls는 탐색이 실패해도 동작하도록 두는 확인된 백업 목록입니다.",
+  "_comment": "PTR(278-T) 공시 소스. 실측 결과 whitehouse.gov 공시 목록이 가장 잘 동작한다(PDF 80건 발견). OGE는 보조. ptrUrls는 탐색 실패 대비 백업.",
+
+  "discover": [
+    {
+      "_note": "백악관 공시 목록. 직원 전체가 섞여 있으므로 filerPattern으로 트럼프만 남긴다.",
+      "listUrl": "https://www.whitehouse.gov/disclosures/",
+      "linkPattern": "href=\"([^\"]*\\.pdf)\"",
+      "filerPattern": "Trump.*Periodic-Transaction-Report"
+    }
+  ],
 
   "oge": {
-    "_note": "OGE PAS Index는 Lotus Domino라 ?ReadViewEntries가 XML 목록을 준다. 뷰에서 filer를 고르고, 각 문서를 열어 $FILE PDF 링크를 수집한다.",
+    "_note": "OGE PAS Index(Lotus Domino). 보조 경로.",
     "viewUrl": "https://extapps2.oge.gov/201/Presiden.nsf/PAS+Index",
     "filerPattern": "trump",
     "formPattern": "278-?T",
@@ -10,12 +19,6 @@
   },
 
   "ptrUrls": [
-    "https://extapps2.oge.gov/201/Presiden.nsf/PAS+Index/5326D3AF5BE7C25385258DF7002DD1B7/$FILE/Trump,%20Donald%20J.-05.08.2026-278T.pdf",
-    "https://extapps2.oge.gov/201/Presiden.nsf/PAS+Index/405E4EC4E27BE8D185258DF7002DD1C0/$FILE/Trump,%20Donald%20J.-05.08.2026-278T(2).pdf",
-    "https://extapps2.oge.gov/201/Presiden.nsf/PAS+Index/CD75555856A7D2E485258DE4002DD4A0/$FILE/Donald-J-Trump-4.20.2026-278T.pdf",
-    "https://extapps2.oge.gov/201/Presiden.nsf/PAS+Index/174165F6E1E120B185258DB000347F54/$FILE/Donald%20J.%20Trump%202.26.2026%20278-T%20(1).pdf",
-    "https://extapps2.oge.gov/201/Presiden.nsf/PAS+Index/18353894FE440B3685258D430031A337/$FILE/Donald%20J.%20Trump%2010.20.2025%20278-T%20(2).pdf",
-    "https://extapps2.oge.gov/201/Presiden.nsf/PAS+Index/322B8A28DB21CC9285258CFD002C0D0B/$FILE/Donald%20J.%20Trump%209.3.25%20278-T.pdf",
-    "https://extapps2.oge.gov/201/Presiden.nsf/PAS+Index/5315A095A2EE1B9185258CEB006E7E36/$FILE/Donald-J-Trump-08.12.2025-278T(3).pdf"
+    "https://extapps2.oge.gov/201/Presiden.nsf/PAS+Index/5326D3AF5BE7C25385258DF7002DD1B7/$FILE/Trump,%20Donald%20J.-05.08.2026-278T.pdf"
   ]
 }

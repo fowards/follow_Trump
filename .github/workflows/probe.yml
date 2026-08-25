@@ -1,6 +1,6 @@
-name: OGE 탐색 진단
+name: 수집 진단
 
-# 데이터를 바꾸지 않고 자동 탐색이 실제로 되는지만 확인한다.
+# 데이터를 바꾸지 않고 탐색·다운로드·파싱·시세를 실제 네트워크에서 점검한다.
 on:
   workflow_dispatch:
 
@@ -17,44 +17,60 @@ jobs:
           python-version: "3.11"
       - run: pip install -r scripts/requirements.txt
 
-      - name: OGE 뷰/문서 탐색 진단
-        run: python3 scripts/build_data.py --probe-oge
-
-      - name: 백업 URL 접근 가능 여부
-        if: always()
+      - name: 1) 트럼프 PTR 자동 탐색
         run: |
           python3 - <<'PY'
-          import json, urllib.request
-          UA={"User-Agent":"Mozilla/5.0 (compatible; follow-trump/1.0)"}
-          urls=json.load(open("scripts/sources.json"))["ptrUrls"]
-          for u in urls[:3]:
-              try:
-                  req=urllib.request.Request(u, headers=UA)
-                  with urllib.request.urlopen(req, timeout=60) as r:
-                      b=r.read()
-                  print(f"OK  {len(b):>9,} bytes  {u.rsplit('/',1)[-1]}")
-              except Exception as e:
-                  print(f"FAIL  {e}  {u}")
+          import sys, json; sys.path.insert(0,"scripts")
+          import build_data as B
+          cfg = B.load_sources("scripts/sources.json")
+          urls = B.discover_ptr_urls(cfg)
+          print(f"\n=== 트럼프 PTR {len(urls)}건 ===")
+          for u in urls[:20]: print(" ", u)
+          json.dump(urls, open("/tmp/urls.json","w"))
           PY
 
-      - name: 첫 PDF 실제 파싱 시험
+      - name: 2) 최신 PDF 텍스트 추출 진단
         if: always()
         run: |
           python3 - <<'PY'
-          import json, sys
-          sys.path.insert(0,"scripts")
+          import sys, json; sys.path.insert(0,"scripts")
           import build_data as B
-          u=json.load(open("scripts/sources.json"))["ptrUrls"][0]
-          try:
-              text=B.extract_pdf_text(B.fetch_bytes(u))
-          except Exception as e:
-              print("PDF 로드/추출 실패:",e); sys.exit(0)
-          print("추출 텍스트 길이:",len(text))
-          print("---- 앞 1500자 ----")
-          print(text[:1500])
-          rows=B.parse_ptr_text(text)
-          print("---- 파싱 결과 ----")
-          print("원시 거래행:",len(rows))
-          for r in rows[:8]:
-              print(" ",r)
+          try: urls = json.load(open("/tmp/urls.json"))
+          except Exception: urls = []
+          if not urls:
+              urls = B.load_sources("scripts/sources.json")["ptrUrls"]
+          u = urls[0]
+          print("대상:", u)
+          data = B.fetch_bytes(u)
+          print("PDF 크기:", f"{len(data):,} bytes")
+          from pypdf import PdfReader
+          import io
+          rd = PdfReader(io.BytesIO(data))
+          print("페이지 수:", len(rd.pages))
+          text = "\n".join((p.extract_text() or "") for p in rd.pages)
+          print("추출 텍스트 길이:", len(text))
+          print("\n===== 텍스트 앞 3000자 (원본 서식 확인용) =====")
+          print(text[:3000])
+          print("\n===== 현재 파서 결과 =====")
+          rows = B.parse_ptr_text(text)
+          print("원시 거래행:", len(rows))
+          for r in rows[:10]: print("  ", r)
+          PY
+
+      - name: 3) Stooq 시세 진단
+        if: always()
+        run: |
+          python3 - <<'PY'
+          import urllib.request, sys
+          UA={"User-Agent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0 Safari/537.36"}
+          for url in ["https://stooq.com/q/d/l/?s=mrna.us&i=d",
+                      "https://stooq.pl/q/d/l/?s=mrna.us&i=d"]:
+              try:
+                  req=urllib.request.Request(url, headers=UA)
+                  with urllib.request.urlopen(req, timeout=45) as r:
+                      body=r.read().decode("utf-8","replace")
+                  print(f"[{r.status}] {url}  {len(body)} bytes")
+                  print("  앞부분:", body[:200].replace("\n"," | "))
+              except Exception as e:
+                  print(f"[FAIL] {url} → {type(e).__name__}: {e}")
           PY

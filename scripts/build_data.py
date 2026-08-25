@@ -111,6 +111,8 @@ def extract_ticker(asset_name: str) -> str | None:
 # 2) 278-T PDF 파싱
 # ---------------------------------------------------------------------------
 
+UA = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0 Safari/537.36"}
+
 TXN_TYPE = {"P": "buy", "S": "sell", "S (partial)": "sell", "E": "exchange"}
 
 # 금액 구간 문자열 → [min, max]
@@ -180,10 +182,27 @@ def extract_pdf_text(data: bytes) -> str:
     return "\n".join((page.extract_text() or "") for page in reader.pages)
 
 
+def encode_url(url: str) -> str:
+    """URL의 비ASCII 문자를 퍼센트 인코딩한다.
+
+    실제 공시 파일명에 en-dash(–)가 섞여 있어 urllib이
+    UnicodeEncodeError로 죽는 사례가 있었다(ASCII만 허용).
+    이미 인코딩된 %XX는 건드리지 않는다.
+    """
+    parts = urllib.parse.urlsplit(url)
+    return urllib.parse.urlunsplit((
+        parts.scheme,
+        parts.netloc.encode("idna").decode("ascii") if parts.netloc else "",
+        urllib.parse.quote(parts.path, safe="/%$+(),!~*'-._:@&="),
+        urllib.parse.quote(parts.query, safe="=&%+/:,$"),
+        "",
+    ))
+
+
 def fetch_bytes(source: str) -> bytes:
     if source.startswith("http://") or source.startswith("https://"):
-        req = urllib.request.Request(source, headers={"User-Agent": "follow-trump/1.0"})
-        with urllib.request.urlopen(req, timeout=60) as r:
+        req = urllib.request.Request(encode_url(source), headers=UA)
+        with urllib.request.urlopen(req, timeout=90) as r:
             return r.read()
     with open(source, "rb") as f:
         return f.read()
@@ -197,7 +216,7 @@ def fetch_stooq_daily(ticker: str):
     """[(date 'YYYY-MM-DD', close float)] 오름차순. 실패 시 []"""
     url = f"https://stooq.com/q/d/l/?s={ticker.lower()}.us&i=d"
     try:
-        req = urllib.request.Request(url, headers={"User-Agent": "follow-trump/1.0"})
+        req = urllib.request.Request(url, headers=UA)
         with urllib.request.urlopen(req, timeout=60) as r:
             body = r.read().decode("utf-8", "replace")
     except Exception as e:  # noqa: BLE001
@@ -401,10 +420,15 @@ def refresh_prices(path):
         updated += 1
 
     meta = doc.setdefault("meta", {})
-    meta["lastUpdated"] = datetime.utcnow().strftime("%Y-%m-%d")
-    meta["pricesRefreshedAt"] = datetime.utcnow().strftime("%Y-%m-%d")
-    if updated and not failed:
+    # 한 건도 못 받았으면 '갱신했다'고 기록하지 않는다(거짓 표기 방지).
+    if updated:
+        meta["lastUpdated"] = datetime.utcnow().strftime("%Y-%m-%d")
+        meta["pricesRefreshedAt"] = datetime.utcnow().strftime("%Y-%m-%d")
         meta["priceSource"] = "stooq"
+    if failed:
+        meta["priceFetchFailed"] = sorted(set(failed))
+    else:
+        meta.pop("priceFetchFailed", None)
 
     with open(path, "w", encoding="utf-8") as f:
         json.dump(doc, f, ensure_ascii=False, indent=2)
@@ -421,11 +445,10 @@ def load_sources(path="scripts/sources.json"):
 
 
 OGE_VIEW = "https://extapps2.oge.gov/201/Presiden.nsf/PAS+Index"
-UA = {"User-Agent": "Mozilla/5.0 (compatible; follow-trump/1.0; +https://github.com/fowards/follow_Trump)"}
 
 
 def _get_text(url, timeout=60):
-    req = urllib.request.Request(url, headers=UA)
+    req = urllib.request.Request(encode_url(url), headers=UA)
     with urllib.request.urlopen(req, timeout=timeout) as r:
         return r.read().decode("utf-8", "replace")
 
@@ -527,7 +550,7 @@ def discover_ptr_urls(cfg):
             found += discover_oge(cfg["oge"])
         except Exception as e:  # noqa: BLE001
             print(f"  ! OGE 탐색 중 오류: {e}", file=sys.stderr)
-    # 범용 목록 페이지(선택)
+    # 목록 페이지에서 링크 수집
     for c in cfg.get("discover") or []:
         url = c.get("listUrl")
         if not url:
@@ -537,10 +560,18 @@ def discover_ptr_urls(cfg):
         except Exception as e:  # noqa: BLE001
             print(f"  ! 목록 조회 실패 {url}: {e}", file=sys.stderr)
             continue
-        for m in re.findall(c.get("linkPattern", r'href="([^"]+\.pdf)"'), body, flags=re.I):
+        raw = re.findall(c.get("linkPattern", r'href="([^"]+\.pdf)"'), body, flags=re.I)
+        # 이 목록에는 백악관 직원 전체의 공시가 섞여 있다. 대상 인물만 남긴다.
+        keep = re.compile(c.get("filerPattern", "trump"), re.I)
+        picked = 0
+        for m in raw:
             link = m if m.startswith("http") else urllib.parse.urljoin(url, m)
+            if not keep.search(urllib.parse.unquote(link)):
+                continue
             if link not in found:
                 found.append(link)
+                picked += 1
+        print(f"  · 목록 {url} — 링크 {len(raw)}건 중 대상 {picked}건", file=sys.stderr)
     return found
 
 
