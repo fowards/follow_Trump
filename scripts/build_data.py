@@ -46,6 +46,7 @@ import os
 import json
 import re
 import sys
+import urllib.error
 import urllib.parse
 import urllib.request
 from datetime import datetime, timedelta
@@ -327,6 +328,53 @@ def _ocr_cache_path(data: bytes, dpi: int) -> str:
     return os.path.join(OCR_CACHE_DIR, f"{key}-{dpi}.txt")
 
 
+def _render_pages(data: bytes, dpi: int):
+    """PDF를 페이지 이미지로 렌더링한다.
+
+    PyMuPDF를 먼저 쓰되, 최신 파이썬에서 휠이 없어 설치가 안 되는 경우가 있어
+    pypdfium2로도 동작하게 해 둔다. 둘 중 하나만 있으면 된다.
+    """
+    from PIL import Image
+
+    try:
+        import pymupdf
+    except ImportError:
+        pymupdf = None
+    if pymupdf is not None:
+        doc = pymupdf.open(stream=data, filetype="pdf")
+        try:
+            mat = pymupdf.Matrix(dpi / 72.0, dpi / 72.0)
+            for page in doc:
+                pix = page.get_pixmap(matrix=mat, colorspace=pymupdf.csGRAY)
+                yield Image.frombytes("L", (pix.width, pix.height), pix.samples)
+        finally:
+            doc.close()
+        return
+
+    try:
+        import pypdfium2
+    except ImportError:
+        raise RuntimeError(
+            "PDF 렌더러가 없습니다. 아래 중 하나를 설치하세요:\n"
+            "    pip install pymupdf\n"
+            "    pip install pypdfium2   (파이썬이 너무 최신이라 pymupdf가 안 깔릴 때)")
+
+    pdf = pypdfium2.PdfDocument(data)
+    try:
+        for page in pdf:
+            yield page.render(scale=dpi / 72.0, grayscale=True).to_pil()
+    finally:
+        pdf.close()
+
+
+def count_pdf_pages(data: bytes) -> int:
+    try:
+        from pypdf import PdfReader
+        return len(PdfReader(io.BytesIO(data)).pages)
+    except Exception:  # noqa: BLE001
+        return 0
+
+
 def ocr_pdf(data: bytes, dpi=300, lang="eng", progress=True) -> str:
     """스캔 PDF를 페이지 이미지로 렌더링해 Tesseract로 읽는다.
 
@@ -341,33 +389,30 @@ def ocr_pdf(data: bytes, dpi=300, lang="eng", progress=True) -> str:
         return txt
 
     try:
-        import pymupdf as fitz
         import pytesseract
-        from PIL import Image
-    except ImportError as e:
-        print(f"  ! OCR 의존성 없음({e}). scripts/requirements.txt 설치 필요", file=sys.stderr)
+    except ImportError:
+        print("  ! pytesseract 없음 — pip install -r scripts/requirements.txt", file=sys.stderr)
         return ""
 
-    cmd = os.environ.get("TESSERACT_CMD")
+    cmd = os.environ.get("TESSERACT_CMD") or (find_tesseract()[0] or "")
     if cmd:
         pytesseract.pytesseract.tesseract_cmd = cmd
 
-    doc = fitz.open(stream=data, filetype="pdf")
-    n_pages = doc.page_count
-    zoom = dpi / 72.0
-    mat = fitz.Matrix(zoom, zoom)
+    total = count_pdf_pages(data)
     out = []
-    for i, page in enumerate(doc, 1):
-        pix = page.get_pixmap(matrix=mat, colorspace=fitz.csGRAY)
-        img = Image.frombytes("L", (pix.width, pix.height), pix.samples)
-        # --psm 6: 표 형태 문서를 한 덩어리 텍스트로 읽기
-        out.append(pytesseract.image_to_string(img, lang=lang, config="--psm 6"))
-        if progress:
-            print(f"    OCR {i}/{n_pages}쪽", end="\r", file=sys.stderr)
-    doc.close()
+    try:
+        for i, img in enumerate(_render_pages(data, dpi), 1):
+            # --psm 6: 표 형태 문서를 한 덩어리 텍스트로 읽기
+            out.append(pytesseract.image_to_string(img, lang=lang, config="--psm 6"))
+            if progress:
+                print(f"    OCR {i}/{total or '?'}쪽", end="\r", file=sys.stderr)
+    except RuntimeError as e:
+        print(f"  ! {e}", file=sys.stderr)
+        return ""
+
     text = "\n".join(out)
     if progress:
-        print(f"    OCR 완료 {n_pages}쪽 → {len(text):,}자          ", file=sys.stderr)
+        print(f"    OCR 완료 {len(out)}쪽 → {len(text):,}자          ", file=sys.stderr)
 
     os.makedirs(OCR_CACHE_DIR, exist_ok=True)
     with open(cache, "w", encoding="utf-8") as f:
@@ -416,15 +461,12 @@ def fetch_bytes(source: str) -> bytes:
 # 3) 가격 보강 (Stooq, 무료·키 불필요)
 # ---------------------------------------------------------------------------
 
-def _fetch_yahoo_daily(ticker: str):
-    """Yahoo Finance 차트 API — 무료·키 불필요·JSON. 1순위."""
-    url = ("https://query1.finance.yahoo.com/v8/finance/chart/"
-           f"{urllib.parse.quote(ticker)}?range=5y&interval=1d")
-    body = _get_text(url, timeout=45)
+def _parse_yahoo_chart(body):
     doc = json.loads(body)
     res = (doc.get("chart") or {}).get("result") or []
     if not res:
-        raise ValueError("빈 응답")
+        err = (doc.get("chart") or {}).get("error")
+        raise ValueError(f"빈 응답{f' ({err})' if err else ''}")
     r = res[0]
     stamps = r.get("timestamp") or []
     quote = ((r.get("indicators") or {}).get("quote") or [{}])[0]
@@ -439,11 +481,23 @@ def _fetch_yahoo_daily(ticker: str):
     return out
 
 
-def _fetch_stooq_daily(ticker: str):
-    """Stooq CSV — 2순위.
+def _fetch_yahoo(host):
+    """Yahoo 차트 API. query1이 막히면 query2가 되는 경우가 있어 호스트를 나눠 시도한다."""
+    def fn(ticker):
+        url = (f"https://{host}/v8/finance/chart/"
+               f"{urllib.parse.quote(ticker)}?range=5y&interval=1d")
+        return _parse_yahoo_chart(_get_text(url, timeout=45, extra_headers={
+            "Accept": "application/json",
+            "Referer": "https://finance.yahoo.com/",
+        }))
+    return fn
 
-    주의: 데이터센터 IP에서는 JS 브라우저 검증 페이지를 돌려주며 막는다
-    (실측 확인). 그래서 1순위로 쓰지 않는다.
+
+def _fetch_stooq_daily(ticker: str):
+    """Stooq CSV.
+
+    데이터센터 IP에서는 JS 검증 페이지를 돌려주며 막지만(실측),
+    가정용 IP에서는 정상 동작하는 경우가 많다.
     """
     url = f"https://stooq.com/q/d/l/?s={ticker.lower()}.us&i=d"
     body = _get_text(url, timeout=45)
@@ -460,11 +514,15 @@ def _fetch_stooq_daily(ticker: str):
     return out
 
 
-PRICE_PROVIDERS = (("yahoo", _fetch_yahoo_daily), ("stooq", _fetch_stooq_daily))
+PRICE_PROVIDERS = (
+    ("yahoo(query1)", _fetch_yahoo("query1.finance.yahoo.com")),
+    ("yahoo(query2)", _fetch_yahoo("query2.finance.yahoo.com")),
+    ("stooq", _fetch_stooq_daily),
+)
 
 
 def fetch_stooq_daily(ticker: str):
-    """[(date 'YYYY-MM-DD', close)] 오름차순. 제공처를 순서대로 시도, 전부 실패 시 []."""
+    """[(date, close)] 오름차순. 제공처를 순서대로 시도, 전부 실패 시 []."""
     for name, fn in PRICE_PROVIDERS:
         try:
             series = fn(ticker)
@@ -472,7 +530,7 @@ def fetch_stooq_daily(ticker: str):
                   file=sys.stderr)
             return series
         except Exception as e:  # noqa: BLE001
-            print(f"  · 시세 {ticker}: {name} 실패 — {type(e).__name__}: {e}", file=sys.stderr)
+            print(f"  · 시세 {ticker}: {name} 실패 — {e}", file=sys.stderr)
     print(f"  ! 시세 조회 전부 실패: {ticker}", file=sys.stderr)
     return []
 
@@ -693,10 +751,22 @@ def load_sources(path="scripts/sources.json"):
 OGE_VIEW = "https://extapps2.oge.gov/201/Presiden.nsf/PAS+Index"
 
 
-def _get_text(url, timeout=60):
-    req = urllib.request.Request(encode_url(url), headers=UA)
-    with urllib.request.urlopen(req, timeout=timeout) as r:
-        return r.read().decode("utf-8", "replace")
+def _get_text(url, timeout=60, extra_headers=None):
+    headers = dict(UA)
+    if extra_headers:
+        headers.update(extra_headers)
+    req = urllib.request.Request(encode_url(url), headers=headers)
+    try:
+        with urllib.request.urlopen(req, timeout=timeout) as r:
+            return r.read().decode("utf-8", "replace")
+    except urllib.error.HTTPError as e:
+        # 상태 코드와 본문 앞부분을 남겨야 원인(차단/한도/경로오류)을 구분할 수 있다.
+        body = ""
+        try:
+            body = e.read().decode("utf-8", "replace")[:200].replace("\n", " ")
+        except Exception:  # noqa: BLE001
+            pass
+        raise RuntimeError(f"HTTP {e.code} {e.reason}" + (f" | {body}" if body else "")) from None
 
 
 def _strip_tags(x):
@@ -1062,7 +1132,6 @@ def doctor():
     print("\n[2] 파이썬 패키지")
     for mod, pkg, why in [
         ("pypdf", "pypdf", "PDF 텍스트 추출"),
-        ("pymupdf", "pymupdf", "스캔 PDF를 이미지로 변환"),
         ("pytesseract", "pytesseract", "Tesseract 연결"),
         ("PIL", "pillow", "이미지 처리"),
     ]:
@@ -1072,6 +1141,20 @@ def doctor():
         except ImportError:
             bad(f"{pkg} 없음 ({why})",
                 "pip install -r scripts\\requirements.txt")
+
+    renderers = []
+    for mod in ("pymupdf", "pypdfium2"):
+        try:
+            __import__(mod)
+            renderers.append(mod)
+        except ImportError:
+            pass
+    if renderers:
+        ok(f"PDF 렌더러: {', '.join(renderers)} (하나만 있으면 충분)")
+    else:
+        bad("PDF 렌더러 없음 (스캔 공시를 읽을 수 없음)",
+            "pip install pypdfium2      (권장, 휠 지원 범위 넓음)\n"
+            "         또는 pip install pymupdf   (더 빠르지만 최신 파이썬에선 설치 실패 가능)")
 
     print("\n[3] Tesseract OCR 엔진")
     path, how = find_tesseract()
@@ -1102,16 +1185,27 @@ def doctor():
                 "저장소 최상위 폴더에서 실행하세요 (cd follow_Trump)")
 
     print("\n[5] 네트워크")
-    for name, url in [
-        ("공시 목록 (whitehouse.gov)", "https://www.whitehouse.gov/disclosures/"),
-        ("시세 (Yahoo Finance)", "https://query1.finance.yahoo.com/v8/finance/chart/AAPL?range=5d&interval=1d"),
-    ]:
+    try:
+        body = _get_text("https://www.whitehouse.gov/disclosures/", timeout=25)
+        ok(f"공시 목록 (whitehouse.gov) — 응답 {len(body):,}자")
+    except Exception as e:  # noqa: BLE001
+        bad(f"공시 목록 접속 실패: {e}", "인터넷 연결 또는 방화벽/백신 확인")
+
+    print("\n[6] 시세 제공처 (하나만 되면 충분)")
+    got = None
+    for name, fn in PRICE_PROVIDERS:
         try:
-            body = _get_text(url, timeout=25)
-            ok(f"{name} — 응답 {len(body):,}자")
+            series = fn("AAPL")
+            ok(f"{name} — {len(series)}일, 최신 {series[-1][0]} ${series[-1][1]:.2f}")
+            got = got or name
         except Exception as e:  # noqa: BLE001
-            bad(f"{name} 접속 실패: {type(e).__name__}",
-                "인터넷 연결 또는 방화벽/백신 확인")
+            print(f"  [실패] {name} — {e}")
+    if got:
+        ok(f"사용 가능: {got}")
+    else:
+        bad("시세 제공처 전부 실패",
+            "방화벽/백신이 파이썬의 HTTPS를 막는지 확인하거나,\n"
+            "         회사망이면 프록시 설정(HTTPS_PROXY 환경변수)이 필요할 수 있습니다")
 
     print("\n" + "=" * 62)
     if problems:
