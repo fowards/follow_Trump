@@ -46,6 +46,7 @@ import os
 import json
 import re
 import sys
+import time
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -461,6 +462,31 @@ def fetch_bytes(source: str) -> bytes:
 # 3) 가격 보강 (Stooq, 무료·키 불필요)
 # ---------------------------------------------------------------------------
 
+# Yahoo는 쿠키 없는 요청을 429(Too Many Requests)로 막는다(실측).
+# 세션 쿠키를 한 번 받아두면 통과한다.
+_YAHOO_OPENER = None
+
+
+def _yahoo_opener():
+    global _YAHOO_OPENER
+    if _YAHOO_OPENER is not None:
+        return _YAHOO_OPENER
+    import http.cookiejar
+    jar = http.cookiejar.CookieJar()
+    op = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(jar))
+    op.addheaders = list(UA.items()) + [
+        ("Accept", "text/html,application/json,*/*"),
+        ("Accept-Language", "en-US,en;q=0.9"),
+    ]
+    for seed in ("https://fc.yahoo.com/", "https://finance.yahoo.com/"):
+        try:
+            op.open(seed, timeout=20).read(2048)
+        except Exception:  # noqa: BLE001
+            pass  # 쿠키만 얻으면 되므로 실패해도 계속
+    _YAHOO_OPENER = op
+    return op
+
+
 def _parse_yahoo_chart(body):
     doc = json.loads(body)
     res = (doc.get("chart") or {}).get("result") or []
@@ -482,23 +508,63 @@ def _parse_yahoo_chart(body):
 
 
 def _fetch_yahoo(host):
-    """Yahoo 차트 API. query1이 막히면 query2가 되는 경우가 있어 호스트를 나눠 시도한다."""
+    """Yahoo 차트 API. 쿠키 세션을 쓰고, 429면 잠시 쉬었다 다시 시도한다."""
     def fn(ticker):
-        url = (f"https://{host}/v8/finance/chart/"
-               f"{urllib.parse.quote(ticker)}?range=5y&interval=1d")
-        return _parse_yahoo_chart(_get_text(url, timeout=45, extra_headers={
-            "Accept": "application/json",
-            "Referer": "https://finance.yahoo.com/",
-        }))
+        url = encode_url(f"https://{host}/v8/finance/chart/"
+                         f"{urllib.parse.quote(ticker)}?range=5y&interval=1d")
+        op = _yahoo_opener()
+        last = None
+        for attempt in range(3):
+            try:
+                with op.open(url, timeout=45) as r:
+                    return _parse_yahoo_chart(r.read().decode("utf-8", "replace"))
+            except urllib.error.HTTPError as e:
+                last = f"HTTP {e.code} {e.reason}"
+                if e.code == 429 and attempt < 2:
+                    time.sleep(2 * (attempt + 1))
+                    continue
+                raise RuntimeError(last) from None
+        raise RuntimeError(last or "실패")
     return fn
 
 
-def _fetch_stooq_daily(ticker: str):
-    """Stooq CSV.
+def _fetch_nasdaq_daily(ticker: str):
+    """Nasdaq 공개 API — 키 불필요. Yahoo가 막힐 때의 대안."""
+    today = datetime.utcnow()
+    frm = (today - timedelta(days=5 * 365)).strftime("%Y-%m-%d")
+    url = (f"https://api.nasdaq.com/api/quote/{urllib.parse.quote(ticker)}/historical"
+           f"?assetclass=stocks&fromdate={frm}&todate={today.strftime('%Y-%m-%d')}&limit=9999")
+    body = _get_text(url, timeout=45, extra_headers={
+        "Accept": "application/json, text/plain, */*",
+        "Referer": "https://www.nasdaq.com/",
+        "Origin": "https://www.nasdaq.com",
+    })
+    return _parse_nasdaq(body)
 
-    데이터센터 IP에서는 JS 검증 페이지를 돌려주며 막지만(실측),
-    가정용 IP에서는 정상 동작하는 경우가 많다.
-    """
+
+def _parse_nasdaq(body):
+    doc = json.loads(body)
+    rows = (((doc.get("data") or {}).get("tradesTable") or {}).get("rows")) or []
+    if not rows:
+        raise ValueError(f"행 없음 ({(doc.get('status') or {}).get('bCodeMessage')})")
+    out = []
+    for r in rows:
+        d, c = r.get("date"), (r.get("close") or "").replace("$", "").replace(",", "")
+        if not d or not c:
+            continue
+        try:
+            iso = datetime.strptime(d, "%m/%d/%Y").strftime("%Y-%m-%d")
+            out.append((iso, float(c)))
+        except ValueError:
+            continue
+    if not out:
+        raise ValueError("종가 파싱 실패")
+    out.sort()  # Nasdaq은 최신순으로 준다
+    return out
+
+
+def _fetch_stooq_daily(ticker: str):
+    """Stooq CSV. 데이터센터/일부 IP에서는 JS 검증 페이지로 막힌다(실측)."""
     url = f"https://stooq.com/q/d/l/?s={ticker.lower()}.us&i=d"
     body = _get_text(url, timeout=45)
     if not body.lstrip().lower().startswith("date"):
@@ -517,6 +583,7 @@ def _fetch_stooq_daily(ticker: str):
 PRICE_PROVIDERS = (
     ("yahoo(query1)", _fetch_yahoo("query1.finance.yahoo.com")),
     ("yahoo(query2)", _fetch_yahoo("query2.finance.yahoo.com")),
+    ("nasdaq", _fetch_nasdaq_daily),
     ("stooq", _fetch_stooq_daily),
 )
 
@@ -1021,6 +1088,26 @@ def self_test():
     # 소스 목록 로딩(파일 없어도 죽지 않아야 함)
     cfg = load_sources("scripts/does-not-exist.json")
     check("소스 파일 없으면 빈 설정 반환", cfg.get("ptrUrls") == [])
+
+    # 시세 응답 파서 (네트워크 없이 합성 응답으로 검증)
+    yser = _parse_yahoo_chart(json.dumps({"chart": {"result": [{
+        "timestamp": [1767225600, 1767312000],
+        "indicators": {"quote": [{"close": [26.4, 174.38]}]}}]}}))
+    check(f"Yahoo 응답 파싱 2일 (실제 {len(yser)})", len(yser) == 2)
+    check("Yahoo 종가", yser[-1][1] == 174.38)
+    try:
+        _parse_yahoo_chart(json.dumps({"chart": {"result": []}}))
+        check("Yahoo 빈 응답은 오류로 처리", False)
+    except ValueError:
+        check("Yahoo 빈 응답은 오류로 처리", True)
+
+    nas = _parse_nasdaq(json.dumps({"data": {"tradesTable": {"rows": [
+        {"date": "08/19/2026", "close": "$174.38"},
+        {"date": "05/12/2026", "close": "$26.40"},
+    ]}}}))
+    check(f"Nasdaq 응답 파싱 2일 (실제 {len(nas)})", len(nas) == 2)
+    check("Nasdaq 오름차순 정렬", nas[0][0] == "2026-05-12" and nas[-1][0] == "2026-08-19")
+    check("Nasdaq 달러기호 제거", nas[-1][1] == 174.38)
 
     # OCR 배관 검증 — 텍스트 레이어가 없는 PDF를 만들어 실제로 읽어본다.
     try:
