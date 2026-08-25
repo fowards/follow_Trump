@@ -212,23 +212,65 @@ def fetch_bytes(source: str) -> bytes:
 # 3) 가격 보강 (Stooq, 무료·키 불필요)
 # ---------------------------------------------------------------------------
 
-def fetch_stooq_daily(ticker: str):
-    """[(date 'YYYY-MM-DD', close float)] 오름차순. 실패 시 []"""
+def _fetch_yahoo_daily(ticker: str):
+    """Yahoo Finance 차트 API — 무료·키 불필요·JSON. 1순위."""
+    url = ("https://query1.finance.yahoo.com/v8/finance/chart/"
+           f"{urllib.parse.quote(ticker)}?range=5y&interval=1d")
+    body = _get_text(url, timeout=45)
+    doc = json.loads(body)
+    res = (doc.get("chart") or {}).get("result") or []
+    if not res:
+        raise ValueError("빈 응답")
+    r = res[0]
+    stamps = r.get("timestamp") or []
+    quote = ((r.get("indicators") or {}).get("quote") or [{}])[0]
+    closes = quote.get("close") or []
+    out = []
+    for ts, c in zip(stamps, closes):
+        if c is None:
+            continue
+        out.append((datetime.utcfromtimestamp(ts).strftime("%Y-%m-%d"), float(c)))
+    if not out:
+        raise ValueError("종가 없음")
+    return out
+
+
+def _fetch_stooq_daily(ticker: str):
+    """Stooq CSV — 2순위.
+
+    주의: 데이터센터 IP에서는 JS 브라우저 검증 페이지를 돌려주며 막는다
+    (실측 확인). 그래서 1순위로 쓰지 않는다.
+    """
     url = f"https://stooq.com/q/d/l/?s={ticker.lower()}.us&i=d"
-    try:
-        req = urllib.request.Request(url, headers=UA)
-        with urllib.request.urlopen(req, timeout=60) as r:
-            body = r.read().decode("utf-8", "replace")
-    except Exception as e:  # noqa: BLE001
-        print(f"  ! Stooq 가격 조회 실패 {ticker}: {e}", file=sys.stderr)
-        return []
+    body = _get_text(url, timeout=45)
+    if not body.lstrip().lower().startswith("date"):
+        raise ValueError("CSV가 아님(봇 차단 페이지로 추정)")
     out = []
     for row in csv.DictReader(io.StringIO(body)):
         try:
             out.append((row["Date"], float(row["Close"])))
         except (KeyError, ValueError):
             continue
+    if not out:
+        raise ValueError("행 없음")
     return out
+
+
+PRICE_PROVIDERS = (("yahoo", _fetch_yahoo_daily), ("stooq", _fetch_stooq_daily))
+
+
+def fetch_stooq_daily(ticker: str):
+    """[(date 'YYYY-MM-DD', close)] 오름차순. 제공처를 순서대로 시도, 전부 실패 시 []."""
+    for name, fn in PRICE_PROVIDERS:
+        try:
+            series = fn(ticker)
+            print(f"  · 시세 {ticker}: {name} OK ({len(series)}일, 최신 {series[-1][0]})",
+                  file=sys.stderr)
+            return series
+        except Exception as e:  # noqa: BLE001
+            print(f"  · 시세 {ticker}: {name} 실패 — {type(e).__name__}: {e}", file=sys.stderr)
+    print(f"  ! 시세 조회 전부 실패: {ticker}", file=sys.stderr)
+    return []
 
 
 def close_on_or_after(series, date_str: str):

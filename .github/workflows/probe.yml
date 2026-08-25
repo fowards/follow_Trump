@@ -1,6 +1,5 @@
 name: 수집 진단
 
-# 데이터를 바꾸지 않고 탐색·다운로드·파싱·시세를 실제 네트워크에서 점검한다.
 on:
   workflow_dispatch:
 
@@ -10,6 +9,7 @@ permissions:
 jobs:
   probe:
     runs-on: ubuntu-latest
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -17,60 +17,53 @@ jobs:
           python-version: "3.11"
       - run: pip install -r scripts/requirements.txt
 
-      - name: 1) 트럼프 PTR 자동 탐색
+      - name: 1) 시세 제공처 확인
         run: |
           python3 - <<'PY'
-          import sys, json; sys.path.insert(0,"scripts")
+          import sys; sys.path.insert(0,"scripts")
           import build_data as B
+          for tk in ["MRNA","CMCSA","PTC"]:
+              s = B.fetch_stooq_daily(tk)
+              if s:
+                  print(f"  {tk}: {len(s)}일  최신 {s[-1][0]} ${s[-1][1]:.2f}")
+          PY
+
+      - name: 2) 트럼프 PDF 전수 텍스트 레이어 조사
+        if: always()
+        run: |
+          python3 - <<'PY'
+          import sys, io, json; sys.path.insert(0,"scripts")
+          import build_data as B
+          from pypdf import PdfReader
+
           cfg = B.load_sources("scripts/sources.json")
           urls = B.discover_ptr_urls(cfg)
-          print(f"\n=== 트럼프 PTR {len(urls)}건 ===")
-          for u in urls[:20]: print(" ", u)
-          json.dump(urls, open("/tmp/urls.json","w"))
-          PY
-
-      - name: 2) 최신 PDF 텍스트 추출 진단
-        if: always()
-        run: |
-          python3 - <<'PY'
-          import sys, json; sys.path.insert(0,"scripts")
-          import build_data as B
-          try: urls = json.load(open("/tmp/urls.json"))
-          except Exception: urls = []
-          if not urls:
-              urls = B.load_sources("scripts/sources.json")["ptrUrls"]
-          u = urls[0]
-          print("대상:", u)
-          data = B.fetch_bytes(u)
-          print("PDF 크기:", f"{len(data):,} bytes")
-          from pypdf import PdfReader
-          import io
-          rd = PdfReader(io.BytesIO(data))
-          print("페이지 수:", len(rd.pages))
-          text = "\n".join((p.extract_text() or "") for p in rd.pages)
-          print("추출 텍스트 길이:", len(text))
-          print("\n===== 텍스트 앞 3000자 (원본 서식 확인용) =====")
-          print(text[:3000])
-          print("\n===== 현재 파서 결과 =====")
-          rows = B.parse_ptr_text(text)
-          print("원시 거래행:", len(rows))
-          for r in rows[:10]: print("  ", r)
-          PY
-
-      - name: 3) Stooq 시세 진단
-        if: always()
-        run: |
-          python3 - <<'PY'
-          import urllib.request, sys
-          UA={"User-Agent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0 Safari/537.36"}
-          for url in ["https://stooq.com/q/d/l/?s=mrna.us&i=d",
-                      "https://stooq.pl/q/d/l/?s=mrna.us&i=d"]:
+          print(f"\n=== 트럼프 PTR {len(urls)}건 전수 조사 ===")
+          print(f"{'파일':<52} {'MB':>6} {'쪽':>4} {'글자':>8} {'행':>5}  판정")
+          summary = {"text": 0, "scan": 0, "fail": 0}
+          best = None
+          for u in urls:
+              name = u.rsplit("/",1)[-1][:50]
               try:
-                  req=urllib.request.Request(url, headers=UA)
-                  with urllib.request.urlopen(req, timeout=45) as r:
-                      body=r.read().decode("utf-8","replace")
-                  print(f"[{r.status}] {url}  {len(body)} bytes")
-                  print("  앞부분:", body[:200].replace("\n"," | "))
+                  data = B.fetch_bytes(u)
+                  rd = PdfReader(io.BytesIO(data))
+                  pages = len(rd.pages)
+                  text = "\n".join((p.extract_text() or "") for p in rd.pages)
+                  rows = B.parse_ptr_text(text)
+                  # 페이지당 글자수로 텍스트 레이어 유무 판정
+                  per = len(text)/max(pages,1)
+                  verdict = "텍스트" if per > 200 else "스캔이미지"
+                  summary["text" if per > 200 else "scan"] += 1
+                  if per > 200 and (best is None or len(rows) > best[1]):
+                      best = (u, len(rows), text)
+                  print(f"{name:<52} {len(data)/1e6:>6.1f} {pages:>4} {len(text):>8} {len(rows):>5}  {verdict}")
               except Exception as e:
-                  print(f"[FAIL] {url} → {type(e).__name__}: {e}")
+                  summary["fail"] += 1
+                  print(f"{name:<52} {'?':>6} {'?':>4} {'?':>8} {'?':>5}  실패 {type(e).__name__}")
+          print(f"\n텍스트 있음 {summary['text']} / 스캔 {summary['scan']} / 실패 {summary['fail']}")
+
+          if best:
+              u, n, text = best
+              print(f"\n===== 텍스트가 가장 잘 나온 PDF: {u.rsplit('/',1)[-1]} (파싱 {n}행) =====")
+              print(text[:4000])
           PY
