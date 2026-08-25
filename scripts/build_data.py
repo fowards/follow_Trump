@@ -670,12 +670,27 @@ def build_record(row, series):
 
 def build_from_ptrs(sources, enrich=True, use_ocr=True, dpi=300):
     raw_rows = []
+    n_ocr = n_text = n_empty = 0
     for src in sources:
-        print(f"· PTR 로드: {src}", file=sys.stderr)
-        text = extract_pdf_text(fetch_bytes(src), use_ocr=use_ocr, dpi=dpi)
+        print(f"· PTR 로드: {src.rsplit('/', 1)[-1]}", file=sys.stderr)
+        data = fetch_bytes(src)
+        layer, pages = _text_layer(data)
+        had_text = has_text_layer(layer, pages)
+        text = extract_pdf_text(data, use_ocr=use_ocr, dpi=dpi)
+        used_ocr = (not had_text) and len(text) > len(layer)
+        if used_ocr:
+            n_ocr += 1
+        elif had_text:
+            n_text += 1
+        else:
+            n_empty += 1
         parsed = parse_ptr_text(text)
-        print(f"  → 원시 거래행 {len(parsed)}건", file=sys.stderr)
+        how = "OCR" if used_ocr else ("텍스트" if had_text else "판독실패")
+        print(f"  → [{how}] {pages}쪽 / 텍스트 {len(text):,}자 / 거래행 {len(parsed)}건",
+              file=sys.stderr)
         raw_rows.extend(parsed)
+    print(f"· 문서 {len(sources)}건 — 텍스트 {n_text} / OCR {n_ocr} / 판독실패 {n_empty}",
+          file=sys.stderr)
 
     # 개별 종목만 남기고 티커 부여
     kept = []
@@ -704,30 +719,72 @@ def build_from_ptrs(sources, enrich=True, use_ocr=True, dpi=300):
             series = []
         records.append(build_record(r, series))
 
-    records.sort(key=lambda x: x["disclosureDate"], reverse=True)
-    return records, {"kept": len(kept), "dropped": dropped, "raw": len(raw_rows)}
+    records.sort(key=lambda x: x["disclosureDate"] or "", reverse=True)
+    return records, {"kept": len(kept), "dropped": dropped, "raw": len(raw_rows),
+                     "docs": len(sources), "ocr": n_ocr, "text": n_text, "unreadable": n_empty}
 
 
-def write_data_json(records, stats, out_path):
-    doc = {
-        "meta": {
-            "subject": "Donald J. Trump",
-            "subjectKo": "도널드 트럼프",
-            "dataSource": "oge-278t",
-            "generatedBy": "scripts/build_data.py",
-            "note": f"OGE 278-T 자동 파싱 결과. 원시 {stats['raw']}건 중 개별종목 {stats['kept']}건만 표시(ETF·채권 등 {stats['dropped']}건 제외).",
-            "caveats": [
-                "백악관은 트럼프 자산이 블라인드 트러스트로 관리된다고 주장합니다.",
-                "공시 원본 대부분은 ETF·머니마켓·채권입니다. 이 사이트는 개별 종목만 보여줍니다.",
-                "공시는 거래 후 상당한 지연을 두고 공개됩니다.",
-            ],
-            "lastUpdated": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
-        },
-        "trades": records,
+def write_data_json(records, stats, out_path, parsed_ids=None):
+    """data.json 저장.
+
+    주의: 예전에는 meta를 통째로 새로 써서, 자동 파싱이 0건이어도
+    '자동 파싱 결과'라고 표기해 사실과 어긋났다. 이제는 기존 meta를 보존하고
+    이번 실행에서 확인된 사실만 갱신한다.
+    """
+    doc = {}
+    try:
+        with open(out_path, encoding="utf-8") as f:
+            doc = json.load(f)
+    except (FileNotFoundError, ValueError):
+        pass
+
+    meta = doc.get("meta") or {}
+    meta.setdefault("subject", "Donald J. Trump")
+    meta.setdefault("subjectKo", "도널드 트럼프")
+    meta.setdefault("caveats", [
+        "백악관은 트럼프의 보유 자산이 블라인드 트러스트로 관리되며 본인은 개별 종목을 모른다고 주장합니다.",
+        "공시 원본에는 분기당 수천 건의 거래가 있고 대부분 ETF·머니마켓·채권입니다. 이 사이트는 그 노이즈를 걷어내고 개별 종목만 보여줍니다.",
+        "공시는 거래 후 최대 45일(실제로는 그 이상 지연되기도 함) 뒤에 공개됩니다.",
+    ])
+
+    n_parsed = len(parsed_ids or [])
+    n_manual = len(records) - n_parsed
+    meta["parseStats"] = {
+        "documents": stats.get("docs"),
+        "readByText": stats.get("text"),
+        "readByOcr": stats.get("ocr"),
+        "unreadable": stats.get("unreadable"),
+        "rawRows": stats.get("raw"),
+        "individualStocks": stats.get("kept"),
+        "filteredOut": stats.get("dropped"),
+        "ranAt": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
     }
+    # 표시 중인 거래가 어디서 왔는지 정확히 적는다.
+    if n_parsed and n_manual:
+        meta["dataSource"] = "oge-278t+manual"
+        meta["note"] = (f"공시 {stats.get('docs')}건에서 원시 {stats.get('raw')}건을 읽어 "
+                        f"개별 종목 {n_parsed}건을 자동 추출했고, 수동 입력 {n_manual}건을 함께 표시합니다. "
+                        f"가격은 실제 시세입니다.")
+    elif n_parsed:
+        meta["dataSource"] = "oge-278t"
+        meta["note"] = (f"공시 {stats.get('docs')}건에서 원시 {stats.get('raw')}건을 읽어 "
+                        f"개별 종목 {n_parsed}건을 자동 추출했습니다(ETF·채권 등 "
+                        f"{stats.get('dropped')}건 제외). 가격은 실제 시세입니다.")
+    else:
+        # 자동 추출이 0건이면 '자동 파싱 결과'라고 쓰면 안 된다.
+        meta["dataSource"] = "manual-trades+live-prices"
+        meta["note"] = (f"이번 자동 파싱에서는 개별 종목을 찾지 못했습니다"
+                        f"(공시 {stats.get('docs')}건, 원시 {stats.get('raw')}건, "
+                        f"OCR {stats.get('ocr')}건, 판독실패 {stats.get('unreadable')}건). "
+                        f"현재 표시된 {n_manual}건은 공시·보도를 근거로 손으로 입력한 것이며, "
+                        f"가격은 실제 시세입니다.")
+
+    doc["meta"] = meta
+    doc["trades"] = records
     with open(out_path, "w", encoding="utf-8") as f:
         json.dump(doc, f, ensure_ascii=False, indent=2)
-    print(f"✓ {out_path} 작성 완료 — 개별종목 {len(records)}건", file=sys.stderr)
+    print(f"✓ {out_path} — 표시 {len(records)}건 (자동 {n_parsed} / 수동·유지 {n_manual})",
+          file=sys.stderr)
 
 
 def merge_records(existing, fresh):
@@ -1089,6 +1146,35 @@ def self_test():
     cfg = load_sources("scripts/does-not-exist.json")
     check("소스 파일 없으면 빈 설정 반환", cfg.get("ptrUrls") == [])
 
+    # meta 정직성: 자동 추출이 0건인데 '자동 파싱 결과'라고 쓰면 안 된다(실제 발생했던 문제)
+    import tempfile
+    with tempfile.TemporaryDirectory() as td:
+        fp = os.path.join(td, "d.json")
+        manual = [{"id": "m1", "ticker": "AAA", "disclosureDate": "2026-01-01"}]
+        st = {"docs": 16, "raw": 280, "kept": 0, "dropped": 280,
+              "ocr": 6, "text": 10, "unreadable": 0}
+        write_data_json(manual, st, fp, parsed_ids=set())
+        got = json.load(open(fp, encoding="utf-8"))
+        check("자동 0건이면 dataSource가 자동파싱이 아님",
+              got["meta"]["dataSource"] == "manual-trades+live-prices")
+        check("자동 0건이면 note에 '찾지 못했습니다' 명시",
+              "찾지 못했" in got["meta"]["note"])
+        check("OCR 통계 기록", got["meta"]["parseStats"]["readByOcr"] == 6)
+
+        # 기존 meta의 수동 정정(caveats)이 덮이지 않아야 한다
+        got["meta"]["caveats"] = ["손으로 쓴 주의문구"]
+        json.dump(got, open(fp, "w", encoding="utf-8"), ensure_ascii=False)
+        write_data_json(manual, st, fp, parsed_ids=set())
+        got2 = json.load(open(fp, encoding="utf-8"))
+        check("기존 caveats 보존", got2["meta"]["caveats"] == ["손으로 쓴 주의문구"])
+
+        # 자동 추출이 있으면 그 사실을 반영
+        parsed = [{"id": "p1", "ticker": "BBB", "disclosureDate": "2026-02-01"}]
+        st2 = dict(st, kept=1)
+        write_data_json(parsed, st2, fp, parsed_ids={"p1"})
+        got3 = json.load(open(fp, encoding="utf-8"))
+        check("자동 추출 시 dataSource=oge-278t", got3["meta"]["dataSource"] == "oge-278t")
+
     # 시세 응답 파서 (네트워크 없이 합성 응답으로 검증)
     yser = _parse_yahoo_chart(json.dumps({"chart": {"result": [{
         "timestamp": [1767225600, 1767312000],
@@ -1365,7 +1451,8 @@ def main():
         except (FileNotFoundError, ValueError):
             pass
         merged = merge_records(existing, fresh)
-        write_data_json(merged, stats, args.out)
+        write_data_json(merged, stats, args.out,
+                        parsed_ids={r.get("id") for r in fresh})
 
     # 2) 가격 갱신 (선택) — 새 공시가 없어도 매일 돌릴 수 있는 경로
     if args.refresh_prices:
