@@ -32,36 +32,44 @@
 - 상세 페이지의 라인차트는 `priceHistory`(공시일→현재 종가열)로 그립니다.
 - **운영**: GitHub Actions가 매일 자동 갱신합니다(아래 참조).
 
-## 자동 갱신 (GitHub Actions)
+## 자동 갱신 (로컬 PC에서 하루 1회)
 
-`.github/workflows/update-data.yml` 이 **매일 06:00 KST**(21:00 UTC)에 실행됩니다.
-러너는 외부 네트워크가 열려 있어 whitehouse.gov·Stooq에 직접 접근합니다. public 저장소라 Actions는 무료입니다.
+정기 실행은 **내 PC**가 담당합니다. `run_local.bat` + Windows 작업 스케줄러.
+설치·설정은 **[scripts/setup_local.md](scripts/setup_local.md)** 참고.
 
-갱신은 성격이 다른 두 단계로 나뉩니다.
-
-| 단계 | 하는 일 | 안정성 |
-|------|---------|--------|
-| ① 새 공시(PTR) 확인 | `--from-sources` — `scripts/sources.json`의 URL 목록 + 목록 페이지 자동 탐색 | 원본 사이트 구조에 의존 → **실패 가능**. `continue-on-error`로 감싸 ②를 막지 않음 |
-| ② 가격·추적 갱신 | `--refresh-prices` — 티커를 이미 아니까 PDF 없이 시세만 갱신 | 안정적. 매일 '공시 후 지금까지' 수익률이 최신화됨 |
-
-data.json / sitemap.xml 이 **실제로 바뀐 경우에만** 커밋하며, 커밋이 나가면 Pages가 자동 재배포합니다.
-
-```bash
-# 로컬에서 같은 동작 확인
-python3 scripts/build_data.py --refresh-prices --out data.json          # 가격만
-python3 scripts/build_data.py --from-sources --refresh-prices --out data.json  # 공시 탐색 + 가격
+```cmd
+run_local.bat
 ```
 
+한 번 실행하면 아래를 순서대로 처리하고, 바뀐 게 있을 때만 커밋·푸시합니다(→ Pages 자동 재배포).
+
+| 단계 | 하는 일 |
+|------|---------|
+| ① 자체 검증 | 파서 회귀 시험 37건. 실패하면 중단해 잘못된 데이터가 배포되지 않게 함 |
+| ② 공시 수집 | whitehouse.gov 목록에서 트럼프 278-T만 선별해 다운로드 |
+| ③ **OCR** | 텍스트 레이어가 없는 스캔본은 300dpi로 렌더링 후 Tesseract로 판독 |
+| ④ 파싱·필터 | 지방채·회사채·ETF를 걷어내고 개별 종목만 추출 |
+| ⑤ 시세 갱신 | Yahoo Finance로 공시 후 추적 수익률 재계산 |
+
+### 왜 OCR이 필요한가
+백악관은 공시를 **종이 출력물을 스캔한 PDF**로 올립니다. 실측 결과 16건 중 6건이
+텍스트 레이어가 아예 없었고(32MB·34쪽인데 추출 텍스트 33자), 나머지도 저품질 OCR이
+섞여 있었습니다(`GOLDMAN`→`GOLOM.AN`, `purchase`→`ourchoso`).
+개별 주식 거래는 주로 이 스캔본 쪽에 있어, OCR 없이는 정작 중요한 거래를 놓칩니다.
+
+OCR 결과는 PDF 해시 기준으로 `.cache/ocr/`에 저장되어 **같은 문서를 두 번 읽지 않습니다.**
+첫 실행만 오래 걸리고(문서당 수 분) 이후에는 빠릅니다.
+
+### GitHub Actions
+`.github/workflows/update-data.yml`은 **정기 실행을 껐고 수동 실행만** 남겼습니다.
+로컬과 동시에 돌면 같은 파일을 커밋해 git 충돌이 나기 때문입니다.
+로컬 PC를 못 쓸 때 Actions 탭에서 수동으로 돌릴 수 있습니다.
+
 ### 새 공시를 확실히 반영하는 방법
-
-자동 탐색은 원본 사이트가 바뀌면 놓칠 수 있습니다. 확실한 경로는 두 가지입니다.
-
-1. **URL을 목록에 추가** — `scripts/sources.json`의 `ptrUrls`에 PDF 주소를 넣고 커밋하면 다음 실행부터 반영됩니다.
-2. **수동 실행** — 저장소 Actions 탭 → "데이터 자동 갱신" → *Run workflow* → `ptr_url` 칸에 PDF 주소를 넣고 실행.
+자동 탐색은 원본 사이트 구조가 바뀌면 놓칠 수 있습니다.
+`scripts/sources.json`의 `ptrUrls`에 PDF 주소를 직접 추가하면 다음 실행부터 반영됩니다.
 
 > 병합은 `id` 기준이며, 자동 파싱이 채우지 못하는 **수동 보완 필드(`catalyst`·`note`·`companyKo`·`sector`)는 덮어쓰지 않습니다.**
-> 따라서 손으로 다듬은 해설이 자동 갱신으로 사라지지 않습니다.
-
 
 ## 로컬 실행
 

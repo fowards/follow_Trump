@@ -1,9 +1,9 @@
 name: 데이터 자동 갱신
 
-# 매일 21:00 UTC = 06:00 KST. 수동 실행도 가능(workflow_dispatch).
+# 정기 실행은 로컬 PC(run_local.bat + 작업 스케줄러)가 담당한다.
+# 여기서 cron을 켜면 로컬과 동시에 커밋해 git 충돌이 나므로 수동 실행만 남긴다.
+# (로컬 PC를 못 쓸 때 임시 대체용. 단, 러너에는 Tesseract가 없어 OCR은 아래 단계에서 설치한다.)
 on:
-  schedule:
-    - cron: "0 21 * * *"
   workflow_dispatch:
     inputs:
       ptr_url:
@@ -27,6 +27,9 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+
+      - name: OCR 엔진 설치
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq tesseract-ocr
 
       - name: 의존성 설치
         run: pip install -r scripts/requirements.txt

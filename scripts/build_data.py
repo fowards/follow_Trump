@@ -39,8 +39,10 @@ data.json 스키마로 변환합니다. 핵심 차별화 로직 두 가지가 �
 
 import argparse
 import csv
+import hashlib
 import html
 import io
+import os
 import json
 import re
 import sys
@@ -303,10 +305,85 @@ def parse_ptr_text(text: str, disclosure_date=None):
     return rows
 
 
-def extract_pdf_text(data: bytes) -> str:
+# 공시 PDF의 절반가량은 종이 출력물을 스캔한 이미지라 텍스트 레이어가 없다
+# (실측: 32MB·34쪽인데 추출 텍스트 33자). 그런 문서는 직접 OCR해야 한다.
+MIN_CHARS_PER_PAGE = 200
+OCR_CACHE_DIR = os.environ.get("FT_OCR_CACHE", ".cache/ocr")
+
+
+def _text_layer(data: bytes) -> str:
     from pypdf import PdfReader
     reader = PdfReader(io.BytesIO(data))
-    return "\n".join((page.extract_text() or "") for page in reader.pages)
+    pages = [(p.extract_text() or "") for p in reader.pages]
+    return "\n".join(pages), len(pages)
+
+
+def has_text_layer(text: str, pages: int) -> bool:
+    return pages > 0 and (len(text) / pages) >= MIN_CHARS_PER_PAGE
+
+
+def _ocr_cache_path(data: bytes, dpi: int) -> str:
+    key = hashlib.sha256(data).hexdigest()[:32]
+    return os.path.join(OCR_CACHE_DIR, f"{key}-{dpi}.txt")
+
+
+def ocr_pdf(data: bytes, dpi=300, lang="eng", progress=True) -> str:
+    """스캔 PDF를 페이지 이미지로 렌더링해 Tesseract로 읽는다.
+
+    느리기 때문에(쪽당 수 초) 결과를 PDF 해시 기준으로 캐시한다.
+    같은 공시를 다시 돌려도 두 번 OCR하지 않는다.
+    """
+    cache = _ocr_cache_path(data, dpi)
+    if os.path.exists(cache):
+        with open(cache, encoding="utf-8") as f:
+            txt = f.read()
+        print(f"    (OCR 캐시 사용: {len(txt):,}자)", file=sys.stderr)
+        return txt
+
+    try:
+        import pymupdf as fitz
+        import pytesseract
+        from PIL import Image
+    except ImportError as e:
+        print(f"  ! OCR 의존성 없음({e}). scripts/requirements.txt 설치 필요", file=sys.stderr)
+        return ""
+
+    cmd = os.environ.get("TESSERACT_CMD")
+    if cmd:
+        pytesseract.pytesseract.tesseract_cmd = cmd
+
+    doc = fitz.open(stream=data, filetype="pdf")
+    n_pages = doc.page_count
+    zoom = dpi / 72.0
+    mat = fitz.Matrix(zoom, zoom)
+    out = []
+    for i, page in enumerate(doc, 1):
+        pix = page.get_pixmap(matrix=mat, colorspace=fitz.csGRAY)
+        img = Image.frombytes("L", (pix.width, pix.height), pix.samples)
+        # --psm 6: 표 형태 문서를 한 덩어리 텍스트로 읽기
+        out.append(pytesseract.image_to_string(img, lang=lang, config="--psm 6"))
+        if progress:
+            print(f"    OCR {i}/{n_pages}쪽", end="\r", file=sys.stderr)
+    doc.close()
+    text = "\n".join(out)
+    if progress:
+        print(f"    OCR 완료 {n_pages}쪽 → {len(text):,}자          ", file=sys.stderr)
+
+    os.makedirs(OCR_CACHE_DIR, exist_ok=True)
+    with open(cache, "w", encoding="utf-8") as f:
+        f.write(text)
+    return text
+
+
+def extract_pdf_text(data: bytes, use_ocr=True, dpi=300) -> str:
+    """텍스트 레이어를 우선 쓰고, 없으면(스캔본) OCR로 넘어간다."""
+    text, pages = _text_layer(data)
+    if has_text_layer(text, pages):
+        return text
+    if not use_ocr:
+        return text
+    print(f"    텍스트 레이어 없음({len(text)}자/{pages}쪽) → OCR 시작", file=sys.stderr)
+    return ocr_pdf(data, dpi=dpi) or text
 
 
 def encode_url(url: str) -> str:
@@ -466,11 +543,11 @@ def build_record(row, series):
     }
 
 
-def build_from_ptrs(sources, enrich=True):
+def build_from_ptrs(sources, enrich=True, use_ocr=True, dpi=300):
     raw_rows = []
     for src in sources:
         print(f"· PTR 로드: {src}", file=sys.stderr)
-        text = extract_pdf_text(fetch_bytes(src))
+        text = extract_pdf_text(fetch_bytes(src), use_ocr=use_ocr, dpi=dpi)
         parsed = parse_ptr_text(text)
         print(f"  → 원시 거래행 {len(parsed)}건", file=sys.stderr)
         raw_rows.extend(parsed)
@@ -875,6 +952,54 @@ def self_test():
     cfg = load_sources("scripts/does-not-exist.json")
     check("소스 파일 없으면 빈 설정 반환", cfg.get("ptrUrls") == [])
 
+    # OCR 배관 검증 — 텍스트 레이어가 없는 PDF를 만들어 실제로 읽어본다.
+    try:
+        import pymupdf, pytesseract  # noqa: F401
+        from PIL import Image, ImageDraw, ImageFont
+        import shutil
+        have_ocr = shutil.which(os.environ.get("TESSERACT_CMD", "tesseract")) is not None
+    except ImportError:
+        have_ocr = False
+
+    if not have_ocr:
+        print("  · OCR 의존성 없음 — OCR 시험 건너뜀 (로컬에서 확인 필요)")
+    else:
+        import pymupdf
+        from PIL import Image, ImageDraw, ImageFont
+        lines = [
+            "OGE RECEIVED:  5/12/2026",
+            "2  MODERNA INC MRNA           purchase  3/02/2026  Yes  $15,001 - $50,000",
+            "6  PENNSYLVANIA ST 5.25% DUE 11/01/39  purchase  3/20/2026  Yes  $500,001 - $1,000,000",
+        ]
+        img = Image.new("L", (2000, 300), 255)
+        d = ImageDraw.Draw(img)
+        try:
+            font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf", 30)
+        except Exception:  # noqa: BLE001
+            font = ImageFont.load_default()
+        for i, ln in enumerate(lines):
+            d.text((40, 40 + i * 60), ln, fill=20, font=font)
+        buf = io.BytesIO()
+        img.save(buf, format="PNG")
+        doc = pymupdf.open()
+        pg = doc.new_page(width=2000 * 72 / 200, height=300 * 72 / 200)
+        pg.insert_image(pg.rect, stream=buf.getvalue())
+        pdf = doc.tobytes()
+        doc.close()
+
+        raw, pages = _text_layer(pdf)
+        check("스캔본은 텍스트 레이어 없음으로 판정", not has_text_layer(raw, pages))
+        text = extract_pdf_text(pdf)
+        check("OCR로 텍스트 복원", len(text) > 50)
+        check("OCR 텍스트에서 공시일 추출", parse_received_date(text) == "2026-05-12")
+        orows = parse_ptr_text(text)
+        ostocks = [r for r in orows
+                   if is_individual_stock(r["asset"]) and extract_ticker(r["asset"])]
+        check(f"OCR 후 개별종목 1건 (실제 {len(ostocks)})", len(ostocks) == 1)
+        if ostocks:
+            check("OCR 티커 MRNA", extract_ticker(ostocks[0]["asset"]) == "MRNA")
+            check("OCR 거래일", ostocks[0]["transactionDate"] == "2026-03-02")
+
     print("\n" + ("전체 통과 ✅" if ok else "실패 있음 ❌"))
     return 0 if ok else 1
 
@@ -897,6 +1022,10 @@ def main():
     ap.add_argument("--from-sources", action="store_true",
                     help="scripts/sources.json의 PTR 목록/자동탐색으로 갱신")
     ap.add_argument("--sources", default="scripts/sources.json", help="소스 목록 경로")
+    ap.add_argument("--no-ocr", action="store_true",
+                    help="스캔 PDF OCR 생략(텍스트 레이어가 있는 것만 처리)")
+    ap.add_argument("--ocr-dpi", type=int, default=300,
+                    help="OCR 렌더링 해상도(기본 300). 낮추면 빠르고 부정확")
     ap.add_argument("--probe-oge", action="store_true",
                     help="OGE 자동 탐색만 실행해 진단 출력(데이터 변경 없음)")
     args = ap.parse_args()
@@ -921,7 +1050,8 @@ def main():
         ptrs += [u for u in discover_ptr_urls(cfg.get("discover")) if u not in ptrs]
 
     if ptrs:
-        fresh, stats = build_from_ptrs(ptrs, enrich=not args.no_price)
+        fresh, stats = build_from_ptrs(ptrs, enrich=not args.no_price,
+                                       use_ocr=not args.no_ocr, dpi=args.ocr_dpi)
         existing = []
         try:
             with open(args.out, encoding="utf-8") as f:

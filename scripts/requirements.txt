@@ -1,3 +1,6 @@
 # 데이터 파이프라인 의존성
-# 가격 조회는 표준 라이브러리(urllib)만 쓰므로 requests 불필요.
-pypdf>=4.0
+pypdf>=4.0          # PDF 텍스트 레이어 추출
+pymupdf>=1.24       # 스캔 PDF를 이미지로 렌더링(OCR 입력용)
+pytesseract>=0.3.10 # Tesseract 래퍼 (별도로 Tesseract 본체 설치 필요)
+pillow>=10.0        # 이미지 처리
+# 시세 조회는 표준 라이브러리(urllib)만 사용 — 별도 패키지 불필요
