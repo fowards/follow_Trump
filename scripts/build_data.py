@@ -50,7 +50,7 @@ import time
 import urllib.error
 import urllib.parse
 import urllib.request
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 # ---------------------------------------------------------------------------
 # 1) 개별 종목 vs 노이즈(ETF/펀드/채권) 분류
@@ -241,7 +241,7 @@ def pick_transaction_date(line: str, disclosure_date=None):
     첫 날짜를 쓰면 만기일을 거래일로 오인한다(실측에서 확인).
     거래일은 공시일보다 뒤일 수 없고 지나치게 과거일 수도 없다.
     """
-    limit = disclosure_date or datetime.utcnow().strftime("%Y-%m-%d")
+    limit = disclosure_date or datetime.now(timezone.utc).strftime("%Y-%m-%d")
     earliest = (datetime.strptime(limit, "%Y-%m-%d") - timedelta(days=730)).strftime("%Y-%m-%d")
     best = None
     for m in DATE_RE.finditer(line):
@@ -501,7 +501,7 @@ def _parse_yahoo_chart(body):
     for ts, c in zip(stamps, closes):
         if c is None:
             continue
-        out.append((datetime.utcfromtimestamp(ts).strftime("%Y-%m-%d"), float(c)))
+        out.append((datetime.fromtimestamp(ts, timezone.utc).strftime("%Y-%m-%d"), float(c)))
     if not out:
         raise ValueError("종가 없음")
     return out
@@ -530,7 +530,7 @@ def _fetch_yahoo(host):
 
 def _fetch_nasdaq_daily(ticker: str):
     """Nasdaq 공개 API — 키 불필요. Yahoo가 막힐 때의 대안."""
-    today = datetime.utcnow()
+    today = datetime.now(timezone.utc)
     frm = (today - timedelta(days=5 * 365)).strftime("%Y-%m-%d")
     url = (f"https://api.nasdaq.com/api/quote/{urllib.parse.quote(ticker)}/historical"
            f"?assetclass=stocks&fromdate={frm}&todate={today.strftime('%Y-%m-%d')}&limit=9999")
@@ -721,7 +721,7 @@ def write_data_json(records, stats, out_path):
                 "공시 원본 대부분은 ETF·머니마켓·채권입니다. 이 사이트는 개별 종목만 보여줍니다.",
                 "공시는 거래 후 상당한 지연을 두고 공개됩니다.",
             ],
-            "lastUpdated": datetime.utcnow().strftime("%Y-%m-%d"),
+            "lastUpdated": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
         },
         "trades": records,
     }
@@ -793,8 +793,8 @@ def refresh_prices(path):
     meta = doc.setdefault("meta", {})
     # 한 건도 못 받았으면 '갱신했다'고 기록하지 않는다(거짓 표기 방지).
     if updated:
-        meta["lastUpdated"] = datetime.utcnow().strftime("%Y-%m-%d")
-        meta["pricesRefreshedAt"] = datetime.utcnow().strftime("%Y-%m-%d")
+        meta["lastUpdated"] = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+        meta["pricesRefreshedAt"] = datetime.now(timezone.utc).strftime("%Y-%m-%d")
         meta["priceSource"] = "stooq"
     if failed:
         meta["priceFetchFailed"] = sorted(set(failed))
@@ -961,7 +961,7 @@ def discover_ptr_urls(cfg):
 def write_sitemap(records, base_url, out_path="sitemap.xml"):
     """홈·용어집·종목 상세 URL로 sitemap.xml 생성(SEO)."""
     base = base_url.rstrip("/")
-    today = datetime.utcnow().strftime("%Y-%m-%d")
+    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
     urls = [
         f"{base}/",
         f"{base}/about.html",
@@ -1110,18 +1110,24 @@ def self_test():
     check("Nasdaq 달러기호 제거", nas[-1][1] == 174.38)
 
     # OCR 배관 검증 — 텍스트 레이어가 없는 PDF를 만들어 실제로 읽어본다.
+    have_render = False
+    for _m in ("pymupdf", "pypdfium2"):
+        try:
+            __import__(_m)
+            have_render = True
+            break
+        except ImportError:
+            pass
     try:
-        import pymupdf, pytesseract  # noqa: F401
-        from PIL import Image, ImageDraw, ImageFont
-        import shutil
-        have_ocr = shutil.which(os.environ.get("TESSERACT_CMD", "tesseract")) is not None
+        import pytesseract  # noqa: F401
+        from PIL import Image, ImageDraw, ImageFont  # noqa: F401
+        have_ocr = have_render and (find_tesseract()[0] is not None)
     except ImportError:
         have_ocr = False
 
     if not have_ocr:
         print("  · OCR 의존성 없음 — OCR 시험 건너뜀 (로컬에서 확인 필요)")
     else:
-        import pymupdf
         from PIL import Image, ImageDraw, ImageFont
         lines = [
             "OGE RECEIVED:  5/12/2026",
@@ -1137,12 +1143,8 @@ def self_test():
         for i, ln in enumerate(lines):
             d.text((40, 40 + i * 60), ln, fill=20, font=font)
         buf = io.BytesIO()
-        img.save(buf, format="PNG")
-        doc = pymupdf.open()
-        pg = doc.new_page(width=2000 * 72 / 200, height=300 * 72 / 200)
-        pg.insert_image(pg.rect, stream=buf.getvalue())
-        pdf = doc.tobytes()
-        doc.close()
+        img.convert("RGB").save(buf, format="PDF")   # 텍스트 레이어 없는 PDF
+        pdf = buf.getvalue()
 
         raw, pages = _text_layer(pdf)
         check("스캔본은 텍스트 레이어 없음으로 판정", not has_text_layer(raw, pages))
@@ -1351,7 +1353,7 @@ def main():
     if args.from_sources:
         cfg = load_sources(args.sources)
         ptrs += [u for u in cfg.get("ptrUrls", []) if u not in ptrs]
-        ptrs += [u for u in discover_ptr_urls(cfg.get("discover")) if u not in ptrs]
+        ptrs += [u for u in discover_ptr_urls(cfg) if u not in ptrs]
 
     if ptrs:
         fresh, stats = build_from_ptrs(ptrs, enrich=not args.no_price,
