@@ -4,7 +4,7 @@
     "subjectKo": "도널드 트럼프",
     "dataSource": "manual-trades+live-prices",
     "generatedBy": "scripts/build_data.py --refresh-prices",
-    "note": "가격·추적 수익률은 실제 시세입니다(자동 갱신). 표시된 거래 3건은 공시·보도를 근거로 손으로 입력한 것이며, 공시 PDF 자동 파싱은 아직 개별 종목을 찾지 못했습니다.",
+    "note": "이번 자동 파싱에서는 개별 종목을 찾지 못했습니다(공시 17건, 원시 280건, OCR 6건, 판독실패 0건). 현재 표시된 3건은 공시·보도를 근거로 손으로 입력한 것이며, 가격은 실제 시세입니다.",
     "caveats": [
       "백악관은 트럼프의 보유 자산이 블라인드 트러스트로 관리되며 본인은 개별 종목을 모른다고 주장합니다.",
       "공시 원본에는 분기당 수천 건의 거래가 있고 대부분 ETF·머니마켓·채권입니다. 이 사이트는 그 노이즈를 걷어내고 개별 종목만 보여줍니다.",
@@ -13,7 +13,17 @@
     ],
     "lastUpdated": "2026-08-25",
     "pricesRefreshedAt": "2026-08-25",
-    "priceSource": "stooq"
+    "priceSource": "stooq",
+    "parseStats": {
+      "documents": 17,
+      "readByText": 11,
+      "readByOcr": 6,
+      "unreadable": 0,
+      "rawRows": 280,
+      "individualStocks": 0,
+      "filteredOut": 280,
+      "ranAt": "2026-08-25"
+    }
   },
   "trades": [
     {
