@@ -22,13 +22,28 @@ cd C:\경로\follow_Trump
 pip install -r scripts\requirements.txt
 ```
 
-## 2. 동작 확인
+## 2. 동작 확인 — 문제가 있으면 여기서 다 알려줍니다
+
+```cmd
+python scripts\build_data.py --doctor
+```
+
+파이썬 버전, 패키지 4종, Tesseract 위치, 프로젝트 파일, 네트워크를 순서대로 점검하고
+빠진 항목마다 **해결 방법을 함께** 출력합니다.
+
+Tesseract를 설치했는데도 못 찾는다면(PATH에 안 잡히는 흔한 경우), doctor가 실제
+설치 경로를 찾아 아래처럼 알려줍니다:
+
+```
+set TESSERACT_CMD=C:\Program Files\Tesseract-OCR\tesseract.exe
+```
+
+이상이 없으면 로직 검증도 돌려보세요:
 
 ```cmd
 python scripts\build_data.py --self-test
 ```
-`전체 통과 ✅` 가 나오면 정상입니다.
-OCR 항목이 "건너뜀"으로 나오면 Tesseract를 못 찾은 것이니 경로를 확인하세요.
+`전체 통과 ✅` 가 나오면 준비 완료입니다.
 
 ## 3. 수동 실행
 

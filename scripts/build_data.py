@@ -1005,6 +1005,124 @@ def self_test():
 
 
 # ---------------------------------------------------------------------------
+# 환경 진단 (--doctor)
+# ---------------------------------------------------------------------------
+
+# Windows에서 Tesseract가 흔히 설치되는 위치들.
+# 설치는 했는데 PATH에 안 잡히는 경우가 많아 직접 뒤져본다.
+TESSERACT_GUESSES = [
+    r"C:\Program Files\Tesseract-OCR\tesseract.exe",
+    r"C:\Program Files (x86)\Tesseract-OCR\tesseract.exe",
+    os.path.expandvars(r"%LOCALAPPDATA%\Programs\Tesseract-OCR\tesseract.exe"),
+    os.path.expandvars(r"%LOCALAPPDATA%\Tesseract-OCR\tesseract.exe"),
+    os.path.expandvars(r"%USERPROFILE%\AppData\Local\Tesseract-OCR\tesseract.exe"),
+    "/usr/bin/tesseract", "/usr/local/bin/tesseract", "/opt/homebrew/bin/tesseract",
+]
+
+
+def find_tesseract():
+    """PATH → 환경변수 → 흔한 설치 경로 순으로 tesseract 실행파일을 찾는다."""
+    import shutil
+    env = os.environ.get("TESSERACT_CMD")
+    if env and os.path.exists(env):
+        return env, "TESSERACT_CMD 환경변수"
+    found = shutil.which("tesseract")
+    if found:
+        return found, "PATH"
+    for g in TESSERACT_GUESSES:
+        if g and os.path.exists(g):
+            return g, "설치 경로 자동 탐색"
+    return None, None
+
+
+def doctor():
+    """무엇이 빠졌는지 짚어주는 진단. 각 항목마다 해결 방법을 함께 출력한다."""
+    problems = []
+
+    def ok(msg):
+        print(f"  [OK]   {msg}")
+
+    def bad(msg, fix):
+        print(f"  [문제] {msg}")
+        print(f"         → {fix}")
+        problems.append(msg)
+
+    print("=" * 62)
+    print(" 트럼프 팔로우 — 환경 진단")
+    print("=" * 62)
+
+    print("\n[1] 파이썬")
+    v = sys.version_info
+    if v >= (3, 10):
+        ok(f"Python {v.major}.{v.minor}.{v.micro}")
+    else:
+        bad(f"Python {v.major}.{v.minor} (3.10 이상 필요)",
+            "https://www.python.org/downloads/ 에서 최신 버전 설치")
+
+    print("\n[2] 파이썬 패키지")
+    for mod, pkg, why in [
+        ("pypdf", "pypdf", "PDF 텍스트 추출"),
+        ("pymupdf", "pymupdf", "스캔 PDF를 이미지로 변환"),
+        ("pytesseract", "pytesseract", "Tesseract 연결"),
+        ("PIL", "pillow", "이미지 처리"),
+    ]:
+        try:
+            __import__(mod)
+            ok(f"{pkg} ({why})")
+        except ImportError:
+            bad(f"{pkg} 없음 ({why})",
+                "pip install -r scripts\\requirements.txt")
+
+    print("\n[3] Tesseract OCR 엔진")
+    path, how = find_tesseract()
+    if path:
+        ok(f"{path}  ({how})")
+        try:
+            import subprocess
+            out = subprocess.run([path, "--version"], capture_output=True,
+                                 text=True, timeout=20)
+            ver = (out.stdout or out.stderr).splitlines()[0]
+            ok(f"버전: {ver}")
+        except Exception as e:  # noqa: BLE001
+            bad(f"실행 실패: {e}", "설치가 손상되었을 수 있습니다. 재설치를 권합니다")
+        if how == "설치 경로 자동 탐색":
+            print(f"         ※ PATH에는 없습니다. run_local.bat이 쓰도록 하려면:")
+            print(f'            set TESSERACT_CMD={path}')
+    else:
+        bad("Tesseract를 찾을 수 없음",
+            "https://github.com/UB-Mannheim/tesseract/wiki 에서 설치\n"
+            "         → 이미 설치했다면: set TESSERACT_CMD=설치경로\\tesseract.exe")
+
+    print("\n[4] 프로젝트 파일")
+    for f in ["data.json", "scripts/sources.json", "index.html"]:
+        if os.path.exists(f):
+            ok(f)
+        else:
+            bad(f"{f} 없음",
+                "저장소 최상위 폴더에서 실행하세요 (cd follow_Trump)")
+
+    print("\n[5] 네트워크")
+    for name, url in [
+        ("공시 목록 (whitehouse.gov)", "https://www.whitehouse.gov/disclosures/"),
+        ("시세 (Yahoo Finance)", "https://query1.finance.yahoo.com/v8/finance/chart/AAPL?range=5d&interval=1d"),
+    ]:
+        try:
+            body = _get_text(url, timeout=25)
+            ok(f"{name} — 응답 {len(body):,}자")
+        except Exception as e:  # noqa: BLE001
+            bad(f"{name} 접속 실패: {type(e).__name__}",
+                "인터넷 연결 또는 방화벽/백신 확인")
+
+    print("\n" + "=" * 62)
+    if problems:
+        print(f" 문제 {len(problems)}건 — 위의 → 표시를 따라 조치하세요.")
+    else:
+        print(" 이상 없음. run_local.bat 을 실행하면 됩니다.")
+    print("=" * 62)
+    return 1 if problems else 0
+
+
+# ---------------------------------------------------------------------------
 # main
 # ---------------------------------------------------------------------------
 
@@ -1026,9 +1144,14 @@ def main():
                     help="스캔 PDF OCR 생략(텍스트 레이어가 있는 것만 처리)")
     ap.add_argument("--ocr-dpi", type=int, default=300,
                     help="OCR 렌더링 해상도(기본 300). 낮추면 빠르고 부정확")
+    ap.add_argument("--doctor", action="store_true",
+                    help="무엇이 빠졌는지 진단(설치 확인용)")
     ap.add_argument("--probe-oge", action="store_true",
                     help="OGE 자동 탐색만 실행해 진단 출력(데이터 변경 없음)")
     args = ap.parse_args()
+
+    if args.doctor:
+        return doctor()
 
     if args.self_test:
         return self_test()
