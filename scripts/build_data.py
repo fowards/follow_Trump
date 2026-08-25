@@ -92,10 +92,14 @@ TICKER_NAME_KO = {
 # 채권의 결정적 신호. 개별 주식에는 만기와 표면금리가 없다.
 # 실측 예: "5% DUE 09/01/38", "5.00 % Duo Jun 15 2026", "YIELD TO MATURITY"
 BOND_RE = re.compile(
-    r"(\d[\d.,]*\s*%\s*(due|duo|d0e))"      # 5% DUE / 5.00 % Duo
-    r"|(\bdue\s+\w+\s*\d)"                  # DUE Jun 15
+    r"(\d[\d.,]*\s*%)"                       # 표면금리: 5% / 02.850% / 5.0000%
+    r"|(\bdue\b|\bduo\b)"                    # DUE '30 / Duo Jun 15
     r"|(yield\s+to\s+maturity)"
-    r"|(\bcallable\b)|(\bcoupon\b)|(\bmaturity\b)",
+    r"|(\bcallable\b)|(\bcoupon\b)|(\bmaturity\b)"
+    r"|(\bnts\b|\bnotes?\b|\bbds?\b|\bbnd\b)"   # NTS / NOTES / BDS
+    r"|(\breg\s?s\b)"                         # REG S (해외발행 채권)
+    r"|(\b(dt0|otd|om|oto)\d{4,6}\b)"          # 발행일 코드(OCR 변형 포함)
+    r"|(\b\d{6}\b\s*$)",                      # 끝의 6자리 만기 코드
     re.I)
 
 # 지방채·기관채에 반복해서 나타나는 약어(실측 공시에서 수집).
@@ -226,6 +230,30 @@ def parse_received_date(text: str):
         return None
 
 
+def pick_transaction_date(line: str, disclosure_date=None):
+    """행에서 '거래일'을 고른다.
+
+    채권 행에는 만기일(2040년, 2065년 등)이 함께 나오기 때문에, 단순히
+    첫 날짜를 쓰면 만기일을 거래일로 오인한다(실측에서 확인).
+    거래일은 공시일보다 뒤일 수 없고 지나치게 과거일 수도 없다.
+    """
+    limit = disclosure_date or datetime.utcnow().strftime("%Y-%m-%d")
+    earliest = (datetime.strptime(limit, "%Y-%m-%d") - timedelta(days=730)).strftime("%Y-%m-%d")
+    best = None
+    for m in DATE_RE.finditer(line):
+        mm, dd, yy = m.groups()
+        y = int(yy)
+        if y < 100:
+            y += 2000
+        try:
+            d = datetime(y, int(mm), int(dd)).strftime("%Y-%m-%d")
+        except ValueError:
+            continue
+        if earliest <= d <= limit and (best is None or d > best):
+            best = d
+    return best
+
+
 def parse_ptr_text(text: str, disclosure_date=None):
     """278-T 텍스트에서 거래 행을 추출한다.
 
@@ -254,7 +282,7 @@ def parse_ptr_text(text: str, disclosure_date=None):
                 break
         if not action:
             continue
-        txn = parse_date(line)
+        txn = pick_transaction_date(line, disclosure_date)
         if not txn:
             continue
         # 자산 설명 = 금액·날짜·행번호를 걷어낸 앞부분
@@ -757,8 +785,8 @@ Oa■crlDtlon 1'vDe Data Daya Ago Amount
 2 NEW YORK NY CITY MUN WT RV BE/R/ 2,7 061543 OTO 111413 CALLABLE VARATE PUTBND salo 11/17/2025 ves $250,001 • $500 000
 3 WASHINGTON ST HEALT 5% DUE 09/01/38 ourchoso 11/26/2025 VOS $1,000,001 -$5,000,000
 7 MISSOURI ST HWYS & TRANS COMMN ST RD REV APPROP MEGA PJS SER A B/E 5.00 % Duo Moy 1, 2026 lpurchaso 12/10/25 VOS $100,001 -$250,000
-30 Modorna Inc MRNA ourchoso 3/2/2026 VOS $15,001 • $50,000
-31 Comcast Corp CMCSA lourchoso 2/10/2026 VOS $1,001 • $15,000
+30 Modorna Inc MRNA ourchoso 12/2/2025 VOS $15,001 • $50,000
+31 Comcast Corp CMCSA lourchoso 12/10/2025 VOS $1,001 • $15,000
 """
 
 
@@ -803,7 +831,19 @@ def self_test():
     mrna = [r for r in rows if "MRNA" in r["asset"] or "odorna" in r["asset"]]
     check("개별 종목 행 인식", bool(mrna))
     if mrna:
-        check("개별 종목 거래일", mrna[0]["transactionDate"] == "2026-03-02")
+        check("개별 종목 거래일", mrna[0]["transactionDate"] == "2025-12-02")
+
+    # 회사채는 회사 이름이 붙어 있어도 주식이 아니다(실측에서 대량 오검출)
+    check("회사채(NTS) 제외", not is_individual_stock("PAYPAL HOLDINGS INC NTS 02.850% 100129"))
+    check("회사채(DUE) 제외", not is_individual_stock("MACYS RETAIL HOLDINGS LLC REGS DUE '30 05.875"))
+    check("지방채(GO BDS) 제외", not is_individual_stock("NEW YORK NY GO BOS FISCAL 5.0000%"))
+
+    # 만기일을 거래일로 오인하면 안 된다(2040년 등 미래 날짜가 나왔던 실측 버그)
+    mat = pick_transaction_date(
+        "NORTH EASTTEX REGLS% DUE 01/01/2040 ourchoso 12/9/2025", "2026-01-14")
+    check("만기일 대신 거래일 선택", mat == "2025-12-09")
+    check("공시일 이후 날짜는 거래일 아님",
+          pick_transaction_date("x 05/01/2065 y", "2026-01-14") is None)
 
     # 노이즈 필터: 지방채를 걸러내고 개별 종목만 남겨야 한다
     kept = [r for r in rows if is_individual_stock(r["asset"]) and extract_ticker(r["asset"])]
