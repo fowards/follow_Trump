@@ -97,7 +97,7 @@ BOND_RE = re.compile(
     r"|(yield\s+to\s+maturity)"
     r"|(\bcallable\b)|(\bcoupon\b)|(\bmaturity\b)"
     r"|(\bnts\b|\bnotes?\b|\bbds?\b|\bbnd\b)"   # NTS / NOTES / BDS
-    r"|(\breg\s?s\b)"                         # REG S (해외발행 채권)
+    r"|(\breg[\s.]?s\b)|(pursuant)"                         # REG S (해외발행 채권)
     r"|(\b(dt0|otd|om|oto)\d{4,6}\b)"          # 발행일 코드(OCR 변형 포함)
     r"|(\b\d{6}\b\s*$)",                      # 끝의 6자리 만기 코드
     re.I)
