@@ -11,7 +11,12 @@
       "공시는 거래 후 최대 45일(실제로는 그 이상 지연되기도 함) 뒤에 공개됩니다."
     ],
     "lastUpdated": "2026-08-24",
-    "pricesRefreshedAt": "2026-08-24"
+    "pricesRefreshedAt": "2026-08-24",
+    "priceFetchFailed": [
+      "CMCSA",
+      "MRNA",
+      "PTC"
+    ]
   },
   "trades": [
     {
