@@ -33,10 +33,13 @@ if defined TESSERACT_CMD (
   echo [OCR] 경고: Tesseract를 찾지 못했습니다. 스캔 공시는 건너뜁니다.
   echo       진단: python scripts\build_data.py --doctor
 )
+set "LOG=%~dp0run_log.txt"
+echo [LOG] 실행 기록: %LOG%
+echo. > "%LOG%"
 echo.
 
 echo [1/4] 파이프라인 자체 검증
-python scripts\build_data.py --self-test
+call :run python scripts\build_data.py --self-test
 if errorlevel 1 (
   echo    검증 실패 - 중단합니다.
   goto :end
@@ -44,12 +47,12 @@ if errorlevel 1 (
 
 echo.
 echo [2/4] 새 공시 수집 + OCR + 파싱
-python scripts\build_data.py --from-sources --out data.json
+call :run python scripts\build_data.py --from-sources --out data.json
 if errorlevel 1 echo    (공시 단계 실패 - 시세 갱신은 계속합니다)
 
 echo.
 echo [3/4] 시세 / 추적 수익률 갱신
-python scripts\build_data.py --refresh-prices --out data.json
+call :run python scripts\build_data.py --refresh-prices --out data.json
 if errorlevel 1 (
   echo    시세 갱신 실패 - 중단합니다.
   goto :end
@@ -69,5 +72,16 @@ if errorlevel 1 (
 
 :end
 echo.
+echo ================================================================
+echo  실행 기록이 아래 파일에 저장됐습니다. 문제가 있으면 이 파일을 보내주세요:
+echo    %LOG%
+echo ================================================================
 pause
 endlocal
+exit /b
+
+REM --- 명령을 실행하면서 화면과 로그 파일에 동시에 남긴다 -----------
+:run
+powershell -NoProfile -ExecutionPolicy Bypass -Command ^
+  "& { %* 2>&1 | Tee-Object -FilePath '%LOG%' -Append }"
+exit /b %errorlevel%
