@@ -89,14 +89,58 @@ TICKER_NAME_KO = {
 }
 
 
+# 채권의 결정적 신호. 개별 주식에는 만기와 표면금리가 없다.
+# 실측 예: "5% DUE 09/01/38", "5.00 % Duo Jun 15 2026", "YIELD TO MATURITY"
+BOND_RE = re.compile(
+    r"(\d[\d.,]*\s*%\s*(due|duo|d0e))"      # 5% DUE / 5.00 % Duo
+    r"|(\bdue\s+\w+\s*\d)"                  # DUE Jun 15
+    r"|(yield\s+to\s+maturity)"
+    r"|(\bcallable\b)|(\bcoupon\b)|(\bmaturity\b)",
+    re.I)
+
+# 지방채·기관채에 반복해서 나타나는 약어(실측 공시에서 수집).
+MUNI_TOKENS = [
+    "cnty", "county", "mun", "muni", "sch dist", "indpt sch", "unif sch",
+    "rev", "rfdg", "rfog", "rf□g", "ser a", "ser b", "ser c", "b/e", "8/e",
+    "be/r/", "bie", "ctf oblig", "auth", "pollt", "wtr", "swr", "hwys",
+    "trans commn", "st rd", "gen oblig", "go bds", "putbnd", "varate",
+    "cr enh", "st intrcpt", "appropriation", "approp", "tax", "brd regts",
+]
+
+
 def is_individual_stock(asset_name: str) -> bool:
-    """자산명이 개별 상장 주식이면 True, ETF/펀드/채권류면 False."""
+    """자산명이 개별 상장 주식이면 True.
+
+    ETF·펀드·머니마켓뿐 아니라 지방채/기관채도 걸러낸다.
+    실측 결과 트럼프 공시의 대부분이 지방채였다.
+    """
     low = asset_name.lower()
-    return not any(kw in low for kw in NON_STOCK_KEYWORDS)
+    if BOND_RE.search(asset_name):
+        return False
+    if any(kw in low for kw in NON_STOCK_KEYWORDS):
+        return False
+    if any(tok in low for tok in MUNI_TOKENS):
+        return False
+    return True
+
+
+# 티커로 오인하기 쉬운 대문자 약어(회사명이 아님).
+TICKER_STOPWORDS = {
+    "INC", "CORP", "CO", "LLC", "LP", "LTD", "PLC", "SA", "NV", "AG", "USD",
+    "THE", "AND", "FOR", "NEW", "ST", "SER", "DUE", "REV", "BE", "BIE", "CAB",
+    "CNTY", "MUN", "AUTH", "GO", "II", "III", "IV", "PJS", "FC", "OTO", "YES",
+    "NO", "VOS", "VES", "DB", "NA", "US", "USA", "ETF", "REIT", "TX", "NY",
+    "CA", "FL", "PA", "WI", "MN", "NC", "OK", "AL", "IN", "MI", "WA", "MO",
+}
 
 
 def extract_ticker(asset_name: str) -> str | None:
-    """자산명에서 티커를 뽑는다. '(MRNA)' 형태 우선, 없으면 이름 맵."""
+    """자산명에서 티커를 뽑는다.
+
+    1) '(MRNA)' 괄호 표기  2) 회사명 매핑
+    3) 단독 대문자 토큰 — 공시 OCR이 회사명을 뭉개도(Moderna→Modorna)
+       티커 자체는 대문자라 비교적 온전히 남는다.
+    """
     m = re.search(r"\(([A-Z]{1,5})\)", asset_name)
     if m:
         return m.group(1)
@@ -104,6 +148,9 @@ def extract_ticker(asset_name: str) -> str | None:
     for name, tk in NAME_TO_TICKER.items():
         if name in low:
             return tk
+    for tok in re.findall(r"\b([A-Z]{2,5})\b", asset_name):
+        if tok not in TICKER_STOPWORDS:
+            return tok
     return None
 
 
@@ -113,66 +160,118 @@ def extract_ticker(asset_name: str) -> str | None:
 
 UA = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0 Safari/537.36"}
 
-TXN_TYPE = {"P": "buy", "S": "sell", "S (partial)": "sell", "E": "exchange"}
+# 공시 PDF는 백악관이 스캔 후 저품질 OCR을 거친 텍스트를 담고 있다.
+# 실측 예: "purchase"→"lourchoso"/"ourchoso", "sale"→"salo", "YES"→"VOS".
+# 그래서 정확한 단어가 아니라 뭉개진 형태까지 잡는 패턴을 쓴다.
+TYPE_PATTERNS = [
+    (re.compile(r"(purch|ourch|urcho|urcha|pu·ch)", re.I), "buy"),
+    (re.compile(r"(\bsal[eo0]\b|\bsold\b|\bsalq\b)", re.I), "sell"),
+    (re.compile(r"exchan", re.I), "exchange"),
+]
 
-# 금액 구간 문자열 → [min, max]
-AMOUNT_RE = re.compile(r"\$([\d,]+)\s*[-–]\s*\$([\d,]+)")
-DATE_RE = re.compile(r"(\d{2})/(\d{2})/(\d{4})")
+# 금액 구간. 구분자가 하이픈이 아니라 불릿(•)인 경우가 많고, OCR 탓에
+# 콤마가 공백이나 마침표로 깨지기도 한다.
+AMOUNT_RE = re.compile(
+    r"[\$sS]\s?([\d][\d,.\s]{2,15}?)\s*[-–—•·‧∙]\s*[\$sS]?\s?([\d][\d,.\s]{2,15})")
+
+# 거래일. MM/DD/YYYY 와 M/D/YY 를 모두 받는다.
+DATE_RE = re.compile(r"\b(\d{1,2})/(\d{1,2})/(\d{2,4})\b")
+
+# 문서 전체의 공시일(행마다 있지 않고 헤더에 한 번 나온다).
+RECEIVED_RE = re.compile(r"OGE\s+RECEIVED[:\s]+(\d{1,2})/(\d{1,2})/(\d{2,4})", re.I)
+
+
+def _norm_amount(x):
+    """'250,001' / '500 000' / '1.000.001' → 250001 형태의 정수. 실패 시 None."""
+    d = re.sub(r"[^\d]", "", x)
+    if not d or len(d) > 12:
+        return None
+    return int(d)
 
 
 def parse_amount(text: str):
-    m = AMOUNT_RE.search(text)
-    if not m:
-        return None
-    lo = int(m.group(1).replace(",", ""))
-    hi = int(m.group(2).replace(",", ""))
-    return [lo, hi]
+    for m in AMOUNT_RE.finditer(text):
+        lo, hi = _norm_amount(m.group(1)), _norm_amount(m.group(2))
+        if lo is not None and hi is not None and 0 < lo < hi:
+            return [lo, hi]
+    return None
 
 
-def parse_date(text: str):
+def parse_date(text: str, year_hint=None):
     m = DATE_RE.search(text)
     if not m:
         return None
-    mm, dd, yyyy = m.groups()
-    return f"{yyyy}-{mm}-{dd}"
+    mm, dd, yy = m.groups()
+    y = int(yy)
+    if y < 100:
+        y += 2000
+    try:
+        return datetime(y, int(mm), int(dd)).strftime("%Y-%m-%d")
+    except ValueError:
+        return None
 
 
-def parse_ptr_text(text: str):
-    """278-T 텍스트에서 거래 행을 추출한다(휴리스틱).
+def parse_received_date(text: str):
+    """문서 헤더의 'OGE RECEIVED: M/D/YYYY' → 공시일."""
+    m = RECEIVED_RE.search(text)
+    if not m:
+        return None
+    mm, dd, yy = m.groups()
+    y = int(yy)
+    if y < 100:
+        y += 2000
+    try:
+        return datetime(y, int(mm), int(dd)).strftime("%Y-%m-%d")
+    except ValueError:
+        return None
 
-    보고서 서식은 판마다 조금씩 달라서, 한 '행'을 다음 신호로 인식한다.
-      - 거래유형 토큰 (P/S/E) 이 있고
-      - MM/DD/YYYY 날짜가 최소 1개(거래일), 보통 2개(거래일, 통지/공시일)
-      - $범위 금액
-    실제 배포용으로 쓸 땐 대상 PDF 몇 개로 한 번 검증/보정하는 것을 권장.
+
+def parse_ptr_text(text: str, disclosure_date=None):
+    """278-T 텍스트에서 거래 행을 추출한다.
+
+    실측한 실제 행 구조:
+      <번호> <자산 설명> <거래유형> <거래일> <30일초과 여부> <금액 구간>
+    예) 3 WASHINGTON ST HEALT 5% DUE 09/01/38 ourchoso 11/26/2025 VOS $1,000,001 -$5,000,000
+
+    공시일은 행이 아니라 문서 헤더(OGE RECEIVED)에 한 번만 나오므로
+    호출부에서 넘겨주거나 이 함수가 텍스트에서 찾아 쓴다.
     """
+    if disclosure_date is None:
+        disclosure_date = parse_received_date(text)
+
     rows = []
     for raw in text.splitlines():
         line = raw.strip()
-        if not line:
+        if len(line) < 20:
             continue
-        dates = DATE_RE.findall(line)
         amount = parse_amount(line)
-        # 거래유형: 단독 대문자 토큰 P/S/E (앞뒤 공백)
-        ttype = None
-        tm = re.search(r"(?<![A-Za-z])([PSE])(?![A-Za-z])", line)
-        if tm:
-            ttype = TXN_TYPE.get(tm.group(1))
-        if ttype and dates and amount:
-            # 자산명 = 금액/날짜/유형 토큰을 걷어낸 앞부분
-            name = AMOUNT_RE.sub("", line)
-            name = DATE_RE.sub("", name).strip(" .-\t")
-            txn_date = f"{dates[0][2]}-{dates[0][0]}-{dates[0][1]}"
-            disc_date = None
-            if len(dates) >= 2:
-                disc_date = f"{dates[1][2]}-{dates[1][0]}-{dates[1][1]}"
-            rows.append({
-                "asset": name,
-                "action": ttype,
-                "transactionDate": txn_date,
-                "disclosureDate": disc_date,
-                "amountRange": amount,
-            })
+        if not amount:
+            continue
+        action = None
+        for pat, kind in TYPE_PATTERNS:
+            if pat.search(line):
+                action = kind
+                break
+        if not action:
+            continue
+        txn = parse_date(line)
+        if not txn:
+            continue
+        # 자산 설명 = 금액·날짜·행번호를 걷어낸 앞부분
+        name = AMOUNT_RE.sub(" ", line)
+        name = DATE_RE.sub(" ", name)
+        name = re.sub(r"^\s*\d{1,3}\s+", "", name)
+        for pat, _ in TYPE_PATTERNS:
+            name = pat.sub(" ", name)
+        name = re.sub(r"\b(VOS|YES|NO|ves|yes|no)\b", " ", name)
+        name = re.sub(r"\s{2,}", " ", name).strip(" .-|·•")
+        rows.append({
+            "asset": name,
+            "action": action,
+            "transactionDate": txn,
+            "disclosureDate": disclosure_date,
+            "amountRange": amount,
+        })
     return rows
 
 
@@ -645,15 +744,21 @@ def write_sitemap(records, base_url, out_path="sitemap.xml"):
 # 5) 셀프 테스트 (네트워크 불필요)
 # ---------------------------------------------------------------------------
 
-SAMPLE_PTR_TEXT = """
-Asset Trans Date Notified Amount
-Moderna, Inc. (MRNA) P 03/02/2026 05/12/2026 $15,001 - $50,000
-Comcast Corporation (CMCSA) P 02/10/2026 05/12/2026 $1,001 - $15,000
-Vanguard S&P 500 ETF (VOO) P 02/01/2026 05/12/2026 $50,001 - $100,000
-U.S. Treasury Bill S 02/15/2026 05/12/2026 $250,001 - $500,000
-Fidelity Money Market Fund P 02/20/2026 05/12/2026 $100,001 - $250,000
-PTC Inc. (PTC) P 02/24/2026 05/12/2026 $1,001 - $15,000
-Moderna, Inc. (MRNA) S 05/18/2026 07/01/2026 $1,001 - $15,000
+# 아래는 실제 공시 PDF(2026-01-14 접수분)에서 추출된 텍스트를 그대로 가져온
+# 것이다. 백악관 스캔 OCR 특유의 오인식(purchase→ourchoso, YES→VOS,
+# 구분자가 하이픈이 아닌 불릿)이 그대로 들어 있어 회귀 시험에 적합하다.
+SAMPLE_PTR_TEXT = """OGE Form 278-T (Updated February 2024)
+U.S. Ollico of Govommont Ethics; 5 C.F.R. part 2634
+Flier"s Nome I Pnnn
+Donfld J Trump I D->?o? nf7
+OGE RECEIVED:  1/14/2026
+Oa■crlDtlon 1'vDe Data Daya Ago Amount
+1 MIAMI-DADE CNTY Fl WTR & SR B fN BE/R/ 5 DUE 100133 OTO 120425 FC 040126 2.610% YIELD TO MATURITY lourchoso 11/14/2025 VOS $250,001 • $500,000
+2 NEW YORK NY CITY MUN WT RV BE/R/ 2,7 061543 OTO 111413 CALLABLE VARATE PUTBND salo 11/17/2025 ves $250,001 • $500 000
+3 WASHINGTON ST HEALT 5% DUE 09/01/38 ourchoso 11/26/2025 VOS $1,000,001 -$5,000,000
+7 MISSOURI ST HWYS & TRANS COMMN ST RD REV APPROP MEGA PJS SER A B/E 5.00 % Duo Moy 1, 2026 lpurchaso 12/10/25 VOS $100,001 -$250,000
+30 Modorna Inc MRNA ourchoso 3/2/2026 VOS $15,001 • $50,000
+31 Comcast Corp CMCSA lourchoso 2/10/2026 VOS $1,001 • $15,000
 """
 
 
@@ -668,35 +773,47 @@ def self_test():
     # 분류
     check("MRNA는 개별종목", is_individual_stock("Moderna, Inc. (MRNA)"))
     check("VOO는 ETF로 제외", not is_individual_stock("Vanguard S&P 500 ETF (VOO)"))
-    check("Treasury는 제외", not is_individual_stock("U.S. Treasury Bill"))
+    check("지방채는 제외", not is_individual_stock("MIAMI-DADE CNTY Fl WTR & SR B DUE 100133"))
     check("Money Market는 제외", not is_individual_stock("Fidelity Money Market Fund"))
 
     # 티커 추출
     check("괄호 티커 추출", extract_ticker("Comcast Corporation (CMCSA)") == "CMCSA")
     check("이름맵 티커 추출", extract_ticker("Moderna, Inc.") == "MRNA")
 
-    # 파싱
+    # 실제 OCR 텍스트 파싱
     rows = parse_ptr_text(SAMPLE_PTR_TEXT)
-    check(f"거래행 7개 파싱 (실제 {len(rows)})", len(rows) == 7)
-    mrna = [r for r in rows if "MRNA" in r["asset"]][0]
-    check("거래일 파싱 2026-03-02", mrna["transactionDate"] == "2026-03-02")
-    check("공시일 파싱 2026-05-12", mrna["disclosureDate"] == "2026-05-12")
-    check("금액 파싱 [15001,50000]", mrna["amountRange"] == [15001, 50000])
-    check("매수/매도 구분", mrna["action"] == "buy")
+    check(f"거래행 6개 파싱 (실제 {len(rows)})", len(rows) == 6)
 
-    # 필터 통합 (가격 조회 없이)
-    kept = []
-    for r in rows:
-        if is_individual_stock(r["asset"]) and extract_ticker(r["asset"]):
-            kept.append(r)
-    check(f"개별종목만 4건 남김 (실제 {len(kept)})", len(kept) == 4)
+    check("문서 헤더에서 공시일 추출", parse_received_date(SAMPLE_PTR_TEXT) == "2026-01-14")
+    if rows:
+        check("모든 행에 공시일 부여", all(r["disclosureDate"] == "2026-01-14" for r in rows))
+
+    muni = [r for r in rows if "MIAMI" in r["asset"]]
+    check("불릿(•) 구분 금액 파싱", bool(muni) and muni[0]["amountRange"] == [250001, 500000])
+    check("불릿 행의 거래일", bool(muni) and muni[0]["transactionDate"] == "2025-11-14")
+    check("깨진 'lourchoso'를 매수로 인식", bool(muni) and muni[0]["action"] == "buy")
+
+    sale = [r for r in rows if "NEW YORK" in r["asset"]]
+    check("깨진 'salo'를 매도로 인식", bool(sale) and sale[0]["action"] == "sell")
+    check("콤마 없는 금액 파싱", bool(sale) and sale[0]["amountRange"] == [250001, 500000])
+
+    two = [r for r in rows if "MISSOURI" in r["asset"]]
+    check("두자리 연도(12/10/25) 파싱", bool(two) and two[0]["transactionDate"] == "2025-12-10")
+
+    mrna = [r for r in rows if "MRNA" in r["asset"] or "odorna" in r["asset"]]
+    check("개별 종목 행 인식", bool(mrna))
+    if mrna:
+        check("개별 종목 거래일", mrna[0]["transactionDate"] == "2026-03-02")
+
+    # 노이즈 필터: 지방채를 걸러내고 개별 종목만 남겨야 한다
+    kept = [r for r in rows if is_individual_stock(r["asset"]) and extract_ticker(r["asset"])]
+    check(f"개별종목만 2건 남김 (실제 {len(kept)})", len(kept) == 2)
 
     # 가격 헬퍼
     series = [("2026-05-11", 26.0), ("2026-05-12", 26.4), ("2026-07-11", 34.1)]
     check("공시일 종가 26.4", close_on_or_after(series, "2026-05-12") == 26.4)
     check("+60일 종가 34.1", close_on_or_after(series, add_days("2026-05-12", 60)) == 34.1)
 
-    # 추적 이력: 공시일 이후만 남김 (05-11은 제외, 05-12/07-11만)
     hist = history_since(series, "2026-05-12")
     check(f"추적 이력 2점 (실제 {len(hist)})", len(hist) == 2)
     check("추적 이력 시작 = 공시일", hist[0][0] == "2026-05-12")

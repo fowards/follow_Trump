@@ -17,53 +17,49 @@ jobs:
           python-version: "3.11"
       - run: pip install -r scripts/requirements.txt
 
-      - name: 1) 시세 제공처 확인
+      - name: 시세 제공처 확인
         run: |
           python3 - <<'PY'
           import sys; sys.path.insert(0,"scripts")
           import build_data as B
           for tk in ["MRNA","CMCSA","PTC"]:
               s = B.fetch_stooq_daily(tk)
-              if s:
-                  print(f"  {tk}: {len(s)}일  최신 {s[-1][0]} ${s[-1][1]:.2f}")
+              if s: print(f"  {tk}: {len(s)}일  최신 {s[-1][0]} ${s[-1][1]:.2f}")
           PY
 
-      - name: 2) 트럼프 PDF 전수 텍스트 레이어 조사
+      - name: 전체 PDF 파싱 → 개별 종목 추출
         if: always()
         run: |
           python3 - <<'PY'
-          import sys, io, json; sys.path.insert(0,"scripts")
+          import sys, io; sys.path.insert(0,"scripts")
           import build_data as B
           from pypdf import PdfReader
 
-          cfg = B.load_sources("scripts/sources.json")
-          urls = B.discover_ptr_urls(cfg)
-          print(f"\n=== 트럼프 PTR {len(urls)}건 전수 조사 ===")
-          print(f"{'파일':<52} {'MB':>6} {'쪽':>4} {'글자':>8} {'행':>5}  판정")
-          summary = {"text": 0, "scan": 0, "fail": 0}
-          best = None
+          urls = B.discover_ptr_urls(B.load_sources("scripts/sources.json"))
+          print(f"\n=== 트럼프 PTR {len(urls)}건 파싱 ===")
+          tot_rows = tot_stock = 0
+          stocks = []
           for u in urls:
-              name = u.rsplit("/",1)[-1][:50]
+              name = u.rsplit("/",1)[-1][-34:]
               try:
-                  data = B.fetch_bytes(u)
-                  rd = PdfReader(io.BytesIO(data))
-                  pages = len(rd.pages)
+                  rd = PdfReader(io.BytesIO(B.fetch_bytes(u)))
                   text = "\n".join((p.extract_text() or "") for p in rd.pages)
                   rows = B.parse_ptr_text(text)
-                  # 페이지당 글자수로 텍스트 레이어 유무 판정
-                  per = len(text)/max(pages,1)
-                  verdict = "텍스트" if per > 200 else "스캔이미지"
-                  summary["text" if per > 200 else "scan"] += 1
-                  if per > 200 and (best is None or len(rows) > best[1]):
-                      best = (u, len(rows), text)
-                  print(f"{name:<52} {len(data)/1e6:>6.1f} {pages:>4} {len(text):>8} {len(rows):>5}  {verdict}")
+                  kept = []
+                  for r in rows:
+                      if B.is_individual_stock(r["asset"]) and B.extract_ticker(r["asset"]):
+                          r["ticker"] = B.extract_ticker(r["asset"])
+                          kept.append(r)
+                  tot_rows += len(rows); tot_stock += len(kept)
+                  stocks += kept
+                  print(f"{name:<34} 공시 {str(rows[0]['disclosureDate']) if rows else '-':<10} "
+                        f"거래 {len(rows):>4}  개별종목 {len(kept):>3}")
               except Exception as e:
-                  summary["fail"] += 1
-                  print(f"{name:<52} {'?':>6} {'?':>4} {'?':>8} {'?':>5}  실패 {type(e).__name__}")
-          print(f"\n텍스트 있음 {summary['text']} / 스캔 {summary['scan']} / 실패 {summary['fail']}")
+                  print(f"{name:<34} 실패 {type(e).__name__}: {e}")
 
-          if best:
-              u, n, text = best
-              print(f"\n===== 텍스트가 가장 잘 나온 PDF: {u.rsplit('/',1)[-1]} (파싱 {n}행) =====")
-              print(text[:4000])
+          print(f"\n총 거래행 {tot_rows} / 개별 종목 {tot_stock}")
+          print("\n=== 추출된 개별 종목 (최대 40) ===")
+          for r in stocks[:40]:
+              print(f"  {r['ticker']:<6} {r['action']:<5} {r['transactionDate']} "
+                    f"{r['amountRange']}  {r['asset'][:60]}")
           PY
