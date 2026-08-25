@@ -1250,6 +1250,69 @@ def self_test():
 
 
 # ---------------------------------------------------------------------------
+# OCR 결과 진단 (--dump-ocr)
+# ---------------------------------------------------------------------------
+
+def dump_ocr(lines=60):
+    """캐시된 OCR 텍스트를 보여주고, 파서가 왜 못 읽는지 짚어준다.
+
+    OCR은 성공했는데 거래행이 0건인 경우, 원인은 대개
+    '한 줄에 금액·날짜·거래유형이 모두 있어야 한다'는 파서 가정이
+    OCR의 줄 나눔과 맞지 않아서다. 어느 조건이 몇 줄에서 걸리는지 센다.
+    """
+    if not os.path.isdir(OCR_CACHE_DIR):
+        print(f"OCR 캐시 폴더가 없습니다: {OCR_CACHE_DIR}", file=sys.stderr)
+        print("run_local.bat 을 먼저 실행하세요.", file=sys.stderr)
+        return 2
+
+    files = [os.path.join(OCR_CACHE_DIR, f)
+             for f in os.listdir(OCR_CACHE_DIR) if f.endswith(".txt")]
+    if not files:
+        print(f"OCR 캐시가 비어 있습니다: {OCR_CACHE_DIR}", file=sys.stderr)
+        return 2
+
+    files.sort(key=os.path.getsize, reverse=True)
+    print("=" * 62)
+    print(f" OCR 캐시 {len(files)}건 (큰 순)")
+    print("=" * 62)
+    for f in files:
+        print(f"  {os.path.getsize(f):>9,} bytes  {os.path.basename(f)}")
+
+    target = files[0]
+    with open(target, encoding="utf-8") as fh:
+        text = fh.read()
+
+    rows = parse_ptr_text(text)
+    all_lines = text.splitlines()
+    n_amount = sum(1 for l in all_lines if parse_amount(l))
+    n_date = sum(1 for l in all_lines if DATE_RE.search(l))
+    n_type = sum(1 for l in all_lines
+                 if any(p.search(l) for p, _ in TYPE_PATTERNS))
+    n_all3 = sum(1 for l in all_lines
+                 if parse_amount(l) and DATE_RE.search(l)
+                 and any(p.search(l) for p, _ in TYPE_PATTERNS))
+
+    print(f"\n가장 큰 파일 분석: {os.path.basename(target)}")
+    print(f"  전체 {len(text):,}자 / {len(all_lines):,}줄")
+    print(f"  공시일(OGE RECEIVED) 추출: {parse_received_date(text)}")
+    print("\n  파서 조건별로 걸리는 줄 수:")
+    print(f"    금액 구간이 있는 줄      : {n_amount:>5}")
+    print(f"    날짜가 있는 줄           : {n_date:>5}")
+    print(f"    매수/매도 표현이 있는 줄 : {n_type:>5}")
+    print(f"    → 셋 다 있는 줄(=거래행) : {n_all3:>5}   ★ 이게 0이면 줄 나눔 문제")
+    print(f"  parse_ptr_text 결과: {len(rows)}건")
+
+    print(f"\n===== 앞 {lines}줄 (실제 OCR 원문) =====")
+    for l in all_lines[:lines]:
+        print(l)
+
+    if n_all3 == 0 and (n_amount or n_date):
+        print("\n[진단] 금액·날짜는 있는데 한 줄에 모이지 않았습니다.")
+        print("       OCR이 표의 한 행을 여러 줄로 쪼갠 것으로 보입니다.")
+    return 0
+
+
+# ---------------------------------------------------------------------------
 # 환경 진단 (--doctor)
 # ---------------------------------------------------------------------------
 
@@ -1413,11 +1476,16 @@ def main():
                     help="스캔 PDF OCR 생략(텍스트 레이어가 있는 것만 처리)")
     ap.add_argument("--ocr-dpi", type=int, default=300,
                     help="OCR 렌더링 해상도(기본 300). 낮추면 빠르고 부정확")
+    ap.add_argument("--dump-ocr", action="store_true",
+                    help="캐시된 OCR 텍스트와 파서 실패 지점을 진단")
     ap.add_argument("--doctor", action="store_true",
                     help="무엇이 빠졌는지 진단(설치 확인용)")
     ap.add_argument("--probe-oge", action="store_true",
                     help="OGE 자동 탐색만 실행해 진단 출력(데이터 변경 없음)")
     args = ap.parse_args()
+
+    if args.dump_ocr:
+        return dump_ocr()
 
     if args.doctor:
         return doctor()
