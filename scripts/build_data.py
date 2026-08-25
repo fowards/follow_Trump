@@ -39,6 +39,7 @@ data.json 스키마로 변환합니다. 핵심 차별화 로직 두 가지가 �
 
 import argparse
 import csv
+import html
 import io
 import json
 import re
@@ -419,28 +420,127 @@ def load_sources(path="scripts/sources.json"):
         return {"ptrUrls": [], "discover": []}
 
 
-def discover_ptr_urls(discover_cfg):
-    """공시 목록 페이지에서 새 278-T PDF 링크를 찾아본다.
+OGE_VIEW = "https://extapps2.oge.gov/201/Presiden.nsf/PAS+Index"
+UA = {"User-Agent": "Mozilla/5.0 (compatible; follow-trump/1.0; +https://github.com/fowards/follow_Trump)"}
 
-    페이지 구조가 바뀌면 못 찾을 수 있으므로 실패해도 예외를 던지지 않는다.
-    (가격 갱신은 이것과 무관하게 계속 돌아가야 한다.)
+
+def _get_text(url, timeout=60):
+    req = urllib.request.Request(url, headers=UA)
+    with urllib.request.urlopen(req, timeout=timeout) as r:
+        return r.read().decode("utf-8", "replace")
+
+
+def _strip_tags(x):
+    return re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", x)).strip()
+
+
+def oge_view_entries(base=OGE_VIEW, verbose=False):
+    """PAS Index 뷰에서 (문서 UNID, 표시 텍스트) 목록을 얻는다.
+
+    OGE는 Lotus Domino라 ?ReadViewEntries 가 XML을 준다(파싱하기 가장 안정적).
+    실패하면 일반 HTML 뷰로 폴백한다.
     """
+    attempts = [
+        base + "?ReadViewEntries&Count=2000",
+        base + "?ReadViewEntries",
+        base + "?OpenView&Count=2000",
+        base + "?OpenView",
+    ]
+    for url in attempts:
+        try:
+            body = _get_text(url)
+        except Exception as e:  # noqa: BLE001
+            print(f"  · 뷰 실패 {url}: {e}", file=sys.stderr)
+            continue
+        out = []
+        if "<viewentry" in body:
+            for m in re.finditer(
+                r'<viewentry[^>]*unid="([0-9A-Fa-f]{32})"(.*?)</viewentry>', body, re.S):
+                texts = " ".join(re.findall(r"<text>(.*?)</text>", m.group(2), re.S))
+                out.append((m.group(1), html.unescape(_strip_tags(texts))))
+        if not out:
+            for m in re.finditer(
+                r'href="[^"]*?([0-9A-Fa-f]{32})\?OpenDocument"[^>]*>(.*?)</a>', body, re.S | re.I):
+                out.append((m.group(1), html.unescape(_strip_tags(m.group(2)))))
+        if out:
+            print(f"  · 뷰 OK {url} — 항목 {len(out)}건", file=sys.stderr)
+            if verbose:
+                for u, l in out[:5]:
+                    print(f"      예시: {u} | {l[:80]}", file=sys.stderr)
+            return out
+        print(f"  · 뷰 응답은 받았으나 항목 미검출 {url} (본문 {len(body)}자)", file=sys.stderr)
+        if verbose:
+            print("      본문 앞부분:", body[:400].replace("\n", " "), file=sys.stderr)
+    return []
+
+
+def oge_doc_pdfs(unid, base=OGE_VIEW, verbose=False):
+    """문서 하나를 열어 첨부된 PDF의 $FILE 링크를 뽑는다."""
+    url = f"{base}/{unid}?OpenDocument"
+    try:
+        body = _get_text(url)
+    except Exception as e:  # noqa: BLE001
+        if verbose:
+            print(f"      문서 실패 {unid}: {e}", file=sys.stderr)
+        return []
+    links = re.findall(r'href="([^"]*\$[Ff][Ii][Ll][Ee][^"]*\.pdf)"', body)
+    return [urllib.parse.urljoin(url, l) for l in links]
+
+
+def discover_oge(cfg, verbose=False):
+    """OGE PAS Index에서 대상 인물의 278-T PDF 링크를 자동 수집한다."""
+    cfg = cfg or {}
+    base = cfg.get("viewUrl", OGE_VIEW)
+    filer = re.compile(cfg.get("filerPattern", "trump"), re.I)
+    form = re.compile(cfg.get("formPattern", r"278-?T"), re.I)
+    limit = int(cfg.get("maxDocs", 60))
+
+    entries = oge_view_entries(base, verbose=verbose)
+    if not entries:
+        print("  ! OGE 뷰에서 목록을 얻지 못했습니다.", file=sys.stderr)
+        return []
+
+    hits = [(u, l) for u, l in entries if filer.search(l)]
+    print(f"  · 대상 인물 매칭 {len(hits)}건 / 전체 {len(entries)}건", file=sys.stderr)
+    if verbose:
+        for u, l in hits[:10]:
+            print(f"      매칭: {u} | {l[:90]}", file=sys.stderr)
+
+    pdfs = []
+    for unid, label in hits[:limit]:
+        for link in oge_doc_pdfs(unid, base, verbose=verbose):
+            # 연간보고서(278e/ANNUAL)가 아니라 거래보고서(278-T)만 받는다.
+            if form.search(link) or form.search(label):
+                if link not in pdfs:
+                    pdfs.append(link)
+                    if verbose:
+                        print(f"      PDF: {link}", file=sys.stderr)
+    print(f"· OGE 자동 탐색 결과 278-T PDF {len(pdfs)}건", file=sys.stderr)
+    return pdfs
+
+
+def discover_ptr_urls(cfg):
+    """설정에 따라 새 PTR PDF를 탐색. 실패해도 예외를 던지지 않는다."""
     found = []
-    for cfg in discover_cfg or []:
-        url = cfg.get("listUrl")
-        pat = cfg.get("linkPattern", r'href="([^"]+\.pdf)"')
+    if cfg.get("oge"):
+        try:
+            found += discover_oge(cfg["oge"])
+        except Exception as e:  # noqa: BLE001
+            print(f"  ! OGE 탐색 중 오류: {e}", file=sys.stderr)
+    # 범용 목록 페이지(선택)
+    for c in cfg.get("discover") or []:
+        url = c.get("listUrl")
         if not url:
             continue
         try:
-            html = fetch_bytes(url).decode("utf-8", "replace")
+            body = _get_text(url)
         except Exception as e:  # noqa: BLE001
-            print(f"  ! 목록 페이지 조회 실패 {url}: {e}", file=sys.stderr)
+            print(f"  ! 목록 조회 실패 {url}: {e}", file=sys.stderr)
             continue
-        for m in re.findall(pat, html, flags=re.I):
+        for m in re.findall(c.get("linkPattern", r'href="([^"]+\.pdf)"'), body, flags=re.I):
             link = m if m.startswith("http") else urllib.parse.urljoin(url, m)
             if link not in found:
                 found.append(link)
-    print(f"· 발견된 PTR 후보 {len(found)}건", file=sys.stderr)
     return found
 
 
@@ -567,10 +667,21 @@ def main():
     ap.add_argument("--from-sources", action="store_true",
                     help="scripts/sources.json의 PTR 목록/자동탐색으로 갱신")
     ap.add_argument("--sources", default="scripts/sources.json", help="소스 목록 경로")
+    ap.add_argument("--probe-oge", action="store_true",
+                    help="OGE 자동 탐색만 실행해 진단 출력(데이터 변경 없음)")
     args = ap.parse_args()
 
     if args.self_test:
         return self_test()
+
+    if args.probe_oge:
+        cfg = load_sources(args.sources)
+        print("=== OGE 자동 탐색 진단 ===", file=sys.stderr)
+        urls = discover_oge(cfg.get("oge") or {}, verbose=True)
+        print(f"\n=== 최종 {len(urls)}건 ===", file=sys.stderr)
+        for u in urls:
+            print(u)
+        return 0 if urls else 2
 
     # 1) 새 공시 파싱 (선택) — 기존 수동 보완 내용은 병합으로 보존
     ptrs = list(args.ptr)
