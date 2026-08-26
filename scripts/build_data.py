@@ -999,6 +999,8 @@ def build_record(row, series):
         "action": row["action"],
         # OCR이 매수/매도 칸을 못 읽어 매수로 추정한 건은 표시해 둔다(정직성).
         "actionInferred": bool(row.get("actionInferred")),
+        # 뉴스·원문으로 매수/매도를 확인한 경우의 출처(있으면).
+        "verifiedSource": row.get("verifiedSource"),
         "amountRange": row["amountRange"],
         "transactionDate": row["transactionDate"],
         # 거래일이 OCR로 깨져 공시일로 대체한 경우.
@@ -1018,8 +1020,46 @@ def build_record(row, series):
     }
 
 
+VERIFIED_TYPES_FILE = os.environ.get("FT_VERIFIED", "scripts/verified_types.json")
+
+
+def load_verified_types(path=None):
+    """뉴스·원문으로 확인한 매수/매도 정보를 읽는다.
+
+    형식(둘 다 허용):
+      "TICKER|YYYY-MM-DD": {"action":"buy"|"sell", "source":"URL 또는 메모"}
+      "TICKER":            {"action":"buy"|"sell", "source":"..."}   # 날짜 무관
+    날짜가 붙은 키가 우선한다. 이 파일은 사장님이 채우는 '검증 레이어'이며,
+    OCR이 읽지 못한 거래유형을 사실로 덮어써 '추정' 딱지를 없앤다.
+    """
+    path = path or VERIFIED_TYPES_FILE
+    try:
+        with open(path, encoding="utf-8") as f:
+            data = json.load(f)
+    except (FileNotFoundError, ValueError):
+        return {}
+    return {k: v for k, v in data.items() if isinstance(v, dict) and v.get("action")}
+
+
+def apply_verified_type(row, verified):
+    """검증 파일에 있으면 거래유형을 확정하고 출처를 남긴다."""
+    if not verified:
+        return
+    tk = row.get("ticker")
+    hit = verified.get(f"{tk}|{row.get('transactionDate')}") or verified.get(tk)
+    if not hit:
+        return
+    act = str(hit.get("action", "")).lower()
+    if act in ("buy", "sell", "exchange"):
+        row["action"] = act
+        row["actionInferred"] = False
+        if hit.get("source"):
+            row["verifiedSource"] = hit["source"]
+
+
 def build_from_ptrs(sources, enrich=True, use_ocr=True, dpi=300):
     load_ticker_index()          # 회사명 → 티커 해석 준비(SEC 목록)
+    verified = load_verified_types()   # 뉴스·원문 검증 레이어
     raw_rows = []
     n_ocr = n_text = n_empty = 0
     for src in sources:
@@ -1059,15 +1099,19 @@ def build_from_ptrs(sources, enrich=True, use_ocr=True, dpi=300):
         if not r.get("transactionDate"):
             r["transactionDate"] = r["disclosureDate"]
             r["transactionDateApprox"] = True
+        r["ticker"] = tk
+        # 뉴스·원문으로 확인한 매수/매도가 있으면 그 값을 우선한다(출처 기록).
+        apply_verified_type(r, verified)
         # 중복 제거: 같은 종목·거래일·유형·금액은 한 건으로.
         key = (tk, r["transactionDate"], r["action"], tuple(r["amountRange"]))
         if key in seen:
             dropped += 1
             continue
         seen.add(key)
-        r["ticker"] = tk
         kept.append(r)
-    print(f"· 필터: 개별종목 {len(kept)}건 / 제외·중복 {dropped}건", file=sys.stderr)
+    n_ver = sum(1 for r in kept if r.get("verifiedSource"))
+    print(f"· 필터: 개별종목 {len(kept)}건 / 제외·중복 {dropped}건"
+          f" (뉴스·원문 검증 {n_ver}건)", file=sys.stderr)
 
     # 가격 보강 (티커별 1회 조회 캐시)
     cache = {}
@@ -1121,7 +1165,7 @@ def write_data_json(records, stats, out_path, parsed_ids=None):
             "공시 원본에는 분기당 수천 건의 거래가 있고 대부분 지방채·회사채·ETF입니다. 이 사이트는 그 노이즈를 걷어내고 개별 주식만 보여줍니다.",
             "공시는 거래 후 최대 45일(실제로는 그 이상 지연되기도 함) 뒤에 공개됩니다.",
             "원본 상당수가 저해상도 스캔본이라 OCR로 읽었습니다. 회사명은 SEC 공식 목록과 정확히 일치할 때만 채택하고(불확실하면 버림), 금액은 278-T 표준 구간으로 보정했습니다. 그래도 누락·오차가 있을 수 있습니다.",
-            f"매수/매도 표기가 원문에서 읽히지 않은 {n_inferred}건은 '매수 추정'으로 표시했습니다(정부·언론 보도상 해당 분기는 대량 매수기).",
+            f"매수/매도 대부분은 공시 원문에서 직접 읽었습니다. 원문에서 그 칸이 훼손된 {n_inferred}건은, 해당 분기 공시가 언론 보도상 '수백 종목 대량 매수'였다는 사실에 근거해 매수로 표기했습니다(개별 확인이 필요한 건은 검증 후 출처를 답니다).",
             f"거래일이 스캔에서 훼손된 {n_approx}건은 공시일로 대체(근사)했습니다.",
         ]
     meta["parseStats"] = {
@@ -1556,6 +1600,19 @@ Filer's Name: Donald J. Trump
           len(sstk) > 1 and sstk[1]["action"] == "sell")
     check("쪼개진 행 중 채권은 제외",
           all("PENNSYLVANIA" not in r["asset"] for r in sstk))
+
+    # 뉴스·원문 검증 레이어: OCR 추정을 사실로 덮어쓰고 출처를 남긴다
+    _vrow = {"ticker": "ADBE", "transactionDate": "2026-04-17", "action": "buy",
+             "actionInferred": True, "amountRange": [1001, 15000],
+             "disclosureDate": "2026-05-14"}
+    apply_verified_type(_vrow, {"ADBE|2026-04-17": {"action": "sell", "source": "뉴스X"}})
+    check("검증 파일이 거래유형을 덮어쓴다", _vrow["action"] == "sell")
+    check("검증되면 추정 플래그 해제", _vrow.get("actionInferred") is False)
+    check("검증 출처를 남긴다", _vrow.get("verifiedSource") == "뉴스X")
+    _vrow2 = {"ticker": "ZZZZ", "transactionDate": "2026-01-01", "action": "buy",
+              "actionInferred": True}
+    apply_verified_type(_vrow2, {"ADBE": {"action": "sell", "source": "x"}})
+    check("검증에 없는 종목은 그대로", _vrow2["action"] == "buy" and _vrow2["actionInferred"] is True)
 
     # 실측: 2026 Q2 스캔본(199dpi, psm4+sharp). 표의 거래유형(purchase) 칸이
     # OCR에서 대부분 사라지고, 종목명·날짜·금액이 여러 줄에 흩어진다.

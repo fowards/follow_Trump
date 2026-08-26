@@ -1,0 +1,4 @@
+{
+  "_comment": "뉴스·공시 원문으로 확인한 매수/매도. 여기 적으면 그 값이 OCR 추정을 덮어쓰고 '추정' 딱지가 사라집니다. 키는 'TICKER|YYYY-MM-DD'(그 거래일만) 또는 'TICKER'(그 종목 전체). action은 buy/sell/exchange, source는 근거 URL이나 메모.",
+  "_example": {"action": "sell", "source": "https://example.com/기사"}
+}
