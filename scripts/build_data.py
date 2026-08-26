@@ -450,7 +450,11 @@ def _render_pages(data: bytes, dpi: int, pages=None):
 # 금액 칸이 하나도 안 읽히니 거래를 뽑을 수가 없다. 원인은 파서가 아니라
 # 해상도·전처리다. 아래 전처리들을 실제로 재보고 고르기 위한 장치.
 
-PREP_MODES = ("none", "sharp", "binary", "binary2x")
+PREP_MODES = ("none", "sharp", "binary", "binary2x", "binary3x")
+
+# 확대 후 이미지가 지나치게 커지면 Tesseract가 사실상 멈춘다.
+# 600dpi 페이지를 3배로 키우면 3억 픽셀이라 감당이 안 된다.
+MAX_OCR_PIXELS_SIDE = 6000
 
 
 def preprocess(img, mode: str):
@@ -462,10 +466,16 @@ def preprocess(img, mode: str):
     if mode == "sharp":
         # 대비만 펴고 살짝 선명하게. 원본 해상도 유지.
         return ImageOps.autocontrast(g).filter(ImageFilter.SHARPEN)
-    if mode in ("binary", "binary2x"):
-        if mode == "binary2x":
-            # 작은 숫자는 픽셀이 모자라 뭉개진다. 2배로 키운 뒤 이진화한다.
-            g = g.resize((g.width * 2, g.height * 2), Image.LANCZOS)
+    if mode.startswith("binary"):
+        factor = {"binary": 1, "binary2x": 2, "binary3x": 3}[mode]
+        if factor > 1:
+            # 작은 숫자는 픽셀이 모자라 뭉개진다. 키운 뒤 이진화한다.
+            # 다만 상한을 둬서 거대한 이미지로 멈추는 일이 없게 한다.
+            cap = MAX_OCR_PIXELS_SIDE / max(g.width, g.height)
+            factor = max(1.0, min(float(factor), cap))
+            if factor > 1.01:
+                g = g.resize((int(g.width * factor), int(g.height * factor)),
+                             Image.LANCZOS)
         g = ImageOps.autocontrast(g)
         thr = _otsu(g)
         return g.point(lambda v: 255 if v > thr else 0, mode="L")
@@ -1596,6 +1606,32 @@ def dump_ocr(lines=60):
 # OCR 설정 실측 (--ocr-tune)
 # ---------------------------------------------------------------------------
 
+def native_scan_dpi(data: bytes, page: int):
+    """스캔 이미지의 실제 해상도(dpi)를 재본다.
+
+    이게 결정적이다. PDF에 200dpi로 스캔된 이미지가 박혀 있으면, 600dpi로
+    렌더링해도 없는 정보가 생기지는 않는다(보간일 뿐). 그런 문서는
+    해상도를 올려도 소용없고 다른 수를 찾아야 한다.
+    반대로 원본이 300dpi 이상인데 못 읽는 거라면 전처리로 개선 여지가 있다.
+    """
+    try:
+        from pypdf import PdfReader
+        reader = PdfReader(io.BytesIO(data))
+        pg = reader.pages[page - 1]
+        box = pg.mediabox
+        pt_w = float(box.width) or 612.0
+        pt_h = float(box.height) or 792.0
+        best = None
+        for im in pg.images:
+            w, h = im.image.size
+            dpi = max(w / (pt_w / 72.0), h / (pt_h / 72.0))
+            if best is None or dpi > best[0]:
+                best = (dpi, w, h, im.image.mode)
+        return best
+    except Exception:  # noqa: BLE001
+        return None
+
+
 def _score_ocr(text):
     """OCR 결과가 '거래표로서' 쓸만한지 점수화한다.
 
@@ -1618,25 +1654,29 @@ def _score_ocr(text):
 
 
 def ocr_tune(pdf=None, page=None, dpis=(300, 400, 600),
-             preps=("none", "sharp", "binary2x"), psms=("6", "4")):
+             preps=("none", "sharp", "binary2x", "binary3x"), psms=("6", "4")):
     """한 페이지를 여러 설정으로 OCR해 보고 어느 조합이 제일 나은지 표로 보여준다.
 
     추측 대신 실측으로 고르기 위한 도구다. 페이지 하나만 쓰기 때문에
     조합당 수 초~수십 초면 끝난다.
     """
     if pdf is None:
-        if not os.path.isdir(PDF_CACHE_DIR):
-            print(f"PDF 캐시가 없습니다: {PDF_CACHE_DIR}", file=sys.stderr)
-            print("run_local.bat 을 한 번 돌려 PDF를 받아두거나,", file=sys.stderr)
-            print("  python scripts/build_data.py --ocr-tune --pdf <주소나 파일경로>",
-                  file=sys.stderr)
-            return 2
-        cands = [os.path.join(PDF_CACHE_DIR, f)
-                 for f in os.listdir(PDF_CACHE_DIR) if f.endswith(".pdf")]
-        if not cands:
-            print(f"PDF 캐시가 비어 있습니다: {PDF_CACHE_DIR}", file=sys.stderr)
-            return 2
-        pdf = max(cands, key=os.path.getsize)   # 큰 문서 = 스캔본일 확률이 높다
+        cands = []
+        if os.path.isdir(PDF_CACHE_DIR):
+            cands = [os.path.join(PDF_CACHE_DIR, f)
+                     for f in os.listdir(PDF_CACHE_DIR) if f.endswith(".pdf")]
+        if cands:
+            pdf = max(cands, key=os.path.getsize)   # 큰 문서 = 스캔본일 확률이 높다
+        else:
+            # 캐시가 비었으면 목록에서 가장 큰 공시 하나만 받아 온다.
+            # 전체를 받을 필요는 없다. 실험은 한 문서 한 쪽이면 충분하다.
+            print("PDF 캐시가 비어 있어 공시 목록에서 하나만 받아옵니다.")
+            pdf = _pick_largest_ptr()
+            if pdf is None:
+                print("공시를 찾지 못했습니다. 주소를 직접 지정하세요:", file=sys.stderr)
+                print("  python scripts/build_data.py --ocr-tune --pdf <주소나 파일경로>",
+                      file=sys.stderr)
+                return 2
 
     print(f"대상 PDF: {pdf}")
     data = fetch_bytes(pdf)
@@ -1648,7 +1688,27 @@ def ocr_tune(pdf=None, page=None, dpis=(300, 400, 600),
         if page is None:
             print("  거래표가 있는 쪽을 못 찾아 3쪽으로 진행합니다.", file=sys.stderr)
             page = 3
-    print(f"  실험 대상: {page}쪽 (1부터 셈)\n")
+    print(f"  실험 대상: {page}쪽 (1부터 셈)")
+
+    nat = native_scan_dpi(data, page)
+    if nat:
+        ndpi, w, h, mode = nat
+        print(f"  원본 스캔 해상도: 약 {ndpi:.0f}dpi ({w}x{h}, {mode})")
+        if ndpi < 250:
+            print("  ⚠ 원본이 250dpi 미만입니다. 렌더링 dpi를 올려도 없는 정보는")
+            print("    생기지 않습니다(보간일 뿐). 전처리 쪽에서 답이 나와야 합니다.")
+        # 원본의 3배를 넘겨 렌더링하는 건 계산만 늘고 얻는 게 없다.
+        # 다만 Tesseract는 어느 정도의 확대는 좋아하므로 여유를 둔다.
+        cap = max(ndpi * 3, min(dpis))
+        usable = [d for d in dpis if d <= cap]
+        if len(usable) < 2:
+            usable = sorted(dpis)[:2]
+        if len(usable) < len(dpis):
+            dpis = tuple(usable)
+            print(f"  → 시험할 dpi를 {dpis}로 줄입니다(원본의 3배까지).")
+    else:
+        print("  원본 스캔 해상도: 판독 실패")
+    print()
 
     idx = {page - 1}
     print(f"{'dpi':>5} {'psm':>4} {'전처리':<10} "
@@ -1690,6 +1750,31 @@ def ocr_tune(pdf=None, page=None, dpis=(300, 400, 600),
         for l in [l for l in txt.splitlines() if l.strip()][:25]:
             print(l)
     return 0
+
+
+def _pick_largest_ptr():
+    """공시 목록에서 가장 큰 PDF 주소를 고른다.
+
+    큰 문서 = 스캔본(이미지)일 확률이 높고, 개별 주식 거래도 거기 들어 있다.
+    크기는 HEAD 요청으로만 확인하므로 실제로 받는 건 한 건뿐이다.
+    """
+    urls = discover_ptr_urls(load_sources())
+    if not urls:
+        return None
+    print(f"  공시 {len(urls)}건 발견 — 크기 확인 중")
+    best, best_n = None, -1
+    for u in urls:
+        try:
+            req = urllib.request.Request(encode_url(u), headers=UA, method="HEAD")
+            with urllib.request.urlopen(req, timeout=30) as r:
+                n = int(r.headers.get("Content-Length") or 0)
+        except Exception:  # noqa: BLE001
+            continue
+        if n > best_n:
+            best, best_n = u, n
+    if best:
+        print(f"  가장 큰 공시: {best_n:,} bytes")
+    return best
 
 
 def _find_table_page(data: bytes, total: int):
