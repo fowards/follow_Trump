@@ -346,11 +346,38 @@ def _norm_amount(x):
     return int(d)
 
 
+# 278-T 금액 구간은 정해진 값만 쓴다. OCR이 끝자리를 틀리면($15,003) 가장
+# 가까운 표준 구간으로 스냅해 교정한다. (하한, 상한) 쌍.
+AMOUNT_BRACKETS = [
+    (1, 1000), (1001, 15000), (15001, 50000), (50001, 100000),
+    (100001, 250000), (250001, 500000), (500001, 1000000),
+    (1000001, 5000000), (5000001, 25000000),
+    (25000001, 50000000), (50000001, 100000000),
+]
+
+
+def snap_amount_bracket(lo, hi):
+    """OCR로 흐트러진 (하한,상한)을 표준 278-T 구간으로 스냅한다.
+
+    각 표준 구간과의 상대오차 합이 가장 작은 것을 고른다. 오차가 너무 크면
+    (표준에 없는 값) 원래 값을 그대로 둔다.
+    """
+    best, berr = None, None
+    for blo, bhi in AMOUNT_BRACKETS:
+        err = abs(lo - blo) / blo + abs(hi - bhi) / bhi
+        if berr is None or err < berr:
+            best, berr = (blo, bhi), err
+    # 상대오차 합 0.15 이내일 때만 스냅(끝자리 몇 개 오차 수준)
+    if best and berr is not None and berr <= 0.15:
+        return [best[0], best[1]]
+    return [lo, hi]
+
+
 def parse_amount(text: str):
     for m in AMOUNT_RE.finditer(text):
         lo, hi = _norm_amount(m.group(1)), _norm_amount(m.group(2))
         if lo is not None and hi is not None and 0 < lo < hi:
-            return [lo, hi]
+            return snap_amount_bracket(lo, hi)
     return None
 
 
