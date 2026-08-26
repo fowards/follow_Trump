@@ -990,15 +990,19 @@ def build_record(row, series):
         tracking = round(((price_latest - price_disc) / price_disc) * 100, 1)
     price_history = history_since(series, disc) if series else []
     return {
-        "id": f"{ticker.lower()}-{row['transactionDate']}",
+        "id": f"{ticker.lower()}-{row.get('transactionDate') or disc}",
         "ticker": ticker,
         "companyKo": TICKER_NAME_KO.get(ticker, ticker),
         "companyEn": row["asset"][:60],
         "sector": TICKER_SECTOR.get(ticker, "기타"),
         "instrumentType": "stock",
         "action": row["action"],
+        # OCR이 매수/매도 칸을 못 읽어 매수로 추정한 건은 표시해 둔다(정직성).
+        "actionInferred": bool(row.get("actionInferred")),
         "amountRange": row["amountRange"],
         "transactionDate": row["transactionDate"],
+        # 거래일이 OCR로 깨져 공시일로 대체한 경우.
+        "transactionDateApprox": bool(row.get("transactionDateApprox")),
         "disclosureDate": disc,
         "priceAtTransaction": price_tx,
         "priceAtDisclosure": price_disc,
@@ -1010,7 +1014,7 @@ def build_record(row, series):
         "catalyst": "",
         "closed": False,
         "closeDate": None,
-        "note": "OGE 278-T 공시 자동 파싱. 촉매/매도 정보는 수동 보완 권장.",
+        "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장.",
     }
 
 
@@ -1042,6 +1046,7 @@ def build_from_ptrs(sources, enrich=True, use_ocr=True, dpi=300):
     # 개별 종목만 남기고 티커 부여
     kept = []
     dropped = 0
+    seen = set()
     for r in raw_rows:
         if not is_individual_stock(r["asset"]):
             dropped += 1
@@ -1050,9 +1055,19 @@ def build_from_ptrs(sources, enrich=True, use_ocr=True, dpi=300):
         if not tk:
             dropped += 1
             continue
+        # 거래일이 OCR로 깨져 없으면 공시일로 대체하고 근사임을 표시한다.
+        if not r.get("transactionDate"):
+            r["transactionDate"] = r["disclosureDate"]
+            r["transactionDateApprox"] = True
+        # 중복 제거: 같은 종목·거래일·유형·금액은 한 건으로.
+        key = (tk, r["transactionDate"], r["action"], tuple(r["amountRange"]))
+        if key in seen:
+            dropped += 1
+            continue
+        seen.add(key)
         r["ticker"] = tk
         kept.append(r)
-    print(f"· 필터: 개별종목 {len(kept)}건 / 제외(ETF·채권·미식별) {dropped}건", file=sys.stderr)
+    print(f"· 필터: 개별종목 {len(kept)}건 / 제외·중복 {dropped}건", file=sys.stderr)
 
     # 가격 보강 (티커별 1회 조회 캐시)
     cache = {}
@@ -1096,6 +1111,19 @@ def write_data_json(records, stats, out_path, parsed_ids=None):
 
     n_parsed = len(parsed_ids or [])
     n_manual = len(records) - n_parsed
+
+    # 자동 추출(OCR) 데이터에는 그에 맞는 한계를 정직하게 명시한다.
+    if n_parsed:
+        n_inferred = sum(1 for r in records if r.get("actionInferred"))
+        n_approx = sum(1 for r in records if r.get("transactionDateApprox"))
+        meta["caveats"] = [
+            "백악관은 트럼프의 보유 자산이 블라인드 트러스트로 관리되며 본인은 개별 종목을 모른다고 주장합니다.",
+            "공시 원본에는 분기당 수천 건의 거래가 있고 대부분 지방채·회사채·ETF입니다. 이 사이트는 그 노이즈를 걷어내고 개별 주식만 보여줍니다.",
+            "공시는 거래 후 최대 45일(실제로는 그 이상 지연되기도 함) 뒤에 공개됩니다.",
+            "원본 상당수가 저해상도 스캔본이라 OCR로 읽었습니다. 회사명은 SEC 공식 목록과 정확히 일치할 때만 채택하고(불확실하면 버림), 금액은 278-T 표준 구간으로 보정했습니다. 그래도 누락·오차가 있을 수 있습니다.",
+            f"매수/매도 표기가 원문에서 읽히지 않은 {n_inferred}건은 '매수 추정'으로 표시했습니다(정부·언론 보도상 해당 분기는 대량 매수기).",
+            f"거래일이 스캔에서 훼손된 {n_approx}건은 공시일로 대체(근사)했습니다.",
+        ]
     meta["parseStats"] = {
         "documents": stats.get("docs"),
         "readByText": stats.get("text"),
