@@ -235,6 +235,44 @@ def load_ticker_index(path=None, fetch=True, quiet=False):
     return index
 
 
+def _find_companies(tokens):
+    """토큰 열에서 SEC 회사명과 일치하는 구간을 모두 찾아 티커 목록을 준다.
+
+    OCR이 앞뒤에 잡음을 붙이므로("Donald J Trump AMGEN INC ar") 회사명이
+    맨 앞에 있으리라 가정하지 않고, 가장 긴 것부터 훑으며 이어지는 토큰이
+    회사명이면 티커를 거둔다.
+    """
+    found = []
+    i, n = 0, len(tokens)
+    while i < n:
+        hit = None
+        for k in range(min(6, n - i), 0, -1):
+            tk = _SEC_INDEX.get(" ".join(tokens[i:i + k]))
+            if tk:
+                hit = (tk, k)
+                break
+        if hit:
+            found.append(hit[0])
+            i += hit[1]
+        else:
+            i += 1
+    return found
+
+
+def _resolve_sec_ticker(asset_name: str):
+    """SEC 목록으로 티커를 해석하되, OCR 잡음·행 오염에 견디게 한다.
+
+    행에서 발견되는 '서로 다른' 회사가 하나뿐일 때만 그 티커를 쓴다.
+    둘 이상이면 두 종목이 한 줄에 섞인 것이라 금액이 어느 쪽 것인지 알 수
+    없으므로 버린다(틀린 데이터를 내느니 버리는 게 낫다 — 정직성 우선).
+    """
+    toks = _normalize_company(asset_name).split()
+    tickers = set(_find_companies(toks))
+    if len(tickers) == 1:
+        return next(iter(tickers))
+    return None
+
+
 def extract_ticker(asset_name: str) -> str | None:
     """자산명에서 티커를 뽑는다.
 
@@ -251,9 +289,7 @@ def extract_ticker(asset_name: str) -> str | None:
             return tk
     # SEC 공식 목록으로 회사명 → 티커 해석 (인덱스가 로드된 경우에만)
     if _SEC_INDEX:
-        tk = _SEC_INDEX.get(_normalize_company(asset_name))
-        if tk:
-            return tk
+        return _resolve_sec_ticker(asset_name)
     # 마지막 수단: 이름 안에 티커가 그대로 박혀 있는 경우(일부 278-T 형식).
     # 단 SEC 인덱스가 로드됐다면, 못 찾은 이름을 대문자 조각으로 '추측'하지
     # 않는다 — 그러면 ADOBE→"ADOBE"처럼 가짜 티커가 생겨 잘못된 데이터가 된다.
@@ -1348,6 +1384,29 @@ def self_test():
     # 티커 추출
     check("괄호 티커 추출", extract_ticker("Comcast Corporation (CMCSA)") == "CMCSA")
     check("이름맵 티커 추출", extract_ticker("Moderna, Inc.") == "MRNA")
+
+    # SEC 목록 기반 티커 해석(잡음·오염 견디기). 임시 인덱스로 검증 후 복원.
+    global _SEC_INDEX
+    _saved_idx = _SEC_INDEX
+    try:
+        _mini = {"Microsoft Corp": "MSFT", "Amgen Inc": "AMGN",
+                 "Bank of America Corp": "BAC", "Goldman Sachs Group Inc": "GS",
+                 "Republic Services Inc": "RSG", "Chipotle Mexican Grill Inc": "CMG",
+                 "Deere & Co": "DE", "Packaging Corp of America": "PKG"}
+        _SEC_INDEX = {" ".join(_normalize_company(k).split()): v
+                      for k, v in _mini.items()}
+        check("SEC 해석: 깨끗한 이름", extract_ticker("MICROSOFT CORP") == "MSFT")
+        check("SEC 해석: 뒤 잡음 무시",
+              extract_ticker("Donald J Trump AMGEN INC ar 04 of 34") == "AMGN")
+        check("SEC 해석: 앞 잡음 무시(중간의 회사명)",
+              extract_ticker("a a wlio ton Goldman Sachs Group Inc No") == "GS")
+        check("SEC 해석: 두 회사 섞인 행은 버림",
+              extract_ticker("REPUBLIC SERVICES INC 71 CHIPOTLE MEXICAN GRILL INC")
+              is None)
+        check("SEC 해석: 미등록 회사는 버림(추측 안 함)",
+              extract_ticker("Space Expl Technologies Corp") is None)
+    finally:
+        _SEC_INDEX = _saved_idx
 
     # 실제 OCR 텍스트 파싱
     rows = parse_ptr_text(SAMPLE_PTR_TEXT)
