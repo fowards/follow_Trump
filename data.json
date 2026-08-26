@@ -2,14 +2,7163 @@
   "meta": {
     "subject": "Donald J. Trump",
     "subjectKo": "도널드 트럼프",
-    "dataSource": "pending-auto-extraction",
-    "note": "run_local.bat 실행 시 OGE 278-T 공시(스캔본 OCR 포함)에서 개별 주식을 자동 추출해 채웁니다. 이전의 손입력 예시 3건은 원본으로 검증되지 않아 제거했습니다.",
+    "dataSource": "oge-278t",
+    "note": "공시 17건에서 원시 1061건을 읽어 개별 종목 94건을 자동 추출했습니다(ETF·채권 등 967건 제외). 가격은 실제 시세입니다.",
     "caveats": [
       "백악관은 트럼프의 보유 자산이 블라인드 트러스트로 관리되며 본인은 개별 종목을 모른다고 주장합니다.",
-      "공시 원본에는 분기당 수천 건의 거래가 있고 대부분 지방채·회사채·ETF입니다. 이 사이트는 개별 주식만 보여줍니다.",
-      "공시는 거래 후 최대 45일(실제로는 그 이상) 뒤에 공개됩니다."
+      "공시 원본에는 분기당 수천 건의 거래가 있고 대부분 지방채·회사채·ETF입니다. 이 사이트는 그 노이즈를 걷어내고 개별 주식만 보여줍니다.",
+      "공시는 거래 후 최대 45일(실제로는 그 이상 지연되기도 함) 뒤에 공개됩니다.",
+      "원본 상당수가 저해상도 스캔본이라 OCR로 읽었습니다. 회사명은 SEC 공식 목록과 정확히 일치할 때만 채택하고(불확실하면 버림), 금액은 278-T 표준 구간으로 보정했습니다. 그래도 누락·오차가 있을 수 있습니다.",
+      "매수/매도 대부분은 공시 원문에서 직접 읽었습니다. 원문에서 그 칸이 훼손된 30건은, 해당 분기 공시가 언론 보도상 '수백 종목 대량 매수'였다는 사실에 근거해 매수로 표기했습니다(개별 확인이 필요한 건은 검증 후 출처를 답니다).",
+      "거래일이 스캔에서 훼손된 19건은 공시일로 대체(근사)했습니다."
     ],
-    "lastUpdated": "2026-08-26"
+    "lastUpdated": "2026-08-26",
+    "parseStats": {
+      "documents": 17,
+      "readByText": 11,
+      "readByOcr": 6,
+      "unreadable": 0,
+      "rawRows": 1061,
+      "individualStocks": 94,
+      "filteredOut": 967,
+      "ranAt": "2026-08-26"
+    }
   },
-  "trades": []
+  "trades": [
+    {
+      "id": "gs-2026-08-13",
+      "ticker": "GS",
+      "companyKo": "GS",
+      "companyEn": "Goldman Sachs Group Inc ae eee ee",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": true,
+      "verifiedSource": null,
+      "amountRange": [
+        1001,
+        15000
+      ],
+      "transactionDate": "2026-08-13",
+      "transactionDateApprox": true,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 1042.63,
+      "priceAtDisclosure": 1042.63,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 1058.88,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": 1.6,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          1042.63
+        ],
+        [
+          "2026-08-14",
+          1039.42
+        ],
+        [
+          "2026-08-17",
+          1051.31
+        ],
+        [
+          "2026-08-18",
+          1040.47
+        ],
+        [
+          "2026-08-19",
+          1021.65
+        ],
+        [
+          "2026-08-20",
+          1001.95
+        ],
+        [
+          "2026-08-21",
+          1039.28
+        ],
+        [
+          "2026-08-24",
+          1036.28
+        ],
+        [
+          "2026-08-25",
+          1058.88
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "cat-2026-06-23",
+      "ticker": "CAT",
+      "companyKo": "CAT",
+      "companyEn": "a a wlio ton Caterpillar Inc No",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": false,
+      "verifiedSource": null,
+      "amountRange": [
+        15001,
+        50000
+      ],
+      "transactionDate": "2026-06-23",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 984.24,
+      "priceAtDisclosure": 854.6,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 811.29,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": -5.1,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          854.6
+        ],
+        [
+          "2026-08-14",
+          856.57
+        ],
+        [
+          "2026-08-17",
+          881.65
+        ],
+        [
+          "2026-08-18",
+          840.87
+        ],
+        [
+          "2026-08-19",
+          816.15
+        ],
+        [
+          "2026-08-20",
+          815.39
+        ],
+        [
+          "2026-08-21",
+          827.9
+        ],
+        [
+          "2026-08-24",
+          811.02
+        ],
+        [
+          "2026-08-25",
+          811.29
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "spgi-2026-06-23",
+      "ticker": "SPGI",
+      "companyKo": "SPGI",
+      "companyEn": "Sal S&p Global Inc No",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": false,
+      "verifiedSource": null,
+      "amountRange": [
+        1001,
+        15000
+      ],
+      "transactionDate": "2026-06-23",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 392.6139,
+      "priceAtDisclosure": 422.67,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 432.99,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": 2.4,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          422.67
+        ],
+        [
+          "2026-08-14",
+          418.8
+        ],
+        [
+          "2026-08-17",
+          410.53
+        ],
+        [
+          "2026-08-18",
+          418.04
+        ],
+        [
+          "2026-08-19",
+          426.66
+        ],
+        [
+          "2026-08-20",
+          432.16
+        ],
+        [
+          "2026-08-21",
+          431.29
+        ],
+        [
+          "2026-08-24",
+          435.42
+        ],
+        [
+          "2026-08-25",
+          432.99
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "amgn-2026-06-12",
+      "ticker": "AMGN",
+      "companyKo": "AMGN",
+      "companyEn": "AMGEN INC ar",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": false,
+      "verifiedSource": null,
+      "amountRange": [
+        15001,
+        50000
+      ],
+      "transactionDate": "2026-06-12",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 355.2,
+      "priceAtDisclosure": 417.84,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 442.24,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": 5.8,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          417.84
+        ],
+        [
+          "2026-08-14",
+          415.21
+        ],
+        [
+          "2026-08-17",
+          419.38
+        ],
+        [
+          "2026-08-18",
+          425.28
+        ],
+        [
+          "2026-08-19",
+          442.36
+        ],
+        [
+          "2026-08-20",
+          433.73
+        ],
+        [
+          "2026-08-21",
+          439.33
+        ],
+        [
+          "2026-08-24",
+          443.84
+        ],
+        [
+          "2026-08-25",
+          442.24
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "gd-2026-06-12",
+      "ticker": "GD",
+      "companyKo": "GD",
+      "companyEn": "GENERAL DYNAMICS CORP",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": false,
+      "verifiedSource": null,
+      "amountRange": [
+        15001,
+        50000
+      ],
+      "transactionDate": "2026-06-12",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 360.22,
+      "priceAtDisclosure": 392.96,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 376.58,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": -4.2,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          392.96
+        ],
+        [
+          "2026-08-14",
+          395.78
+        ],
+        [
+          "2026-08-17",
+          391.14
+        ],
+        [
+          "2026-08-18",
+          393.48
+        ],
+        [
+          "2026-08-19",
+          392.34
+        ],
+        [
+          "2026-08-20",
+          386.07
+        ],
+        [
+          "2026-08-21",
+          384.29
+        ],
+        [
+          "2026-08-24",
+          383.77
+        ],
+        [
+          "2026-08-25",
+          376.58
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "msft-2026-06-12",
+      "ticker": "MSFT",
+      "companyKo": "마이크로소프트",
+      "companyEn": "MICROSOFT CORP",
+      "sector": "소프트웨어",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": false,
+      "verifiedSource": null,
+      "amountRange": [
+        15001,
+        50000
+      ],
+      "transactionDate": "2026-06-12",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 390.74,
+      "priceAtDisclosure": 496.88,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 491.71,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": -1.0,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          496.88
+        ],
+        [
+          "2026-08-14",
+          495.4
+        ],
+        [
+          "2026-08-17",
+          480.35
+        ],
+        [
+          "2026-08-18",
+          481.63
+        ],
+        [
+          "2026-08-19",
+          484.31
+        ],
+        [
+          "2026-08-20",
+          481.15
+        ],
+        [
+          "2026-08-21",
+          483.24
+        ],
+        [
+          "2026-08-24",
+          487.31
+        ],
+        [
+          "2026-08-25",
+          491.71
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "pypl-2026-06-12",
+      "ticker": "PYPL",
+      "companyKo": "PYPL",
+      "companyEn": "PAYPAL HOLDINGS INC",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": false,
+      "verifiedSource": null,
+      "amountRange": [
+        15001,
+        50000
+      ],
+      "transactionDate": "2026-06-12",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 41.53,
+      "priceAtDisclosure": 60.59,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 62.27,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": 2.8,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          60.59
+        ],
+        [
+          "2026-08-14",
+          61.66
+        ],
+        [
+          "2026-08-17",
+          60.47
+        ],
+        [
+          "2026-08-18",
+          60.43
+        ],
+        [
+          "2026-08-19",
+          61.25
+        ],
+        [
+          "2026-08-20",
+          62.3
+        ],
+        [
+          "2026-08-21",
+          61.55
+        ],
+        [
+          "2026-08-24",
+          61.68
+        ],
+        [
+          "2026-08-25",
+          62.27
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "nrg-2026-06-12",
+      "ticker": "NRG",
+      "companyKo": "NRG",
+      "companyEn": "are A NRG ENERGY INC",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": true,
+      "verifiedSource": null,
+      "amountRange": [
+        15001,
+        50000
+      ],
+      "transactionDate": "2026-06-12",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 125.47,
+      "priceAtDisclosure": 119.75,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 113.61,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": -5.1,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          119.75
+        ],
+        [
+          "2026-08-14",
+          126.24
+        ],
+        [
+          "2026-08-17",
+          122.37
+        ],
+        [
+          "2026-08-18",
+          115.56
+        ],
+        [
+          "2026-08-19",
+          120.58
+        ],
+        [
+          "2026-08-20",
+          115.36
+        ],
+        [
+          "2026-08-21",
+          113.11
+        ],
+        [
+          "2026-08-24",
+          111.78
+        ],
+        [
+          "2026-08-25",
+          113.61
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "fe-2026-06-12",
+      "ticker": "FE",
+      "companyKo": "FE",
+      "companyEn": "FIRSTENERGY CORP",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": false,
+      "verifiedSource": null,
+      "amountRange": [
+        15001,
+        50000
+      ],
+      "transactionDate": "2026-06-12",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 47.03,
+      "priceAtDisclosure": 46.84,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 46.62,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": -0.5,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          46.84
+        ],
+        [
+          "2026-08-14",
+          47.41
+        ],
+        [
+          "2026-08-17",
+          47.42
+        ],
+        [
+          "2026-08-18",
+          47.26
+        ],
+        [
+          "2026-08-19",
+          47.25
+        ],
+        [
+          "2026-08-20",
+          47.18
+        ],
+        [
+          "2026-08-21",
+          45.96
+        ],
+        [
+          "2026-08-24",
+          46.57
+        ],
+        [
+          "2026-08-25",
+          46.62
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "sw-2026-06-12",
+      "ticker": "SW",
+      "companyKo": "SW",
+      "companyEn": "SMURFIT WESTROCK PL",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": false,
+      "verifiedSource": null,
+      "amountRange": [
+        15001,
+        50000
+      ],
+      "transactionDate": "2026-06-12",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 43.32,
+      "priceAtDisclosure": 50.02,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 49.43,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": -1.2,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          50.02
+        ],
+        [
+          "2026-08-14",
+          49.25
+        ],
+        [
+          "2026-08-17",
+          47.81
+        ],
+        [
+          "2026-08-18",
+          47.3
+        ],
+        [
+          "2026-08-19",
+          48.71
+        ],
+        [
+          "2026-08-20",
+          48.19
+        ],
+        [
+          "2026-08-21",
+          49.39
+        ],
+        [
+          "2026-08-24",
+          48.69
+        ],
+        [
+          "2026-08-25",
+          49.43
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "cms-2026-06-12",
+      "ticker": "CMS",
+      "companyKo": "CMS",
+      "companyEn": "CMS ENERGY CORP",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": false,
+      "verifiedSource": null,
+      "amountRange": [
+        15001,
+        50000
+      ],
+      "transactionDate": "2026-06-12",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 73.57,
+      "priceAtDisclosure": 70.51,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 68.74,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": -2.5,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          70.51
+        ],
+        [
+          "2026-08-14",
+          71.11
+        ],
+        [
+          "2026-08-17",
+          71.4
+        ],
+        [
+          "2026-08-18",
+          71.06
+        ],
+        [
+          "2026-08-19",
+          70.61
+        ],
+        [
+          "2026-08-20",
+          69.83
+        ],
+        [
+          "2026-08-21",
+          68.27
+        ],
+        [
+          "2026-08-24",
+          68.42
+        ],
+        [
+          "2026-08-25",
+          68.74
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "tmus-2026-06-12",
+      "ticker": "TMUS",
+      "companyKo": "TMUS",
+      "companyEn": "T MOBILE US INC",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": false,
+      "verifiedSource": null,
+      "amountRange": [
+        15001,
+        50000
+      ],
+      "transactionDate": "2026-06-12",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 189.1,
+      "priceAtDisclosure": 183.38,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 181.61,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": -1.0,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          183.38
+        ],
+        [
+          "2026-08-14",
+          182.61
+        ],
+        [
+          "2026-08-17",
+          180.12
+        ],
+        [
+          "2026-08-18",
+          182.75
+        ],
+        [
+          "2026-08-19",
+          182.36
+        ],
+        [
+          "2026-08-20",
+          181.22
+        ],
+        [
+          "2026-08-21",
+          183.04
+        ],
+        [
+          "2026-08-24",
+          182.62
+        ],
+        [
+          "2026-08-25",
+          181.61
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "lnt-2026-06-12",
+      "ticker": "LNT",
+      "companyKo": "LNT",
+      "companyEn": "ALLIANT ENERGY CORPORATION",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": true,
+      "verifiedSource": null,
+      "amountRange": [
+        15001,
+        50000
+      ],
+      "transactionDate": "2026-06-12",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 73.11,
+      "priceAtDisclosure": 70.2,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 68.34,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": -2.6,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          70.2
+        ],
+        [
+          "2026-08-14",
+          70.6
+        ],
+        [
+          "2026-08-17",
+          70.35
+        ],
+        [
+          "2026-08-18",
+          69.98
+        ],
+        [
+          "2026-08-19",
+          70.15
+        ],
+        [
+          "2026-08-20",
+          69.46
+        ],
+        [
+          "2026-08-21",
+          67.86
+        ],
+        [
+          "2026-08-24",
+          68.42
+        ],
+        [
+          "2026-08-25",
+          68.34
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "msi-2026-06-12",
+      "ticker": "MSI",
+      "companyKo": "MSI",
+      "companyEn": "MOTOROLA SOLUTIONS INC 2",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": true,
+      "verifiedSource": null,
+      "amountRange": [
+        1001,
+        15000
+      ],
+      "transactionDate": "2026-06-12",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 412.25,
+      "priceAtDisclosure": 465.04,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 485.39,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": 4.4,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          465.04
+        ],
+        [
+          "2026-08-14",
+          466.51
+        ],
+        [
+          "2026-08-17",
+          457.08
+        ],
+        [
+          "2026-08-18",
+          469.5
+        ],
+        [
+          "2026-08-19",
+          480.84
+        ],
+        [
+          "2026-08-20",
+          473.63
+        ],
+        [
+          "2026-08-21",
+          480.47
+        ],
+        [
+          "2026-08-24",
+          481.52
+        ],
+        [
+          "2026-08-25",
+          485.39
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "hig-2026-06-12",
+      "ticker": "HIG",
+      "companyKo": "HIG",
+      "companyEn": "HARTFORD INSURANCE GROUP INC",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "sell",
+      "actionInferred": false,
+      "verifiedSource": null,
+      "amountRange": [
+        50001,
+        100000
+      ],
+      "transactionDate": "2026-06-12",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 129.62,
+      "priceAtDisclosure": 137.81,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 138.22,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": 0.3,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          137.81
+        ],
+        [
+          "2026-08-14",
+          138.02
+        ],
+        [
+          "2026-08-17",
+          136.71
+        ],
+        [
+          "2026-08-18",
+          138.96
+        ],
+        [
+          "2026-08-19",
+          137.53
+        ],
+        [
+          "2026-08-20",
+          137.12
+        ],
+        [
+          "2026-08-21",
+          136.1
+        ],
+        [
+          "2026-08-24",
+          138.98
+        ],
+        [
+          "2026-08-25",
+          138.22
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "trv-2026-06-12",
+      "ticker": "TRV",
+      "companyKo": "TRV",
+      "companyEn": "THE TRAVELERS COMPANIES INC $",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "sell",
+      "actionInferred": false,
+      "verifiedSource": null,
+      "amountRange": [
+        1,
+        100000
+      ],
+      "transactionDate": "2026-06-12",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 304.46,
+      "priceAtDisclosure": 370.0,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 369.66,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": -0.1,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          370.0
+        ],
+        [
+          "2026-08-14",
+          370.36
+        ],
+        [
+          "2026-08-17",
+          364.51
+        ],
+        [
+          "2026-08-18",
+          367.93
+        ],
+        [
+          "2026-08-19",
+          362.22
+        ],
+        [
+          "2026-08-20",
+          364.49
+        ],
+        [
+          "2026-08-21",
+          363.58
+        ],
+        [
+          "2026-08-24",
+          370.55
+        ],
+        [
+          "2026-08-25",
+          369.66
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "cme-2026-06-12",
+      "ticker": "CME",
+      "companyKo": "CME",
+      "companyEn": "CME GROUP INC ie. = =",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": true,
+      "verifiedSource": null,
+      "amountRange": [
+        100001,
+        250000
+      ],
+      "transactionDate": "2026-06-12",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 269.53,
+      "priceAtDisclosure": 267.21,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 277.32,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": 3.8,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          267.21
+        ],
+        [
+          "2026-08-14",
+          269.8
+        ],
+        [
+          "2026-08-17",
+          267.88
+        ],
+        [
+          "2026-08-18",
+          271.54
+        ],
+        [
+          "2026-08-19",
+          266.94
+        ],
+        [
+          "2026-08-20",
+          270.87
+        ],
+        [
+          "2026-08-21",
+          274.98
+        ],
+        [
+          "2026-08-24",
+          279.165
+        ],
+        [
+          "2026-08-25",
+          277.32
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "ba-2026-08-13",
+      "ticker": "BA",
+      "companyKo": "BA",
+      "companyEn": "gs = 2 BOEING PANY",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": false,
+      "verifiedSource": null,
+      "amountRange": [
+        250001,
+        500000
+      ],
+      "transactionDate": "2026-08-13",
+      "transactionDateApprox": true,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 230.33,
+      "priceAtDisclosure": 230.33,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 211.08,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": -8.4,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          230.33
+        ],
+        [
+          "2026-08-14",
+          231.67
+        ],
+        [
+          "2026-08-17",
+          225.95
+        ],
+        [
+          "2026-08-18",
+          223.06
+        ],
+        [
+          "2026-08-19",
+          222.2
+        ],
+        [
+          "2026-08-20",
+          215.1
+        ],
+        [
+          "2026-08-21",
+          214.2
+        ],
+        [
+          "2026-08-24",
+          210.46
+        ],
+        [
+          "2026-08-25",
+          211.08
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "tyl-2026-08-13",
+      "ticker": "TYL",
+      "companyKo": "TYL",
+      "companyEn": "TYLER TECHNOLOGIES INC",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": false,
+      "verifiedSource": null,
+      "amountRange": [
+        250001,
+        500000
+      ],
+      "transactionDate": "2026-08-13",
+      "transactionDateApprox": true,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 328.95,
+      "priceAtDisclosure": 328.95,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 350.06,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": 6.4,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          328.95
+        ],
+        [
+          "2026-08-14",
+          328.64
+        ],
+        [
+          "2026-08-17",
+          320.48
+        ],
+        [
+          "2026-08-18",
+          332.21
+        ],
+        [
+          "2026-08-19",
+          346.88
+        ],
+        [
+          "2026-08-20",
+          348.14
+        ],
+        [
+          "2026-08-21",
+          350.73
+        ],
+        [
+          "2026-08-24",
+          355.79
+        ],
+        [
+          "2026-08-25",
+          350.06
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "payx-2026-08-13",
+      "ticker": "PAYX",
+      "companyKo": "PAYX",
+      "companyEn": "ly, PAYCHEX INC",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": false,
+      "verifiedSource": null,
+      "amountRange": [
+        250001,
+        500000
+      ],
+      "transactionDate": "2026-08-13",
+      "transactionDateApprox": true,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 125.4,
+      "priceAtDisclosure": 125.4,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 124.99,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": -0.3,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          125.4
+        ],
+        [
+          "2026-08-14",
+          122.02
+        ],
+        [
+          "2026-08-17",
+          118.54
+        ],
+        [
+          "2026-08-18",
+          119.93
+        ],
+        [
+          "2026-08-19",
+          122.5
+        ],
+        [
+          "2026-08-20",
+          122.91
+        ],
+        [
+          "2026-08-21",
+          124.475
+        ],
+        [
+          "2026-08-24",
+          126.01
+        ],
+        [
+          "2026-08-25",
+          124.99
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "syk-2026-08-13",
+      "ticker": "SYK",
+      "companyKo": "SYK",
+      "companyEn": "ee STRYKER CORP",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": false,
+      "verifiedSource": null,
+      "amountRange": [
+        250001,
+        500000
+      ],
+      "transactionDate": "2026-08-13",
+      "transactionDateApprox": true,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 341.09,
+      "priceAtDisclosure": 341.09,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 330.59,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": -3.1,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          341.09
+        ],
+        [
+          "2026-08-14",
+          339.21
+        ],
+        [
+          "2026-08-17",
+          331.68
+        ],
+        [
+          "2026-08-18",
+          331.37
+        ],
+        [
+          "2026-08-19",
+          339.98
+        ],
+        [
+          "2026-08-20",
+          327.7
+        ],
+        [
+          "2026-08-21",
+          329.45
+        ],
+        [
+          "2026-08-24",
+          327.81
+        ],
+        [
+          "2026-08-25",
+          330.59
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "pg-2026-08-13",
+      "ticker": "PG",
+      "companyKo": "PG",
+      "companyEn": "PROCTER & GAMBLE PANY",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": false,
+      "verifiedSource": null,
+      "amountRange": [
+        250001,
+        500000
+      ],
+      "transactionDate": "2026-08-13",
+      "transactionDateApprox": true,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 144.26,
+      "priceAtDisclosure": 144.26,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 145.4,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": 0.8,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          144.26
+        ],
+        [
+          "2026-08-14",
+          144.55
+        ],
+        [
+          "2026-08-17",
+          143.12
+        ],
+        [
+          "2026-08-18",
+          143.45
+        ],
+        [
+          "2026-08-19",
+          144.38
+        ],
+        [
+          "2026-08-20",
+          142.97
+        ],
+        [
+          "2026-08-21",
+          144.68
+        ],
+        [
+          "2026-08-24",
+          146.6
+        ],
+        [
+          "2026-08-25",
+          145.4
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "lulu-2026-06-18",
+      "ticker": "LULU",
+      "companyKo": "LULU",
+      "companyEn": "LULULEMON ATHLETICA INC",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": true,
+      "verifiedSource": null,
+      "amountRange": [
+        1001,
+        15000
+      ],
+      "transactionDate": "2026-06-18",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 111.77,
+      "priceAtDisclosure": 119.56,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 118.33,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": -1.0,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          119.56
+        ],
+        [
+          "2026-08-14",
+          119.55
+        ],
+        [
+          "2026-08-17",
+          115.74
+        ],
+        [
+          "2026-08-18",
+          119.01
+        ],
+        [
+          "2026-08-19",
+          119.45
+        ],
+        [
+          "2026-08-20",
+          115.69
+        ],
+        [
+          "2026-08-21",
+          121.07
+        ],
+        [
+          "2026-08-24",
+          122.78
+        ],
+        [
+          "2026-08-25",
+          118.33
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "eqt-2026-06-18",
+      "ticker": "EQT",
+      "companyKo": "EQT",
+      "companyEn": "254 EQT CORP",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "sell",
+      "actionInferred": false,
+      "verifiedSource": null,
+      "amountRange": [
+        100001,
+        250000
+      ],
+      "transactionDate": "2026-06-18",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 50.72,
+      "priceAtDisclosure": 54.08,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 54.0,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": -0.1,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          54.08
+        ],
+        [
+          "2026-08-14",
+          54.42
+        ],
+        [
+          "2026-08-17",
+          53.01
+        ],
+        [
+          "2026-08-18",
+          53.14
+        ],
+        [
+          "2026-08-19",
+          53.64
+        ],
+        [
+          "2026-08-20",
+          53.89
+        ],
+        [
+          "2026-08-21",
+          53.72
+        ],
+        [
+          "2026-08-24",
+          53.79
+        ],
+        [
+          "2026-08-25",
+          54.0
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "csgp-2026-06-18",
+      "ticker": "CSGP",
+      "companyKo": "CSGP",
+      "companyEn": "COSTAR GROUP INC fe ty",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": true,
+      "verifiedSource": null,
+      "amountRange": [
+        100001,
+        250000
+      ],
+      "transactionDate": "2026-06-18",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 30.12,
+      "priceAtDisclosure": 33.05,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 32.81,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": -0.7,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          33.05
+        ],
+        [
+          "2026-08-14",
+          32.38
+        ],
+        [
+          "2026-08-17",
+          31.35
+        ],
+        [
+          "2026-08-18",
+          31.38
+        ],
+        [
+          "2026-08-19",
+          33.73
+        ],
+        [
+          "2026-08-20",
+          32.26
+        ],
+        [
+          "2026-08-21",
+          32.26
+        ],
+        [
+          "2026-08-24",
+          32.84
+        ],
+        [
+          "2026-08-25",
+          32.81
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "coin-2026-06-18",
+      "ticker": "COIN",
+      "companyKo": "COIN",
+      "companyEn": "ll COINBASE GLOBAL INC eae",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": true,
+      "verifiedSource": null,
+      "amountRange": [
+        100001,
+        250000
+      ],
+      "transactionDate": "2026-06-18",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 163.26,
+      "priceAtDisclosure": 153.9,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 187.16,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": 21.6,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          153.9
+        ],
+        [
+          "2026-08-14",
+          148.47
+        ],
+        [
+          "2026-08-17",
+          150.55
+        ],
+        [
+          "2026-08-18",
+          146.23
+        ],
+        [
+          "2026-08-19",
+          160.2
+        ],
+        [
+          "2026-08-20",
+          172.35
+        ],
+        [
+          "2026-08-21",
+          186.49
+        ],
+        [
+          "2026-08-24",
+          179.48
+        ],
+        [
+          "2026-08-25",
+          187.16
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "pypl-2026-06-18",
+      "ticker": "PYPL",
+      "companyKo": "PYPL",
+      "companyEn": "Paypal Hidgs Inc",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "sell",
+      "actionInferred": false,
+      "verifiedSource": null,
+      "amountRange": [
+        100001,
+        250000
+      ],
+      "transactionDate": "2026-06-18",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 42.51,
+      "priceAtDisclosure": 60.59,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 62.27,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": 2.8,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          60.59
+        ],
+        [
+          "2026-08-14",
+          61.66
+        ],
+        [
+          "2026-08-17",
+          60.47
+        ],
+        [
+          "2026-08-18",
+          60.43
+        ],
+        [
+          "2026-08-19",
+          61.25
+        ],
+        [
+          "2026-08-20",
+          62.3
+        ],
+        [
+          "2026-08-21",
+          61.55
+        ],
+        [
+          "2026-08-24",
+          61.68
+        ],
+        [
+          "2026-08-25",
+          62.27
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "bkng-2026-06-18",
+      "ticker": "BKNG",
+      "companyKo": "BKNG",
+      "companyEn": "BOOKING HLDGS INC",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "sell",
+      "actionInferred": false,
+      "verifiedSource": null,
+      "amountRange": [
+        100001,
+        250000
+      ],
+      "transactionDate": "2026-06-18",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 171.78,
+      "priceAtDisclosure": 213.34,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 213.78,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": 0.2,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          213.34
+        ],
+        [
+          "2026-08-14",
+          212.06
+        ],
+        [
+          "2026-08-17",
+          204.76
+        ],
+        [
+          "2026-08-18",
+          208.25
+        ],
+        [
+          "2026-08-19",
+          213.0
+        ],
+        [
+          "2026-08-20",
+          209.87
+        ],
+        [
+          "2026-08-21",
+          209.62
+        ],
+        [
+          "2026-08-24",
+          213.36
+        ],
+        [
+          "2026-08-25",
+          213.78
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "hsy-2026-06-18",
+      "ticker": "HSY",
+      "companyKo": "HSY",
+      "companyEn": "THE HERSHEY COMPANY",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "sell",
+      "actionInferred": false,
+      "verifiedSource": null,
+      "amountRange": [
+        250001,
+        500000
+      ],
+      "transactionDate": "2026-06-18",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 172.63,
+      "priceAtDisclosure": 186.12,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 187.18,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": 0.6,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          186.12
+        ],
+        [
+          "2026-08-14",
+          184.22
+        ],
+        [
+          "2026-08-17",
+          181.06
+        ],
+        [
+          "2026-08-18",
+          183.45
+        ],
+        [
+          "2026-08-19",
+          188.79
+        ],
+        [
+          "2026-08-20",
+          188.31
+        ],
+        [
+          "2026-08-21",
+          186.46
+        ],
+        [
+          "2026-08-24",
+          189.94
+        ],
+        [
+          "2026-08-25",
+          187.18
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "nvda-2026-06-15",
+      "ticker": "NVDA",
+      "companyKo": "엔비디아",
+      "companyEn": "NVIDIA CORP",
+      "sector": "반도체/AI",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": false,
+      "verifiedSource": null,
+      "amountRange": [
+        100001,
+        250000
+      ],
+      "transactionDate": "2026-06-15",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 212.45,
+      "priceAtDisclosure": 225.3,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 213.05,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": -5.4,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          225.3
+        ],
+        [
+          "2026-08-14",
+          225.16
+        ],
+        [
+          "2026-08-17",
+          225.01
+        ],
+        [
+          "2026-08-18",
+          219.74
+        ],
+        [
+          "2026-08-19",
+          217.56
+        ],
+        [
+          "2026-08-20",
+          216.85
+        ],
+        [
+          "2026-08-21",
+          214.72
+        ],
+        [
+          "2026-08-24",
+          208.48
+        ],
+        [
+          "2026-08-25",
+          213.05
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "abbv-2026-06-16",
+      "ticker": "ABBV",
+      "companyKo": "ABBV",
+      "companyEn": "ABBVIE INC",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": false,
+      "verifiedSource": null,
+      "amountRange": [
+        50001,
+        100000
+      ],
+      "transactionDate": "2026-06-16",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 222.47,
+      "priceAtDisclosure": 250.82,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 265.79,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": 6.0,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          250.82
+        ],
+        [
+          "2026-08-14",
+          249.46
+        ],
+        [
+          "2026-08-17",
+          250.33
+        ],
+        [
+          "2026-08-18",
+          258.92
+        ],
+        [
+          "2026-08-19",
+          265.97
+        ],
+        [
+          "2026-08-20",
+          261.83
+        ],
+        [
+          "2026-08-21",
+          264.96
+        ],
+        [
+          "2026-08-24",
+          264.52
+        ],
+        [
+          "2026-08-25",
+          265.79
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "pld-2026-06-15",
+      "ticker": "PLD",
+      "companyKo": "PLD",
+      "companyEn": "PROLOGIS INC",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": false,
+      "verifiedSource": null,
+      "amountRange": [
+        50001,
+        100000
+      ],
+      "transactionDate": "2026-06-15",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 148.5,
+      "priceAtDisclosure": 141.21,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 143.33,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": 1.5,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          141.21
+        ],
+        [
+          "2026-08-14",
+          141.03
+        ],
+        [
+          "2026-08-17",
+          140.62
+        ],
+        [
+          "2026-08-18",
+          140.02
+        ],
+        [
+          "2026-08-19",
+          141.3
+        ],
+        [
+          "2026-08-20",
+          140.68
+        ],
+        [
+          "2026-08-21",
+          141.8
+        ],
+        [
+          "2026-08-24",
+          143.36
+        ],
+        [
+          "2026-08-25",
+          143.33
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "avgo-2026-08-13",
+      "ticker": "AVGO",
+      "companyKo": "AVGO",
+      "companyEn": "BROADCOM INC",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": false,
+      "verifiedSource": null,
+      "amountRange": [
+        1001,
+        15000
+      ],
+      "transactionDate": "2026-08-13",
+      "transactionDateApprox": true,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 417.82,
+      "priceAtDisclosure": 417.82,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 356.74,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": -14.6,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          417.82
+        ],
+        [
+          "2026-08-14",
+          392.99
+        ],
+        [
+          "2026-08-17",
+          392.43
+        ],
+        [
+          "2026-08-18",
+          380.0
+        ],
+        [
+          "2026-08-19",
+          362.48
+        ],
+        [
+          "2026-08-20",
+          364.03
+        ],
+        [
+          "2026-08-21",
+          368.45
+        ],
+        [
+          "2026-08-24",
+          358.76
+        ],
+        [
+          "2026-08-25",
+          356.74
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "wmt-2026-06-15",
+      "ticker": "WMT",
+      "companyKo": "WMT",
+      "companyEn": "WALMART INC",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": false,
+      "verifiedSource": null,
+      "amountRange": [
+        1001,
+        15000
+      ],
+      "transactionDate": "2026-06-15",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 120.82,
+      "priceAtDisclosure": 115.72,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 105.38,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": -8.9,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          115.72
+        ],
+        [
+          "2026-08-14",
+          115.27
+        ],
+        [
+          "2026-08-17",
+          114.33
+        ],
+        [
+          "2026-08-18",
+          115.2
+        ],
+        [
+          "2026-08-19",
+          114.3
+        ],
+        [
+          "2026-08-20",
+          103.84
+        ],
+        [
+          "2026-08-21",
+          103.7
+        ],
+        [
+          "2026-08-24",
+          106.49
+        ],
+        [
+          "2026-08-25",
+          105.38
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "wbd-2026-06-16",
+      "ticker": "WBD",
+      "companyKo": "WBD",
+      "companyEn": "as 424 WARNER BROS DISCOVERY INC SERA",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": false,
+      "verifiedSource": null,
+      "amountRange": [
+        1001,
+        15000
+      ],
+      "transactionDate": "2026-06-16",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 26.6,
+      "priceAtDisclosure": 27.75,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 28.9,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": 4.1,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          27.75
+        ],
+        [
+          "2026-08-14",
+          27.99
+        ],
+        [
+          "2026-08-17",
+          27.93
+        ],
+        [
+          "2026-08-18",
+          28.48
+        ],
+        [
+          "2026-08-19",
+          28.53
+        ],
+        [
+          "2026-08-20",
+          28.23
+        ],
+        [
+          "2026-08-21",
+          28.55
+        ],
+        [
+          "2026-08-24",
+          28.7
+        ],
+        [
+          "2026-08-25",
+          28.9
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "ntra-2026-06-15",
+      "ticker": "NTRA",
+      "companyKo": "NTRA",
+      "companyEn": "NATERA INC",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": false,
+      "verifiedSource": null,
+      "amountRange": [
+        1001,
+        15000
+      ],
+      "transactionDate": "2026-06-15",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 216.97,
+      "priceAtDisclosure": 310.78,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 336.71,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": 8.3,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          310.78
+        ],
+        [
+          "2026-08-14",
+          309.93
+        ],
+        [
+          "2026-08-17",
+          314.18
+        ],
+        [
+          "2026-08-18",
+          311.69
+        ],
+        [
+          "2026-08-19",
+          325.07
+        ],
+        [
+          "2026-08-20",
+          324.84
+        ],
+        [
+          "2026-08-21",
+          332.03
+        ],
+        [
+          "2026-08-24",
+          327.72
+        ],
+        [
+          "2026-08-25",
+          336.71
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "cprt-2026-06-15",
+      "ticker": "CPRT",
+      "companyKo": "CPRT",
+      "companyEn": "COPART INC A",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": false,
+      "verifiedSource": null,
+      "amountRange": [
+        1001,
+        15000
+      ],
+      "transactionDate": "2026-06-15",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 30.3,
+      "priceAtDisclosure": 29.39,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 33.33,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": 13.4,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          29.39
+        ],
+        [
+          "2026-08-14",
+          31.61
+        ],
+        [
+          "2026-08-17",
+          31.7
+        ],
+        [
+          "2026-08-18",
+          31.51
+        ],
+        [
+          "2026-08-19",
+          33.85
+        ],
+        [
+          "2026-08-20",
+          34.33
+        ],
+        [
+          "2026-08-21",
+          33.8
+        ],
+        [
+          "2026-08-24",
+          33.26
+        ],
+        [
+          "2026-08-25",
+          33.33
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "entg-2026-06-15",
+      "ticker": "ENTG",
+      "companyKo": "ENTG",
+      "companyEn": "ib ENTEGRIS INC",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": false,
+      "verifiedSource": null,
+      "amountRange": [
+        1001,
+        15000
+      ],
+      "transactionDate": "2026-06-15",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 162.89,
+      "priceAtDisclosure": 163.81,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 138.87,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": -15.2,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          163.81
+        ],
+        [
+          "2026-08-14",
+          161.76
+        ],
+        [
+          "2026-08-17",
+          163.09
+        ],
+        [
+          "2026-08-18",
+          150.265
+        ],
+        [
+          "2026-08-19",
+          144.28
+        ],
+        [
+          "2026-08-20",
+          144.63
+        ],
+        [
+          "2026-08-21",
+          143.66
+        ],
+        [
+          "2026-08-24",
+          138.25
+        ],
+        [
+          "2026-08-25",
+          138.87
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "smtc-2026-06-15",
+      "ticker": "SMTC",
+      "companyKo": "SMTC",
+      "companyEn": "SEMTECH CORP",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": false,
+      "verifiedSource": null,
+      "amountRange": [
+        1001,
+        15000
+      ],
+      "transactionDate": "2026-06-15",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 174.3,
+      "priceAtDisclosure": 133.58,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 127.52,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": -4.5,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          133.58
+        ],
+        [
+          "2026-08-14",
+          140.35
+        ],
+        [
+          "2026-08-17",
+          154.22
+        ],
+        [
+          "2026-08-18",
+          135.23
+        ],
+        [
+          "2026-08-19",
+          125.36
+        ],
+        [
+          "2026-08-20",
+          124.88
+        ],
+        [
+          "2026-08-21",
+          124.09
+        ],
+        [
+          "2026-08-24",
+          120.91
+        ],
+        [
+          "2026-08-25",
+          127.52
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "sanm-2026-06-15",
+      "ticker": "SANM",
+      "companyKo": "SANM",
+      "companyEn": "SANMINA CORP",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": false,
+      "verifiedSource": null,
+      "amountRange": [
+        1001,
+        15000
+      ],
+      "transactionDate": "2026-06-15",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 259.82,
+      "priceAtDisclosure": 206.56,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 191.11,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": -7.5,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          206.56
+        ],
+        [
+          "2026-08-14",
+          210.84
+        ],
+        [
+          "2026-08-17",
+          217.03
+        ],
+        [
+          "2026-08-18",
+          198.28
+        ],
+        [
+          "2026-08-19",
+          194.53
+        ],
+        [
+          "2026-08-20",
+          190.72
+        ],
+        [
+          "2026-08-21",
+          188.89
+        ],
+        [
+          "2026-08-24",
+          185.41
+        ],
+        [
+          "2026-08-25",
+          191.11
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "mtch-2026-06-15",
+      "ticker": "MTCH",
+      "companyKo": "MTCH",
+      "companyEn": "MATCH GROUP INC",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": false,
+      "verifiedSource": null,
+      "amountRange": [
+        1001,
+        15000
+      ],
+      "transactionDate": "2026-06-15",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 35.94,
+      "priceAtDisclosure": 37.28,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 42.18,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": 13.1,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          37.28
+        ],
+        [
+          "2026-08-14",
+          37.95
+        ],
+        [
+          "2026-08-17",
+          37.22
+        ],
+        [
+          "2026-08-18",
+          38.69
+        ],
+        [
+          "2026-08-19",
+          39.7
+        ],
+        [
+          "2026-08-20",
+          40.35
+        ],
+        [
+          "2026-08-21",
+          40.87
+        ],
+        [
+          "2026-08-24",
+          41.73
+        ],
+        [
+          "2026-08-25",
+          42.18
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "orly-2026-06-16",
+      "ticker": "ORLY",
+      "companyKo": "ORLY",
+      "companyEn": "eas: O REILLY AUTOMOTIVE INC",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "sell",
+      "actionInferred": false,
+      "verifiedSource": null,
+      "amountRange": [
+        1001,
+        15000
+      ],
+      "transactionDate": "2026-06-16",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 90.68,
+      "priceAtDisclosure": 92.58,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 90.32,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": -2.4,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          92.58
+        ],
+        [
+          "2026-08-14",
+          91.05
+        ],
+        [
+          "2026-08-17",
+          90.23
+        ],
+        [
+          "2026-08-18",
+          90.76
+        ],
+        [
+          "2026-08-19",
+          91.2
+        ],
+        [
+          "2026-08-20",
+          89.08
+        ],
+        [
+          "2026-08-21",
+          89.11
+        ],
+        [
+          "2026-08-24",
+          90.68
+        ],
+        [
+          "2026-08-25",
+          90.32
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "ctsh-2026-08-13",
+      "ticker": "CTSH",
+      "companyKo": "CTSH",
+      "companyEn": "STELANTIS NV as a ee ee 511 COGNIZANT TECHNOLOGY SOLUTIONS C",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": true,
+      "verifiedSource": null,
+      "amountRange": [
+        15001,
+        50000
+      ],
+      "transactionDate": "2026-08-13",
+      "transactionDateApprox": true,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 59.29,
+      "priceAtDisclosure": 59.29,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 63.06,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": 6.4,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          59.29
+        ],
+        [
+          "2026-08-14",
+          58.79
+        ],
+        [
+          "2026-08-17",
+          56.61
+        ],
+        [
+          "2026-08-18",
+          57.78
+        ],
+        [
+          "2026-08-19",
+          60.93
+        ],
+        [
+          "2026-08-20",
+          60.92
+        ],
+        [
+          "2026-08-21",
+          61.87
+        ],
+        [
+          "2026-08-24",
+          62.2
+        ],
+        [
+          "2026-08-25",
+          63.06
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "rmd-2026-06-23",
+      "ticker": "RMD",
+      "companyKo": "RMD",
+      "companyEn": "RESMED INC No",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": true,
+      "verifiedSource": null,
+      "amountRange": [
+        1001,
+        15000
+      ],
+      "transactionDate": "2026-06-23",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 191.26,
+      "priceAtDisclosure": 226.74,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 236.59,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": 4.3,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          226.74
+        ],
+        [
+          "2026-08-14",
+          224.46
+        ],
+        [
+          "2026-08-17",
+          220.37
+        ],
+        [
+          "2026-08-18",
+          219.98
+        ],
+        [
+          "2026-08-19",
+          230.65
+        ],
+        [
+          "2026-08-20",
+          228.44
+        ],
+        [
+          "2026-08-21",
+          231.52
+        ],
+        [
+          "2026-08-24",
+          232.45
+        ],
+        [
+          "2026-08-25",
+          236.59
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "amzn-2026-06-23",
+      "ticker": "AMZN",
+      "companyKo": "아마존",
+      "companyEn": "S45 CONSTELLATION ENERGY COR ay No $1,00 000 26 CHEVRON Con?",
+      "sector": "빅테크",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": true,
+      "verifiedSource": null,
+      "amountRange": [
+        1001,
+        15000
+      ],
+      "transactionDate": "2026-06-23",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 234.11,
+      "priceAtDisclosure": 265.13,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 261.06,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": -1.5,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          265.13
+        ],
+        [
+          "2026-08-14",
+          262.65
+        ],
+        [
+          "2026-08-17",
+          261.31
+        ],
+        [
+          "2026-08-18",
+          259.45
+        ],
+        [
+          "2026-08-19",
+          265.84
+        ],
+        [
+          "2026-08-20",
+          260.11
+        ],
+        [
+          "2026-08-21",
+          258.63
+        ],
+        [
+          "2026-08-24",
+          262.07
+        ],
+        [
+          "2026-08-25",
+          261.06
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "mrk-2026-06-23",
+      "ticker": "MRK",
+      "companyKo": "머크",
+      "companyEn": "ss MERCK 80. NC pute ganoone nol gnomn-stsemo 563 ROCKET COM",
+      "sector": "바이오/제약",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": true,
+      "verifiedSource": null,
+      "amountRange": [
+        1001,
+        15000
+      ],
+      "transactionDate": "2026-06-23",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 119.6,
+      "priceAtDisclosure": 135.55,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 156.45,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": 15.4,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          135.55
+        ],
+        [
+          "2026-08-14",
+          135.84
+        ],
+        [
+          "2026-08-17",
+          135.97
+        ],
+        [
+          "2026-08-18",
+          135.17
+        ],
+        [
+          "2026-08-19",
+          152.2
+        ],
+        [
+          "2026-08-20",
+          148.99
+        ],
+        [
+          "2026-08-21",
+          152.55
+        ],
+        [
+          "2026-08-24",
+          150.66
+        ],
+        [
+          "2026-08-25",
+          156.45
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "team-2026-06-23",
+      "ticker": "TEAM",
+      "companyKo": "TEAM",
+      "companyEn": "ATLASSIAN CORP CLASS CLASS A No",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": false,
+      "verifiedSource": null,
+      "amountRange": [
+        1001,
+        15000
+      ],
+      "transactionDate": "2026-06-23",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 81.35,
+      "priceAtDisclosure": 165.98,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 166.49,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": 0.3,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          165.98
+        ],
+        [
+          "2026-08-14",
+          162.22
+        ],
+        [
+          "2026-08-17",
+          158.34
+        ],
+        [
+          "2026-08-18",
+          163.0
+        ],
+        [
+          "2026-08-19",
+          174.23
+        ],
+        [
+          "2026-08-20",
+          174.91
+        ],
+        [
+          "2026-08-21",
+          171.81
+        ],
+        [
+          "2026-08-24",
+          171.33
+        ],
+        [
+          "2026-08-25",
+          166.49
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "lmt-2026-06-23",
+      "ticker": "LMT",
+      "companyKo": "LMT",
+      "companyEn": "LOCKHEED MARTIN CORP No",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": false,
+      "verifiedSource": null,
+      "amountRange": [
+        1001,
+        15000
+      ],
+      "transactionDate": "2026-06-23",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 503.67,
+      "priceAtDisclosure": 598.01,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 556.52,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": -6.9,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          598.01
+        ],
+        [
+          "2026-08-14",
+          608.68
+        ],
+        [
+          "2026-08-17",
+          593.74
+        ],
+        [
+          "2026-08-18",
+          607.17
+        ],
+        [
+          "2026-08-19",
+          589.15
+        ],
+        [
+          "2026-08-20",
+          571.48
+        ],
+        [
+          "2026-08-21",
+          563.57
+        ],
+        [
+          "2026-08-24",
+          564.14
+        ],
+        [
+          "2026-08-25",
+          556.52
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "abbv-2026-06-23",
+      "ticker": "ABBV",
+      "companyKo": "ABBV",
+      "companyEn": "ABBVIE INC No",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": false,
+      "verifiedSource": null,
+      "amountRange": [
+        1001,
+        15000
+      ],
+      "transactionDate": "2026-06-23",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 234.76,
+      "priceAtDisclosure": 250.82,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 265.79,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": 6.0,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          250.82
+        ],
+        [
+          "2026-08-14",
+          249.46
+        ],
+        [
+          "2026-08-17",
+          250.33
+        ],
+        [
+          "2026-08-18",
+          258.92
+        ],
+        [
+          "2026-08-19",
+          265.97
+        ],
+        [
+          "2026-08-20",
+          261.83
+        ],
+        [
+          "2026-08-21",
+          264.96
+        ],
+        [
+          "2026-08-24",
+          264.52
+        ],
+        [
+          "2026-08-25",
+          265.79
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "hca-2026-06-23",
+      "ticker": "HCA",
+      "companyKo": "HCA",
+      "companyEn": "S75 HCA HEALTHCARE INC No",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": false,
+      "verifiedSource": null,
+      "amountRange": [
+        1001,
+        15000
+      ],
+      "transactionDate": "2026-06-23",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 386.92,
+      "priceAtDisclosure": 411.74,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 428.76,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": 4.1,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          411.74
+        ],
+        [
+          "2026-08-14",
+          404.68
+        ],
+        [
+          "2026-08-17",
+          404.98
+        ],
+        [
+          "2026-08-18",
+          411.73
+        ],
+        [
+          "2026-08-19",
+          407.05
+        ],
+        [
+          "2026-08-20",
+          406.27
+        ],
+        [
+          "2026-08-21",
+          429.19
+        ],
+        [
+          "2026-08-24",
+          429.24
+        ],
+        [
+          "2026-08-25",
+          428.76
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "dox-2026-06-23",
+      "ticker": "DOX",
+      "companyKo": "DOX",
+      "companyEn": "AMDOCS LTD F No",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": true,
+      "verifiedSource": null,
+      "amountRange": [
+        1001,
+        15000
+      ],
+      "transactionDate": "2026-06-23",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 52.35,
+      "priceAtDisclosure": 58.66,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 62.31,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": 6.2,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          58.66
+        ],
+        [
+          "2026-08-14",
+          58.22
+        ],
+        [
+          "2026-08-17",
+          57.25
+        ],
+        [
+          "2026-08-18",
+          57.88
+        ],
+        [
+          "2026-08-19",
+          60.21
+        ],
+        [
+          "2026-08-20",
+          60.9
+        ],
+        [
+          "2026-08-21",
+          61.4
+        ],
+        [
+          "2026-08-24",
+          62.1
+        ],
+        [
+          "2026-08-25",
+          62.31
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "dpz-2026-06-23",
+      "ticker": "DPZ",
+      "companyKo": "DPZ",
+      "companyEn": "DOMINOS PIZZA INC No",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "sell",
+      "actionInferred": false,
+      "verifiedSource": null,
+      "amountRange": [
+        1001,
+        15000
+      ],
+      "transactionDate": "2026-06-23",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 283.03,
+      "priceAtDisclosure": 350.88,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 349.91,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": -0.3,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          350.88
+        ],
+        [
+          "2026-08-14",
+          346.27
+        ],
+        [
+          "2026-08-17",
+          335.42
+        ],
+        [
+          "2026-08-18",
+          336.25
+        ],
+        [
+          "2026-08-19",
+          336.52
+        ],
+        [
+          "2026-08-20",
+          334.37
+        ],
+        [
+          "2026-08-21",
+          341.85
+        ],
+        [
+          "2026-08-24",
+          349.01
+        ],
+        [
+          "2026-08-25",
+          349.91
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "cb-2026-06-23",
+      "ticker": "CB",
+      "companyKo": "CB",
+      "companyEn": "CHUBB LTD F No",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "sell",
+      "actionInferred": false,
+      "verifiedSource": null,
+      "amountRange": [
+        1001,
+        15000
+      ],
+      "transactionDate": "2026-06-23",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 332.11,
+      "priceAtDisclosure": 344.5,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 343.11,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": -0.4,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          344.5
+        ],
+        [
+          "2026-08-14",
+          343.64
+        ],
+        [
+          "2026-08-17",
+          340.86
+        ],
+        [
+          "2026-08-18",
+          345.29
+        ],
+        [
+          "2026-08-19",
+          340.92
+        ],
+        [
+          "2026-08-20",
+          342.87
+        ],
+        [
+          "2026-08-21",
+          340.99
+        ],
+        [
+          "2026-08-24",
+          345.83
+        ],
+        [
+          "2026-08-25",
+          343.11
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "intu-2026-06-23",
+      "ticker": "INTU",
+      "companyKo": "INTU",
+      "companyEn": "INTUIT No",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "sell",
+      "actionInferred": false,
+      "verifiedSource": null,
+      "amountRange": [
+        1001,
+        15000
+      ],
+      "transactionDate": "2026-06-23",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 258.05,
+      "priceAtDisclosure": 358.29,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 357.46,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": -0.2,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          358.29
+        ],
+        [
+          "2026-08-14",
+          345.66
+        ],
+        [
+          "2026-08-17",
+          335.6
+        ],
+        [
+          "2026-08-18",
+          350.41
+        ],
+        [
+          "2026-08-19",
+          362.47
+        ],
+        [
+          "2026-08-20",
+          361.87
+        ],
+        [
+          "2026-08-21",
+          367.0
+        ],
+        [
+          "2026-08-24",
+          369.92
+        ],
+        [
+          "2026-08-25",
+          357.46
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "cci-2026-06-23",
+      "ticker": "CCI",
+      "companyKo": "CCI",
+      "companyEn": "CROWN CASTLE INC REIT REIT No",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "sell",
+      "actionInferred": false,
+      "verifiedSource": null,
+      "amountRange": [
+        1001,
+        15000
+      ],
+      "transactionDate": "2026-06-23",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 84.33,
+      "priceAtDisclosure": 75.73,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 76.29,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": 0.7,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          75.73
+        ],
+        [
+          "2026-08-14",
+          75.98
+        ],
+        [
+          "2026-08-17",
+          74.44
+        ],
+        [
+          "2026-08-18",
+          74.03
+        ],
+        [
+          "2026-08-19",
+          74.65
+        ],
+        [
+          "2026-08-20",
+          75.39
+        ],
+        [
+          "2026-08-21",
+          75.51
+        ],
+        [
+          "2026-08-24",
+          76.4
+        ],
+        [
+          "2026-08-25",
+          76.29
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "cmcsa-2026-06-23",
+      "ticker": "CMCSA",
+      "companyKo": "컴캐스트",
+      "companyEn": "SI en a a Ne ee ee 662 AT&T INC COMCAST CORP NEW CLASS A No",
+      "sector": "미디어/통신",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": true,
+      "verifiedSource": null,
+      "amountRange": [
+        1001,
+        15000
+      ],
+      "transactionDate": "2026-06-23",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 22.8,
+      "priceAtDisclosure": 26.18,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 27.1,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": 3.5,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          26.18
+        ],
+        [
+          "2026-08-14",
+          26.18
+        ],
+        [
+          "2026-08-17",
+          25.57
+        ],
+        [
+          "2026-08-18",
+          26.2
+        ],
+        [
+          "2026-08-19",
+          26.59
+        ],
+        [
+          "2026-08-20",
+          26.42
+        ],
+        [
+          "2026-08-21",
+          26.85
+        ],
+        [
+          "2026-08-24",
+          27.02
+        ],
+        [
+          "2026-08-25",
+          27.1
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "now-2026-06-03",
+      "ticker": "NOW",
+      "companyKo": "NOW",
+      "companyEn": "SERVICENOW INC p",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": true,
+      "verifiedSource": null,
+      "amountRange": [
+        1001,
+        15000
+      ],
+      "transactionDate": "2026-06-03",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 117.9,
+      "priceAtDisclosure": 127.25,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 127.0,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": -0.2,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          127.25
+        ],
+        [
+          "2026-08-14",
+          124.0
+        ],
+        [
+          "2026-08-17",
+          117.7
+        ],
+        [
+          "2026-08-18",
+          119.49
+        ],
+        [
+          "2026-08-19",
+          127.2
+        ],
+        [
+          "2026-08-20",
+          129.75
+        ],
+        [
+          "2026-08-21",
+          128.48
+        ],
+        [
+          "2026-08-24",
+          128.05
+        ],
+        [
+          "2026-08-25",
+          127.0
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "vrsk-2026-06-03",
+      "ticker": "VRSK",
+      "companyKo": "VRSK",
+      "companyEn": "VERISK ANALYTICS INC CLASS A",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": true,
+      "verifiedSource": null,
+      "amountRange": [
+        1001,
+        15000
+      ],
+      "transactionDate": "2026-06-03",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 178.33,
+      "priceAtDisclosure": 185.94,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 188.49,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": 1.4,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          185.94
+        ],
+        [
+          "2026-08-14",
+          181.67
+        ],
+        [
+          "2026-08-17",
+          175.62
+        ],
+        [
+          "2026-08-18",
+          178.86
+        ],
+        [
+          "2026-08-19",
+          186.45
+        ],
+        [
+          "2026-08-20",
+          187.68
+        ],
+        [
+          "2026-08-21",
+          187.5
+        ],
+        [
+          "2026-08-24",
+          189.55
+        ],
+        [
+          "2026-08-25",
+          188.49
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "amzn-2026-06-03",
+      "ticker": "AMZN",
+      "companyKo": "아마존",
+      "companyEn": "AMAZON.COM INC 718 EL LILLY AND CO ore MICRON TECHNOLOGY INC",
+      "sector": "빅테크",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": false,
+      "verifiedSource": null,
+      "amountRange": [
+        1001,
+        15000
+      ],
+      "transactionDate": "2026-06-03",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 250.02,
+      "priceAtDisclosure": 265.13,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 261.06,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": -1.5,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          265.13
+        ],
+        [
+          "2026-08-14",
+          262.65
+        ],
+        [
+          "2026-08-17",
+          261.31
+        ],
+        [
+          "2026-08-18",
+          259.45
+        ],
+        [
+          "2026-08-19",
+          265.84
+        ],
+        [
+          "2026-08-20",
+          260.11
+        ],
+        [
+          "2026-08-21",
+          258.63
+        ],
+        [
+          "2026-08-24",
+          262.07
+        ],
+        [
+          "2026-08-25",
+          261.06
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "pypl-2026-06-03",
+      "ticker": "PYPL",
+      "companyKo": "PYPL",
+      "companyEn": "PAYPAL HLDGS INC",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "sell",
+      "actionInferred": false,
+      "verifiedSource": null,
+      "amountRange": [
+        1001,
+        15000
+      ],
+      "transactionDate": "2026-06-03",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 42.61,
+      "priceAtDisclosure": 60.59,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 62.27,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": 2.8,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          60.59
+        ],
+        [
+          "2026-08-14",
+          61.66
+        ],
+        [
+          "2026-08-17",
+          60.47
+        ],
+        [
+          "2026-08-18",
+          60.43
+        ],
+        [
+          "2026-08-19",
+          61.25
+        ],
+        [
+          "2026-08-20",
+          62.3
+        ],
+        [
+          "2026-08-21",
+          61.55
+        ],
+        [
+          "2026-08-24",
+          61.68
+        ],
+        [
+          "2026-08-25",
+          62.27
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "ceg-2026-06-03",
+      "ticker": "CEG",
+      "companyKo": "CEG",
+      "companyEn": "CONSTELLATION ENERGY COR",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "sell",
+      "actionInferred": false,
+      "verifiedSource": null,
+      "amountRange": [
+        1001,
+        15000
+      ],
+      "transactionDate": "2026-06-03",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 267.24,
+      "priceAtDisclosure": 278.64,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 278.42,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": -0.1,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          278.64
+        ],
+        [
+          "2026-08-14",
+          282.5
+        ],
+        [
+          "2026-08-17",
+          278.2
+        ],
+        [
+          "2026-08-18",
+          266.83
+        ],
+        [
+          "2026-08-19",
+          274.17
+        ],
+        [
+          "2026-08-20",
+          272.92
+        ],
+        [
+          "2026-08-21",
+          272.88
+        ],
+        [
+          "2026-08-24",
+          273.43
+        ],
+        [
+          "2026-08-25",
+          278.42
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "cme-2026-06-03",
+      "ticker": "CME",
+      "companyKo": "CME",
+      "companyEn": "755. CME GROUP INC CLASS CLASS A",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "sell",
+      "actionInferred": false,
+      "verifiedSource": null,
+      "amountRange": [
+        1001,
+        15000
+      ],
+      "transactionDate": "2026-06-03",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 252.64,
+      "priceAtDisclosure": 267.21,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 277.32,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": 3.8,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          267.21
+        ],
+        [
+          "2026-08-14",
+          269.8
+        ],
+        [
+          "2026-08-17",
+          267.88
+        ],
+        [
+          "2026-08-18",
+          271.54
+        ],
+        [
+          "2026-08-19",
+          266.94
+        ],
+        [
+          "2026-08-20",
+          270.87
+        ],
+        [
+          "2026-08-21",
+          274.98
+        ],
+        [
+          "2026-08-24",
+          279.165
+        ],
+        [
+          "2026-08-25",
+          277.32
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "syk-2026-06-03",
+      "ticker": "SYK",
+      "companyKo": "SYK",
+      "companyEn": "STRYKER CORP",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "sell",
+      "actionInferred": false,
+      "verifiedSource": null,
+      "amountRange": [
+        1001,
+        15000
+      ],
+      "transactionDate": "2026-06-03",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 295.0,
+      "priceAtDisclosure": 341.09,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 330.59,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": -3.1,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          341.09
+        ],
+        [
+          "2026-08-14",
+          339.21
+        ],
+        [
+          "2026-08-17",
+          331.68
+        ],
+        [
+          "2026-08-18",
+          331.37
+        ],
+        [
+          "2026-08-19",
+          339.98
+        ],
+        [
+          "2026-08-20",
+          327.7
+        ],
+        [
+          "2026-08-21",
+          329.45
+        ],
+        [
+          "2026-08-24",
+          327.81
+        ],
+        [
+          "2026-08-25",
+          330.59
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "gpc-2026-06-22",
+      "ticker": "GPC",
+      "companyKo": "GPC",
+      "companyEn": "GENUINE PARTS CO 9",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": true,
+      "verifiedSource": null,
+      "amountRange": [
+        250001,
+        500000
+      ],
+      "transactionDate": "2026-06-22",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 105.11,
+      "priceAtDisclosure": 135.35,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 137.95,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": 1.9,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          135.35
+        ],
+        [
+          "2026-08-14",
+          135.03
+        ],
+        [
+          "2026-08-17",
+          132.52
+        ],
+        [
+          "2026-08-18",
+          131.89
+        ],
+        [
+          "2026-08-19",
+          134.54
+        ],
+        [
+          "2026-08-20",
+          132.92
+        ],
+        [
+          "2026-08-21",
+          133.96
+        ],
+        [
+          "2026-08-24",
+          135.69
+        ],
+        [
+          "2026-08-25",
+          137.95
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "ebc-2026-08-13",
+      "ticker": "EBC",
+      "companyKo": "EBC",
+      "companyEn": "es EASTERN BANKSHARES No",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": true,
+      "verifiedSource": null,
+      "amountRange": [
+        15001,
+        50000
+      ],
+      "transactionDate": "2026-08-13",
+      "transactionDateApprox": true,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 23.52,
+      "priceAtDisclosure": 23.52,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 22.36,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": -4.9,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          23.52
+        ],
+        [
+          "2026-08-14",
+          23.625
+        ],
+        [
+          "2026-08-17",
+          23.65
+        ],
+        [
+          "2026-08-18",
+          23.61
+        ],
+        [
+          "2026-08-19",
+          23.01
+        ],
+        [
+          "2026-08-20",
+          22.74
+        ],
+        [
+          "2026-08-21",
+          22.74
+        ],
+        [
+          "2026-08-24",
+          22.64
+        ],
+        [
+          "2026-08-25",
+          22.36
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "indv-2026-06-04",
+      "ticker": "INDV",
+      "companyKo": "INDV",
+      "companyEn": "INDIVIOR PHARMACEUTICALS p",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": true,
+      "verifiedSource": null,
+      "amountRange": [
+        15001,
+        50000
+      ],
+      "transactionDate": "2026-06-04",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 37.45,
+      "priceAtDisclosure": 38.22,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 35.97,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": -5.9,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          38.22
+        ],
+        [
+          "2026-08-14",
+          39.01
+        ],
+        [
+          "2026-08-17",
+          39.08
+        ],
+        [
+          "2026-08-18",
+          39.43
+        ],
+        [
+          "2026-08-19",
+          39.04
+        ],
+        [
+          "2026-08-20",
+          37.78
+        ],
+        [
+          "2026-08-21",
+          36.87
+        ],
+        [
+          "2026-08-24",
+          36.18
+        ],
+        [
+          "2026-08-25",
+          35.97
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "uvv-2026-06-04",
+      "ticker": "UVV",
+      "companyKo": "UVV",
+      "companyEn": "UNIVERSAL CORP VA",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": false,
+      "verifiedSource": null,
+      "amountRange": [
+        15001,
+        50000
+      ],
+      "transactionDate": "2026-06-04",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 52.87,
+      "priceAtDisclosure": 44.89,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 45.89,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": 2.2,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          44.89
+        ],
+        [
+          "2026-08-14",
+          44.77
+        ],
+        [
+          "2026-08-17",
+          44.32
+        ],
+        [
+          "2026-08-18",
+          44.43
+        ],
+        [
+          "2026-08-19",
+          45.19
+        ],
+        [
+          "2026-08-20",
+          45.52
+        ],
+        [
+          "2026-08-21",
+          45.0
+        ],
+        [
+          "2026-08-24",
+          45.62
+        ],
+        [
+          "2026-08-25",
+          45.89
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "ua-2026-06-04",
+      "ticker": "UA",
+      "companyKo": "UA",
+      "companyEn": "UNDER ARMOUR INC CLASS C reel",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": true,
+      "verifiedSource": null,
+      "amountRange": [
+        15001,
+        50000
+      ],
+      "transactionDate": "2026-06-04",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 5.41,
+      "priceAtDisclosure": 5.24,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 5.0,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": -4.6,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          5.24
+        ],
+        [
+          "2026-08-14",
+          5.25
+        ],
+        [
+          "2026-08-17",
+          5.19
+        ],
+        [
+          "2026-08-18",
+          4.94
+        ],
+        [
+          "2026-08-19",
+          5.13
+        ],
+        [
+          "2026-08-20",
+          5.15
+        ],
+        [
+          "2026-08-21",
+          5.24
+        ],
+        [
+          "2026-08-24",
+          5.23
+        ],
+        [
+          "2026-08-25",
+          5.0
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "ps-2026-06-04",
+      "ticker": "PS",
+      "companyKo": "PS",
+      "companyEn": "powncemmomnsinc che ——anrans ol cus amass SS susp sagen a (P",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": false,
+      "verifiedSource": null,
+      "amountRange": [
+        15001,
+        50000
+      ],
+      "transactionDate": "2026-06-04",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 38.32,
+      "priceAtDisclosure": 41.4,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 42.65,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": 3.0,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          41.4
+        ],
+        [
+          "2026-08-14",
+          40.83
+        ],
+        [
+          "2026-08-17",
+          39.38
+        ],
+        [
+          "2026-08-18",
+          39.91
+        ],
+        [
+          "2026-08-19",
+          39.81
+        ],
+        [
+          "2026-08-20",
+          40.23
+        ],
+        [
+          "2026-08-21",
+          40.06
+        ],
+        [
+          "2026-08-24",
+          40.95
+        ],
+        [
+          "2026-08-25",
+          42.65
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "lfst-2026-06-04",
+      "ticker": "LFST",
+      "companyKo": "LFST",
+      "companyEn": "eae ae OP ee ay LIFESTANCE HEALTH GROUP",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": false,
+      "verifiedSource": null,
+      "amountRange": [
+        15001,
+        50000
+      ],
+      "transactionDate": "2026-06-04",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 7.64,
+      "priceAtDisclosure": 12.22,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 12.28,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": 0.5,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          12.22
+        ],
+        [
+          "2026-08-14",
+          12.42
+        ],
+        [
+          "2026-08-17",
+          12.55
+        ],
+        [
+          "2026-08-18",
+          12.36
+        ],
+        [
+          "2026-08-19",
+          12.83
+        ],
+        [
+          "2026-08-20",
+          12.65
+        ],
+        [
+          "2026-08-21",
+          12.47
+        ],
+        [
+          "2026-08-24",
+          12.16
+        ],
+        [
+          "2026-08-25",
+          12.28
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "efor-2026-06-04",
+      "ticker": "EFOR",
+      "companyKo": "EFOR",
+      "companyEn": "EVERFORTH INC 45,001 - $50,000 875",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": false,
+      "verifiedSource": null,
+      "amountRange": [
+        15001,
+        50000
+      ],
+      "transactionDate": "2026-06-04",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 20.6,
+      "priceAtDisclosure": 33.45,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 31.56,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": -5.7,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          33.45
+        ],
+        [
+          "2026-08-14",
+          31.67
+        ],
+        [
+          "2026-08-17",
+          30.86
+        ],
+        [
+          "2026-08-18",
+          30.79
+        ],
+        [
+          "2026-08-19",
+          31.95
+        ],
+        [
+          "2026-08-20",
+          32.17
+        ],
+        [
+          "2026-08-21",
+          32.7
+        ],
+        [
+          "2026-08-24",
+          32.5
+        ],
+        [
+          "2026-08-25",
+          31.56
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "vrrm-2026-06-04",
+      "ticker": "VRRM",
+      "companyKo": "VRRM",
+      "companyEn": "VERRA MOBILITY CORP CLASS A",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": true,
+      "verifiedSource": null,
+      "amountRange": [
+        1001,
+        15000
+      ],
+      "transactionDate": "2026-06-04",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 4.31,
+      "priceAtDisclosure": 4.81,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 4.43,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": -7.9,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          4.81
+        ],
+        [
+          "2026-08-14",
+          4.72
+        ],
+        [
+          "2026-08-17",
+          4.6
+        ],
+        [
+          "2026-08-18",
+          4.45
+        ],
+        [
+          "2026-08-19",
+          4.65
+        ],
+        [
+          "2026-08-20",
+          4.66
+        ],
+        [
+          "2026-08-21",
+          4.56
+        ],
+        [
+          "2026-08-24",
+          4.47
+        ],
+        [
+          "2026-08-25",
+          4.43
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "isrg-2026-06-24",
+      "ticker": "ISRG",
+      "companyKo": "ISRG",
+      "companyEn": "INTUITIVE SURGICAL INC",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": false,
+      "verifiedSource": null,
+      "amountRange": [
+        100001,
+        250000
+      ],
+      "transactionDate": "2026-06-24",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 401.83,
+      "priceAtDisclosure": 401.27,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 371.84,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": -7.3,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          401.27
+        ],
+        [
+          "2026-08-14",
+          394.51
+        ],
+        [
+          "2026-08-17",
+          390.33
+        ],
+        [
+          "2026-08-18",
+          391.18
+        ],
+        [
+          "2026-08-19",
+          397.72
+        ],
+        [
+          "2026-08-20",
+          374.48
+        ],
+        [
+          "2026-08-21",
+          378.81
+        ],
+        [
+          "2026-08-24",
+          373.57
+        ],
+        [
+          "2026-08-25",
+          371.84
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "bkng-2026-06-24",
+      "ticker": "BKNG",
+      "companyKo": "BKNG",
+      "companyEn": "BOOKING HLDGS INC p No",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": true,
+      "verifiedSource": null,
+      "amountRange": [
+        100001,
+        250000
+      ],
+      "transactionDate": "2026-06-24",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 181.25,
+      "priceAtDisclosure": 213.34,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 213.78,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": 0.2,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          213.34
+        ],
+        [
+          "2026-08-14",
+          212.06
+        ],
+        [
+          "2026-08-17",
+          204.76
+        ],
+        [
+          "2026-08-18",
+          208.25
+        ],
+        [
+          "2026-08-19",
+          213.0
+        ],
+        [
+          "2026-08-20",
+          209.87
+        ],
+        [
+          "2026-08-21",
+          209.62
+        ],
+        [
+          "2026-08-24",
+          213.36
+        ],
+        [
+          "2026-08-25",
+          213.78
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "shw-2026-06-24",
+      "ticker": "SHW",
+      "companyKo": "SHW",
+      "companyEn": "SHERWIN-WILLIAMS CO. ise. a No",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": true,
+      "verifiedSource": null,
+      "amountRange": [
+        50001,
+        100000
+      ],
+      "transactionDate": "2026-06-24",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 333.13,
+      "priceAtDisclosure": 361.55,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 350.45,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": -3.1,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          361.55
+        ],
+        [
+          "2026-08-14",
+          359.1
+        ],
+        [
+          "2026-08-17",
+          349.97
+        ],
+        [
+          "2026-08-18",
+          345.27
+        ],
+        [
+          "2026-08-19",
+          353.59
+        ],
+        [
+          "2026-08-20",
+          346.91
+        ],
+        [
+          "2026-08-21",
+          346.59
+        ],
+        [
+          "2026-08-24",
+          346.73
+        ],
+        [
+          "2026-08-25",
+          350.45
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "cag-2026-06-24",
+      "ticker": "CAG",
+      "companyKo": "CAG",
+      "companyEn": "CONAGRA BRANDS INC",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": true,
+      "verifiedSource": null,
+      "amountRange": [
+        50001,
+        100000
+      ],
+      "transactionDate": "2026-06-24",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 13.61,
+      "priceAtDisclosure": 15.39,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 16.27,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": 5.7,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          15.39
+        ],
+        [
+          "2026-08-14",
+          15.62
+        ],
+        [
+          "2026-08-17",
+          15.54
+        ],
+        [
+          "2026-08-18",
+          15.52
+        ],
+        [
+          "2026-08-19",
+          16.22
+        ],
+        [
+          "2026-08-20",
+          16.27
+        ],
+        [
+          "2026-08-21",
+          16.43
+        ],
+        [
+          "2026-08-24",
+          16.67
+        ],
+        [
+          "2026-08-25",
+          16.27
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "tdg-2026-06-24",
+      "ticker": "TDG",
+      "companyKo": "TDG",
+      "companyEn": "TRANSDIGM GROUP INC",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": false,
+      "verifiedSource": null,
+      "amountRange": [
+        15001,
+        50000
+      ],
+      "transactionDate": "2026-06-24",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 1322.67,
+      "priceAtDisclosure": 1246.31,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 1192.6,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": -4.3,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          1246.31
+        ],
+        [
+          "2026-08-14",
+          1256.9
+        ],
+        [
+          "2026-08-17",
+          1237.82
+        ],
+        [
+          "2026-08-18",
+          1233.78
+        ],
+        [
+          "2026-08-19",
+          1222.91
+        ],
+        [
+          "2026-08-20",
+          1180.4
+        ],
+        [
+          "2026-08-21",
+          1200.35
+        ],
+        [
+          "2026-08-24",
+          1199.08
+        ],
+        [
+          "2026-08-25",
+          1192.6
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "ttd-2026-06-24",
+      "ticker": "TTD",
+      "companyKo": "TTD",
+      "companyEn": "THE TRADE DESK INC CLASS A",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": false,
+      "verifiedSource": null,
+      "amountRange": [
+        15001,
+        50000
+      ],
+      "transactionDate": "2026-06-24",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 17.7,
+      "priceAtDisclosure": 14.56,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 13.25,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": -9.0,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          14.56
+        ],
+        [
+          "2026-08-14",
+          14.14
+        ],
+        [
+          "2026-08-17",
+          13.4
+        ],
+        [
+          "2026-08-18",
+          13.42
+        ],
+        [
+          "2026-08-19",
+          13.54
+        ],
+        [
+          "2026-08-20",
+          13.32
+        ],
+        [
+          "2026-08-21",
+          13.18
+        ],
+        [
+          "2026-08-24",
+          13.27
+        ],
+        [
+          "2026-08-25",
+          13.25
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "cmg-2026-06-24",
+      "ticker": "CMG",
+      "companyKo": "CMG",
+      "companyEn": "CHIPOTLE MEXICAN GRILL 1",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": false,
+      "verifiedSource": null,
+      "amountRange": [
+        15001,
+        50000
+      ],
+      "transactionDate": "2026-06-24",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 31.69,
+      "priceAtDisclosure": 32.61,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 37.43,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": 14.8,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          32.61
+        ],
+        [
+          "2026-08-14",
+          33.5
+        ],
+        [
+          "2026-08-17",
+          33.76
+        ],
+        [
+          "2026-08-18",
+          33.36
+        ],
+        [
+          "2026-08-19",
+          34.66
+        ],
+        [
+          "2026-08-20",
+          35.29
+        ],
+        [
+          "2026-08-21",
+          36.9
+        ],
+        [
+          "2026-08-24",
+          38.02
+        ],
+        [
+          "2026-08-25",
+          37.43
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "jpm-2026-06-24",
+      "ticker": "JPM",
+      "companyKo": "JPM",
+      "companyEn": "JPMORGAN CHASE & CO",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": false,
+      "verifiedSource": null,
+      "amountRange": [
+        15001,
+        50000
+      ],
+      "transactionDate": "2026-06-24",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 333.45,
+      "priceAtDisclosure": 363.11,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 356.69,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": -1.8,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          363.11
+        ],
+        [
+          "2026-08-14",
+          362.84
+        ],
+        [
+          "2026-08-17",
+          360.96
+        ],
+        [
+          "2026-08-18",
+          363.25
+        ],
+        [
+          "2026-08-19",
+          357.26
+        ],
+        [
+          "2026-08-20",
+          351.55
+        ],
+        [
+          "2026-08-21",
+          351.58
+        ],
+        [
+          "2026-08-24",
+          356.39
+        ],
+        [
+          "2026-08-25",
+          356.69
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "kmb-2026-06-24",
+      "ticker": "KMB",
+      "companyKo": "KMB",
+      "companyEn": "KIMBERLY CLARK CORP",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": false,
+      "verifiedSource": null,
+      "amountRange": [
+        15001,
+        50000
+      ],
+      "transactionDate": "2026-06-24",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 106.73,
+      "priceAtDisclosure": 110.7,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 111.02,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": 0.3,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          110.7
+        ],
+        [
+          "2026-08-14",
+          110.39
+        ],
+        [
+          "2026-08-17",
+          107.91
+        ],
+        [
+          "2026-08-18",
+          107.72
+        ],
+        [
+          "2026-08-19",
+          109.88
+        ],
+        [
+          "2026-08-20",
+          108.69
+        ],
+        [
+          "2026-08-21",
+          109.31
+        ],
+        [
+          "2026-08-24",
+          111.37
+        ],
+        [
+          "2026-08-25",
+          111.02
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "mrvl-2026-06-24",
+      "ticker": "MRVL",
+      "companyKo": "MRVL",
+      "companyEn": "S69 MARVELL TECHNOLOGY INC al",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": false,
+      "verifiedSource": null,
+      "amountRange": [
+        15001,
+        50000
+      ],
+      "transactionDate": "2026-06-24",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 276.7,
+      "priceAtDisclosure": 222.18,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 240.38,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": 8.2,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          222.18
+        ],
+        [
+          "2026-08-14",
+          222.02
+        ],
+        [
+          "2026-08-17",
+          234.33
+        ],
+        [
+          "2026-08-18",
+          216.0
+        ],
+        [
+          "2026-08-19",
+          237.27
+        ],
+        [
+          "2026-08-20",
+          251.01
+        ],
+        [
+          "2026-08-21",
+          237.04
+        ],
+        [
+          "2026-08-24",
+          229.29
+        ],
+        [
+          "2026-08-25",
+          240.38
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "gis-2026-05-12",
+      "ticker": "GIS",
+      "companyKo": "GIS",
+      "companyEn": "GENERAL MILLS INC",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": true,
+      "verifiedSource": null,
+      "amountRange": [
+        50001,
+        100000
+      ],
+      "transactionDate": "2026-05-12",
+      "transactionDateApprox": true,
+      "disclosureDate": "2026-05-12",
+      "priceAtTransaction": 34.13,
+      "priceAtDisclosure": 34.13,
+      "priceAfter2mFromDisclosure": 36.6,
+      "priceLatest": 39.78,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": 16.6,
+      "priceHistory": [
+        [
+          "2026-05-12",
+          34.13
+        ],
+        [
+          "2026-05-14",
+          33.13
+        ],
+        [
+          "2026-05-18",
+          33.45
+        ],
+        [
+          "2026-05-21",
+          33.47
+        ],
+        [
+          "2026-05-26",
+          33.16
+        ],
+        [
+          "2026-05-29",
+          33.81
+        ],
+        [
+          "2026-06-02",
+          33.07
+        ],
+        [
+          "2026-06-05",
+          33.15
+        ],
+        [
+          "2026-06-09",
+          33.72
+        ],
+        [
+          "2026-06-11",
+          33.82
+        ],
+        [
+          "2026-06-16",
+          34.4
+        ],
+        [
+          "2026-06-18",
+          33.42
+        ],
+        [
+          "2026-06-24",
+          34.8
+        ],
+        [
+          "2026-06-26",
+          36.01
+        ],
+        [
+          "2026-07-01",
+          37.77
+        ],
+        [
+          "2026-07-06",
+          36.12
+        ],
+        [
+          "2026-07-08",
+          36.33
+        ],
+        [
+          "2026-07-13",
+          36.6
+        ],
+        [
+          "2026-07-15",
+          37.22
+        ],
+        [
+          "2026-07-20",
+          37.58
+        ],
+        [
+          "2026-07-22",
+          36.91
+        ],
+        [
+          "2026-07-27",
+          36.61
+        ],
+        [
+          "2026-07-29",
+          37.92
+        ],
+        [
+          "2026-07-31",
+          35.75
+        ],
+        [
+          "2026-08-05",
+          35.93
+        ],
+        [
+          "2026-08-07",
+          36.89
+        ],
+        [
+          "2026-08-12",
+          38.18
+        ],
+        [
+          "2026-08-14",
+          39.2
+        ],
+        [
+          "2026-08-19",
+          39.99
+        ],
+        [
+          "2026-08-21",
+          39.97
+        ],
+        [
+          "2026-08-25",
+          39.78
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "cat-2026-05-12",
+      "ticker": "CAT",
+      "companyKo": "CAT",
+      "companyEn": "CATERPILLAR INC UNSOLICITED",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": false,
+      "verifiedSource": null,
+      "amountRange": [
+        50001,
+        100000
+      ],
+      "transactionDate": "2026-05-12",
+      "transactionDateApprox": true,
+      "disclosureDate": "2026-05-12",
+      "priceAtTransaction": 912.14,
+      "priceAtDisclosure": 912.14,
+      "priceAfter2mFromDisclosure": 931.47,
+      "priceLatest": 811.29,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": -11.1,
+      "priceHistory": [
+        [
+          "2026-05-12",
+          912.14
+        ],
+        [
+          "2026-05-14",
+          920.22
+        ],
+        [
+          "2026-05-18",
+          863.95
+        ],
+        [
+          "2026-05-21",
+          865.95
+        ],
+        [
+          "2026-05-26",
+          908.55
+        ],
+        [
+          "2026-05-29",
+          875.87
+        ],
+        [
+          "2026-06-02",
+          909.81
+        ],
+        [
+          "2026-06-05",
+          904.28
+        ],
+        [
+          "2026-06-09",
+          914.7
+        ],
+        [
+          "2026-06-11",
+          897.63
+        ],
+        [
+          "2026-06-16",
+          945.46
+        ],
+        [
+          "2026-06-18",
+          985.82
+        ],
+        [
+          "2026-06-24",
+          994.45
+        ],
+        [
+          "2026-06-26",
+          997.47
+        ],
+        [
+          "2026-07-01",
+          991.41
+        ],
+        [
+          "2026-07-06",
+          969.92
+        ],
+        [
+          "2026-07-08",
+          948.08
+        ],
+        [
+          "2026-07-13",
+          931.47
+        ],
+        [
+          "2026-07-15",
+          914.3
+        ],
+        [
+          "2026-07-20",
+          864.3
+        ],
+        [
+          "2026-07-22",
+          889.31
+        ],
+        [
+          "2026-07-27",
+          873.28
+        ],
+        [
+          "2026-07-29",
+          782.71
+        ],
+        [
+          "2026-07-31",
+          814.81
+        ],
+        [
+          "2026-08-05",
+          871.08
+        ],
+        [
+          "2026-08-07",
+          842.19
+        ],
+        [
+          "2026-08-12",
+          855.6
+        ],
+        [
+          "2026-08-14",
+          856.57
+        ],
+        [
+          "2026-08-19",
+          816.15
+        ],
+        [
+          "2026-08-21",
+          827.9
+        ],
+        [
+          "2026-08-25",
+          811.29
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "carr-2026-05-12",
+      "ticker": "CARR",
+      "companyKo": "CARR",
+      "companyEn": "CARRIER GLOBAL CORP Laas, INZ2026",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": true,
+      "verifiedSource": null,
+      "amountRange": [
+        50001,
+        100000
+      ],
+      "transactionDate": "2026-05-12",
+      "transactionDateApprox": true,
+      "disclosureDate": "2026-05-12",
+      "priceAtTransaction": 65.56,
+      "priceAtDisclosure": 65.56,
+      "priceAfter2mFromDisclosure": 68.61,
+      "priceLatest": 58.52,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": -10.7,
+      "priceHistory": [
+        [
+          "2026-05-12",
+          65.56
+        ],
+        [
+          "2026-05-14",
+          66.73
+        ],
+        [
+          "2026-05-18",
+          64.51
+        ],
+        [
+          "2026-05-21",
+          62.18
+        ],
+        [
+          "2026-05-26",
+          64.89
+        ],
+        [
+          "2026-05-29",
+          63.87
+        ],
+        [
+          "2026-06-02",
+          66.42
+        ],
+        [
+          "2026-06-05",
+          67.16
+        ],
+        [
+          "2026-06-09",
+          71.24
+        ],
+        [
+          "2026-06-11",
+          69.74
+        ],
+        [
+          "2026-06-16",
+          71.15
+        ],
+        [
+          "2026-06-18",
+          71.81
+        ],
+        [
+          "2026-06-24",
+          74.06
+        ],
+        [
+          "2026-06-26",
+          73.59
+        ],
+        [
+          "2026-07-01",
+          72.07
+        ],
+        [
+          "2026-07-06",
+          70.1
+        ],
+        [
+          "2026-07-08",
+          66.74
+        ],
+        [
+          "2026-07-13",
+          68.61
+        ],
+        [
+          "2026-07-15",
+          68.74
+        ],
+        [
+          "2026-07-20",
+          66.98
+        ],
+        [
+          "2026-07-22",
+          68.1
+        ],
+        [
+          "2026-07-27",
+          69.33
+        ],
+        [
+          "2026-07-29",
+          59.92
+        ],
+        [
+          "2026-07-31",
+          61.81
+        ],
+        [
+          "2026-08-05",
+          65.43
+        ],
+        [
+          "2026-08-07",
+          64.01
+        ],
+        [
+          "2026-08-12",
+          63.08
+        ],
+        [
+          "2026-08-14",
+          62.78
+        ],
+        [
+          "2026-08-19",
+          61.2
+        ],
+        [
+          "2026-08-21",
+          60.37
+        ],
+        [
+          "2026-08-25",
+          58.52
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "cmcsa-2026-03-30",
+      "ticker": "CMCSA",
+      "companyKo": "컴캐스트",
+      "companyEn": "Oonsid J Trump COMCAST CORPCLA pucime ass MCRON TECHNOLOGY N",
+      "sector": "미디어/통신",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": false,
+      "verifiedSource": null,
+      "amountRange": [
+        50001,
+        100000
+      ],
+      "transactionDate": "2026-03-30",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-05-12",
+      "priceAtTransaction": 28.9,
+      "priceAtDisclosure": 24.9,
+      "priceAfter2mFromDisclosure": 23.97,
+      "priceLatest": 27.1,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": 8.8,
+      "priceHistory": [
+        [
+          "2026-05-12",
+          24.9
+        ],
+        [
+          "2026-05-14",
+          25.17
+        ],
+        [
+          "2026-05-18",
+          24.93
+        ],
+        [
+          "2026-05-21",
+          25.08
+        ],
+        [
+          "2026-05-26",
+          25.15
+        ],
+        [
+          "2026-05-29",
+          24.87
+        ],
+        [
+          "2026-06-02",
+          24.85
+        ],
+        [
+          "2026-06-05",
+          23.82
+        ],
+        [
+          "2026-06-09",
+          23.85
+        ],
+        [
+          "2026-06-11",
+          23.97
+        ],
+        [
+          "2026-06-16",
+          23.66
+        ],
+        [
+          "2026-06-18",
+          22.43
+        ],
+        [
+          "2026-06-24",
+          22.64
+        ],
+        [
+          "2026-06-26",
+          23.17
+        ],
+        [
+          "2026-07-01",
+          23.73
+        ],
+        [
+          "2026-07-06",
+          23.38
+        ],
+        [
+          "2026-07-08",
+          23.19
+        ],
+        [
+          "2026-07-13",
+          23.97
+        ],
+        [
+          "2026-07-15",
+          23.49
+        ],
+        [
+          "2026-07-20",
+          23.78
+        ],
+        [
+          "2026-07-22",
+          23.52
+        ],
+        [
+          "2026-07-27",
+          22.8
+        ],
+        [
+          "2026-07-29",
+          24.61
+        ],
+        [
+          "2026-07-31",
+          23.96
+        ],
+        [
+          "2026-08-05",
+          24.75
+        ],
+        [
+          "2026-08-07",
+          25.36
+        ],
+        [
+          "2026-08-12",
+          25.47
+        ],
+        [
+          "2026-08-14",
+          26.18
+        ],
+        [
+          "2026-08-19",
+          26.59
+        ],
+        [
+          "2026-08-21",
+          26.85
+        ],
+        [
+          "2026-08-25",
+          27.1
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "gehc-2026-05-12",
+      "ticker": "GEHC",
+      "companyKo": "GEHC",
+      "companyEn": "Pew ee a i a ‘ng GE HEALTHCARE TECHNOLOGIES INC UNSOLICITED",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": false,
+      "verifiedSource": null,
+      "amountRange": [
+        15001,
+        50000
+      ],
+      "transactionDate": "2026-05-12",
+      "transactionDateApprox": true,
+      "disclosureDate": "2026-05-12",
+      "priceAtTransaction": 62.29,
+      "priceAtDisclosure": 62.29,
+      "priceAfter2mFromDisclosure": 65.31,
+      "priceLatest": 73.91,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": 18.7,
+      "priceHistory": [
+        [
+          "2026-05-12",
+          62.29
+        ],
+        [
+          "2026-05-14",
+          62.67
+        ],
+        [
+          "2026-05-18",
+          61.51
+        ],
+        [
+          "2026-05-21",
+          64.33
+        ],
+        [
+          "2026-05-26",
+          64.18
+        ],
+        [
+          "2026-05-29",
+          62.34
+        ],
+        [
+          "2026-06-02",
+          61.99
+        ],
+        [
+          "2026-06-05",
+          64.67
+        ],
+        [
+          "2026-06-09",
+          66.01
+        ],
+        [
+          "2026-06-11",
+          64.51
+        ],
+        [
+          "2026-06-16",
+          63.23
+        ],
+        [
+          "2026-06-18",
+          61.59
+        ],
+        [
+          "2026-06-24",
+          64.88
+        ],
+        [
+          "2026-06-26",
+          65.76
+        ],
+        [
+          "2026-07-01",
+          64.86
+        ],
+        [
+          "2026-07-06",
+          64.84
+        ],
+        [
+          "2026-07-08",
+          64.68
+        ],
+        [
+          "2026-07-13",
+          65.31
+        ],
+        [
+          "2026-07-15",
+          63.2
+        ],
+        [
+          "2026-07-20",
+          62.83
+        ],
+        [
+          "2026-07-22",
+          61.41
+        ],
+        [
+          "2026-07-27",
+          61.12
+        ],
+        [
+          "2026-07-29",
+          71.9
+        ],
+        [
+          "2026-07-31",
+          68.02
+        ],
+        [
+          "2026-08-05",
+          70.24
+        ],
+        [
+          "2026-08-07",
+          71.77
+        ],
+        [
+          "2026-08-12",
+          72.28
+        ],
+        [
+          "2026-08-14",
+          73.69
+        ],
+        [
+          "2026-08-19",
+          74.62
+        ],
+        [
+          "2026-08-21",
+          74.82
+        ],
+        [
+          "2026-08-25",
+          73.91
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "meta-2026-05-12",
+      "ticker": "META",
+      "companyKo": "META",
+      "companyEn": "1430 META PLATFORMS INC CLASS A W17/2026",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": false,
+      "verifiedSource": null,
+      "amountRange": [
+        15001,
+        50000
+      ],
+      "transactionDate": "2026-05-12",
+      "transactionDateApprox": true,
+      "disclosureDate": "2026-05-12",
+      "priceAtTransaction": 603.0,
+      "priceAtDisclosure": 603.0,
+      "priceAfter2mFromDisclosure": 656.73,
+      "priceLatest": 570.05,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": -5.5,
+      "priceHistory": [
+        [
+          "2026-05-12",
+          603.0
+        ],
+        [
+          "2026-05-14",
+          618.43
+        ],
+        [
+          "2026-05-18",
+          611.21
+        ],
+        [
+          "2026-05-21",
+          607.38
+        ],
+        [
+          "2026-05-26",
+          612.34
+        ],
+        [
+          "2026-05-29",
+          632.51
+        ],
+        [
+          "2026-06-02",
+          597.63
+        ],
+        [
+          "2026-06-05",
+          593.0
+        ],
+        [
+          "2026-06-09",
+          584.59
+        ],
+        [
+          "2026-06-11",
+          568.43
+        ],
+        [
+          "2026-06-16",
+          600.21
+        ],
+        [
+          "2026-06-18",
+          577.22
+        ],
+        [
+          "2026-06-24",
+          557.67
+        ],
+        [
+          "2026-06-26",
+          550.25
+        ],
+        [
+          "2026-07-01",
+          612.91
+        ],
+        [
+          "2026-07-06",
+          600.29
+        ],
+        [
+          "2026-07-08",
+          603.12
+        ],
+        [
+          "2026-07-13",
+          656.73
+        ],
+        [
+          "2026-07-15",
+          681.31
+        ],
+        [
+          "2026-07-20",
+          645.85
+        ],
+        [
+          "2026-07-22",
+          627.17
+        ],
+        [
+          "2026-07-27",
+          593.87
+        ],
+        [
+          "2026-07-29",
+          585.61
+        ],
+        [
+          "2026-07-31",
+          556.71
+        ],
+        [
+          "2026-08-05",
+          588.77
+        ],
+        [
+          "2026-08-07",
+          592.1
+        ],
+        [
+          "2026-08-12",
+          578.85
+        ],
+        [
+          "2026-08-14",
+          589.85
+        ],
+        [
+          "2026-08-19",
+          546.03
+        ],
+        [
+          "2026-08-21",
+          549.9
+        ],
+        [
+          "2026-08-25",
+          570.05
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "mnro-2026-05-12",
+      "ticker": "MNRO",
+      "companyKo": "MNRO",
+      "companyEn": "1431 MONRO INC 3430/2026",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": false,
+      "verifiedSource": null,
+      "amountRange": [
+        15001,
+        50000
+      ],
+      "transactionDate": "2026-05-12",
+      "transactionDateApprox": true,
+      "disclosureDate": "2026-05-12",
+      "priceAtTransaction": 16.16,
+      "priceAtDisclosure": 16.16,
+      "priceAfter2mFromDisclosure": 16.51,
+      "priceLatest": 13.96,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": -13.6,
+      "priceHistory": [
+        [
+          "2026-05-12",
+          16.16
+        ],
+        [
+          "2026-05-14",
+          16.32
+        ],
+        [
+          "2026-05-18",
+          15.74
+        ],
+        [
+          "2026-05-21",
+          16.38
+        ],
+        [
+          "2026-05-26",
+          16.56
+        ],
+        [
+          "2026-05-29",
+          16.45
+        ],
+        [
+          "2026-06-02",
+          15.77
+        ],
+        [
+          "2026-06-05",
+          14.53
+        ],
+        [
+          "2026-06-09",
+          14.66
+        ],
+        [
+          "2026-06-11",
+          16.08
+        ],
+        [
+          "2026-06-16",
+          16.0
+        ],
+        [
+          "2026-06-18",
+          15.55
+        ],
+        [
+          "2026-06-24",
+          15.71
+        ],
+        [
+          "2026-06-26",
+          17.22
+        ],
+        [
+          "2026-07-01",
+          17.15
+        ],
+        [
+          "2026-07-06",
+          17.22
+        ],
+        [
+          "2026-07-08",
+          16.54
+        ],
+        [
+          "2026-07-13",
+          16.51
+        ],
+        [
+          "2026-07-15",
+          17.21
+        ],
+        [
+          "2026-07-20",
+          16.79
+        ],
+        [
+          "2026-07-22",
+          16.83
+        ],
+        [
+          "2026-07-27",
+          16.94
+        ],
+        [
+          "2026-07-29",
+          13.255
+        ],
+        [
+          "2026-07-31",
+          12.25
+        ],
+        [
+          "2026-08-05",
+          13.15
+        ],
+        [
+          "2026-08-07",
+          12.73
+        ],
+        [
+          "2026-08-12",
+          11.48
+        ],
+        [
+          "2026-08-14",
+          11.48
+        ],
+        [
+          "2026-08-19",
+          12.57
+        ],
+        [
+          "2026-08-21",
+          12.55
+        ],
+        [
+          "2026-08-25",
+          13.96
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "dva-2026-05-12",
+      "ticker": "DVA",
+      "companyKo": "DVA",
+      "companyEn": "1694 DAVITA INC, W17/2026",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": false,
+      "verifiedSource": null,
+      "amountRange": [
+        1001,
+        15000
+      ],
+      "transactionDate": "2026-05-12",
+      "transactionDateApprox": true,
+      "disclosureDate": "2026-05-12",
+      "priceAtTransaction": 200.54,
+      "priceAtDisclosure": 200.54,
+      "priceAfter2mFromDisclosure": 235.58,
+      "priceLatest": 177.8,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": -11.3,
+      "priceHistory": [
+        [
+          "2026-05-12",
+          200.54
+        ],
+        [
+          "2026-05-14",
+          192.58
+        ],
+        [
+          "2026-05-18",
+          199.52
+        ],
+        [
+          "2026-05-21",
+          198.66
+        ],
+        [
+          "2026-05-26",
+          195.57
+        ],
+        [
+          "2026-05-29",
+          194.36
+        ],
+        [
+          "2026-06-02",
+          187.89
+        ],
+        [
+          "2026-06-05",
+          192.16
+        ],
+        [
+          "2026-06-09",
+          198.19
+        ],
+        [
+          "2026-06-11",
+          203.83
+        ],
+        [
+          "2026-06-16",
+          208.98
+        ],
+        [
+          "2026-06-18",
+          207.91
+        ],
+        [
+          "2026-06-24",
+          213.04
+        ],
+        [
+          "2026-06-26",
+          217.04
+        ],
+        [
+          "2026-07-01",
+          228.03
+        ],
+        [
+          "2026-07-06",
+          235.71
+        ],
+        [
+          "2026-07-08",
+          230.72
+        ],
+        [
+          "2026-07-13",
+          235.58
+        ],
+        [
+          "2026-07-15",
+          231.61
+        ],
+        [
+          "2026-07-20",
+          234.1
+        ],
+        [
+          "2026-07-22",
+          232.08
+        ],
+        [
+          "2026-07-27",
+          236.31
+        ],
+        [
+          "2026-07-29",
+          240.96
+        ],
+        [
+          "2026-07-31",
+          240.09
+        ],
+        [
+          "2026-08-05",
+          188.69
+        ],
+        [
+          "2026-08-07",
+          183.77
+        ],
+        [
+          "2026-08-12",
+          181.5
+        ],
+        [
+          "2026-08-14",
+          180.06
+        ],
+        [
+          "2026-08-19",
+          177.27
+        ],
+        [
+          "2026-08-21",
+          173.82
+        ],
+        [
+          "2026-08-25",
+          177.8
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "pfgc-2026-05-12",
+      "ticker": "PFGC",
+      "companyKo": "PFGC",
+      "companyEn": "PERFORMANCE FOOD GROUP C",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": true,
+      "verifiedSource": null,
+      "amountRange": [
+        1001,
+        15000
+      ],
+      "transactionDate": "2026-05-12",
+      "transactionDateApprox": true,
+      "disclosureDate": "2026-05-12",
+      "priceAtTransaction": 95.03,
+      "priceAtDisclosure": 95.03,
+      "priceAfter2mFromDisclosure": 113.31,
+      "priceLatest": 104.94,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": 10.4,
+      "priceHistory": [
+        [
+          "2026-05-12",
+          95.03
+        ],
+        [
+          "2026-05-14",
+          96.79
+        ],
+        [
+          "2026-05-18",
+          96.14
+        ],
+        [
+          "2026-05-21",
+          95.18
+        ],
+        [
+          "2026-05-26",
+          93.91
+        ],
+        [
+          "2026-05-29",
+          98.19
+        ],
+        [
+          "2026-06-02",
+          96.21
+        ],
+        [
+          "2026-06-05",
+          97.12
+        ],
+        [
+          "2026-06-09",
+          99.76
+        ],
+        [
+          "2026-06-11",
+          104.06
+        ],
+        [
+          "2026-06-16",
+          104.51
+        ],
+        [
+          "2026-06-18",
+          103.62
+        ],
+        [
+          "2026-06-24",
+          106.43
+        ],
+        [
+          "2026-06-26",
+          110.44
+        ],
+        [
+          "2026-07-01",
+          112.54
+        ],
+        [
+          "2026-07-06",
+          113.74
+        ],
+        [
+          "2026-07-08",
+          111.53
+        ],
+        [
+          "2026-07-13",
+          113.31
+        ],
+        [
+          "2026-07-15",
+          110.41
+        ],
+        [
+          "2026-07-20",
+          109.32
+        ],
+        [
+          "2026-07-22",
+          111.37
+        ],
+        [
+          "2026-07-27",
+          114.3
+        ],
+        [
+          "2026-07-29",
+          116.65
+        ],
+        [
+          "2026-07-31",
+          114.39
+        ],
+        [
+          "2026-08-05",
+          112.0
+        ],
+        [
+          "2026-08-07",
+          114.9
+        ],
+        [
+          "2026-08-12",
+          107.41
+        ],
+        [
+          "2026-08-14",
+          107.25
+        ],
+        [
+          "2026-08-19",
+          103.34
+        ],
+        [
+          "2026-08-21",
+          104.98
+        ],
+        [
+          "2026-08-25",
+          104.94
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "app-2026-03-26",
+      "ticker": "APP",
+      "companyKo": "APP",
+      "companyEn": "APPLOVIN CORP CLASS A",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": true,
+      "verifiedSource": null,
+      "amountRange": [
+        1001,
+        15000
+      ],
+      "transactionDate": "2026-03-26",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-05-12",
+      "priceAtTransaction": 391.21,
+      "priceAtDisclosure": 490.69,
+      "priceAfter2mFromDisclosure": 442.85,
+      "priceLatest": 310.54,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": -36.7,
+      "priceHistory": [
+        [
+          "2026-05-12",
+          490.69
+        ],
+        [
+          "2026-05-14",
+          485.16
+        ],
+        [
+          "2026-05-18",
+          492.38
+        ],
+        [
+          "2026-05-21",
+          485.89
+        ],
+        [
+          "2026-05-26",
+          514.24
+        ],
+        [
+          "2026-05-29",
+          613.09
+        ],
+        [
+          "2026-06-02",
+          605.63
+        ],
+        [
+          "2026-06-05",
+          557.2
+        ],
+        [
+          "2026-06-09",
+          520.84
+        ],
+        [
+          "2026-06-11",
+          478.57
+        ],
+        [
+          "2026-06-16",
+          515.2
+        ],
+        [
+          "2026-06-18",
+          469.71
+        ],
+        [
+          "2026-06-24",
+          464.96
+        ],
+        [
+          "2026-06-26",
+          477.08
+        ],
+        [
+          "2026-07-01",
+          564.61
+        ],
+        [
+          "2026-07-06",
+          543.79
+        ],
+        [
+          "2026-07-08",
+          522.18
+        ],
+        [
+          "2026-07-13",
+          442.85
+        ],
+        [
+          "2026-07-15",
+          452.73
+        ],
+        [
+          "2026-07-20",
+          424.6
+        ],
+        [
+          "2026-07-22",
+          412.48
+        ],
+        [
+          "2026-07-27",
+          412.73
+        ],
+        [
+          "2026-07-29",
+          399.46
+        ],
+        [
+          "2026-07-31",
+          395.9
+        ],
+        [
+          "2026-08-05",
+          417.8
+        ],
+        [
+          "2026-08-07",
+          346.8
+        ],
+        [
+          "2026-08-12",
+          303.76
+        ],
+        [
+          "2026-08-14",
+          315.44
+        ],
+        [
+          "2026-08-19",
+          310.79
+        ],
+        [
+          "2026-08-21",
+          305.77
+        ],
+        [
+          "2026-08-25",
+          310.54
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "pg-2026-05-12",
+      "ticker": "PG",
+      "companyKo": "PG",
+      "companyEn": "PROCTER & GAMBLE CO Yo",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": true,
+      "verifiedSource": null,
+      "amountRange": [
+        1001,
+        15000
+      ],
+      "transactionDate": "2026-05-12",
+      "transactionDateApprox": true,
+      "disclosureDate": "2026-05-12",
+      "priceAtTransaction": 143.91,
+      "priceAtDisclosure": 143.91,
+      "priceAfter2mFromDisclosure": 148.37,
+      "priceLatest": 145.4,
+      "priceLatestDate": "2026-08-25",
+      "trackingReturnPct": 1.0,
+      "priceHistory": [
+        [
+          "2026-05-12",
+          143.91
+        ],
+        [
+          "2026-05-14",
+          142.71
+        ],
+        [
+          "2026-05-18",
+          142.39
+        ],
+        [
+          "2026-05-21",
+          143.4
+        ],
+        [
+          "2026-05-26",
+          142.96
+        ],
+        [
+          "2026-05-29",
+          143.56
+        ],
+        [
+          "2026-06-02",
+          140.82
+        ],
+        [
+          "2026-06-05",
+          146.54
+        ],
+        [
+          "2026-06-09",
+          148.67
+        ],
+        [
+          "2026-06-11",
+          148.34
+        ],
+        [
+          "2026-06-16",
+          152.49
+        ],
+        [
+          "2026-06-18",
+          150.38
+        ],
+        [
+          "2026-06-24",
+          152.04
+        ],
+        [
+          "2026-06-26",
+          149.02
+        ],
+        [
+          "2026-07-01",
+          147.43
+        ],
+        [
+          "2026-07-06",
+          149.31
+        ],
+        [
+          "2026-07-08",
+          148.4
+        ],
+        [
+          "2026-07-13",
+          148.37
+        ],
+        [
+          "2026-07-15",
+          148.05
+        ],
+        [
+          "2026-07-20",
+          149.13
+        ],
+        [
+          "2026-07-22",
+          149.13
+        ],
+        [
+          "2026-07-27",
+          148.63
+        ],
+        [
+          "2026-07-29",
+          146.1
+        ],
+        [
+          "2026-07-31",
+          144.49
+        ],
+        [
+          "2026-08-05",
+          146.8
+        ],
+        [
+          "2026-08-07",
+          145.79
+        ],
+        [
+          "2026-08-12",
+          144.08
+        ],
+        [
+          "2026-08-14",
+          144.55
+        ],
+        [
+          "2026-08-19",
+          144.38
+        ],
+        [
+          "2026-08-21",
+          144.68
+        ],
+        [
+          "2026-08-25",
+          145.4
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "brk-b-2026-05-12",
+      "ticker": "BRK-B",
+      "companyKo": "BRK-B",
+      "companyEn": "BERKSHIRE HATHAWAY CLASS B solo",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": true,
+      "verifiedSource": null,
+      "amountRange": [
+        1001,
+        15000
+      ],
+      "transactionDate": "2026-05-12",
+      "transactionDateApprox": true,
+      "disclosureDate": "2026-05-12",
+      "priceAtTransaction": null,
+      "priceAtDisclosure": null,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": null,
+      "priceLatestDate": null,
+      "trackingReturnPct": null,
+      "priceHistory": [],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    }
+  ]
 }
