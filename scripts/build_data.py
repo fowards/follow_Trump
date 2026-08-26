@@ -1484,6 +1484,48 @@ Filer's Name: Donald J. Trump
 # 전체 진단 (--diagnose) — 한 번에 모든 문서를 훑어 어디가 막혔는지 보여준다
 # ---------------------------------------------------------------------------
 
+def list_sources(sources_path="scripts/sources.json"):
+    """공시를 받지 않고 목록과 날짜만 즉시 보여준다.
+
+    '지금 우리가 몇 월 공시부터 보고 있나'에 대한 답. 파일명 날짜만 파싱하므로
+    네트워크는 목록 페이지 한 번만 두드리고 PDF는 하나도 받지 않는다.
+    """
+    cfg = load_sources(sources_path)
+    urls = list(cfg.get("ptrUrls") or [])
+    try:
+        for u in discover_ptr_urls(cfg):
+            if u not in urls:
+                urls.append(u)
+    except Exception as e:  # noqa: BLE001
+        print(f"  ! 자동 탐색 오류: {e}", file=sys.stderr)
+
+    if not urls:
+        print("공시를 찾지 못했습니다.", file=sys.stderr)
+        return 2
+
+    rows = []
+    for u in urls:
+        name = urllib.parse.unquote(u.rsplit("/", 1)[-1])
+        rows.append((_date_from_name(name), name, urllib.parse.urlsplit(u).netloc))
+    rows.sort(key=lambda r: r[0] or "0000")
+
+    print("=" * 70)
+    print(f" 현재 잡히는 공시 {len(rows)}건 (다운로드 없이 목록만)")
+    print("=" * 70)
+    for d, name, host in rows:
+        print(f"  {d or '날짜?':<12}  {name[:52]}")
+
+    dated = [d for d, _, _ in rows if d]
+    print("-" * 70)
+    if dated:
+        print(f" 기간: {min(dated)} ~ {max(dated)}  (총 {len(dated)}건 날짜 확인)")
+        print(f" ⚠ 이 범위 밖의 트럼프 거래는 지금 목록에 없습니다.")
+        print("   더 옛날 공시가 필요하면 sources.json의 ptrUrls에 직접 추가하세요.")
+    else:
+        print(" 파일명에서 날짜를 못 읽었습니다.")
+    return 0
+
+
 def diagnose(sources_path="scripts/sources.json"):
     """모든 공시를 실제로 받아 파싱해 보고, 문서별로 무엇이 걸러졌는지 보여준다.
 
@@ -1539,6 +1581,8 @@ def diagnose(sources_path="scripts/sources.json"):
         how = "OCR" if used_ocr else ("텍스트" if had_text else "판독실패")
 
         rows = parse_ptr_text(text)
+        disc = parse_received_date(text)
+        txn_dates = sorted(r["transactionDate"] for r in rows if r.get("transactionDate"))
         stocks, dropped = [], []
         for r in rows:
             if is_individual_stock(r["asset"]) and extract_ticker(r["asset"]):
@@ -1559,13 +1603,20 @@ def diagnose(sources_path="scripts/sources.json"):
             if info:
                 nat = f"  원본 {info[0]:.0f}dpi"
 
+        name_date = _date_from_name(name)
         docs.append({
             "name": name, "host": host, "how": how, "pages": pages,
             "chars": len(text), "rows": len(rows), "stocks": len(stocks),
             "scan_dpi": (info[0] if (not had_text and nat) else None),
+            "disclosure": disc, "name_date": name_date,
+            "txn_min": txn_dates[0] if txn_dates else None,
+            "txn_max": txn_dates[-1] if txn_dates else None,
         })
-        print(f"  {i:>2}. [{how:^5}] {pages:>2}쪽  거래행 {len(rows):>3}  "
-              f"개별종목 {len(stocks):>2}{nat}   {name}")
+        # 이 공시가 '언제 것'인지: 파일명 날짜 → 없으면 헤더 공시일
+        when = name_date or disc or "날짜?"
+        span = f"{txn_dates[0][:7]}~{txn_dates[-1][:7]}" if txn_dates else "거래없음"
+        print(f"  {i:>2}. {when}  [{how:^5}] {pages:>2}쪽  거래행 {len(rows):>3}  "
+              f"개별 {len(stocks):>2}  거래일 {span}{nat}")
 
     # ---- 요약 -----------------------------------------------------------
     n_text = sum(1 for d in docs if d.get("how") == "텍스트")
@@ -1574,6 +1625,17 @@ def diagnose(sources_path="scripts/sources.json"):
     print("\n" + "=" * 70)
     print(f" 문서 {len(docs)}건 — 텍스트 {n_text} / OCR {n_ocr} / 판독실패 {n_fail}")
     print(f" 개별 종목 {len(all_stocks)}건 / 걸러낸 행 {len(all_dropped)}건")
+
+    # 공시가 커버하는 기간 — '몇 월부터'에 대한 답
+    filed = sorted(d["name_date"] or d.get("disclosure") for d in docs
+                   if d.get("name_date") or d.get("disclosure"))
+    txns = sorted(d["txn_min"] for d in docs if d.get("txn_min"))
+    txns_max = sorted((d["txn_max"] for d in docs if d.get("txn_max")), reverse=True)
+    if filed:
+        print(f" 공시 파일 날짜:  {filed[0]} ~ {filed[-1]}")
+    if txns:
+        print(f" 읽어낸 거래일:   {txns[0]} ~ {txns_max[0]}  "
+              f"(이 범위 밖의 거래는 우리 데이터에 없음)")
     print("=" * 70)
 
     # ---- 개별 종목 (있으면) ---------------------------------------------
@@ -1808,6 +1870,28 @@ def dump_ocr(lines=60):
 # ---------------------------------------------------------------------------
 # OCR 설정 실측 (--ocr-tune)
 # ---------------------------------------------------------------------------
+
+def _date_from_name(name: str):
+    """공시 파일명에 박힌 날짜(MM.DD.YY / MM.DD.YYYY / MM-DD-YY)를 뽑는다.
+
+    whitehouse.gov 파일명이 '...Report-11.14.25.pdf' 꼴이라 여기서
+    이 공시가 '언제 것'인지 바로 알 수 있다.
+    """
+    m = re.search(r"(\d{1,2})[.\-](\d{1,2})[.\-](\d{2,4})", name)
+    if not m:
+        return None
+    mm, dd, yy = m.groups()
+    y = int(yy)
+    if y < 100:
+        y += 2000
+    try:
+        d = datetime(y, int(mm), int(dd))
+    except ValueError:
+        return None
+    if d.year < 2012 or d > datetime.now(timezone.utc).replace(tzinfo=None) + timedelta(days=7):
+        return None
+    return d.strftime("%Y-%m-%d")
+
 
 def native_scan_dpi(data: bytes, page: int):
     """스캔 이미지의 실제 해상도(dpi)를 재본다.
@@ -2173,6 +2257,8 @@ def main():
                     help="스캔 PDF OCR 생략(텍스트 레이어가 있는 것만 처리)")
     ap.add_argument("--ocr-dpi", type=int, default=300,
                     help="OCR 렌더링 해상도(기본 300). 낮추면 빠르고 부정확")
+    ap.add_argument("--list-sources", action="store_true",
+                    help="다운로드 없이 현재 잡히는 공시 목록과 기간만 즉시 출력")
     ap.add_argument("--diagnose", action="store_true",
                     help="모든 공시를 한 번에 받아 파싱·필터·해상도를 통째로 진단")
     ap.add_argument("--dump-ocr", action="store_true",
@@ -2186,6 +2272,9 @@ def main():
     ap.add_argument("--probe-oge", action="store_true",
                     help="OGE 자동 탐색만 실행해 진단 출력(데이터 변경 없음)")
     args = ap.parse_args()
+
+    if args.list_sources:
+        return list_sources(args.sources)
 
     if args.diagnose:
         return diagnose(args.sources)
