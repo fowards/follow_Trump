@@ -46,6 +46,7 @@ import os
 import json
 import re
 import sys
+import tempfile
 import time
 import urllib.error
 import urllib.parse
@@ -220,7 +221,12 @@ def parse_date(text: str, year_hint=None):
 
 
 def parse_received_date(text: str):
-    """문서 헤더의 'OGE RECEIVED: M/D/YYYY' → 공시일."""
+    """문서 헤더의 'OGE RECEIVED: M/D/YYYY' → 공시일.
+
+    OCR이 숫자를 틀리면(실측: 2026 → "2626") 이 값이 전체 파싱을 망가뜨린다.
+    공시일은 거래일의 상한선으로 쓰이기 때문에, 말이 안 되는 연도가 들어오면
+    아예 None을 돌려 '상한선 없음(오늘 기준)'으로 떨어지게 한다.
+    """
     m = RECEIVED_RE.search(text)
     if not m:
         return None
@@ -229,9 +235,14 @@ def parse_received_date(text: str):
     if y < 100:
         y += 2000
     try:
-        return datetime(y, int(mm), int(dd)).strftime("%Y-%m-%d")
+        d = datetime(y, int(mm), int(dd))
     except ValueError:
         return None
+    # 278-T 전자공시는 2012년 이후. 미래 날짜도 있을 수 없다(접수 여유 며칠만 허용).
+    now = datetime.now(timezone.utc).replace(tzinfo=None)
+    if d.year < 2012 or d > now + timedelta(days=7):
+        return None
+    return d.strftime("%Y-%m-%d")
 
 
 def pick_transaction_date(line: str, disclosure_date=None):
@@ -372,12 +383,25 @@ def has_text_layer(text: str, pages: int) -> bool:
     return pages > 0 and (len(text) / pages) >= MIN_CHARS_PER_PAGE
 
 
-def _ocr_cache_path(data: bytes, dpi: int) -> str:
+# 기본값. --ocr-tune 으로 실측해 고른 값을 여기에 반영한다.
+OCR_DPI = int(os.environ.get("FT_OCR_DPI", "300"))
+OCR_PSM = os.environ.get("FT_OCR_PSM", "6")
+OCR_PREP = os.environ.get("FT_OCR_PREP", "none")
+
+
+def _ocr_cache_path(data: bytes, dpi: int, psm="6", prep="none") -> str:
+    """OCR 설정이 다르면 결과도 다르므로 캐시 키에 넣는다.
+
+    기본 설정(psm 6 / 전처리 없음)은 예전 파일명을 그대로 써서, 이미 몇 시간
+    걸려 만들어 둔 캐시를 버리지 않는다.
+    """
     key = hashlib.sha256(data).hexdigest()[:32]
-    return os.path.join(OCR_CACHE_DIR, f"{key}-{dpi}.txt")
+    if psm == "6" and prep == "none":
+        return os.path.join(OCR_CACHE_DIR, f"{key}-{dpi}.txt")
+    return os.path.join(OCR_CACHE_DIR, f"{key}-{dpi}-p{psm}-{prep}.txt")
 
 
-def _render_pages(data: bytes, dpi: int):
+def _render_pages(data: bytes, dpi: int, pages=None):
     """PDF를 페이지 이미지로 렌더링한다.
 
     PyMuPDF를 먼저 쓰되, 최신 파이썬에서 휠이 없어 설치가 안 되는 경우가 있어
@@ -393,7 +417,9 @@ def _render_pages(data: bytes, dpi: int):
         doc = pymupdf.open(stream=data, filetype="pdf")
         try:
             mat = pymupdf.Matrix(dpi / 72.0, dpi / 72.0)
-            for page in doc:
+            for i, page in enumerate(doc):
+                if pages is not None and i not in pages:
+                    continue
                 pix = page.get_pixmap(matrix=mat, colorspace=pymupdf.csGRAY)
                 yield Image.frombytes("L", (pix.width, pix.height), pix.samples)
         finally:
@@ -410,10 +436,64 @@ def _render_pages(data: bytes, dpi: int):
 
     pdf = pypdfium2.PdfDocument(data)
     try:
-        for page in pdf:
+        for i, page in enumerate(pdf):
+            if pages is not None and i not in pages:
+                continue
             yield page.render(scale=dpi / 72.0, grayscale=True).to_pil()
     finally:
         pdf.close()
+
+
+# 실측: 300dpi + --psm 6 으로 읽은 백악관 스캔본은 숫자가 통째로 글자가 된다.
+#   "$500,001 - $1,000,000" → "ssongon-sonnsnn"
+#   "$50,000 - $100,000"    → "ssenco-stconcoo"
+# 금액 칸이 하나도 안 읽히니 거래를 뽑을 수가 없다. 원인은 파서가 아니라
+# 해상도·전처리다. 아래 전처리들을 실제로 재보고 고르기 위한 장치.
+
+PREP_MODES = ("none", "sharp", "binary", "binary2x")
+
+
+def preprocess(img, mode: str):
+    """OCR 전 이미지 보정. mode별 차이를 --ocr-tune 으로 실측해 고른다."""
+    if mode == "none":
+        return img
+    from PIL import Image, ImageOps, ImageFilter
+    g = img.convert("L")
+    if mode == "sharp":
+        # 대비만 펴고 살짝 선명하게. 원본 해상도 유지.
+        return ImageOps.autocontrast(g).filter(ImageFilter.SHARPEN)
+    if mode in ("binary", "binary2x"):
+        if mode == "binary2x":
+            # 작은 숫자는 픽셀이 모자라 뭉개진다. 2배로 키운 뒤 이진화한다.
+            g = g.resize((g.width * 2, g.height * 2), Image.LANCZOS)
+        g = ImageOps.autocontrast(g)
+        thr = _otsu(g)
+        return g.point(lambda v: 255 if v > thr else 0, mode="L")
+    raise ValueError(f"알 수 없는 전처리: {mode}")
+
+
+def _otsu(img) -> int:
+    """Otsu 임계값. 스캔 품질이 문서마다 달라 고정값을 쓰면 안 된다."""
+    hist = img.histogram()[:256]
+    total = sum(hist) or 1
+    sum_all = sum(i * h for i, h in enumerate(hist))
+    w_b = 0.0
+    sum_b = 0.0
+    best, thr = -1.0, 128
+    for i, h in enumerate(hist):
+        w_b += h
+        if w_b == 0:
+            continue
+        w_f = total - w_b
+        if w_f == 0:
+            break
+        sum_b += i * h
+        m_b = sum_b / w_b
+        m_f = (sum_all - sum_b) / w_f
+        var = w_b * w_f * (m_b - m_f) ** 2
+        if var > best:
+            best, thr = var, i
+    return thr
 
 
 def count_pdf_pages(data: bytes) -> int:
@@ -424,14 +504,18 @@ def count_pdf_pages(data: bytes) -> int:
         return 0
 
 
-def ocr_pdf(data: bytes, dpi=300, lang="eng", progress=True) -> str:
+def ocr_pdf(data: bytes, dpi=None, lang="eng", progress=True,
+            psm=None, prep=None, pages=None) -> str:
     """스캔 PDF를 페이지 이미지로 렌더링해 Tesseract로 읽는다.
 
     느리기 때문에(쪽당 수 초) 결과를 PDF 해시 기준으로 캐시한다.
     같은 공시를 다시 돌려도 두 번 OCR하지 않는다.
     """
-    cache = _ocr_cache_path(data, dpi)
-    if os.path.exists(cache):
+    dpi = dpi or OCR_DPI
+    psm = psm or OCR_PSM
+    prep = prep or OCR_PREP
+    cache = _ocr_cache_path(data, dpi, psm, prep) if pages is None else None
+    if cache and os.path.exists(cache):
         with open(cache, encoding="utf-8") as f:
             txt = f.read()
         print(f"    (OCR 캐시 사용: {len(txt):,}자)", file=sys.stderr)
@@ -450,9 +534,11 @@ def ocr_pdf(data: bytes, dpi=300, lang="eng", progress=True) -> str:
     total = count_pdf_pages(data)
     out = []
     try:
-        for i, img in enumerate(_render_pages(data, dpi), 1):
-            # --psm 6: 표 형태 문서를 한 덩어리 텍스트로 읽기
-            out.append(pytesseract.image_to_string(img, lang=lang, config="--psm 6"))
+        # --oem 1: LSTM 엔진만 사용. 구형 엔진이 섞이면 숫자 오독이 늘어난다.
+        cfg = f"--oem 1 --psm {psm} -c preserve_interword_spaces=1"
+        for i, img in enumerate(_render_pages(data, dpi, pages), 1):
+            out.append(pytesseract.image_to_string(
+                preprocess(img, prep), lang=lang, config=cfg))
             if progress:
                 print(f"    OCR {i}/{total or '?'}쪽", end="\r", file=sys.stderr)
     except RuntimeError as e:
@@ -463,13 +549,14 @@ def ocr_pdf(data: bytes, dpi=300, lang="eng", progress=True) -> str:
     if progress:
         print(f"    OCR 완료 {len(out)}쪽 → {len(text):,}자          ", file=sys.stderr)
 
-    os.makedirs(OCR_CACHE_DIR, exist_ok=True)
-    with open(cache, "w", encoding="utf-8") as f:
-        f.write(text)
+    if cache:
+        os.makedirs(OCR_CACHE_DIR, exist_ok=True)
+        with open(cache, "w", encoding="utf-8") as f:
+            f.write(text)
     return text
 
 
-def extract_pdf_text(data: bytes, use_ocr=True, dpi=300) -> str:
+def extract_pdf_text(data: bytes, use_ocr=True, dpi=None) -> str:
     """텍스트 레이어를 우선 쓰고, 없으면(스캔본) OCR로 넘어간다."""
     text, pages = _text_layer(data)
     if has_text_layer(text, pages):
@@ -497,13 +584,35 @@ def encode_url(url: str) -> str:
     ))
 
 
+PDF_CACHE_DIR = os.environ.get("FT_PDF_CACHE", ".cache/pdf")
+
+
 def fetch_bytes(source: str) -> bytes:
-    if source.startswith("http://") or source.startswith("https://"):
-        req = urllib.request.Request(encode_url(source), headers=UA)
-        with urllib.request.urlopen(req, timeout=90) as r:
-            return r.read()
-    with open(source, "rb") as f:
-        return f.read()
+    """받은 PDF는 디스크에 남긴다.
+
+    공시 한 건이 32MB나 되는 게 있어서, OCR 설정을 바꿔가며 실험할 때마다
+    다시 받으면 시간도 대역폭도 낭비다. 원본은 확정 문서라 변하지 않는다.
+    """
+    if not (source.startswith("http://") or source.startswith("https://")):
+        with open(source, "rb") as f:
+            return f.read()
+
+    key = hashlib.sha256(source.encode("utf-8")).hexdigest()[:32]
+    cached = os.path.join(PDF_CACHE_DIR, f"{key}.pdf")
+    if os.path.exists(cached):
+        with open(cached, "rb") as f:
+            return f.read()
+
+    req = urllib.request.Request(encode_url(source), headers=UA)
+    with urllib.request.urlopen(req, timeout=90) as r:
+        data = r.read()
+    os.makedirs(PDF_CACHE_DIR, exist_ok=True)
+    with open(cached, "wb") as f:
+        f.write(data)
+    # 어느 캐시가 어느 공시인지 나중에 알아볼 수 있게 남긴다.
+    with open(os.path.join(PDF_CACHE_DIR, "index.txt"), "a", encoding="utf-8") as f:
+        f.write(f"{key}\t{source}\n")
+    return data
 
 
 # ---------------------------------------------------------------------------
@@ -1152,6 +1261,18 @@ def self_test():
     if mrna:
         check("개별 종목 거래일", mrna[0]["transactionDate"] == "2025-12-02")
 
+    # OCR이 연도를 틀리면(2026→2626) 공시일이 거래일 상한선으로 쓰여 전체가 0건이 된다
+    check("말도 안 되는 연도의 공시일은 무시",
+          parse_received_date("OGE RECEIVED 5/12/2626") is None)
+    check("2012년 이전 공시일은 무시",
+          parse_received_date("OGE RECEIVED 5/12/1998") is None)
+    check("정상 공시일은 그대로",
+          parse_received_date("OGE RECEIVED 5/12/2026") == "2026-05-12")
+    check("공시일이 깨져도 거래는 파싱된다",
+          len(parse_ptr_text(
+              "OGE RECEIVED 5/12/2626\n"
+              "1 MODERNA INC MRNA purchase 3/02/2026 $15,001 - $50,000\n")) == 1)
+
     # OCR이 표의 한 행을 여러 줄로 쪼갠 경우 (우리가 직접 OCR한 스캔본의 실제 모습).
     # 특히 종목명은 행의 첫 줄에 오는데, 예전 파서는 버퍼가 비어 있으면 그 줄을
     # 버려서 이름이 통째로 사라졌다("purchase"의 잔해인 "ase Yes"만 남았다).
@@ -1237,7 +1358,7 @@ Filer's Name: Donald J. Trump
     check("소스 파일 없으면 빈 설정 반환", cfg.get("ptrUrls") == [])
 
     # meta 정직성: 자동 추출이 0건인데 '자동 파싱 결과'라고 쓰면 안 된다(실제 발생했던 문제)
-    import tempfile
+    # tempfile은 상단에서 import
     with tempfile.TemporaryDirectory() as td:
         fp = os.path.join(td, "d.json")
         manual = [{"id": "m1", "ticker": "AAA", "disclosureDate": "2026-01-01"}]
@@ -1324,7 +1445,16 @@ Filer's Name: Donald J. Trump
 
         raw, pages = _text_layer(pdf)
         check("스캔본은 텍스트 레이어 없음으로 판정", not has_text_layer(raw, pages))
-        text = extract_pdf_text(pdf)
+        # 시험용 OCR 결과가 실제 캐시에 섞이면 안 된다. 실측에서 이 픽스처가
+        # .cache/ocr 에 쌓여 --dump-ocr 진단을 오염시켰다(가짜 MRNA 3건).
+        global OCR_CACHE_DIR
+        _real_cache = OCR_CACHE_DIR
+        with tempfile.TemporaryDirectory() as _tmp:
+            OCR_CACHE_DIR = _tmp
+            try:
+                text = extract_pdf_text(pdf)
+            finally:
+                OCR_CACHE_DIR = _real_cache
         check("OCR로 텍스트 복원", len(text) > 50)
         check("OCR 텍스트에서 공시일 추출", parse_received_date(text) == "2026-05-12")
         orows = parse_ptr_text(text)
@@ -1371,9 +1501,15 @@ def dump_ocr(lines=60):
     total_rows, total_stocks = 0, 0
     kept, dropped = [], []
     per_file = []
+    fixtures = []
     for f in files:
         with open(f, encoding="utf-8") as fh:
             t = fh.read()
+        # 예전 버전의 --self-test가 시험용 픽스처를 실제 캐시에 써 놓았다.
+        # 그대로 두면 가짜 MRNA 거래가 진단에 잡힌다.
+        if len(t) < 1000 and "MODERNA" in t.upper() and "PENNSYLVANIA" in t.upper():
+            fixtures.append(f)
+            continue
         rws = parse_ptr_text(t)
         stk = [r for r in rws if is_individual_stock(r["asset"])]
         total_rows += len(rws)
@@ -1383,6 +1519,12 @@ def dump_ocr(lines=60):
         per_file.append((f, t, rws, stk))
         print(f"  {os.path.getsize(f):>9,}B  거래행 {len(rws):>4}  개별종목 {len(stk):>3}"
               f"   {os.path.basename(f)[:28]}")
+
+    if fixtures:
+        print(f"\n  ⚠ 시험용 픽스처 {len(fixtures)}건을 건너뛰었습니다(가짜 데이터).")
+        print("    지우려면:")
+        for f in fixtures:
+            print(f"      del \"{os.path.abspath(f)}\"")
 
     print("\n" + "-" * 62)
     print(f" ① 파서가 뽑은 거래 행      : {total_rows:>5}")
@@ -1409,6 +1551,10 @@ def dump_ocr(lines=60):
 
     # 원인 지목: 0이 되는 첫 단계를 짚는다.
     print()
+    if not per_file:
+        print("[진단] 읽을 수 있는 OCR 캐시가 없습니다(전부 시험용 픽스처).")
+        print("       위 del 명령으로 지운 뒤 run_local.bat 을 다시 돌리세요.")
+        return 0
     if total_rows == 0:
         print("[진단] 파서가 거래 행을 한 건도 못 뽑았습니다.")
         target, text, _, _ = per_file[0]
@@ -1445,6 +1591,135 @@ def dump_ocr(lines=60):
         print("       run_local.bat 으로 전체 실행하면 data.json에 반영됩니다.")
     return 0
 
+
+# ---------------------------------------------------------------------------
+# OCR 설정 실측 (--ocr-tune)
+# ---------------------------------------------------------------------------
+
+def _score_ocr(text):
+    """OCR 결과가 '거래표로서' 쓸만한지 점수화한다.
+
+    핵심은 금액 칸이다. 실측에서 종목명은 대충 읽히는데 금액이 통째로
+    글자가 돼버려("$500,001" → "ssongon") 거래를 하나도 못 뽑았다.
+    그래서 금액 인식 줄 수를 가장 무겁게 본다.
+    """
+    lines = [l for l in text.splitlines() if l.strip()]
+    n_amount = sum(1 for l in lines if parse_amount(l))
+    n_date = sum(1 for l in lines if DATE_RE.search(l))
+    n_type = sum(1 for l in lines if any(p.search(l) for p, _ in TYPE_PATTERNS))
+    rows = parse_ptr_text(text)
+    digits = sum(c.isdigit() for c in text)
+    return {
+        "amount": n_amount, "date": n_date, "type": n_type,
+        "rows": len(rows), "digits": digits, "chars": len(text),
+        # 최종 산출물은 거래 행이다. 금액줄이 많아도 행으로 안 묶이면 소용없다.
+        "score": len(rows) * 20 + n_amount * 10 + n_date * 3 + n_type,
+    }
+
+
+def ocr_tune(pdf=None, page=None, dpis=(300, 400, 600),
+             preps=("none", "sharp", "binary2x"), psms=("6", "4")):
+    """한 페이지를 여러 설정으로 OCR해 보고 어느 조합이 제일 나은지 표로 보여준다.
+
+    추측 대신 실측으로 고르기 위한 도구다. 페이지 하나만 쓰기 때문에
+    조합당 수 초~수십 초면 끝난다.
+    """
+    if pdf is None:
+        if not os.path.isdir(PDF_CACHE_DIR):
+            print(f"PDF 캐시가 없습니다: {PDF_CACHE_DIR}", file=sys.stderr)
+            print("run_local.bat 을 한 번 돌려 PDF를 받아두거나,", file=sys.stderr)
+            print("  python scripts/build_data.py --ocr-tune --pdf <주소나 파일경로>",
+                  file=sys.stderr)
+            return 2
+        cands = [os.path.join(PDF_CACHE_DIR, f)
+                 for f in os.listdir(PDF_CACHE_DIR) if f.endswith(".pdf")]
+        if not cands:
+            print(f"PDF 캐시가 비어 있습니다: {PDF_CACHE_DIR}", file=sys.stderr)
+            return 2
+        pdf = max(cands, key=os.path.getsize)   # 큰 문서 = 스캔본일 확률이 높다
+
+    print(f"대상 PDF: {pdf}")
+    data = fetch_bytes(pdf)
+    total = count_pdf_pages(data)
+    print(f"  {len(data):,} bytes / {total}쪽")
+
+    if page is None:
+        page = _find_table_page(data, total)
+        if page is None:
+            print("  거래표가 있는 쪽을 못 찾아 3쪽으로 진행합니다.", file=sys.stderr)
+            page = 3
+    print(f"  실험 대상: {page}쪽 (1부터 셈)\n")
+
+    idx = {page - 1}
+    print(f"{'dpi':>5} {'psm':>4} {'전처리':<10} "
+          f"{'금액줄':>6} {'날짜줄':>6} {'매매줄':>6} {'거래행':>6} {'숫자수':>7} {'점수':>6}")
+    print("-" * 70)
+    results = []
+    for dpi in dpis:
+        for psm in psms:
+            for prep in preps:
+                try:
+                    txt = ocr_pdf(data, dpi=dpi, psm=psm, prep=prep,
+                                  pages=idx, progress=False)
+                except RuntimeError as e:
+                    print(f"  ! {e}", file=sys.stderr)
+                    return 2
+                sc = _score_ocr(txt)
+                results.append((sc["score"], dpi, psm, prep, sc, txt))
+                print(f"{dpi:>5} {psm:>4} {prep:<10} "
+                      f"{sc['amount']:>6} {sc['date']:>6} {sc['type']:>6} "
+                      f"{sc['rows']:>6} {sc['digits']:>7} {sc['score']:>6}")
+
+    results.sort(key=lambda r: r[0], reverse=True)
+    best = results[0]
+    print("\n" + "=" * 70)
+    if best[0] == 0:
+        print("[결과] 어떤 설정으로도 금액·날짜를 읽지 못했습니다.")
+        print("       이 스캔본은 OCR로 자동 처리하기 어렵습니다.")
+        print("       --page 로 다른 쪽을 지정해 보고(표지·서명 쪽일 수 있음),")
+        print("       그래도 0이면 수동 입력이나 유료 API를 고려해야 합니다.")
+    else:
+        _, dpi, psm, prep, sc, txt = best
+        print(f"[최적] dpi={dpi}  psm={psm}  전처리={prep}"
+              f"   (금액 {sc['amount']}줄 / 거래행 {sc['rows']}건)")
+        print("\n적용하려면 run_local.bat 실행 전에:")
+        print(f"    set FT_OCR_DPI={dpi}")
+        print(f"    set FT_OCR_PSM={psm}")
+        print(f"    set FT_OCR_PREP={prep}")
+        print("\n===== 최적 설정의 OCR 결과 앞 25줄 =====")
+        for l in [l for l in txt.splitlines() if l.strip()][:25]:
+            print(l)
+    return 0
+
+
+def _find_table_page(data: bytes, total: int):
+    """거래표가 있는 쪽을 찾는다.
+
+    앞쪽은 표지·서명 페이지라 거래가 없다. 저해상도로 빠르게 훑어
+    'Received Over 30' 같은 표 머리글이나 금액 비슷한 문자열이 있는 쪽을 고른다.
+    """
+    try:
+        import pytesseract
+    except ImportError:
+        return None
+    cmd = os.environ.get("TESSERACT_CMD") or (find_tesseract()[0] or "")
+    if cmd:
+        pytesseract.pytesseract.tesseract_cmd = cmd
+
+    scan = range(min(total, 12))
+    best, best_n = None, 0
+    for i in scan:
+        try:
+            img = next(iter(_render_pages(data, 150, {i})))
+        except (StopIteration, RuntimeError):
+            break
+        t = pytesseract.image_to_string(img, config="--oem 1 --psm 6")
+        n = len(re.findall(r"[\$sS]\s?\d", t)) + t.lower().count("received over")
+        print(f"    쪽 탐색 {i+1}/{min(total,12)} (신호 {n})", end="\r", file=sys.stderr)
+        if n > best_n:
+            best, best_n = i + 1, n
+    print(" " * 40, end="\r", file=sys.stderr)
+    return best
 
 # ---------------------------------------------------------------------------
 # 환경 진단 (--doctor)
@@ -1612,6 +1887,10 @@ def main():
                     help="OCR 렌더링 해상도(기본 300). 낮추면 빠르고 부정확")
     ap.add_argument("--dump-ocr", action="store_true",
                     help="캐시된 OCR 텍스트와 파서 실패 지점을 진단")
+    ap.add_argument("--ocr-tune", action="store_true",
+                    help="OCR 설정(해상도·전처리)을 한 쪽으로 실측 비교")
+    ap.add_argument("--pdf", help="--ocr-tune 대상 PDF (주소 또는 파일경로)")
+    ap.add_argument("--page", type=int, help="--ocr-tune 대상 쪽 번호 (1부터)")
     ap.add_argument("--doctor", action="store_true",
                     help="무엇이 빠졌는지 진단(설치 확인용)")
     ap.add_argument("--probe-oge", action="store_true",
@@ -1620,6 +1899,9 @@ def main():
 
     if args.dump_ocr:
         return dump_ocr()
+
+    if args.ocr_tune:
+        return ocr_tune(pdf=args.pdf, page=args.page)
 
     if args.doctor:
         return doctor()

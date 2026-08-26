@@ -8,6 +8,15 @@ REM ===================================================================
 setlocal enabledelayedexpansion
 cd /d "%~dp0"
 
+REM --- OCR 설정 ---------------------------------------------------
+REM 백악관 스캔본은 품질이 들쭉날쭉해서 해상도·전처리에 따라 결과가 크게 다르다.
+REM 어느 조합이 나은지는 추측하지 말고 아래로 실측한 뒤 여기에 적는다:
+REM     python scripts\build_data.py --ocr-tune
+if not defined FT_OCR_DPI  set "FT_OCR_DPI=300"
+if not defined FT_OCR_PSM  set "FT_OCR_PSM=6"
+if not defined FT_OCR_PREP set "FT_OCR_PREP=none"
+echo [OCR] dpi=!FT_OCR_DPI! psm=!FT_OCR_PSM! 전처리=!FT_OCR_PREP!
+
 REM --- Tesseract 자동 탐색 ---------------------------------------
 REM 설치는 했는데 PATH에 안 잡히는 경우가 흔해서 흔한 위치를 직접 뒤진다.
 if not defined TESSERACT_CMD (
