@@ -13,8 +13,8 @@ REM 백악관 스캔본은 품질이 들쭉날쭉해서 해상도·전처리에 
 REM 어느 조합이 나은지는 추측하지 말고 아래로 실측한 뒤 여기에 적는다:
 REM     python scripts\build_data.py --ocr-tune
 if not defined FT_OCR_DPI  set "FT_OCR_DPI=300"
-if not defined FT_OCR_PSM  set "FT_OCR_PSM=6"
-if not defined FT_OCR_PREP set "FT_OCR_PREP=none"
+if not defined FT_OCR_PSM  set "FT_OCR_PSM=4"
+if not defined FT_OCR_PREP set "FT_OCR_PREP=sharp"
 echo [OCR] dpi=!FT_OCR_DPI! psm=!FT_OCR_PSM! 전처리=!FT_OCR_PREP!
 
 REM --- Tesseract 자동 탐색 ---------------------------------------

@@ -284,85 +284,85 @@ def _line_has(line):
 def parse_ptr_text(text: str, disclosure_date=None, window=8):
     """278-T 텍스트에서 거래 행을 추출한다.
 
-    표의 한 행이 한 줄에 담기는 경우(텍스트 레이어 문서)와, 여러 줄로
-    쪼개지는 경우(우리가 직접 OCR한 스캔 문서)를 모두 처리한다.
-    실측: OCR 결과에서는 금액·날짜·거래유형이 서로 다른 줄에 흩어져
-    한 줄 기준으로만 찾으면 한 건도 못 뽑는다.
+    핵심 착안: 278-T 표의 모든 거래 행은 **금액 구간으로 끝난다**
+    ($100,001 - $250,000 꼴). 그래서 금액이 나타나는 줄을 '행의 끝'으로 보고,
+    직전까지 쌓인 줄에서 종목명·날짜·거래유형을 거둬들인다.
 
-    방식: 줄을 누적하다가 금액·날짜·거래유형이 모두 모이면 한 건으로
-    확정하고 버퍼를 비운다. 한 줄에 다 있으면 즉시 확정되므로
-    기존 동작과 동일하고, 흩어져 있으면 최대 window줄까지 묶는다.
+    실측(트럼프 2026 Q1·Q2 스캔본)에서 확인한 두 가지:
+      · 종목명·날짜·금액이 서로 다른 줄에 흩어진다(스캔 OCR).
+      · 거래유형(purchase/sale) 칸이 OCR에서 자주 통째로 사라진다.
+        수백 건이 유형 없이 이름+날짜+금액만 남는다. 그래서 유형을
+        '필수'로 두면 대부분을 놓친다 — 유형은 선택으로 두고, 없으면
+        매수로 추정하되 actionInferred 플래그를 남겨 정직하게 표시한다.
     """
     if disclosure_date is None:
         disclosure_date = parse_received_date(text)
 
     rows = []
-    buf = []          # [(line, amount, has_date, action), ...]
+    buf = []          # 아직 금액을 만나지 못한, 쌓이는 줄들
 
-    def flush():
-        """버퍼가 한 건을 이루면 레코드로 만든다."""
-        if not buf:
-            return False
-        amount = next((b[1] for b in buf if b[1]), None)
-        action = next((b[3] for b in buf if b[3]), None)
-        joined = " ".join(b[0] for b in buf)
-        if not amount or not action:
-            return False
-        # 금액이 적힌 줄에 거래일이 함께 있는 경우가 많다. 그 줄을 먼저 보고,
-        # 없을 때만 버퍼 전체에서 찾는다(헤더 날짜 오염 방지).
-        amount_line = next((b[0] for b in buf if b[1]), "")
-        txn = (pick_transaction_date(amount_line, disclosure_date)
-               or pick_transaction_date(joined, disclosure_date))
-        if not txn:
-            return False
+    # 헤더·안내문·페이지 표시는 어떤 거래 행에도 속하지 않는다. 만나면 버퍼를 비운다.
+    # OCR이 단어를 뭉개므로(RECEIVED→RECELVED) 앞부분만 느슨하게 잡는다.
+    boundary_re = re.compile(
+        r"(OGE\s+REC|OGE\s+Form|Filer.{0,3}s\s+Name|Periodic\s+Trans"
+        r"|Received\s+Over|Do\s+not\s+include|This\s+is\s+a?\s*publ"
+        r"|Page\s?\d|Paged\d|of\s?44|Note\s?[:\.])", re.I)
 
+    def flush(amount):
+        joined = " ".join(buf)
+        # 거래일: 버퍼 전체에서 공시일 이전의 가장 그럴듯한 날짜(없으면 None)
+        txn = pick_transaction_date(joined, disclosure_date)
+        # 거래유형: 감지되면 쓰고, 없으면 매수로 추정(플래그 남김)
+        action, inferred = None, False
+        for pat, kind in TYPE_PATTERNS:
+            if pat.search(joined):
+                action = kind
+                break
+        if action is None:
+            action, inferred = "buy", True
+
+        # 종목명 정리: 금액·날짜·유형어·표 부호·안내 토큰을 걷어낸다
         name = AMOUNT_RE.sub(" ", joined)
         name = DATE_RE.sub(" ", name)
-        name = re.sub(r"^\s*\d{1,3}\s+", "", name)
-        # 거래유형은 부분 일치(purch·ourch…)로 잡으므로 sub하면 "ase" 같은
-        # 찌꺼기가 남는다. 매칭된 토큰을 통째로 버린다.
+        name = re.sub(r"^\s*\d{1,3}\s+", "", name)          # 앞 행번호
+        # 주의: 쿠폰금리(7.1000%)·만기 같은 숫자는 지우지 않는다. 채권 판별
+        # (BOND_RE)이 이 표식으로 채권을 걸러내기 때문. 지우면 채권이 주식으로
+        # 새어 들어온다(실측: ALLY FINL PERP NT 7.1000% 가 주식으로 분류됨).
         name = " ".join(tok for tok in name.split()
                         if not any(p.search(tok) for p, _ in TYPE_PATTERNS))
-        name = re.sub(r"\b(VOS|YES|NO)\b", " ", name, flags=re.I)
-        name = re.sub(r"\s{2,}", " ", name).strip(" .-|·•")
+        name = re.sub(r"\b(VOS|VES|YES|NO|Yos|Yes)\b", " ", name)
+        # 슬래시가 뭉개진 날짜 잔해(412712026 등) 제거. 5자리 이상 연속 숫자만
+        # 지우므로 쿠폰금리(7.1000)·만기연도(2049)는 건드리지 않는다.
+        name = re.sub(r"\b\d{5,}\b", " ", name)
+        name = re.sub(r"[|_}{~•·\[\]!]+", " ", name)
+        name = re.sub(r"\s{2,}", " ", name).strip(" .-—|·•,")
+
+        # 이름에 알파벳 대문자가 최소 두 글자는 있어야 종목으로 본다(잡음 배제)
+        if len(re.findall(r"[A-Z]", name)) < 2 or len(name) < 3:
+            return False
         rows.append({
             "asset": name,
             "action": action,
+            "actionInferred": inferred,
             "transactionDate": txn,
             "disclosureDate": disclosure_date,
             "amountRange": amount,
         })
         return True
 
-    # OCR이 헤더 단어도 뭉갠다(RECEIVED→RECELVED). 앞부분만 느슨하게 잡는다.
-    header_re = re.compile(
-        r"(OGE\s+REC|OGE\s+Form|Filer.{0,3}s\s+Name|Periodic\s+Trans)", re.I)
-
     for raw in text.splitlines():
         line = raw.strip()
         if not line:
             continue
-        if header_re.search(line):
-            buf.clear()          # 헤더는 어떤 거래 행에도 속하지 않는다
+        if boundary_re.search(line):
+            buf.clear()
             continue
-        amount, has_date, action = _line_has(line)
-        if not (amount or has_date or action):
-            # 신호가 없는 줄이 대개 종목명이다. OCR이 행을 쪼개면 종목명이
-            # 맨 앞에 오므로, 버퍼가 비어 있어도 반드시 담아 둬야 한다.
-            # (예전엔 버퍼가 비었을 때 버려서 이름이 통째로 사라졌다.)
-            buf.append((line, None, False, None))
-            buf[:] = buf[-window:]
-            continue
-
-        buf.append((line, amount, has_date, action))
+        buf.append(line)
         buf[:] = buf[-window:]
-
-        have_amount = any(b[1] for b in buf)
-        have_date = any(b[2] for b in buf)
-        have_action = any(b[3] for b in buf)
-        if have_amount and have_date and have_action:
-            if flush():
-                buf.clear()
+        amount = parse_amount(line)      # 금액이 있으면 이 줄이 행의 끝
+        if amount:
+            flush(amount)
+            buf.clear()
 
     return rows
 
@@ -386,8 +386,8 @@ def has_text_layer(text: str, pages: int) -> bool:
 
 # 기본값. --ocr-tune 으로 실측해 고른 값을 여기에 반영한다.
 OCR_DPI = int(os.environ.get("FT_OCR_DPI", "300"))
-OCR_PSM = os.environ.get("FT_OCR_PSM", "6")
-OCR_PREP = os.environ.get("FT_OCR_PREP", "none")
+OCR_PSM = os.environ.get("FT_OCR_PSM", "4")
+OCR_PREP = os.environ.get("FT_OCR_PREP", "sharp")
 
 
 def _ocr_cache_path(data: bytes, dpi: int, psm="6", prep="none") -> str:
@@ -1325,6 +1325,34 @@ Filer's Name: Donald J. Trump
           len(sstk) > 1 and sstk[1]["action"] == "sell")
     check("쪼개진 행 중 채권은 제외",
           all("PENNSYLVANIA" not in r["asset"] for r in sstk))
+
+    # 실측: 2026 Q2 스캔본(199dpi, psm4+sharp). 표의 거래유형(purchase) 칸이
+    # OCR에서 대부분 사라지고, 종목명·날짜·금액이 여러 줄에 흩어진다.
+    # 유형 없어도 금액을 기준으로 행을 잡아내야 한다(수백 건이 이 형태).
+    Q2 = """OGE Form 278-T (Updated February 2024)
+Note: This is a public form. Do not include account numbers.
+| Paged2of44 | 02 of 44
+ADOBE INC                                             4/17/2026
+Yes} $1,000,001 - $5,000,000
+AGILENT TECHNOLOGIES INC              4/17/2026    Yes |$100,001 - $250,000
+ALLY FINL INC PERP -D NT 7.1000% 12/31/49    412712026   Yos| $1,001 - $15,000
+BERKSHIRE HATHAWAY INC-CL B           4/17/2026
+Yes! $1,000,001 - $5,000,000
+"""
+    q2 = parse_ptr_text(Q2, disclosure_date="2026-05-14")
+    q2_stk = [r for r in q2 if is_individual_stock(r["asset"])]
+    check(f"유형칸 없는 스캔본에서 행 추출 (실제 {len(q2)})", len(q2) == 4)
+    check("금액만으로 종목 인식 (ADOBE/AGILENT/BERKSHIRE)",
+          any("ADOBE" in r["asset"] for r in q2_stk)
+          and any("BERKSHIRE" in r["asset"] for r in q2_stk))
+    check("유형 없으면 매수로 추정하고 플래그를 남긴다",
+          all(r.get("actionInferred") for r in q2_stk if "ADOBE" in r["asset"]))
+    check("유형 있으면 명시로 두고 추정 안 함",
+          not any(r.get("actionInferred") for r in srows if r["action"] == "sell"))
+    check("쿠폰 붙은 채권(PERP NT 7.1000%)은 여기서도 제외",
+          not any("ALLY" in r["asset"] for r in q2_stk))
+    check("종목명에 뭉개진 날짜숫자(412712026) 잔해 없음",
+          all(not re.search(r"\\d{5,}", r["asset"]) for r in q2))
 
     # 회사채는 회사 이름이 붙어 있어도 주식이 아니다(실측에서 대량 오검출)
     check("회사채(NTS) 제외", not is_individual_stock("PAYPAL HOLDINGS INC NTS 02.850% 100129"))

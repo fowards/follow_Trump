@@ -2,3 +2,4 @@
 __pycache__/
 *.pyc
 run_log.txt
+scripts/__pycache__/
