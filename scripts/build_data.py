@@ -143,6 +143,87 @@ TICKER_STOPWORDS = {
 }
 
 
+# ---------------------------------------------------------------------------
+# 종목명 → 티커 해석 (SEC company_tickers.json)
+# ---------------------------------------------------------------------------
+# 278-T에는 티커가 없고 회사명만 있다("ADOBE INC"). 수백 개 종목의 티커를
+# 손으로 넣을 수 없으니, SEC가 무료로 공개하는 공식 목록으로 해석한다.
+#   https://www.sec.gov/files/company_tickers.json
+# 형식: {"0":{"cik_str":320193,"ticker":"AAPL","title":"Apple Inc."}, ...}
+
+SEC_TICKERS_URL = "https://www.sec.gov/files/company_tickers.json"
+SEC_TICKERS_FILE = os.environ.get("FT_SEC_TICKERS", "scripts/company_tickers.json")
+_SEC_INDEX = None          # 정규화된 회사명 → 티커
+
+# 회사명에서 떼어낼 접미사·주식종류 표기. 정규화 때 양쪽에서 똑같이 지워
+# "ADOBE INC" 와 SEC의 "Adobe Inc." 가 같아지게 한다.
+_NAME_NOISE = {
+    "INC", "INCORPORATED", "CORP", "CORPORATION", "CO", "COMPANY", "COS",
+    "LLC", "LP", "LLP", "LTD", "PLC", "SA", "NV", "AG", "SE", "AB",
+    "HLDG", "HLDGS", "HOLDING", "HOLDINGS", "GROUP", "GRP", "THE",
+    "COM", "COMMON", "STOCK", "STK", "CAP", "SHS", "SH", "SHARES",
+    "CL", "CLA", "CLB", "CLC", "CLASS", "A", "B", "C", "NEW", "ADR", "ADS",
+    "SER", "REIT", "TR", "TRUST", "FUND", "ORD", "NPV", "PAR",
+}
+
+
+def _normalize_company(name: str) -> str:
+    """회사명을 비교용으로 정규화한다(대문자·부호제거·접미사제거)."""
+    name = re.sub(r"[^A-Za-z0-9& ]", " ", name.upper())
+    name = name.replace("&", " AND ")
+    toks = [t for t in name.split() if t and t not in _NAME_NOISE]
+    return " ".join(toks)
+
+
+def load_ticker_index(path=None, fetch=True, quiet=False):
+    """SEC 티커 목록을 읽어 정규화 인덱스를 만든다.
+
+    로컬 파일이 있으면 그걸 쓰고, 없으면(그리고 fetch=True면) SEC에서 받아
+    캐시한다. 파일도 네트워크도 없으면 인덱스 없이(=기존 방식) 넘어간다.
+    """
+    global _SEC_INDEX
+    path = path or SEC_TICKERS_FILE
+    data = None
+    if os.path.exists(path):
+        with open(path, encoding="utf-8") as f:
+            data = json.load(f)
+    elif fetch:
+        try:
+            if not quiet:
+                print(f"· SEC 티커 목록 다운로드: {SEC_TICKERS_URL}", file=sys.stderr)
+            raw = fetch_bytes(SEC_TICKERS_URL)
+            data = json.loads(raw)
+            os.makedirs(os.path.dirname(path) or ".", exist_ok=True)
+            with open(path, "wb") as f:
+                f.write(raw)
+        except Exception as e:  # noqa: BLE001
+            if not quiet:
+                print(f"  ! SEC 목록을 받지 못했습니다({e}). 티커 해석을 건너뜁니다.",
+                      file=sys.stderr)
+            _SEC_INDEX = {}
+            return _SEC_INDEX
+
+    index = {}
+    if data:
+        rows = data.values() if isinstance(data, dict) else data
+        for row in rows:
+            tk = (row.get("ticker") or "").strip().upper()
+            title = row.get("title") or ""
+            if not tk or not title:
+                continue
+            key = _normalize_company(title)
+            if not key:
+                continue
+            # 같은 정규화명이 여럿이면(예: Alphabet GOOGL/GOOG) 짧은 티커를
+            # 우선한다. 대개 대표 클래스(보통주)에 가깝다.
+            if key not in index or len(tk) < len(index[key]):
+                index[key] = tk
+    _SEC_INDEX = index
+    if not quiet:
+        print(f"· SEC 티커 인덱스 {len(index):,}개 회사", file=sys.stderr)
+    return index
+
+
 def extract_ticker(asset_name: str) -> str | None:
     """자산명에서 티커를 뽑는다.
 
@@ -157,9 +238,18 @@ def extract_ticker(asset_name: str) -> str | None:
     for name, tk in NAME_TO_TICKER.items():
         if name in low:
             return tk
-    for tok in re.findall(r"\b([A-Z]{2,5})\b", asset_name):
-        if tok not in TICKER_STOPWORDS:
-            return tok
+    # SEC 공식 목록으로 회사명 → 티커 해석 (인덱스가 로드된 경우에만)
+    if _SEC_INDEX:
+        tk = _SEC_INDEX.get(_normalize_company(asset_name))
+        if tk:
+            return tk
+    # 마지막 수단: 이름 안에 티커가 그대로 박혀 있는 경우(일부 278-T 형식).
+    # 단 SEC 인덱스가 로드됐다면, 못 찾은 이름을 대문자 조각으로 '추측'하지
+    # 않는다 — 그러면 ADOBE→"ADOBE"처럼 가짜 티커가 생겨 잘못된 데이터가 된다.
+    if not _SEC_INDEX:
+        for tok in re.findall(r"\b([A-Z]{2,5})\b", asset_name):
+            if tok not in TICKER_STOPWORDS:
+                return tok
     return None
 
 
@@ -837,6 +927,7 @@ def build_record(row, series):
 
 
 def build_from_ptrs(sources, enrich=True, use_ocr=True, dpi=300):
+    load_ticker_index()          # 회사명 → 티커 해석 준비(SEC 목록)
     raw_rows = []
     n_ocr = n_text = n_empty = 0
     for src in sources:
@@ -1565,6 +1656,7 @@ def diagnose(sources_path="scripts/sources.json"):
     PDF·OCR 캐시를 쓰므로 두 번째 실행부터는 빠르다. 딱 한 번만 돌리면 된다.
     """
     cfg = load_sources(sources_path)
+    load_ticker_index()          # 회사명 → 티커 해석 준비(SEC 목록)
     print("=" * 70)
     print(" 전체 진단 — 공시 목록 수집 중")
     print("=" * 70)
@@ -2231,14 +2323,26 @@ def doctor():
             bad(f"{f} 없음",
                 "저장소 최상위 폴더에서 실행하세요 (cd follow_Trump)")
 
-    print("\n[5] 네트워크")
+    print("\n[5] SEC 티커 목록 (회사명 → 티커 해석)")
+    if os.path.exists(SEC_TICKERS_FILE):
+        try:
+            n = len(load_ticker_index(quiet=True))
+            ok(f"{SEC_TICKERS_FILE} — 회사 {n:,}개")
+        except Exception as e:  # noqa: BLE001
+            bad(f"{SEC_TICKERS_FILE} 읽기 실패: {e}",
+                "파일이 깨졌을 수 있습니다. 지우고 다시 받으세요.")
+    else:
+        bad(f"{SEC_TICKERS_FILE} 없음 (없으면 실행 중 자동 다운로드 시도)",
+            f"수동으로 받으려면: {SEC_TICKERS_URL} → scripts\\company_tickers.json 로 저장")
+
+    print("\n[6] 네트워크")
     try:
         body = _get_text("https://www.whitehouse.gov/disclosures/", timeout=25)
         ok(f"공시 목록 (whitehouse.gov) — 응답 {len(body):,}자")
     except Exception as e:  # noqa: BLE001
         bad(f"공시 목록 접속 실패: {e}", "인터넷 연결 또는 방화벽/백신 확인")
 
-    print("\n[6] 시세 제공처 (하나만 되면 충분)")
+    print("\n[7] 시세 제공처 (하나만 되면 충분)")
     got = None
     for name, fn in PRICE_PROVIDERS:
         try:
