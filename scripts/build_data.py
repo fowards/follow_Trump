@@ -334,8 +334,9 @@ def parse_ptr_text(text: str, disclosure_date=None, window=8):
         })
         return True
 
+    # OCR이 헤더 단어도 뭉갠다(RECEIVED→RECELVED). 앞부분만 느슨하게 잡는다.
     header_re = re.compile(
-        r"(OGE\s+RECEIVED|OGE\s+Form|Filer.{0,3}s\s+Name|Periodic\s+Transaction)", re.I)
+        r"(OGE\s+REC|OGE\s+Form|Filer.{0,3}s\s+Name|Periodic\s+Trans)", re.I)
 
     for raw in text.splitlines():
         line = raw.strip()
@@ -1480,6 +1481,208 @@ Filer's Name: Donald J. Trump
 
 
 # ---------------------------------------------------------------------------
+# 전체 진단 (--diagnose) — 한 번에 모든 문서를 훑어 어디가 막혔는지 보여준다
+# ---------------------------------------------------------------------------
+
+def diagnose(sources_path="scripts/sources.json"):
+    """모든 공시를 실제로 받아 파싱해 보고, 문서별로 무엇이 걸러졌는지 보여준다.
+
+    지금까지는 스캔본 6건만 --dump-ocr로 봤다. 하지만 텍스트 레이어로 깨끗이
+    읽힌 11건이 뭘로 파싱됐는지는 본 적이 없다. 이 도구는 셋을 한꺼번에 답한다.
+      1) 문제가 OCR 화질인가, 필터 과다인가, 아니면 진짜 채권뿐인가
+      2) 스캔본은 해상도를 올리면 나아질 여지가 있는가(원본 dpi 측정)
+      3) 걸러낸 것 중에 진짜 개별 주식이 섞여 있는가(눈검사용 전체 목록)
+    PDF·OCR 캐시를 쓰므로 두 번째 실행부터는 빠르다. 딱 한 번만 돌리면 된다.
+    """
+    cfg = load_sources(sources_path)
+    print("=" * 70)
+    print(" 전체 진단 — 공시 목록 수집 중")
+    print("=" * 70)
+
+    urls = []
+    for u in (cfg.get("ptrUrls") or []):
+        if u not in urls:
+            urls.append(u)
+    try:
+        for u in discover_ptr_urls(cfg):
+            if u not in urls:
+                urls.append(u)
+    except Exception as e:  # noqa: BLE001
+        print(f"  ! 자동 탐색 중 오류(계속 진행): {e}", file=sys.stderr)
+
+    if not urls:
+        print("공시를 하나도 찾지 못했습니다. 네트워크나 sources.json을 확인하세요.",
+              file=sys.stderr)
+        return 2
+
+    print(f"\n대상 공시 {len(urls)}건. 하나씩 받아 파싱합니다"
+          " (캐시가 있으면 빠릅니다)…\n")
+
+    docs = []            # 문서별 결과
+    all_stocks = []      # 전체 개별 종목
+    all_dropped = []     # 전체 걸러낸 행 (문서 출처 포함)
+
+    for i, url in enumerate(urls, 1):
+        name = urllib.parse.unquote(url.rsplit("/", 1)[-1])[:48]
+        host = urllib.parse.urlsplit(url).netloc
+        try:
+            data = fetch_bytes(url)
+        except Exception as e:  # noqa: BLE001
+            print(f"  {i:>2}. [받기실패] {name}  ({e})")
+            docs.append({"name": name, "host": host, "fail": str(e)})
+            continue
+
+        layer, pages = _text_layer(data)
+        had_text = has_text_layer(layer, pages)
+        text = extract_pdf_text(data, use_ocr=True)
+        used_ocr = (not had_text) and len(text) > len(layer)
+        how = "OCR" if used_ocr else ("텍스트" if had_text else "판독실패")
+
+        rows = parse_ptr_text(text)
+        stocks, dropped = [], []
+        for r in rows:
+            if is_individual_stock(r["asset"]) and extract_ticker(r["asset"]):
+                r["ticker"] = extract_ticker(r["asset"])
+                stocks.append(r)
+                all_stocks.append(r)
+            else:
+                dropped.append(r)
+                all_dropped.append((name, r))
+
+        nat = ""
+        if not had_text:                       # 스캔본만 해상도 측정
+            info = None
+            try:
+                info = native_scan_dpi(data, _first_image_page(data, pages))
+            except Exception:  # noqa: BLE001
+                pass
+            if info:
+                nat = f"  원본 {info[0]:.0f}dpi"
+
+        docs.append({
+            "name": name, "host": host, "how": how, "pages": pages,
+            "chars": len(text), "rows": len(rows), "stocks": len(stocks),
+            "scan_dpi": (info[0] if (not had_text and nat) else None),
+        })
+        print(f"  {i:>2}. [{how:^5}] {pages:>2}쪽  거래행 {len(rows):>3}  "
+              f"개별종목 {len(stocks):>2}{nat}   {name}")
+
+    # ---- 요약 -----------------------------------------------------------
+    n_text = sum(1 for d in docs if d.get("how") == "텍스트")
+    n_ocr = sum(1 for d in docs if d.get("how") == "OCR")
+    n_fail = sum(1 for d in docs if d.get("how") == "판독실패" or d.get("fail"))
+    print("\n" + "=" * 70)
+    print(f" 문서 {len(docs)}건 — 텍스트 {n_text} / OCR {n_ocr} / 판독실패 {n_fail}")
+    print(f" 개별 종목 {len(all_stocks)}건 / 걸러낸 행 {len(all_dropped)}건")
+    print("=" * 70)
+
+    # ---- 개별 종목 (있으면) ---------------------------------------------
+    if all_stocks:
+        print("\n[✓ 개별 종목으로 판정된 거래]  ※ 채권 오탐이 없는지 확인하세요")
+        seen = set()
+        for r in all_stocks:
+            key = (r["ticker"], r["transactionDate"], tuple(r["amountRange"]))
+            if key in seen:
+                continue
+            seen.add(key)
+            lo, hi = r["amountRange"]
+            print(f"  {r['transactionDate']}  {r['action']:<8} {r['ticker']:<6} "
+                  f"${lo:,}~${hi:,}  | {r['asset'][:46]}")
+
+    # ---- 걸러낸 행 전체 (핵심: 여기 진짜 주식이 있나) --------------------
+    if all_dropped:
+        print(f"\n[✗ 채권·ETF·미식별로 걸러낸 행 {len(all_dropped)}건]"
+              "  ※ 여기 진짜 개별 주식이 보이면 알려주세요")
+        for src_name, r in all_dropped[:80]:
+            why = _drop_reason(r["asset"])
+            print(f"  [{why:<6}] {r['asset'][:60]}")
+        if len(all_dropped) > 80:
+            print(f"  ... 외 {len(all_dropped) - 80}건")
+
+    # ---- 판정 -----------------------------------------------------------
+    print("\n" + "=" * 70)
+    print(" 판정")
+    print("=" * 70)
+    _diagnose_verdict(docs, all_stocks, all_dropped)
+    return 0
+
+
+def _first_image_page(data: bytes, pages: int) -> int:
+    """스캔 이미지가 실제로 들어 있는 첫 쪽(1부터). 없으면 1."""
+    try:
+        from pypdf import PdfReader
+        reader = PdfReader(io.BytesIO(data))
+        for i, pg in enumerate(reader.pages, 1):
+            try:
+                if any(True for _ in pg.images):
+                    return i
+            except Exception:  # noqa: BLE001
+                continue
+    except Exception:  # noqa: BLE001
+        pass
+    return 1
+
+
+def _drop_reason(asset: str) -> str:
+    """왜 걸러졌는지 한 단어로. 눈검사 때 채권/ETF/미식별을 구분해 준다."""
+    if not is_individual_stock(asset):
+        low = asset.lower()
+        if any(t in low for t in MUNI_TOKENS):
+            return "지방채"
+        if BOND_RE.search(asset):
+            return "채권"
+        if re.search(r"\betf\b|fund|index|trust|money\s*market", low):
+            return "펀드"
+        return "비종목"
+    if not extract_ticker(asset):
+        return "티커없음"
+    return "기타"
+
+
+def _diagnose_verdict(docs, stocks, dropped):
+    """숫자를 사람 말로 옮긴다. 다음에 뭘 할지가 여기서 갈린다."""
+    scanned = [d for d in docs if d.get("how") == "OCR" or d.get("how") == "판독실패"]
+    low_res = [d for d in scanned if d.get("scan_dpi") and d["scan_dpi"] < 250]
+    ticketless = [name for name, r in dropped if _drop_reason(r["asset"]) == "티커없음"]
+
+    if stocks:
+        print(f"• 개별 종목 {len(stocks)}건을 찾았습니다. 위 목록에 채권이 섞이지 않았다면")
+        print("  run_local.bat 으로 data.json에 반영할 수 있습니다.")
+    else:
+        print("• 개별 종목을 한 건도 찾지 못했습니다. 아래로 원인을 좁힙니다:")
+
+    # 텍스트 레이어 문서가 주식을 못 낸 경우 — 필터냐 진짜 채권이냐
+    text_docs = [d for d in docs if d.get("how") == "텍스트"]
+    if text_docs and not stocks:
+        print(f"\n  ① 깨끗한 텍스트 문서 {len(text_docs)}건도 개별 종목 0건입니다.")
+        if ticketless:
+            print(f"     그런데 '티커없음'으로 걸러진 게 {len(ticketless)}건 있습니다 —")
+            print("     이름은 주식 같은데 티커 매핑이 없을 수 있습니다. 위 [티커없음]")
+            print("     줄을 보세요. 진짜 주식이면 이름→티커 매핑만 추가하면 됩니다.")
+        else:
+            print("     걸러진 행이 전부 채권·지방채·펀드라면, 이 문서들엔 실제로")
+            print("     개별 주식이 없는 것입니다(트럼프 공시의 정상적 특성).")
+
+    # 스캔본 화질 문제
+    if scanned:
+        print(f"\n  ② 스캔본 {len(scanned)}건 중 개별 종목을 낸 건 "
+              f"{sum(1 for d in scanned if d.get('stocks'))}건입니다.")
+        if low_res:
+            print(f"     이 중 {len(low_res)}건은 원본이 250dpi 미만이라 해상도를 올려도")
+            print("     소용없습니다(없는 정보는 못 만듭니다). OCR로는 한계입니다.")
+        hi_res = [d for d in scanned if d.get("scan_dpi") and d["scan_dpi"] >= 250
+                  and not d.get("stocks")]
+        if hi_res:
+            print(f"     반면 {len(hi_res)}건은 원본 해상도가 충분한데도 0건입니다 —")
+            print("     python scripts/build_data.py --ocr-tune 로 전처리를 바꾸면")
+            print("     나아질 여지가 있습니다.")
+
+    if not stocks:
+        print("\n  → 요약: 위 [걸러낸 행] 목록을 붙여 주시면, 진짜 주식이 필터에")
+        print("     걸린 것인지(고칠 수 있음) 실제로 채권뿐인지(정상) 제가 판단합니다.")
+
+
+# ---------------------------------------------------------------------------
 # OCR 결과 진단 (--dump-ocr)
 # ---------------------------------------------------------------------------
 
@@ -1970,6 +2173,8 @@ def main():
                     help="스캔 PDF OCR 생략(텍스트 레이어가 있는 것만 처리)")
     ap.add_argument("--ocr-dpi", type=int, default=300,
                     help="OCR 렌더링 해상도(기본 300). 낮추면 빠르고 부정확")
+    ap.add_argument("--diagnose", action="store_true",
+                    help="모든 공시를 한 번에 받아 파싱·필터·해상도를 통째로 진단")
     ap.add_argument("--dump-ocr", action="store_true",
                     help="캐시된 OCR 텍스트와 파서 실패 지점을 진단")
     ap.add_argument("--ocr-tune", action="store_true",
@@ -1981,6 +2186,9 @@ def main():
     ap.add_argument("--probe-oge", action="store_true",
                     help="OGE 자동 탐색만 실행해 진단 출력(데이터 변경 없음)")
     args = ap.parse_args()
+
+    if args.diagnose:
+        return diagnose(args.sources)
 
     if args.dump_ocr:
         return dump_ocr()
