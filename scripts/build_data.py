@@ -270,7 +270,7 @@ def _line_has(line):
     return amount, has_date, action
 
 
-def parse_ptr_text(text: str, disclosure_date=None, window=6):
+def parse_ptr_text(text: str, disclosure_date=None, window=8):
     """278-T 텍스트에서 거래 행을 추출한다.
 
     표의 한 행이 한 줄에 담기는 경우(텍스트 레이어 문서)와, 여러 줄로
@@ -308,9 +308,11 @@ def parse_ptr_text(text: str, disclosure_date=None, window=6):
         name = AMOUNT_RE.sub(" ", joined)
         name = DATE_RE.sub(" ", name)
         name = re.sub(r"^\s*\d{1,3}\s+", "", name)
-        for pat, _ in TYPE_PATTERNS:
-            name = pat.sub(" ", name)
-        name = re.sub(r"\b(VOS|YES|NO|ves|yes|no)\b", " ", name)
+        # 거래유형은 부분 일치(purch·ourch…)로 잡으므로 sub하면 "ase" 같은
+        # 찌꺼기가 남는다. 매칭된 토큰을 통째로 버린다.
+        name = " ".join(tok for tok in name.split()
+                        if not any(p.search(tok) for p, _ in TYPE_PATTERNS))
+        name = re.sub(r"\b(VOS|YES|NO)\b", " ", name, flags=re.I)
         name = re.sub(r"\s{2,}", " ", name).strip(" .-|·•")
         rows.append({
             "asset": name,
@@ -333,10 +335,11 @@ def parse_ptr_text(text: str, disclosure_date=None, window=6):
             continue
         amount, has_date, action = _line_has(line)
         if not (amount or has_date or action):
-            # 아무 신호도 없는 줄은 버퍼를 끊지 않되 이름 조각으로 남겨둔다.
-            if buf:
-                buf.append((line, None, False, None))
-                buf[:] = buf[-window:]
+            # 신호가 없는 줄이 대개 종목명이다. OCR이 행을 쪼개면 종목명이
+            # 맨 앞에 오므로, 버퍼가 비어 있어도 반드시 담아 둬야 한다.
+            # (예전엔 버퍼가 비었을 때 버려서 이름이 통째로 사라졌다.)
+            buf.append((line, None, False, None))
+            buf[:] = buf[-window:]
             continue
 
         buf.append((line, amount, has_date, action))
@@ -1149,6 +1152,48 @@ def self_test():
     if mrna:
         check("개별 종목 거래일", mrna[0]["transactionDate"] == "2025-12-02")
 
+    # OCR이 표의 한 행을 여러 줄로 쪼갠 경우 (우리가 직접 OCR한 스캔본의 실제 모습).
+    # 특히 종목명은 행의 첫 줄에 오는데, 예전 파서는 버퍼가 비어 있으면 그 줄을
+    # 버려서 이름이 통째로 사라졌다("purchase"의 잔해인 "ase Yes"만 남았다).
+    SPLIT = """OGE Form 278-T (Periodic Transaction Report)
+OGE RECEIVED:  5/12/2026
+Filer's Name: Donald J. Trump
+
+2  MODERNA INC
+   MRNA
+   purchase
+   3/02/2026   Yes
+   $15,001 - $50,000
+
+6  PENNSYLVANIA ST TURNPIKE COMMN
+   5.25% DUE 11/01/40
+   purchase
+   3/20/2026   Yes
+   $500,001 - $1,000,000
+
+11 COINBASE GLOBAL INC
+   COIN  Class A
+   salo
+   4/07/2026   Yes
+   $1,001 - $15,000
+"""
+    srows = parse_ptr_text(SPLIT)
+    check(f"쪼개진 행 3건 파싱 (실제 {len(srows)})", len(srows) == 3)
+    sstk = [r for r in srows if is_individual_stock(r["asset"])]
+    check(f"그중 개별종목 2건 (실제 {len(sstk)})", len(sstk) == 2)
+    check("쪼개진 행에서 종목명 보존",
+          bool(sstk) and "MODERNA" in sstk[0]["asset"])
+    check("종목명에 'ase' 같은 거래유형 잔해 없음",
+          all("ase" not in r["asset"].split() for r in srows))
+    check("쪼개진 행 티커 MRNA",
+          bool(sstk) and extract_ticker(sstk[0]["asset"]) == "MRNA")
+    check("쪼개진 행 거래일(헤더 접수일 아님)",
+          bool(sstk) and sstk[0]["transactionDate"] == "2026-03-02")
+    check("쪼개진 행 매도 인식",
+          len(sstk) > 1 and sstk[1]["action"] == "sell")
+    check("쪼개진 행 중 채권은 제외",
+          all("PENNSYLVANIA" not in r["asset"] for r in sstk))
+
     # 회사채는 회사 이름이 붙어 있어도 주식이 아니다(실측에서 대량 오검출)
     check("회사채(NTS) 제외", not is_individual_stock("PAYPAL HOLDINGS INC NTS 02.850% 100129"))
     check("회사채(DUE) 제외", not is_individual_stock("MACYS RETAIL HOLDINGS LLC REGS DUE '30 05.875"))
@@ -1299,11 +1344,13 @@ def self_test():
 # ---------------------------------------------------------------------------
 
 def dump_ocr(lines=60):
-    """캐시된 OCR 텍스트를 보여주고, 파서가 왜 못 읽는지 짚어준다.
+    """캐시된 OCR 텍스트를 파서에 그대로 통과시켜, 어디서 걸러지는지 보여준다.
 
-    OCR은 성공했는데 거래행이 0건인 경우, 원인은 대개
-    '한 줄에 금액·날짜·거래유형이 모두 있어야 한다'는 파서 가정이
-    OCR의 줄 나눔과 맞지 않아서다. 어느 조건이 몇 줄에서 걸리는지 센다.
+    단계는 셋이다.
+      ① parse_ptr_text 가 거래 행을 몇 건 뽑는가
+      ② 그중 개별 종목으로 남는 건 몇 건인가 (채권·지방채·ETF 제외)
+      ③ 남은 건에서 티커가 뽑히는가
+    0이 되는 지점이 진짜 원인이다. 각 단계별로 실제 예시를 함께 찍는다.
     """
     if not os.path.isdir(OCR_CACHE_DIR):
         print(f"OCR 캐시 폴더가 없습니다: {OCR_CACHE_DIR}", file=sys.stderr)
@@ -1318,42 +1365,84 @@ def dump_ocr(lines=60):
 
     files.sort(key=os.path.getsize, reverse=True)
     print("=" * 62)
-    print(f" OCR 캐시 {len(files)}건 (큰 순)")
+    print(f" OCR 캐시 {len(files)}건 — 파일별 파싱 결과")
     print("=" * 62)
+
+    total_rows, total_stocks = 0, 0
+    kept, dropped = [], []
+    per_file = []
     for f in files:
-        print(f"  {os.path.getsize(f):>9,} bytes  {os.path.basename(f)}")
+        with open(f, encoding="utf-8") as fh:
+            t = fh.read()
+        rws = parse_ptr_text(t)
+        stk = [r for r in rws if is_individual_stock(r["asset"])]
+        total_rows += len(rws)
+        total_stocks += len(stk)
+        kept.extend(stk)
+        dropped.extend(r for r in rws if r not in stk)
+        per_file.append((f, t, rws, stk))
+        print(f"  {os.path.getsize(f):>9,}B  거래행 {len(rws):>4}  개별종목 {len(stk):>3}"
+              f"   {os.path.basename(f)[:28]}")
 
-    target = files[0]
-    with open(target, encoding="utf-8") as fh:
-        text = fh.read()
+    print("\n" + "-" * 62)
+    print(f" ① 파서가 뽑은 거래 행      : {total_rows:>5}")
+    print(f" ② 개별 종목으로 남은 건    : {total_stocks:>5}")
+    tickered = [r for r in kept if extract_ticker(r["asset"])]
+    print(f" ③ 티커까지 뽑힌 건         : {len(tickered):>5}")
+    print("-" * 62)
 
-    rows = parse_ptr_text(text)
-    all_lines = text.splitlines()
-    n_amount = sum(1 for l in all_lines if parse_amount(l))
-    n_date = sum(1 for l in all_lines if DATE_RE.search(l))
-    n_type = sum(1 for l in all_lines
-                 if any(p.search(l) for p, _ in TYPE_PATTERNS))
-    n_all3 = sum(1 for l in all_lines
-                 if parse_amount(l) and DATE_RE.search(l)
-                 and any(p.search(l) for p, _ in TYPE_PATTERNS))
+    if kept:
+        print("\n[개별 종목으로 판정된 건]  ※ 채권 오탐이 없는지 눈으로 확인하세요")
+        for r in kept[:25]:
+            tk = extract_ticker(r["asset"]) or "티커?"
+            lo, hi = r["amountRange"]
+            print(f"  {r['transactionDate']}  {r['action']:<8} {tk:<6} "
+                  f"${lo:,}~${hi:,}  | {r['asset'][:52]}")
+        if len(kept) > 25:
+            print(f"  ... 외 {len(kept)-25}건")
 
-    print(f"\n가장 큰 파일 분석: {os.path.basename(target)}")
-    print(f"  전체 {len(text):,}자 / {len(all_lines):,}줄")
-    print(f"  공시일(OGE RECEIVED) 추출: {parse_received_date(text)}")
-    print("\n  파서 조건별로 걸리는 줄 수:")
-    print(f"    금액 구간이 있는 줄      : {n_amount:>5}")
-    print(f"    날짜가 있는 줄           : {n_date:>5}")
-    print(f"    매수/매도 표현이 있는 줄 : {n_type:>5}")
-    print(f"    → 셋 다 있는 줄(=거래행) : {n_all3:>5}   ★ 이게 0이면 줄 나눔 문제")
-    print(f"  parse_ptr_text 결과: {len(rows)}건")
+    if dropped:
+        print(f"\n[채권·ETF로 걸러낸 건 {len(dropped)}건 중 앞 15건]"
+              "  ※ 여기 진짜 주식이 섞였으면 필터가 과했다는 뜻")
+        for r in dropped[:15]:
+            print(f"  {r['transactionDate']}  {r['action']:<8} | {r['asset'][:60]}")
 
-    print(f"\n===== 앞 {lines}줄 (실제 OCR 원문) =====")
-    for l in all_lines[:lines]:
-        print(l)
-
-    if n_all3 == 0 and (n_amount or n_date):
-        print("\n[진단] 금액·날짜는 있는데 한 줄에 모이지 않았습니다.")
-        print("       OCR이 표의 한 행을 여러 줄로 쪼갠 것으로 보입니다.")
+    # 원인 지목: 0이 되는 첫 단계를 짚는다.
+    print()
+    if total_rows == 0:
+        print("[진단] 파서가 거래 행을 한 건도 못 뽑았습니다.")
+        target, text, _, _ = per_file[0]
+        all_lines = [l.strip() for l in text.splitlines() if l.strip()]
+        n_amount = sum(1 for l in all_lines if parse_amount(l))
+        n_date = sum(1 for l in all_lines if DATE_RE.search(l))
+        n_type = sum(1 for l in all_lines
+                     if any(p.search(l) for p, _ in TYPE_PATTERNS))
+        print(f"       금액 {n_amount}줄 / 날짜 {n_date}줄 / 매수·매도 표현 {n_type}줄")
+        if n_amount == 0:
+            print("       → 금액 구간($1,001 - $15,000 꼴)을 하나도 못 찾았습니다.")
+            print("         OCR 품질 문제이거나 금액 표기 형식이 다릅니다.")
+        elif n_type == 0:
+            print("       → 매수/매도 표현을 못 찾았습니다. OCR이 단어를 심하게")
+            print("         뭉갰을 수 있습니다(purchase→ourchoso 같은 사례).")
+        elif n_date == 0:
+            print("       → 날짜를 못 찾았습니다.")
+        else:
+            print("       → 신호는 다 있는데 6줄 창 안에 모이지 않았거나,")
+            print("         거래일이 공시일 이후/2년 초과라 버려졌습니다.")
+            print(f"         공시일 판독값: {parse_received_date(text)}")
+        print(f"\n===== {os.path.basename(target)} 앞 {lines}줄 =====")
+        for l in all_lines[:lines]:
+            print(l)
+    elif total_stocks == 0:
+        print("[진단] 거래 행은 뽑혔지만 전부 채권·지방채·ETF로 걸러졌습니다.")
+        print("       위 '걸러낸 건' 목록에 진짜 개별 주식이 보이면 알려주세요.")
+        print("       실제로 트럼프 공시는 대부분 채권이라 이게 정상일 수 있습니다.")
+    elif not tickered:
+        print("[진단] 개별 종목은 찾았는데 티커를 못 뽑았습니다.")
+        print("       위 목록의 종목명을 보고 티커 매핑을 추가하면 됩니다.")
+    else:
+        print(f"[정상] 개별 종목 {total_stocks}건, 티커 {len(tickered)}건 추출됨.")
+        print("       run_local.bat 으로 전체 실행하면 data.json에 반영됩니다.")
     return 0
 
 
