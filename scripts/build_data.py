@@ -236,13 +236,13 @@ def load_ticker_index(path=None, fetch=True, quiet=False):
 
 
 def _find_companies(tokens):
-    """토큰 열에서 SEC 회사명과 일치하는 구간을 모두 찾아 티커 목록을 준다.
+    """토큰 열에서 SEC 회사명과 일치하는 구간을 모두 찾는다.
 
     OCR이 앞뒤에 잡음을 붙이므로("Donald J Trump AMGEN INC ar") 회사명이
-    맨 앞에 있으리라 가정하지 않고, 가장 긴 것부터 훑으며 이어지는 토큰이
-    회사명이면 티커를 거둔다.
+    맨 앞에 있으리라 가정하지 않고, 가장 긴 것부터 훑는다.
+    반환: [(티커, 시작index, 토큰수), ...]
     """
-    found = []
+    spans = []
     i, n = 0, len(tokens)
     while i < n:
         hit = None
@@ -252,24 +252,35 @@ def _find_companies(tokens):
                 hit = (tk, k)
                 break
         if hit:
-            found.append(hit[0])
+            spans.append((hit[0], i, hit[1]))
             i += hit[1]
         else:
             i += 1
-    return found
+    return spans
 
 
 def _resolve_sec_ticker(asset_name: str):
     """SEC 목록으로 티커를 해석하되, OCR 잡음·행 오염에 견디게 한다.
 
-    행에서 발견되는 '서로 다른' 회사가 하나뿐일 때만 그 티커를 쓴다.
-    둘 이상이면 두 종목이 한 줄에 섞인 것이라 금액이 어느 쪽 것인지 알 수
-    없으므로 버린다(틀린 데이터를 내느니 버리는 게 낫다 — 정직성 우선).
+    두 가지 관문을 둔다(정직성 우선 — 틀린 데이터를 내느니 버린다):
+      · 서로 다른 회사가 둘 이상이면 한 줄에 두 종목이 섞인 것 → 버린다.
+      · 회사명이 행의 '의미 있는 글자'의 절반 이상을 차지해야 한다.
+        그러지 않으면 OCR 잡음 속에서 짧은 티커가 우연히 걸린 것이다
+        (실측: "us ee eranoconwormon dee…"에서 ADM, 잡음의 "aes"에서 AES).
     """
     toks = _normalize_company(asset_name).split()
-    tickers = set(_find_companies(toks))
-    if len(tickers) == 1:
-        return next(iter(tickers))
+    spans = _find_companies(toks)
+    distinct = {t for t, _, _ in spans}
+    if len(distinct) != 1:
+        return None
+    matched_idx = {j for _, s, k in spans for j in range(s, s + k)}
+    matched_chars = sum(len(toks[j]) for j in matched_idx)
+    leftover_chars = sum(
+        len(t) for j, t in enumerate(toks)
+        if j not in matched_idx and not t.isdigit()
+        and len(t) >= 2 and t not in _NAME_NOISE)
+    if matched_chars >= leftover_chars:
+        return next(iter(distinct))
     return None
 
 
@@ -443,7 +454,10 @@ def parse_ptr_text(text: str, disclosure_date=None, window=8):
     boundary_re = re.compile(
         r"(OGE\s+REC|OGE\s+Form|Filer.{0,3}s\s+Name|Periodic\s+Trans"
         r"|Received\s+Over|Do\s+not\s+include|This\s+is\s+a?\s*publ"
-        r"|Page\s?\d|Paged\d|of\s?44|Note\s?[:\.])", re.I)
+        r"|Page\s?\d|Paged\d|of\s?\d\d|Note\s?[:\.]"
+        # 매 쪽 반복되는 머리글/열이름. 종목명에 섞이면 티커 해석을 망친다.
+        r"|Donald\s?J|D\.?\s?Trump|Transactions?\b|Notification"
+        r"|Description|Recelved)", re.I)
 
     def flush(amount):
         joined = " ".join(buf)
@@ -1396,10 +1410,11 @@ def self_test():
         _SEC_INDEX = {" ".join(_normalize_company(k).split()): v
                       for k, v in _mini.items()}
         check("SEC 해석: 깨끗한 이름", extract_ticker("MICROSOFT CORP") == "MSFT")
-        check("SEC 해석: 뒤 잡음 무시",
-              extract_ticker("Donald J Trump AMGEN INC ar 04 of 34") == "AMGN")
+        check("SEC 해석: 뒤 잡음 무시", extract_ticker("AMGEN INC ar") == "AMGN")
         check("SEC 해석: 앞 잡음 무시(중간의 회사명)",
               extract_ticker("a a wlio ton Goldman Sachs Group Inc No") == "GS")
+        check("SEC 해석: 잡음이 회사명보다 많으면 버림(짧은 티커 오탐 방지)",
+              extract_ticker("us ee us eranoconwormon dee armel amgen rl") is None)
         check("SEC 해석: 두 회사 섞인 행은 버림",
               extract_ticker("REPUBLIC SERVICES INC 71 CHIPOTLE MEXICAN GRILL INC")
               is None)
