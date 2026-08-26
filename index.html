@@ -68,15 +68,43 @@
     <section id="trades">
       <div class="section-head">
         <h3>매매 내역 <span class="only-stock">개별 종목만</span></h3>
-        <div class="filters">
+        <span class="muted" id="tradeCount"></span>
+      </div>
+
+      <div class="table-controls">
+        <input type="search" id="searchBox" class="search-box"
+               placeholder="종목·티커 검색 (예: NVDA, 엔비디아)" autocomplete="off" />
+        <div class="filters" id="actionFilters">
           <button class="chip is-active" data-filter="all">전체</button>
           <button class="chip" data-filter="buy">매수</button>
           <button class="chip" data-filter="sell">매도</button>
         </div>
+        <select id="sectorFilter" class="sector-select"><option value="all">모든 섹터</option></select>
       </div>
-      <div id="tradeList" class="trade-list">
-        <!-- JS로 채움 -->
+
+      <div class="trade-table-wrap">
+        <table class="trade-table" id="tradeTable">
+          <thead>
+            <tr>
+              <th class="sortable" data-sort="ticker">종목</th>
+              <th class="sortable" data-sort="sector">섹터</th>
+              <th class="sortable" data-sort="action">유형</th>
+              <th class="sortable num" data-sort="amount">금액(구간)</th>
+              <th class="sortable" data-sort="transactionDate">거래일</th>
+              <th class="sortable num" data-sort="delay">공시지연</th>
+              <th class="sortable num" data-sort="tracking">공시 후 수익률</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="tradeBody"><!-- JS로 채움 --></tbody>
+        </table>
+        <p id="tableEmpty" class="muted" hidden>해당 조건의 공시가 없습니다.</p>
       </div>
+      <p class="table-note muted">
+        행을 클릭하면 종목별 상세(공시 지연 타임라인·추적 차트)로 이동합니다.
+        <b class="badge-inline inferred">추정</b> = OCR이 매수/매도 칸을 못 읽어 보도 근거로 매수 표기 ·
+        <b class="badge-inline approx">근사</b> = 거래일이 스캔에서 훼손돼 공시일로 대체.
+      </p>
     </section>
 
     <section id="honest" class="honest">
@@ -97,9 +125,9 @@
       <h3>이 표를 어떻게 읽나요?</h3>
       <ol class="how-list">
         <li><b>거래일</b> — 트럼프가 실제로 사고판 날.</li>
-        <li><b>공시일</b> — 그 사실이 공개된 날. 이 사이에 최대 45일의 <b>블랙박스</b>가 있습니다. 이 기간엔 아무도(당신도) 몰랐습니다.</li>
-        <li><b>공시 시점가</b> — 당신이 실제로 따라 살 수 있던 첫 가격. 수익률은 이 값을 기준으로 계산합니다.</li>
-        <li><b>2개월 뒤 가격</b> — “따라 사서 2개월 뒤 판다” 규칙을 적용했을 때의 결과.</li>
+        <li><b>공시지연</b> — 거래일과 공시일 사이의 <b>블랙박스</b>. 이 기간엔 아무도(당신도) 몰랐습니다.</li>
+        <li><b>공시 후 수익률</b> — 당신이 따라 살 수 있던 <b>공시 시점가</b>부터 지금까지의 누적 수익률(한국식: 빨강=상승·파랑=하락).</li>
+        <li>종목을 클릭하면 <b>공시 시점가·2개월 규칙·추적 차트</b>가 있는 상세 페이지로 갑니다.</li>
       </ol>
     </section>
   </main>
