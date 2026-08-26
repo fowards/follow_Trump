@@ -191,15 +191,26 @@ def load_ticker_index(path=None, fetch=True, quiet=False):
         try:
             if not quiet:
                 print(f"· SEC 티커 목록 다운로드: {SEC_TICKERS_URL}", file=sys.stderr)
-            raw = fetch_bytes(SEC_TICKERS_URL)
+            # SEC는 브라우저 UA를 403으로 막고, 연락처가 든 UA를 요구한다
+            # (공정접근 정책). fetch_bytes(브라우저 UA)를 쓰지 않고 직접 받는다.
+            req = urllib.request.Request(
+                SEC_TICKERS_URL,
+                headers={"User-Agent": "follow-trump-tracker contact@follow-trump.app",
+                         "Accept-Encoding": "gzip, deflate"})
+            with urllib.request.urlopen(req, timeout=60) as r:
+                raw = r.read()
+                if r.headers.get("Content-Encoding") == "gzip":
+                    import gzip
+                    raw = gzip.decompress(raw)
             data = json.loads(raw)
             os.makedirs(os.path.dirname(path) or ".", exist_ok=True)
             with open(path, "wb") as f:
                 f.write(raw)
         except Exception as e:  # noqa: BLE001
             if not quiet:
-                print(f"  ! SEC 목록을 받지 못했습니다({e}). 티커 해석을 건너뜁니다.",
-                      file=sys.stderr)
+                print(f"  ! SEC 목록을 받지 못했습니다({e}).", file=sys.stderr)
+                print(f"    수동 다운로드: {SEC_TICKERS_URL}", file=sys.stderr)
+                print(f"    → {path} 로 저장 후 다시 실행하세요.", file=sys.stderr)
             _SEC_INDEX = {}
             return _SEC_INDEX
 
