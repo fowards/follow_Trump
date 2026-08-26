@@ -22,7 +22,12 @@
       "individualStocks": 94,
       "filteredOut": 967,
       "ranAt": "2026-08-26"
-    }
+    },
+    "pricesRefreshedAt": "2026-08-26",
+    "priceSource": "stooq",
+    "priceFetchFailed": [
+      "BRK-B"
+    ]
   },
   "trades": [
     {
