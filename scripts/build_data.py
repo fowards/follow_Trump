@@ -258,39 +258,54 @@ def pick_transaction_date(line: str, disclosure_date=None):
     return best
 
 
-def parse_ptr_text(text: str, disclosure_date=None):
+def _line_has(line):
+    """한 줄이 가진 신호: (금액, 날짜있음, 거래유형)"""
+    amount = parse_amount(line)
+    has_date = bool(DATE_RE.search(line))
+    action = None
+    for pat, kind in TYPE_PATTERNS:
+        if pat.search(line):
+            action = kind
+            break
+    return amount, has_date, action
+
+
+def parse_ptr_text(text: str, disclosure_date=None, window=6):
     """278-T 텍스트에서 거래 행을 추출한다.
 
-    실측한 실제 행 구조:
-      <번호> <자산 설명> <거래유형> <거래일> <30일초과 여부> <금액 구간>
-    예) 3 WASHINGTON ST HEALT 5% DUE 09/01/38 ourchoso 11/26/2025 VOS $1,000,001 -$5,000,000
+    표의 한 행이 한 줄에 담기는 경우(텍스트 레이어 문서)와, 여러 줄로
+    쪼개지는 경우(우리가 직접 OCR한 스캔 문서)를 모두 처리한다.
+    실측: OCR 결과에서는 금액·날짜·거래유형이 서로 다른 줄에 흩어져
+    한 줄 기준으로만 찾으면 한 건도 못 뽑는다.
 
-    공시일은 행이 아니라 문서 헤더(OGE RECEIVED)에 한 번만 나오므로
-    호출부에서 넘겨주거나 이 함수가 텍스트에서 찾아 쓴다.
+    방식: 줄을 누적하다가 금액·날짜·거래유형이 모두 모이면 한 건으로
+    확정하고 버퍼를 비운다. 한 줄에 다 있으면 즉시 확정되므로
+    기존 동작과 동일하고, 흩어져 있으면 최대 window줄까지 묶는다.
     """
     if disclosure_date is None:
         disclosure_date = parse_received_date(text)
 
     rows = []
-    for raw in text.splitlines():
-        line = raw.strip()
-        if len(line) < 20:
-            continue
-        amount = parse_amount(line)
-        if not amount:
-            continue
-        action = None
-        for pat, kind in TYPE_PATTERNS:
-            if pat.search(line):
-                action = kind
-                break
-        if not action:
-            continue
-        txn = pick_transaction_date(line, disclosure_date)
+    buf = []          # [(line, amount, has_date, action), ...]
+
+    def flush():
+        """버퍼가 한 건을 이루면 레코드로 만든다."""
+        if not buf:
+            return False
+        amount = next((b[1] for b in buf if b[1]), None)
+        action = next((b[3] for b in buf if b[3]), None)
+        joined = " ".join(b[0] for b in buf)
+        if not amount or not action:
+            return False
+        # 금액이 적힌 줄에 거래일이 함께 있는 경우가 많다. 그 줄을 먼저 보고,
+        # 없을 때만 버퍼 전체에서 찾는다(헤더 날짜 오염 방지).
+        amount_line = next((b[0] for b in buf if b[1]), "")
+        txn = (pick_transaction_date(amount_line, disclosure_date)
+               or pick_transaction_date(joined, disclosure_date))
         if not txn:
-            continue
-        # 자산 설명 = 금액·날짜·행번호를 걷어낸 앞부분
-        name = AMOUNT_RE.sub(" ", line)
+            return False
+
+        name = AMOUNT_RE.sub(" ", joined)
         name = DATE_RE.sub(" ", name)
         name = re.sub(r"^\s*\d{1,3}\s+", "", name)
         for pat, _ in TYPE_PATTERNS:
@@ -304,6 +319,36 @@ def parse_ptr_text(text: str, disclosure_date=None):
             "disclosureDate": disclosure_date,
             "amountRange": amount,
         })
+        return True
+
+    header_re = re.compile(
+        r"(OGE\s+RECEIVED|OGE\s+Form|Filer.{0,3}s\s+Name|Periodic\s+Transaction)", re.I)
+
+    for raw in text.splitlines():
+        line = raw.strip()
+        if not line:
+            continue
+        if header_re.search(line):
+            buf.clear()          # 헤더는 어떤 거래 행에도 속하지 않는다
+            continue
+        amount, has_date, action = _line_has(line)
+        if not (amount or has_date or action):
+            # 아무 신호도 없는 줄은 버퍼를 끊지 않되 이름 조각으로 남겨둔다.
+            if buf:
+                buf.append((line, None, False, None))
+                buf[:] = buf[-window:]
+            continue
+
+        buf.append((line, amount, has_date, action))
+        buf[:] = buf[-window:]
+
+        have_amount = any(b[1] for b in buf)
+        have_date = any(b[2] for b in buf)
+        have_action = any(b[3] for b in buf)
+        if have_amount and have_date and have_action:
+            if flush():
+                buf.clear()
+
     return rows
 
 
