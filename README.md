@@ -57,8 +57,23 @@ run_local.bat
 섞여 있었습니다(`GOLDMAN`→`GOLOM.AN`, `purchase`→`ourchoso`).
 개별 주식 거래는 주로 이 스캔본 쪽에 있어, OCR 없이는 정작 중요한 거래를 놓칩니다.
 
-OCR 결과는 PDF 해시 기준으로 `.cache/ocr/`에 저장되어 **같은 문서를 두 번 읽지 않습니다.**
+OCR 결과는 PDF 해시 기준으로 `.cache/ocr/`에, 원본 PDF는 `.cache/pdf/`에 저장되어
+**같은 문서를 두 번 읽지도, 두 번 받지도 않습니다.**
 첫 실행만 오래 걸리고(문서당 수 분) 이후에는 빠릅니다.
+
+#### OCR 설정은 실측으로 고른다
+
+같은 300dpi라도 문서에 따라 숫자가 통째로 글자가 되는 일이 있습니다.
+실측 사례: `$500,001 - $1,000,000` → `ssongon-sonnsnn`, `$50,000 - $100,000` → `ssenco-stconcoo`.
+금액 칸이 안 읽히면 거래를 한 건도 못 뽑으므로, 추측 대신 재봅니다.
+
+```cmd
+python scripts\build_data.py --ocr-tune
+```
+
+한 쪽만 골라 해상도(300/400/600) × 전처리(없음/선명화/2배확대+이진화) × psm(6/4)
+조합을 돌려보고, **금액줄·거래행 수로 점수를 매겨** 최적 조합을 알려줍니다.
+결과를 `run_local.bat` 상단의 `FT_OCR_DPI` / `FT_OCR_PSM` / `FT_OCR_PREP`에 적으면 됩니다.
 
 ### GitHub Actions
 `.github/workflows/update-data.yml`은 **정기 실행을 껐고 수동 실행만** 남겼습니다.
