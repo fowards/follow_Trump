@@ -423,7 +423,16 @@ _NAME_NOISE = {
 
 
 def _normalize_company(name: str) -> str:
-    """회사명을 비교용으로 정규화한다(대문자·부호제거·접미사제거)."""
+    """회사명을 비교용으로 정규화한다(대문자·부호제거·접미사제거).
+
+    SEC 공식 목록의 상당수 회사명에 EDGAR 특유의 설립주 표기가 붙어 있다
+    (예: "Bank of America Corp /DE/", "Comcast Corp /PA/"). 이걸 안 지우면
+    일반 stripping 후 슬래시가 공백이 되면서 "DE"·"PA"가 평범한 토큰으로
+    남아, 공시 원문("BANK OF AMERICA CORPORATION")과 정규화 결과가
+    "BANK OF AMERICA" vs "BANK OF AMERICA DE"로 어긋나 매칭이 깨진다
+    (실측: Bank of America가 이렇게 통째로 누락됐었다).
+    """
+    name = re.sub(r"/[A-Za-z]{2,4}/\s*$", "", name.strip())
     name = re.sub(r"[^A-Za-z0-9& ]", " ", name.upper())
     name = name.replace("&", " AND ")
     toks = [t for t in name.split() if t and t not in _NAME_NOISE]
@@ -1778,6 +1787,14 @@ def self_test():
         check("SEC 해석: 두 회사 섞인 행은 버림",
               extract_ticker("REPUBLIC SERVICES INC 71 CHIPOTLE MEXICAN GRILL INC")
               is None)
+        _old_idx = _SEC_INDEX
+        globals()["_SEC_INDEX"] = {
+            _normalize_company("Bank of America Corp /DE/"): "BAC",
+        }
+        check("SEC 해석: EDGAR 설립주 표기(/DE/) 무시하고 매칭",
+              extract_ticker("BANK OF AMERICA CORPORATION - BAC") == "BAC")
+        globals()["_SEC_INDEX"] = _old_idx
+
         check("SEC 해석: 미등록 회사는 버림(추측 안 함)",
               extract_ticker("Space Expl Technologies Corp") is None)
     finally:
