@@ -30,7 +30,7 @@
         '<td class="c-tick"><span class="tk">' + t.ticker + "</span>" +
           (t.companyKo && t.companyKo !== t.ticker ? '<span class="nm">' + t.companyKo + "</span>" : "") + "</td>" +
         '<td class="c-sec">' + (t.sector || "—") + "</td>" +
-        "<td>" + actionCell(t) + "</td>" +
+        '<td class="c-act">' + actionCell(t) + "</td>" +
         '<td class="num c-amt">' + F.fmtAmount(t.amountRange) + "</td>" +
         '<td class="c-date">' + F.fmtYmd(t.transactionDate) + approx + "</td>" +
         '<td class="num c-delay">' + t._delay + "일</td>" +

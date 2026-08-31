@@ -268,7 +268,11 @@ section { margin: 40px 0; }
 .sector-select:focus { outline: none; border-color: var(--accent); }
 
 .trade-table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: var(--radius); }
-.trade-table { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 720px; }
+/* body의 전역 overflow-wrap:anywhere가 nowrap 칸에서도 티커·배지 글자를
+   강제로 쪼갰다("TSLA" → "TSL/A"). 표 안에서는 대신 가로 스크롤로
+   넘치는 폭을 처리하므로, 글자 단위 강제 줄바꿈을 꺼야 한다(실측 확인). */
+.trade-table { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 720px;
+  word-break: normal; overflow-wrap: normal; }
 .trade-table thead th {
   text-align: left; padding: 12px 14px; font-size: 12px; font-weight: 700; color: var(--muted);
   background: var(--bg-soft); border-bottom: 1px solid var(--border); white-space: nowrap;
@@ -284,9 +288,17 @@ section { margin: 40px 0; }
 .trade-table tbody tr { cursor: pointer; transition: background .12s; }
 .trade-table tbody tr:hover { background: var(--bg-soft); }
 .trade-table tbody tr:last-child td { border-bottom: none; }
+/* 티커("TSLA")가 좁은 칸 폭 때문에 글자 단위로 줄바꿈(TSL/A)되던 문제.
+   .nm은 display:block이라 nowrap을 얹어도 원래 의도한 줄바꿈(티커 아래
+   한글명 한 줄)은 그대로 유지되고, 각 줄 안에서의 글자 단위 wrap만 막힌다. */
+.trade-table .c-tick { white-space: nowrap; }
 .trade-table .c-tick .tk { font-weight: 800; letter-spacing: .3px; }
 .trade-table .c-tick .nm { display: block; font-size: 12px; color: var(--muted); margin-top: 1px; }
 .trade-table .c-sec { color: var(--text); white-space: nowrap; }
+/* 모바일에서 매수/매도 태그+배지가 줄바꿈되며 칸이 세로로 찌그러지던 문제.
+   이 칸만 nowrap이 빠져 있었다 — 좁은 화면에서 "매도"와 "확인" 배지 사이의
+   공백에서 줄바꿈이 일어나 셀이 90px 높이까지 늘어졌었다(실측). */
+.trade-table .c-act { white-space: nowrap; }
 .trade-table .c-amt { white-space: nowrap; font-variant-numeric: tabular-nums; }
 .trade-table .c-date, .trade-table .c-delay { white-space: nowrap; color: var(--muted); font-variant-numeric: tabular-nums; }
 .trade-table td.num.up { color: var(--up); font-weight: 700; }
