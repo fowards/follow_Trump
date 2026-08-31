@@ -2,30 +2,28 @@
   "meta": {
     "subject": "Donald J. Trump",
     "subjectKo": "도널드 트럼프",
-    "dataSource": "oge-278t",
-    "note": "공시 17건에서 원시 1061건을 읽어 개별 종목 94건을 자동 추출했습니다(ETF·채권 등 967건 제외). 가격은 실제 시세입니다.",
+    "dataSource": "oge-278t+manual",
+    "note": "공시 17건에서 원시 1061건을 읽어 개별 종목 99건을 자동 추출했고, 수동 입력 21건을 함께 표시합니다. 가격은 실제 시세입니다.",
     "caveats": [
       "백악관은 트럼프의 보유 자산이 블라인드 트러스트로 관리되며 본인은 개별 종목을 모른다고 주장합니다.",
       "공시 원본에는 분기당 수천 건의 거래가 있고 대부분 지방채·회사채·ETF입니다. 이 사이트는 그 노이즈를 걷어내고 개별 주식만 보여줍니다.",
       "공시는 거래 후 최대 45일(실제로는 그 이상 지연되기도 함) 뒤에 공개됩니다.",
       "원본 상당수가 저해상도 스캔본이라 OCR로 읽었습니다. 회사명은 SEC 공식 목록과 정확히 일치할 때만 채택하고(불확실하면 버림), 금액은 278-T 표준 구간으로 보정했습니다. 그래도 누락·오차가 있을 수 있습니다.",
-      "매수/매도 대부분은 공시 원문에서 직접 읽었습니다. 원문에서 그 칸이 훼손된 30건은, 해당 분기 공시가 언론 보도상 '수백 종목 대량 매수'였다는 사실에 근거해 매수로 표기했습니다(개별 확인이 필요한 건은 검증 후 출처를 답니다).",
-      "거래일이 스캔에서 훼손된 19건은 공시일로 대체(근사)했습니다.",
-      "OCR이 놓친 애플·오라클·알파벳·어도비·케이던스·우버·액손·델·노스럽 그러먼 9건은 CNBC·Forbes 등 언론 보도로 확인해 출처와 함께 직접 추가했습니다(가격은 로컬 갱신 대기 중). 팔란티어·뱅크오브아메리카 등 언론에 보도된 일부 종목은 원본 근거가 부족하거나(팔란티어) 파서 개선으로 곧 자동 반영될 예정(뱅크오브아메리카)이라 아직 없습니다."
+      "매수/매도 대부분은 공시 원문에서 직접 읽었습니다. 원문에서 그 칸이 훼손된 32건은, 해당 분기 공시가 언론 보도상 '수백 종목 대량 매수'였다는 사실에 근거해 매수로 표기했습니다(개별 확인이 필요한 건은 검증 후 출처를 답니다).",
+      "거래일이 스캔에서 훼손된 27건은 공시일로 대체(근사)했습니다."
     ],
-    "lastUpdated": "2026-08-26",
+    "lastUpdated": "2026-08-31",
     "parseStats": {
       "documents": 17,
       "readByText": 11,
       "readByOcr": 6,
       "unreadable": 0,
       "rawRows": 1061,
-      "individualStocks": 113,
-      "filteredOut": 967,
-      "ranAt": "2026-08-26",
-      "manuallyVerified": 21
+      "individualStocks": 99,
+      "filteredOut": 962,
+      "ranAt": "2026-08-31"
     },
-    "pricesRefreshedAt": "2026-08-26",
+    "pricesRefreshedAt": "2026-08-31",
     "priceSource": "stooq",
     "priceFetchFailed": [
       "BRK-B"
@@ -48,13 +46,34 @@
       "transactionDate": "2026-06-18",
       "transactionDateApprox": false,
       "disclosureDate": "2026-08-22",
-      "priceAtTransaction": null,
-      "priceAtDisclosure": null,
+      "priceAtTransaction": 170.85,
+      "priceAtDisclosure": 207.4,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": null,
-      "priceLatestDate": null,
-      "trackingReturnPct": null,
-      "priceHistory": [],
+      "priceLatest": 204.18,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": -1.6,
+      "priceHistory": [
+        [
+          "2026-08-24",
+          207.4
+        ],
+        [
+          "2026-08-25",
+          204.76
+        ],
+        [
+          "2026-08-26",
+          205.78
+        ],
+        [
+          "2026-08-27",
+          204.15
+        ],
+        [
+          "2026-08-28",
+          204.18
+        ]
+      ],
       "catalyst": "",
       "closed": false,
       "closeDate": null,
@@ -77,13 +96,34 @@
       "transactionDate": "2026-06-18",
       "transactionDateApprox": false,
       "disclosureDate": "2026-08-22",
-      "priceAtTransaction": null,
-      "priceAtDisclosure": null,
+      "priceAtTransaction": 327.24,
+      "priceAtDisclosure": 382.41,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": null,
-      "priceLatestDate": null,
-      "trackingReturnPct": null,
-      "priceHistory": [],
+      "priceLatest": 381.6,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": -0.2,
+      "priceHistory": [
+        [
+          "2026-08-24",
+          382.41
+        ],
+        [
+          "2026-08-25",
+          384.14
+        ],
+        [
+          "2026-08-26",
+          383.9
+        ],
+        [
+          "2026-08-27",
+          379.66
+        ],
+        [
+          "2026-08-28",
+          381.6
+        ]
+      ],
       "catalyst": "",
       "closed": false,
       "closeDate": null,
@@ -106,13 +146,34 @@
       "transactionDate": "2026-06-18",
       "transactionDateApprox": false,
       "disclosureDate": "2026-08-22",
-      "priceAtTransaction": null,
-      "priceAtDisclosure": null,
+      "priceAtTransaction": 489.79,
+      "priceAtDisclosure": 599.86,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": null,
-      "priceLatestDate": null,
-      "trackingReturnPct": null,
-      "priceHistory": [],
+      "priceLatest": 595.3,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": -0.8,
+      "priceHistory": [
+        [
+          "2026-08-24",
+          599.86
+        ],
+        [
+          "2026-08-25",
+          599.37
+        ],
+        [
+          "2026-08-26",
+          598.47
+        ],
+        [
+          "2026-08-27",
+          591.73
+        ],
+        [
+          "2026-08-28",
+          595.3
+        ]
+      ],
       "catalyst": "",
       "closed": false,
       "closeDate": null,
@@ -164,13 +225,34 @@
       "transactionDate": "2026-06-18",
       "transactionDateApprox": false,
       "disclosureDate": "2026-08-22",
-      "priceAtTransaction": null,
-      "priceAtDisclosure": null,
+      "priceAtTransaction": 577.22,
+      "priceAtDisclosure": 559.02,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": null,
-      "priceLatestDate": null,
-      "trackingReturnPct": null,
-      "priceHistory": [],
+      "priceLatest": 578.02,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": 3.4,
+      "priceHistory": [
+        [
+          "2026-08-24",
+          559.02
+        ],
+        [
+          "2026-08-25",
+          570.05
+        ],
+        [
+          "2026-08-26",
+          576.14
+        ],
+        [
+          "2026-08-27",
+          571.1
+        ],
+        [
+          "2026-08-28",
+          578.02
+        ]
+      ],
       "catalyst": "",
       "closed": false,
       "closeDate": null,
@@ -193,13 +275,34 @@
       "transactionDate": "2026-06-18",
       "transactionDateApprox": false,
       "disclosureDate": "2026-08-22",
-      "priceAtTransaction": null,
-      "priceAtDisclosure": null,
+      "priceAtTransaction": 395.17,
+      "priceAtDisclosure": 481.52,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": null,
-      "priceLatestDate": null,
-      "trackingReturnPct": null,
-      "priceHistory": [],
+      "priceLatest": 486.0,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": 0.9,
+      "priceHistory": [
+        [
+          "2026-08-24",
+          481.52
+        ],
+        [
+          "2026-08-25",
+          485.39
+        ],
+        [
+          "2026-08-26",
+          487.28
+        ],
+        [
+          "2026-08-27",
+          486.54
+        ],
+        [
+          "2026-08-28",
+          486.0
+        ]
+      ],
       "catalyst": "",
       "closed": false,
       "closeDate": null,
@@ -222,13 +325,34 @@
       "transactionDate": "2026-08-22",
       "transactionDateApprox": true,
       "disclosureDate": "2026-08-22",
-      "priceAtTransaction": null,
-      "priceAtDisclosure": null,
+      "priceAtTransaction": 348.95,
+      "priceAtDisclosure": 348.95,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": null,
-      "priceLatestDate": null,
-      "trackingReturnPct": null,
-      "priceHistory": [],
+      "priceLatest": 348.75,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": -0.1,
+      "priceHistory": [
+        [
+          "2026-08-24",
+          348.95
+        ],
+        [
+          "2026-08-25",
+          350.25
+        ],
+        [
+          "2026-08-26",
+          345.82
+        ],
+        [
+          "2026-08-27",
+          354.81
+        ],
+        [
+          "2026-08-28",
+          348.75
+        ]
+      ],
       "catalyst": "",
       "closed": false,
       "closeDate": null,
@@ -251,13 +375,34 @@
       "transactionDate": "2026-06-12",
       "transactionDateApprox": false,
       "disclosureDate": "2026-08-22",
-      "priceAtTransaction": null,
-      "priceAtDisclosure": null,
+      "priceAtTransaction": 80.34,
+      "priceAtDisclosure": 80.01,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": null,
-      "priceLatestDate": null,
-      "trackingReturnPct": null,
-      "priceHistory": [],
+      "priceLatest": 81.72,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": 2.1,
+      "priceHistory": [
+        [
+          "2026-08-24",
+          80.01
+        ],
+        [
+          "2026-08-25",
+          82.23
+        ],
+        [
+          "2026-08-26",
+          81.46
+        ],
+        [
+          "2026-08-27",
+          79.84
+        ],
+        [
+          "2026-08-28",
+          81.72
+        ]
+      ],
       "catalyst": "",
       "closed": false,
       "closeDate": null,
@@ -280,13 +425,34 @@
       "transactionDate": "2026-06-18",
       "transactionDateApprox": false,
       "disclosureDate": "2026-08-22",
-      "priceAtTransaction": null,
-      "priceAtDisclosure": null,
+      "priceAtTransaction": 77.38,
+      "priceAtDisclosure": 80.01,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": null,
-      "priceLatestDate": null,
-      "trackingReturnPct": null,
-      "priceHistory": [],
+      "priceLatest": 81.72,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": 2.1,
+      "priceHistory": [
+        [
+          "2026-08-24",
+          80.01
+        ],
+        [
+          "2026-08-25",
+          82.23
+        ],
+        [
+          "2026-08-26",
+          81.46
+        ],
+        [
+          "2026-08-27",
+          79.84
+        ],
+        [
+          "2026-08-28",
+          81.72
+        ]
+      ],
       "catalyst": "",
       "closed": false,
       "closeDate": null,
@@ -309,13 +475,34 @@
       "transactionDate": "2026-06-16",
       "transactionDateApprox": false,
       "disclosureDate": "2026-08-22",
-      "priceAtTransaction": null,
-      "priceAtDisclosure": null,
+      "priceAtTransaction": 78.72,
+      "priceAtDisclosure": 80.01,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": null,
-      "priceLatestDate": null,
-      "trackingReturnPct": null,
-      "priceHistory": [],
+      "priceLatest": 81.72,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": 2.1,
+      "priceHistory": [
+        [
+          "2026-08-24",
+          80.01
+        ],
+        [
+          "2026-08-25",
+          82.23
+        ],
+        [
+          "2026-08-26",
+          81.46
+        ],
+        [
+          "2026-08-27",
+          79.84
+        ],
+        [
+          "2026-08-28",
+          81.72
+        ]
+      ],
       "catalyst": "",
       "closed": false,
       "closeDate": null,
@@ -338,13 +525,34 @@
       "transactionDate": "2026-06-24",
       "transactionDateApprox": false,
       "disclosureDate": "2026-08-22",
-      "priceAtTransaction": null,
-      "priceAtDisclosure": null,
+      "priceAtTransaction": 71.84,
+      "priceAtDisclosure": 80.01,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": null,
-      "priceLatestDate": null,
-      "trackingReturnPct": null,
-      "priceHistory": [],
+      "priceLatest": 81.72,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": 2.1,
+      "priceHistory": [
+        [
+          "2026-08-24",
+          80.01
+        ],
+        [
+          "2026-08-25",
+          82.23
+        ],
+        [
+          "2026-08-26",
+          81.46
+        ],
+        [
+          "2026-08-27",
+          79.84
+        ],
+        [
+          "2026-08-28",
+          81.72
+        ]
+      ],
       "catalyst": "",
       "closed": false,
       "closeDate": null,
@@ -355,7 +563,7 @@
       "id": "gs-2026-08-13",
       "ticker": "GS",
       "companyKo": "골드만삭스",
-      "companyEn": "The Goldman Sachs Group",
+      "companyEn": "GOLDMAN SACHS GROUP INC",
       "sector": "금융",
       "instrumentType": "stock",
       "action": "buy",
@@ -371,9 +579,9 @@
       "priceAtTransaction": 1042.63,
       "priceAtDisclosure": 1042.63,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 1058.88,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": 1.6,
+      "priceLatest": 1033.99,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": -0.8,
       "priceHistory": [
         [
           "2026-08-13",
@@ -410,6 +618,18 @@
         [
           "2026-08-25",
           1058.88
+        ],
+        [
+          "2026-08-26",
+          1040.46
+        ],
+        [
+          "2026-08-27",
+          1040.87
+        ],
+        [
+          "2026-08-28",
+          1033.99
         ]
       ],
       "catalyst": "",
@@ -421,7 +641,7 @@
       "id": "cat-2026-06-23",
       "ticker": "CAT",
       "companyKo": "캐터필러",
-      "companyEn": "Caterpillar Inc.",
+      "companyEn": "CATERPILLAR INC",
       "sector": "산업재",
       "instrumentType": "stock",
       "action": "buy",
@@ -437,9 +657,9 @@
       "priceAtTransaction": 984.24,
       "priceAtDisclosure": 854.6,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 811.29,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": -5.1,
+      "priceLatest": 800.25,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": -6.4,
       "priceHistory": [
         [
           "2026-08-13",
@@ -476,6 +696,18 @@
         [
           "2026-08-25",
           811.29
+        ],
+        [
+          "2026-08-26",
+          821.93
+        ],
+        [
+          "2026-08-27",
+          817.0
+        ],
+        [
+          "2026-08-28",
+          800.25
         ]
       ],
       "catalyst": "",
@@ -503,9 +735,9 @@
       "priceAtTransaction": 392.6139,
       "priceAtDisclosure": 422.67,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 432.99,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": 2.4,
+      "priceLatest": 442.89,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": 4.8,
       "priceHistory": [
         [
           "2026-08-13",
@@ -542,6 +774,18 @@
         [
           "2026-08-25",
           432.99
+        ],
+        [
+          "2026-08-26",
+          436.49
+        ],
+        [
+          "2026-08-27",
+          435.39
+        ],
+        [
+          "2026-08-28",
+          442.89
         ]
       ],
       "catalyst": "",
@@ -553,7 +797,7 @@
       "id": "amgn-2026-06-12",
       "ticker": "AMGN",
       "companyKo": "암젠",
-      "companyEn": "Amgen Inc.",
+      "companyEn": "AMGEN INC",
       "sector": "바이오/제약",
       "instrumentType": "stock",
       "action": "buy",
@@ -569,9 +813,9 @@
       "priceAtTransaction": 355.2,
       "priceAtDisclosure": 417.84,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 442.24,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": 5.8,
+      "priceLatest": 432.42,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": 3.5,
       "priceHistory": [
         [
           "2026-08-13",
@@ -608,6 +852,96 @@
         [
           "2026-08-25",
           442.24
+        ],
+        [
+          "2026-08-26",
+          440.34
+        ],
+        [
+          "2026-08-27",
+          436.99
+        ],
+        [
+          "2026-08-28",
+          432.42
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "bac-2026-06-12",
+      "ticker": "BAC",
+      "companyKo": "BAC",
+      "companyEn": "BANK OF AMERICA CORP /DE/",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": false,
+      "verifiedSource": null,
+      "amountRange": [
+        15001,
+        50000
+      ],
+      "transactionDate": "2026-06-12",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 56.02,
+      "priceAtDisclosure": 64.09,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 62.32,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": -2.8,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          64.09
+        ],
+        [
+          "2026-08-14",
+          64.49
+        ],
+        [
+          "2026-08-17",
+          63.89
+        ],
+        [
+          "2026-08-18",
+          64.23
+        ],
+        [
+          "2026-08-19",
+          63.17
+        ],
+        [
+          "2026-08-20",
+          61.86
+        ],
+        [
+          "2026-08-21",
+          61.69
+        ],
+        [
+          "2026-08-24",
+          62.33
+        ],
+        [
+          "2026-08-25",
+          62.43
+        ],
+        [
+          "2026-08-26",
+          62.23
+        ],
+        [
+          "2026-08-27",
+          61.17
+        ],
+        [
+          "2026-08-28",
+          62.32
         ]
       ],
       "catalyst": "",
@@ -619,7 +953,7 @@
       "id": "gd-2026-06-12",
       "ticker": "GD",
       "companyKo": "제너럴 다이내믹스",
-      "companyEn": "General Dynamics Corp.",
+      "companyEn": "GENERAL DYNAMICS CORP",
       "sector": "항공/방산",
       "instrumentType": "stock",
       "action": "buy",
@@ -635,9 +969,9 @@
       "priceAtTransaction": 360.22,
       "priceAtDisclosure": 392.96,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 376.58,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": -4.2,
+      "priceLatest": 379.32,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": -3.5,
       "priceHistory": [
         [
           "2026-08-13",
@@ -674,6 +1008,18 @@
         [
           "2026-08-25",
           376.58
+        ],
+        [
+          "2026-08-26",
+          382.02
+        ],
+        [
+          "2026-08-27",
+          380.06
+        ],
+        [
+          "2026-08-28",
+          379.32
         ]
       ],
       "catalyst": "",
@@ -685,7 +1031,7 @@
       "id": "msft-2026-06-12",
       "ticker": "MSFT",
       "companyKo": "마이크로소프트",
-      "companyEn": "Microsoft Corp.",
+      "companyEn": "MICROSOFT CORP",
       "sector": "빅테크",
       "instrumentType": "stock",
       "action": "buy",
@@ -701,9 +1047,9 @@
       "priceAtTransaction": 390.74,
       "priceAtDisclosure": 496.88,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 491.71,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": -1.0,
+      "priceLatest": 513.53,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": 3.4,
       "priceHistory": [
         [
           "2026-08-13",
@@ -740,6 +1086,18 @@
         [
           "2026-08-25",
           491.71
+        ],
+        [
+          "2026-08-26",
+          496.37
+        ],
+        [
+          "2026-08-27",
+          505.06
+        ],
+        [
+          "2026-08-28",
+          513.53
         ]
       ],
       "catalyst": "",
@@ -767,9 +1125,9 @@
       "priceAtTransaction": 41.53,
       "priceAtDisclosure": 60.59,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 62.27,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": 2.8,
+      "priceLatest": 53.66,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": -11.4,
       "priceHistory": [
         [
           "2026-08-13",
@@ -806,6 +1164,18 @@
         [
           "2026-08-25",
           62.27
+        ],
+        [
+          "2026-08-26",
+          61.81
+        ],
+        [
+          "2026-08-27",
+          61.47
+        ],
+        [
+          "2026-08-28",
+          53.66
         ]
       ],
       "catalyst": "",
@@ -817,7 +1187,7 @@
       "id": "nrg-2026-06-12",
       "ticker": "NRG",
       "companyKo": "NRG 에너지",
-      "companyEn": "NRG Energy, Inc.",
+      "companyEn": "NRG ENERGY, INC.",
       "sector": "에너지/유틸",
       "instrumentType": "stock",
       "action": "buy",
@@ -833,9 +1203,9 @@
       "priceAtTransaction": 125.47,
       "priceAtDisclosure": 119.75,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 113.61,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": -5.1,
+      "priceLatest": 111.12,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": -7.2,
       "priceHistory": [
         [
           "2026-08-13",
@@ -872,6 +1242,18 @@
         [
           "2026-08-25",
           113.61
+        ],
+        [
+          "2026-08-26",
+          116.14
+        ],
+        [
+          "2026-08-27",
+          114.41
+        ],
+        [
+          "2026-08-28",
+          111.12
         ]
       ],
       "catalyst": "",
@@ -883,7 +1265,7 @@
       "id": "fe-2026-06-12",
       "ticker": "FE",
       "companyKo": "퍼스트에너지",
-      "companyEn": "FirstEnergy Corp.",
+      "companyEn": "FIRSTENERGY CORP",
       "sector": "에너지/유틸",
       "instrumentType": "stock",
       "action": "buy",
@@ -899,9 +1281,9 @@
       "priceAtTransaction": 47.03,
       "priceAtDisclosure": 46.84,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 46.62,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": -0.5,
+      "priceLatest": 45.88,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": -2.0,
       "priceHistory": [
         [
           "2026-08-13",
@@ -938,6 +1320,18 @@
         [
           "2026-08-25",
           46.62
+        ],
+        [
+          "2026-08-26",
+          46.73
+        ],
+        [
+          "2026-08-27",
+          46.25
+        ],
+        [
+          "2026-08-28",
+          45.88
         ]
       ],
       "catalyst": "",
@@ -949,7 +1343,7 @@
       "id": "sw-2026-06-12",
       "ticker": "SW",
       "companyKo": "스머핏 웨스트록",
-      "companyEn": "Smurfit WestRock",
+      "companyEn": "Smurfit Westrock plc",
       "sector": "소재",
       "instrumentType": "stock",
       "action": "buy",
@@ -965,9 +1359,9 @@
       "priceAtTransaction": 43.32,
       "priceAtDisclosure": 50.02,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 49.43,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": -1.2,
+      "priceLatest": 48.29,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": -3.5,
       "priceHistory": [
         [
           "2026-08-13",
@@ -1004,6 +1398,18 @@
         [
           "2026-08-25",
           49.43
+        ],
+        [
+          "2026-08-26",
+          49.56
+        ],
+        [
+          "2026-08-27",
+          48.63
+        ],
+        [
+          "2026-08-28",
+          48.29
         ]
       ],
       "catalyst": "",
@@ -1015,7 +1421,7 @@
       "id": "cms-2026-06-12",
       "ticker": "CMS",
       "companyKo": "CMS 에너지",
-      "companyEn": "CMS Energy Corp.",
+      "companyEn": "CMS ENERGY CORP",
       "sector": "에너지/유틸",
       "instrumentType": "stock",
       "action": "buy",
@@ -1031,9 +1437,9 @@
       "priceAtTransaction": 73.57,
       "priceAtDisclosure": 70.51,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 68.74,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": -2.5,
+      "priceLatest": 68.21,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": -3.3,
       "priceHistory": [
         [
           "2026-08-13",
@@ -1070,6 +1476,18 @@
         [
           "2026-08-25",
           68.74
+        ],
+        [
+          "2026-08-26",
+          69.23
+        ],
+        [
+          "2026-08-27",
+          68.35
+        ],
+        [
+          "2026-08-28",
+          68.21
         ]
       ],
       "catalyst": "",
@@ -1097,9 +1515,9 @@
       "priceAtTransaction": 189.1,
       "priceAtDisclosure": 183.38,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 181.61,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": -1.0,
+      "priceLatest": 181.37,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": -1.1,
       "priceHistory": [
         [
           "2026-08-13",
@@ -1136,6 +1554,18 @@
         [
           "2026-08-25",
           181.61
+        ],
+        [
+          "2026-08-26",
+          179.61
+        ],
+        [
+          "2026-08-27",
+          177.75
+        ],
+        [
+          "2026-08-28",
+          181.37
         ]
       ],
       "catalyst": "",
@@ -1147,7 +1577,7 @@
       "id": "lnt-2026-06-12",
       "ticker": "LNT",
       "companyKo": "얼라이언트 에너지",
-      "companyEn": "Alliant Energy Corp.",
+      "companyEn": "ALLIANT ENERGY CORP",
       "sector": "에너지/유틸",
       "instrumentType": "stock",
       "action": "buy",
@@ -1163,9 +1593,9 @@
       "priceAtTransaction": 73.11,
       "priceAtDisclosure": 70.2,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 68.34,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": -2.6,
+      "priceLatest": 68.03,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": -3.1,
       "priceHistory": [
         [
           "2026-08-13",
@@ -1202,6 +1632,18 @@
         [
           "2026-08-25",
           68.34
+        ],
+        [
+          "2026-08-26",
+          68.92
+        ],
+        [
+          "2026-08-27",
+          68.21
+        ],
+        [
+          "2026-08-28",
+          68.03
         ]
       ],
       "catalyst": "",
@@ -1229,9 +1671,9 @@
       "priceAtTransaction": 412.25,
       "priceAtDisclosure": 465.04,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 485.39,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": 4.4,
+      "priceLatest": 486.0,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": 4.5,
       "priceHistory": [
         [
           "2026-08-13",
@@ -1268,6 +1710,18 @@
         [
           "2026-08-25",
           485.39
+        ],
+        [
+          "2026-08-26",
+          487.28
+        ],
+        [
+          "2026-08-27",
+          486.54
+        ],
+        [
+          "2026-08-28",
+          486.0
         ]
       ],
       "catalyst": "",
@@ -1279,7 +1733,7 @@
       "id": "hig-2026-06-12",
       "ticker": "HIG",
       "companyKo": "하트포드",
-      "companyEn": "The Hartford Insurance Group",
+      "companyEn": "HARTFORD INSURANCE GROUP, INC.",
       "sector": "금융",
       "instrumentType": "stock",
       "action": "sell",
@@ -1295,9 +1749,9 @@
       "priceAtTransaction": 129.62,
       "priceAtDisclosure": 137.81,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 138.22,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": 0.3,
+      "priceLatest": 138.55,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": 0.5,
       "priceHistory": [
         [
           "2026-08-13",
@@ -1334,6 +1788,18 @@
         [
           "2026-08-25",
           138.22
+        ],
+        [
+          "2026-08-26",
+          139.86
+        ],
+        [
+          "2026-08-27",
+          137.8
+        ],
+        [
+          "2026-08-28",
+          138.55
         ]
       ],
       "catalyst": "",
@@ -1345,7 +1811,7 @@
       "id": "trv-2026-06-12",
       "ticker": "TRV",
       "companyKo": "트래블러스",
-      "companyEn": "The Travelers Companies",
+      "companyEn": "TRAVELERS COMPANIES, INC.",
       "sector": "금융",
       "instrumentType": "stock",
       "action": "sell",
@@ -1361,9 +1827,9 @@
       "priceAtTransaction": 304.46,
       "priceAtDisclosure": 370.0,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 369.66,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": -0.1,
+      "priceLatest": 369.9,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": -0.0,
       "priceHistory": [
         [
           "2026-08-13",
@@ -1400,6 +1866,18 @@
         [
           "2026-08-25",
           369.66
+        ],
+        [
+          "2026-08-26",
+          371.15
+        ],
+        [
+          "2026-08-27",
+          369.33
+        ],
+        [
+          "2026-08-28",
+          369.9
         ]
       ],
       "catalyst": "",
@@ -1411,7 +1889,7 @@
       "id": "cme-2026-06-12",
       "ticker": "CME",
       "companyKo": "CME 그룹",
-      "companyEn": "CME Group Inc.",
+      "companyEn": "CME GROUP INC.",
       "sector": "금융",
       "instrumentType": "stock",
       "action": "buy",
@@ -1427,9 +1905,9 @@
       "priceAtTransaction": 269.53,
       "priceAtDisclosure": 267.21,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 277.32,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": 3.8,
+      "priceLatest": 285.8,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": 7.0,
       "priceHistory": [
         [
           "2026-08-13",
@@ -1466,6 +1944,18 @@
         [
           "2026-08-25",
           277.32
+        ],
+        [
+          "2026-08-26",
+          280.98
+        ],
+        [
+          "2026-08-27",
+          280.94
+        ],
+        [
+          "2026-08-28",
+          285.8
         ]
       ],
       "catalyst": "",
@@ -1477,7 +1967,7 @@
       "id": "ba-2026-08-13",
       "ticker": "BA",
       "companyKo": "보잉",
-      "companyEn": "The Boeing Company",
+      "companyEn": "BOEING CO",
       "sector": "항공/방산",
       "instrumentType": "stock",
       "action": "buy",
@@ -1493,9 +1983,9 @@
       "priceAtTransaction": 230.33,
       "priceAtDisclosure": 230.33,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 211.08,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": -8.4,
+      "priceLatest": 209.82,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": -8.9,
       "priceHistory": [
         [
           "2026-08-13",
@@ -1532,6 +2022,18 @@
         [
           "2026-08-25",
           211.08
+        ],
+        [
+          "2026-08-26",
+          212.09
+        ],
+        [
+          "2026-08-27",
+          209.89
+        ],
+        [
+          "2026-08-28",
+          209.82
         ]
       ],
       "catalyst": "",
@@ -1543,7 +2045,7 @@
       "id": "tyl-2026-08-13",
       "ticker": "TYL",
       "companyKo": "타일러 테크",
-      "companyEn": "Tyler Technologies",
+      "companyEn": "TYLER TECHNOLOGIES INC",
       "sector": "소프트웨어",
       "instrumentType": "stock",
       "action": "buy",
@@ -1559,9 +2061,9 @@
       "priceAtTransaction": 328.95,
       "priceAtDisclosure": 328.95,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 350.06,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": 6.4,
+      "priceLatest": 377.94,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": 14.9,
       "priceHistory": [
         [
           "2026-08-13",
@@ -1598,6 +2100,18 @@
         [
           "2026-08-25",
           350.06
+        ],
+        [
+          "2026-08-26",
+          352.65
+        ],
+        [
+          "2026-08-27",
+          369.88
+        ],
+        [
+          "2026-08-28",
+          377.94
         ]
       ],
       "catalyst": "",
@@ -1609,7 +2123,7 @@
       "id": "payx-2026-08-13",
       "ticker": "PAYX",
       "companyKo": "페이첵스",
-      "companyEn": "Paychex, Inc.",
+      "companyEn": "PAYCHEX INC",
       "sector": "소프트웨어",
       "instrumentType": "stock",
       "action": "buy",
@@ -1625,9 +2139,9 @@
       "priceAtTransaction": 125.4,
       "priceAtDisclosure": 125.4,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 124.99,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": -0.3,
+      "priceLatest": 127.04,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": 1.3,
       "priceHistory": [
         [
           "2026-08-13",
@@ -1664,6 +2178,18 @@
         [
           "2026-08-25",
           124.99
+        ],
+        [
+          "2026-08-26",
+          124.88
+        ],
+        [
+          "2026-08-27",
+          126.48
+        ],
+        [
+          "2026-08-28",
+          127.04
         ]
       ],
       "catalyst": "",
@@ -1675,7 +2201,7 @@
       "id": "syk-2026-08-13",
       "ticker": "SYK",
       "companyKo": "스트라이커",
-      "companyEn": "Stryker Corp.",
+      "companyEn": "STRYKER CORP",
       "sector": "헬스케어",
       "instrumentType": "stock",
       "action": "buy",
@@ -1691,9 +2217,9 @@
       "priceAtTransaction": 341.09,
       "priceAtDisclosure": 341.09,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 330.59,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": -3.1,
+      "priceLatest": 330.69,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": -3.0,
       "priceHistory": [
         [
           "2026-08-13",
@@ -1730,6 +2256,18 @@
         [
           "2026-08-25",
           330.59
+        ],
+        [
+          "2026-08-26",
+          329.67
+        ],
+        [
+          "2026-08-27",
+          322.12
+        ],
+        [
+          "2026-08-28",
+          330.69
         ]
       ],
       "catalyst": "",
@@ -1741,7 +2279,7 @@
       "id": "pg-2026-08-13",
       "ticker": "PG",
       "companyKo": "P&G",
-      "companyEn": "The Procter & Gamble Company",
+      "companyEn": "PROCTER & GAMBLE Co",
       "sector": "소비재",
       "instrumentType": "stock",
       "action": "buy",
@@ -1757,9 +2295,9 @@
       "priceAtTransaction": 144.26,
       "priceAtDisclosure": 144.26,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 145.4,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": 0.8,
+      "priceLatest": 143.78,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": -0.3,
       "priceHistory": [
         [
           "2026-08-13",
@@ -1796,6 +2334,18 @@
         [
           "2026-08-25",
           145.4
+        ],
+        [
+          "2026-08-26",
+          145.0
+        ],
+        [
+          "2026-08-27",
+          143.14
+        ],
+        [
+          "2026-08-28",
+          143.78
         ]
       ],
       "catalyst": "",
@@ -1807,7 +2357,7 @@
       "id": "lulu-2026-06-18",
       "ticker": "LULU",
       "companyKo": "룰루레몬",
-      "companyEn": "Lululemon Athletica Inc.",
+      "companyEn": "lululemon athletica inc.",
       "sector": "소비재",
       "instrumentType": "stock",
       "action": "buy",
@@ -1823,9 +2373,9 @@
       "priceAtTransaction": 111.77,
       "priceAtDisclosure": 119.56,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 118.33,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": -1.0,
+      "priceLatest": 120.81,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": 1.0,
       "priceHistory": [
         [
           "2026-08-13",
@@ -1862,6 +2412,18 @@
         [
           "2026-08-25",
           118.33
+        ],
+        [
+          "2026-08-26",
+          116.35
+        ],
+        [
+          "2026-08-27",
+          115.0
+        ],
+        [
+          "2026-08-28",
+          120.81
         ]
       ],
       "catalyst": "",
@@ -1873,7 +2435,7 @@
       "id": "eqt-2026-06-18",
       "ticker": "EQT",
       "companyKo": "EQT",
-      "companyEn": "EQT Corporation",
+      "companyEn": "EQT Corp",
       "sector": "에너지/유틸",
       "instrumentType": "stock",
       "action": "sell",
@@ -1889,9 +2451,9 @@
       "priceAtTransaction": 50.72,
       "priceAtDisclosure": 54.08,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 54.0,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": -0.1,
+      "priceLatest": 54.57,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": 0.9,
       "priceHistory": [
         [
           "2026-08-13",
@@ -1928,6 +2490,18 @@
         [
           "2026-08-25",
           54.0
+        ],
+        [
+          "2026-08-26",
+          54.79
+        ],
+        [
+          "2026-08-27",
+          54.77
+        ],
+        [
+          "2026-08-28",
+          54.57
         ]
       ],
       "catalyst": "",
@@ -1939,7 +2513,7 @@
       "id": "csgp-2026-06-18",
       "ticker": "CSGP",
       "companyKo": "코스타 그룹",
-      "companyEn": "CoStar Group, Inc.",
+      "companyEn": "COSTAR GROUP, INC.",
       "sector": "부동산/리츠",
       "instrumentType": "stock",
       "action": "buy",
@@ -1955,9 +2529,9 @@
       "priceAtTransaction": 30.12,
       "priceAtDisclosure": 33.05,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 32.81,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": -0.7,
+      "priceLatest": 32.22,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": -2.5,
       "priceHistory": [
         [
           "2026-08-13",
@@ -1994,6 +2568,18 @@
         [
           "2026-08-25",
           32.81
+        ],
+        [
+          "2026-08-26",
+          32.14
+        ],
+        [
+          "2026-08-27",
+          31.34
+        ],
+        [
+          "2026-08-28",
+          32.22
         ]
       ],
       "catalyst": "",
@@ -2021,9 +2607,9 @@
       "priceAtTransaction": 163.26,
       "priceAtDisclosure": 153.9,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 187.16,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": 21.6,
+      "priceLatest": 178.64,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": 16.1,
       "priceHistory": [
         [
           "2026-08-13",
@@ -2060,6 +2646,18 @@
         [
           "2026-08-25",
           187.16
+        ],
+        [
+          "2026-08-26",
+          181.78
+        ],
+        [
+          "2026-08-27",
+          190.72
+        ],
+        [
+          "2026-08-28",
+          178.64
         ]
       ],
       "catalyst": "",
@@ -2087,9 +2685,9 @@
       "priceAtTransaction": 42.51,
       "priceAtDisclosure": 60.59,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 62.27,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": 2.8,
+      "priceLatest": 53.66,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": -11.4,
       "priceHistory": [
         [
           "2026-08-13",
@@ -2126,6 +2724,18 @@
         [
           "2026-08-25",
           62.27
+        ],
+        [
+          "2026-08-26",
+          61.81
+        ],
+        [
+          "2026-08-27",
+          61.47
+        ],
+        [
+          "2026-08-28",
+          53.66
         ]
       ],
       "catalyst": "",
@@ -2153,9 +2763,9 @@
       "priceAtTransaction": 171.78,
       "priceAtDisclosure": 213.34,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 213.78,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": 0.2,
+      "priceLatest": 205.63,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": -3.6,
       "priceHistory": [
         [
           "2026-08-13",
@@ -2192,6 +2802,18 @@
         [
           "2026-08-25",
           213.78
+        ],
+        [
+          "2026-08-26",
+          208.89
+        ],
+        [
+          "2026-08-27",
+          202.56
+        ],
+        [
+          "2026-08-28",
+          205.63
         ]
       ],
       "catalyst": "",
@@ -2203,7 +2825,7 @@
       "id": "hsy-2026-06-18",
       "ticker": "HSY",
       "companyKo": "허쉬",
-      "companyEn": "The Hershey Company",
+      "companyEn": "HERSHEY CO",
       "sector": "소비재",
       "instrumentType": "stock",
       "action": "sell",
@@ -2219,9 +2841,9 @@
       "priceAtTransaction": 172.63,
       "priceAtDisclosure": 186.12,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 187.18,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": 0.6,
+      "priceLatest": 179.05,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": -3.8,
       "priceHistory": [
         [
           "2026-08-13",
@@ -2258,6 +2880,18 @@
         [
           "2026-08-25",
           187.18
+        ],
+        [
+          "2026-08-26",
+          185.35
+        ],
+        [
+          "2026-08-27",
+          181.32
+        ],
+        [
+          "2026-08-28",
+          179.05
         ]
       ],
       "catalyst": "",
@@ -2269,7 +2903,7 @@
       "id": "nvda-2026-06-15",
       "ticker": "NVDA",
       "companyKo": "엔비디아",
-      "companyEn": "NVIDIA Corp.",
+      "companyEn": "NVIDIA CORP",
       "sector": "반도체/AI",
       "instrumentType": "stock",
       "action": "buy",
@@ -2285,9 +2919,9 @@
       "priceAtTransaction": 212.45,
       "priceAtDisclosure": 225.3,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 213.05,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": -5.4,
+      "priceLatest": 217.55,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": -3.4,
       "priceHistory": [
         [
           "2026-08-13",
@@ -2324,6 +2958,18 @@
         [
           "2026-08-25",
           213.05
+        ],
+        [
+          "2026-08-26",
+          209.66
+        ],
+        [
+          "2026-08-27",
+          227.98
+        ],
+        [
+          "2026-08-28",
+          217.55
         ]
       ],
       "catalyst": "",
@@ -2351,9 +2997,9 @@
       "priceAtTransaction": 222.47,
       "priceAtDisclosure": 250.82,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 265.79,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": 6.0,
+      "priceLatest": 255.48,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": 1.9,
       "priceHistory": [
         [
           "2026-08-13",
@@ -2390,6 +3036,18 @@
         [
           "2026-08-25",
           265.79
+        ],
+        [
+          "2026-08-26",
+          262.9
+        ],
+        [
+          "2026-08-27",
+          258.15
+        ],
+        [
+          "2026-08-28",
+          255.48
         ]
       ],
       "catalyst": "",
@@ -2417,9 +3075,9 @@
       "priceAtTransaction": 148.5,
       "priceAtDisclosure": 141.21,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 143.33,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": 1.5,
+      "priceLatest": 140.7,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": -0.4,
       "priceHistory": [
         [
           "2026-08-13",
@@ -2456,6 +3114,18 @@
         [
           "2026-08-25",
           143.33
+        ],
+        [
+          "2026-08-26",
+          142.59
+        ],
+        [
+          "2026-08-27",
+          141.85
+        ],
+        [
+          "2026-08-28",
+          140.7
         ]
       ],
       "catalyst": "",
@@ -2483,9 +3153,9 @@
       "priceAtTransaction": 417.82,
       "priceAtDisclosure": 417.82,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 356.74,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": -14.6,
+      "priceLatest": 368.79,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": -11.7,
       "priceHistory": [
         [
           "2026-08-13",
@@ -2522,6 +3192,18 @@
         [
           "2026-08-25",
           356.74
+        ],
+        [
+          "2026-08-26",
+          355.59
+        ],
+        [
+          "2026-08-27",
+          371.54
+        ],
+        [
+          "2026-08-28",
+          368.79
         ]
       ],
       "catalyst": "",
@@ -2549,9 +3231,9 @@
       "priceAtTransaction": 120.82,
       "priceAtDisclosure": 115.72,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 105.38,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": -8.9,
+      "priceLatest": 103.09,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": -10.9,
       "priceHistory": [
         [
           "2026-08-13",
@@ -2588,6 +3270,18 @@
         [
           "2026-08-25",
           105.38
+        ],
+        [
+          "2026-08-26",
+          104.34
+        ],
+        [
+          "2026-08-27",
+          102.63
+        ],
+        [
+          "2026-08-28",
+          103.09
         ]
       ],
       "catalyst": "",
@@ -2599,7 +3293,7 @@
       "id": "wbd-2026-06-16",
       "ticker": "WBD",
       "companyKo": "워너브러더스 디스커버리",
-      "companyEn": "Warner Bros. Discovery",
+      "companyEn": "Warner Bros. Discovery, Inc.",
       "sector": "미디어/통신",
       "instrumentType": "stock",
       "action": "buy",
@@ -2615,9 +3309,9 @@
       "priceAtTransaction": 26.6,
       "priceAtDisclosure": 27.75,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 28.9,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": 4.1,
+      "priceLatest": 28.77,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": 3.7,
       "priceHistory": [
         [
           "2026-08-13",
@@ -2654,6 +3348,18 @@
         [
           "2026-08-25",
           28.9
+        ],
+        [
+          "2026-08-26",
+          28.75
+        ],
+        [
+          "2026-08-27",
+          28.88
+        ],
+        [
+          "2026-08-28",
+          28.77
         ]
       ],
       "catalyst": "",
@@ -2681,9 +3387,9 @@
       "priceAtTransaction": 216.97,
       "priceAtDisclosure": 310.78,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 336.71,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": 8.3,
+      "priceLatest": 326.26,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": 5.0,
       "priceHistory": [
         [
           "2026-08-13",
@@ -2720,6 +3426,18 @@
         [
           "2026-08-25",
           336.71
+        ],
+        [
+          "2026-08-26",
+          338.45
+        ],
+        [
+          "2026-08-27",
+          338.7
+        ],
+        [
+          "2026-08-28",
+          326.26
         ]
       ],
       "catalyst": "",
@@ -2731,7 +3449,7 @@
       "id": "cprt-2026-06-15",
       "ticker": "CPRT",
       "companyKo": "코파트",
-      "companyEn": "Copart, Inc.",
+      "companyEn": "COPART INC",
       "sector": "산업재",
       "instrumentType": "stock",
       "action": "buy",
@@ -2747,9 +3465,9 @@
       "priceAtTransaction": 30.3,
       "priceAtDisclosure": 29.39,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 33.33,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": 13.4,
+      "priceLatest": 32.99,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": 12.2,
       "priceHistory": [
         [
           "2026-08-13",
@@ -2786,6 +3504,18 @@
         [
           "2026-08-25",
           33.33
+        ],
+        [
+          "2026-08-26",
+          32.67
+        ],
+        [
+          "2026-08-27",
+          32.76
+        ],
+        [
+          "2026-08-28",
+          32.99
         ]
       ],
       "catalyst": "",
@@ -2797,7 +3527,7 @@
       "id": "entg-2026-06-15",
       "ticker": "ENTG",
       "companyKo": "엔테그리스",
-      "companyEn": "Entegris, Inc.",
+      "companyEn": "ENTEGRIS INC",
       "sector": "반도체/AI",
       "instrumentType": "stock",
       "action": "buy",
@@ -2813,9 +3543,9 @@
       "priceAtTransaction": 162.89,
       "priceAtDisclosure": 163.81,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 138.87,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": -15.2,
+      "priceLatest": 134.92,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": -17.6,
       "priceHistory": [
         [
           "2026-08-13",
@@ -2852,6 +3582,18 @@
         [
           "2026-08-25",
           138.87
+        ],
+        [
+          "2026-08-26",
+          142.46
+        ],
+        [
+          "2026-08-27",
+          145.31
+        ],
+        [
+          "2026-08-28",
+          134.92
         ]
       ],
       "catalyst": "",
@@ -2863,7 +3605,7 @@
       "id": "smtc-2026-06-15",
       "ticker": "SMTC",
       "companyKo": "셈테크",
-      "companyEn": "Semtech Corp.",
+      "companyEn": "SEMTECH CORP",
       "sector": "반도체/AI",
       "instrumentType": "stock",
       "action": "buy",
@@ -2879,9 +3621,9 @@
       "priceAtTransaction": 174.3,
       "priceAtDisclosure": 133.58,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 127.52,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": -4.5,
+      "priceLatest": 131.17,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": -1.8,
       "priceHistory": [
         [
           "2026-08-13",
@@ -2918,6 +3660,18 @@
         [
           "2026-08-25",
           127.52
+        ],
+        [
+          "2026-08-26",
+          140.8
+        ],
+        [
+          "2026-08-27",
+          142.43
+        ],
+        [
+          "2026-08-28",
+          131.17
         ]
       ],
       "catalyst": "",
@@ -2929,7 +3683,7 @@
       "id": "sanm-2026-06-15",
       "ticker": "SANM",
       "companyKo": "사나미나",
-      "companyEn": "Sanmina Corp.",
+      "companyEn": "SANMINA CORP",
       "sector": "반도체/AI",
       "instrumentType": "stock",
       "action": "buy",
@@ -2945,9 +3699,9 @@
       "priceAtTransaction": 259.82,
       "priceAtDisclosure": 206.56,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 191.11,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": -7.5,
+      "priceLatest": 194.01,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": -6.1,
       "priceHistory": [
         [
           "2026-08-13",
@@ -2984,6 +3738,18 @@
         [
           "2026-08-25",
           191.11
+        ],
+        [
+          "2026-08-26",
+          198.64
+        ],
+        [
+          "2026-08-27",
+          203.35
+        ],
+        [
+          "2026-08-28",
+          194.01
         ]
       ],
       "catalyst": "",
@@ -3011,9 +3777,9 @@
       "priceAtTransaction": 35.94,
       "priceAtDisclosure": 37.28,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 42.18,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": 13.1,
+      "priceLatest": 41.58,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": 11.5,
       "priceHistory": [
         [
           "2026-08-13",
@@ -3050,6 +3816,18 @@
         [
           "2026-08-25",
           42.18
+        ],
+        [
+          "2026-08-26",
+          42.07
+        ],
+        [
+          "2026-08-27",
+          41.22
+        ],
+        [
+          "2026-08-28",
+          41.58
         ]
       ],
       "catalyst": "",
@@ -3061,7 +3839,7 @@
       "id": "orly-2026-06-16",
       "ticker": "ORLY",
       "companyKo": "오라일리 오토",
-      "companyEn": "O'Reilly Automotive, Inc.",
+      "companyEn": "O REILLY AUTOMOTIVE INC",
       "sector": "소비재",
       "instrumentType": "stock",
       "action": "sell",
@@ -3077,9 +3855,9 @@
       "priceAtTransaction": 90.68,
       "priceAtDisclosure": 92.58,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 90.32,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": -2.4,
+      "priceLatest": 88.5,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": -4.4,
       "priceHistory": [
         [
           "2026-08-13",
@@ -3116,6 +3894,18 @@
         [
           "2026-08-25",
           90.32
+        ],
+        [
+          "2026-08-26",
+          89.55
+        ],
+        [
+          "2026-08-27",
+          87.83
+        ],
+        [
+          "2026-08-28",
+          88.5
         ]
       ],
       "catalyst": "",
@@ -3127,7 +3917,7 @@
       "id": "ctsh-2026-08-13",
       "ticker": "CTSH",
       "companyKo": "코그니전트",
-      "companyEn": "Cognizant Technology Solutions",
+      "companyEn": "COGNIZANT TECHNOLOGY SOLUTIONS CORP",
       "sector": "소프트웨어",
       "instrumentType": "stock",
       "action": "buy",
@@ -3143,9 +3933,9 @@
       "priceAtTransaction": 59.29,
       "priceAtDisclosure": 59.29,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 63.06,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": 6.4,
+      "priceLatest": 64.04,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": 8.0,
       "priceHistory": [
         [
           "2026-08-13",
@@ -3182,6 +3972,18 @@
         [
           "2026-08-25",
           63.06
+        ],
+        [
+          "2026-08-26",
+          62.09
+        ],
+        [
+          "2026-08-27",
+          63.76
+        ],
+        [
+          "2026-08-28",
+          64.04
         ]
       ],
       "catalyst": "",
@@ -3193,7 +3995,7 @@
       "id": "rmd-2026-06-23",
       "ticker": "RMD",
       "companyKo": "레스메드",
-      "companyEn": "ResMed Inc.",
+      "companyEn": "RESMED INC",
       "sector": "헬스케어",
       "instrumentType": "stock",
       "action": "buy",
@@ -3209,9 +4011,9 @@
       "priceAtTransaction": 191.26,
       "priceAtDisclosure": 226.74,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 236.59,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": 4.3,
+      "priceLatest": 240.33,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": 6.0,
       "priceHistory": [
         [
           "2026-08-13",
@@ -3248,6 +4050,96 @@
         [
           "2026-08-25",
           236.59
+        ],
+        [
+          "2026-08-26",
+          235.69
+        ],
+        [
+          "2026-08-27",
+          235.76
+        ],
+        [
+          "2026-08-28",
+          240.33
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "noc-2026-06-23",
+      "ticker": "NOC",
+      "companyKo": "NOC",
+      "companyEn": "NORTHROP GRUMMAN CORP /DE/",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": true,
+      "verifiedSource": null,
+      "amountRange": [
+        1001,
+        15000
+      ],
+      "transactionDate": "2026-06-23",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 513.22,
+      "priceAtDisclosure": 574.74,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 545.57,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": -5.1,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          574.74
+        ],
+        [
+          "2026-08-14",
+          585.87
+        ],
+        [
+          "2026-08-17",
+          570.2
+        ],
+        [
+          "2026-08-18",
+          589.14
+        ],
+        [
+          "2026-08-19",
+          582.84
+        ],
+        [
+          "2026-08-20",
+          563.86
+        ],
+        [
+          "2026-08-21",
+          551.03
+        ],
+        [
+          "2026-08-24",
+          549.28
+        ],
+        [
+          "2026-08-25",
+          542.52
+        ],
+        [
+          "2026-08-26",
+          549.95
+        ],
+        [
+          "2026-08-27",
+          545.13
+        ],
+        [
+          "2026-08-28",
+          545.57
         ]
       ],
       "catalyst": "",
@@ -3259,7 +4151,7 @@
       "id": "amzn-2026-06-23",
       "ticker": "AMZN",
       "companyKo": "아마존",
-      "companyEn": "Amazon.com, Inc.",
+      "companyEn": "AMAZON COM INC",
       "sector": "빅테크",
       "instrumentType": "stock",
       "action": "buy",
@@ -3275,9 +4167,9 @@
       "priceAtTransaction": 234.11,
       "priceAtDisclosure": 265.13,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 261.06,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": -1.5,
+      "priceLatest": 266.43,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": 0.5,
       "priceHistory": [
         [
           "2026-08-13",
@@ -3314,6 +4206,18 @@
         [
           "2026-08-25",
           261.06
+        ],
+        [
+          "2026-08-26",
+          260.28
+        ],
+        [
+          "2026-08-27",
+          256.26
+        ],
+        [
+          "2026-08-28",
+          266.43
         ]
       ],
       "catalyst": "",
@@ -3341,9 +4245,9 @@
       "priceAtTransaction": 119.6,
       "priceAtDisclosure": 135.55,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 156.45,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": 15.4,
+      "priceLatest": 148.35,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": 9.4,
       "priceHistory": [
         [
           "2026-08-13",
@@ -3380,6 +4284,18 @@
         [
           "2026-08-25",
           156.45
+        ],
+        [
+          "2026-08-26",
+          153.1
+        ],
+        [
+          "2026-08-27",
+          149.54
+        ],
+        [
+          "2026-08-28",
+          148.35
         ]
       ],
       "catalyst": "",
@@ -3391,7 +4307,7 @@
       "id": "team-2026-06-23",
       "ticker": "TEAM",
       "companyKo": "아틀라시안",
-      "companyEn": "Atlassian Corp.",
+      "companyEn": "Atlassian Corp",
       "sector": "소프트웨어",
       "instrumentType": "stock",
       "action": "buy",
@@ -3407,9 +4323,9 @@
       "priceAtTransaction": 81.35,
       "priceAtDisclosure": 165.98,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 166.49,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": 0.3,
+      "priceLatest": 190.415,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": 14.7,
       "priceHistory": [
         [
           "2026-08-13",
@@ -3446,6 +4362,96 @@
         [
           "2026-08-25",
           166.49
+        ],
+        [
+          "2026-08-26",
+          168.47
+        ],
+        [
+          "2026-08-27",
+          185.62
+        ],
+        [
+          "2026-08-28",
+          190.415
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "aph-2026-06-23",
+      "ticker": "APH",
+      "companyKo": "APH",
+      "companyEn": "AMPHENOL CORP /DE/",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": false,
+      "verifiedSource": null,
+      "amountRange": [
+        1001,
+        15000
+      ],
+      "transactionDate": "2026-06-23",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 158.7,
+      "priceAtDisclosure": 165.75,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 157.74,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": -4.8,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          165.75
+        ],
+        [
+          "2026-08-14",
+          167.11
+        ],
+        [
+          "2026-08-17",
+          170.87
+        ],
+        [
+          "2026-08-18",
+          159.57
+        ],
+        [
+          "2026-08-19",
+          156.04
+        ],
+        [
+          "2026-08-20",
+          153.11
+        ],
+        [
+          "2026-08-21",
+          157.01
+        ],
+        [
+          "2026-08-24",
+          155.55
+        ],
+        [
+          "2026-08-25",
+          158.78
+        ],
+        [
+          "2026-08-26",
+          161.34
+        ],
+        [
+          "2026-08-27",
+          161.38
+        ],
+        [
+          "2026-08-28",
+          157.74
         ]
       ],
       "catalyst": "",
@@ -3457,7 +4463,7 @@
       "id": "lmt-2026-06-23",
       "ticker": "LMT",
       "companyKo": "록히드마틴",
-      "companyEn": "Lockheed Martin Corp.",
+      "companyEn": "LOCKHEED MARTIN CORP",
       "sector": "항공/방산",
       "instrumentType": "stock",
       "action": "buy",
@@ -3473,9 +4479,9 @@
       "priceAtTransaction": 503.67,
       "priceAtDisclosure": 598.01,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 556.52,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": -6.9,
+      "priceLatest": 563.85,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": -5.7,
       "priceHistory": [
         [
           "2026-08-13",
@@ -3512,6 +4518,18 @@
         [
           "2026-08-25",
           556.52
+        ],
+        [
+          "2026-08-26",
+          565.62
+        ],
+        [
+          "2026-08-27",
+          565.89
+        ],
+        [
+          "2026-08-28",
+          563.85
         ]
       ],
       "catalyst": "",
@@ -3539,9 +4557,9 @@
       "priceAtTransaction": 234.76,
       "priceAtDisclosure": 250.82,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 265.79,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": 6.0,
+      "priceLatest": 255.48,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": 1.9,
       "priceHistory": [
         [
           "2026-08-13",
@@ -3578,6 +4596,18 @@
         [
           "2026-08-25",
           265.79
+        ],
+        [
+          "2026-08-26",
+          262.9
+        ],
+        [
+          "2026-08-27",
+          258.15
+        ],
+        [
+          "2026-08-28",
+          255.48
         ]
       ],
       "catalyst": "",
@@ -3605,9 +4635,9 @@
       "priceAtTransaction": 386.92,
       "priceAtDisclosure": 411.74,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 428.76,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": 4.1,
+      "priceLatest": 417.82,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": 1.5,
       "priceHistory": [
         [
           "2026-08-13",
@@ -3644,6 +4674,18 @@
         [
           "2026-08-25",
           428.76
+        ],
+        [
+          "2026-08-26",
+          427.16
+        ],
+        [
+          "2026-08-27",
+          419.34
+        ],
+        [
+          "2026-08-28",
+          417.82
         ]
       ],
       "catalyst": "",
@@ -3655,7 +4697,7 @@
       "id": "dox-2026-06-23",
       "ticker": "DOX",
       "companyKo": "암독스",
-      "companyEn": "Amdocs Limited",
+      "companyEn": "AMDOCS LTD",
       "sector": "소프트웨어",
       "instrumentType": "stock",
       "action": "buy",
@@ -3671,9 +4713,9 @@
       "priceAtTransaction": 52.35,
       "priceAtDisclosure": 58.66,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 62.31,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": 6.2,
+      "priceLatest": 62.91,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": 7.2,
       "priceHistory": [
         [
           "2026-08-13",
@@ -3710,6 +4752,18 @@
         [
           "2026-08-25",
           62.31
+        ],
+        [
+          "2026-08-26",
+          62.25
+        ],
+        [
+          "2026-08-27",
+          62.7
+        ],
+        [
+          "2026-08-28",
+          62.91
         ]
       ],
       "catalyst": "",
@@ -3721,7 +4775,7 @@
       "id": "dpz-2026-06-23",
       "ticker": "DPZ",
       "companyKo": "도미노피자",
-      "companyEn": "Domino's Pizza, Inc.",
+      "companyEn": "DOMINOS PIZZA INC",
       "sector": "소비재",
       "instrumentType": "stock",
       "action": "sell",
@@ -3737,8 +4791,8 @@
       "priceAtTransaction": 283.03,
       "priceAtDisclosure": 350.88,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 349.91,
-      "priceLatestDate": "2026-08-25",
+      "priceLatest": 350.0,
+      "priceLatestDate": "2026-08-28",
       "trackingReturnPct": -0.3,
       "priceHistory": [
         [
@@ -3776,6 +4830,18 @@
         [
           "2026-08-25",
           349.91
+        ],
+        [
+          "2026-08-26",
+          344.56
+        ],
+        [
+          "2026-08-27",
+          332.055
+        ],
+        [
+          "2026-08-28",
+          350.0
         ]
       ],
       "catalyst": "",
@@ -3787,7 +4853,7 @@
       "id": "cb-2026-06-23",
       "ticker": "CB",
       "companyKo": "처브",
-      "companyEn": "Chubb Limited",
+      "companyEn": "Chubb Ltd",
       "sector": "금융",
       "instrumentType": "stock",
       "action": "sell",
@@ -3803,9 +4869,9 @@
       "priceAtTransaction": 332.11,
       "priceAtDisclosure": 344.5,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 343.11,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": -0.4,
+      "priceLatest": 339.92,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": -1.3,
       "priceHistory": [
         [
           "2026-08-13",
@@ -3842,6 +4908,18 @@
         [
           "2026-08-25",
           343.11
+        ],
+        [
+          "2026-08-26",
+          343.77
+        ],
+        [
+          "2026-08-27",
+          338.31
+        ],
+        [
+          "2026-08-28",
+          339.92
         ]
       ],
       "catalyst": "",
@@ -3853,7 +4931,7 @@
       "id": "intu-2026-06-23",
       "ticker": "INTU",
       "companyKo": "인튜이트",
-      "companyEn": "Intuit Inc.",
+      "companyEn": "INTUIT INC.",
       "sector": "소프트웨어",
       "instrumentType": "stock",
       "action": "sell",
@@ -3869,9 +4947,9 @@
       "priceAtTransaction": 258.05,
       "priceAtDisclosure": 358.29,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 357.46,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": -0.2,
+      "priceLatest": 358.06,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": -0.1,
       "priceHistory": [
         [
           "2026-08-13",
@@ -3908,6 +4986,18 @@
         [
           "2026-08-25",
           357.46
+        ],
+        [
+          "2026-08-26",
+          345.88
+        ],
+        [
+          "2026-08-27",
+          348.0
+        ],
+        [
+          "2026-08-28",
+          358.06
         ]
       ],
       "catalyst": "",
@@ -3919,7 +5009,7 @@
       "id": "cci-2026-06-23",
       "ticker": "CCI",
       "companyKo": "크라운 캐슬",
-      "companyEn": "Crown Castle Inc.",
+      "companyEn": "CROWN CASTLE INC.",
       "sector": "부동산/리츠",
       "instrumentType": "stock",
       "action": "sell",
@@ -3935,9 +5025,9 @@
       "priceAtTransaction": 84.33,
       "priceAtDisclosure": 75.73,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 76.29,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": 0.7,
+      "priceLatest": 76.14,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": 0.5,
       "priceHistory": [
         [
           "2026-08-13",
@@ -3974,6 +5064,18 @@
         [
           "2026-08-25",
           76.29
+        ],
+        [
+          "2026-08-26",
+          75.54
+        ],
+        [
+          "2026-08-27",
+          75.03
+        ],
+        [
+          "2026-08-28",
+          76.14
         ]
       ],
       "catalyst": "",
@@ -3985,7 +5087,7 @@
       "id": "cmcsa-2026-06-23",
       "ticker": "CMCSA",
       "companyKo": "컴캐스트",
-      "companyEn": "Comcast Corporation",
+      "companyEn": "COMCAST CORP",
       "sector": "미디어/통신",
       "instrumentType": "stock",
       "action": "buy",
@@ -4001,9 +5103,9 @@
       "priceAtTransaction": 22.8,
       "priceAtDisclosure": 26.18,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 27.1,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": 3.5,
+      "priceLatest": 27.06,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": 3.4,
       "priceHistory": [
         [
           "2026-08-13",
@@ -4040,6 +5142,18 @@
         [
           "2026-08-25",
           27.1
+        ],
+        [
+          "2026-08-26",
+          27.2
+        ],
+        [
+          "2026-08-27",
+          26.41
+        ],
+        [
+          "2026-08-28",
+          27.06
         ]
       ],
       "catalyst": "",
@@ -4067,9 +5181,9 @@
       "priceAtTransaction": 117.9,
       "priceAtDisclosure": 127.25,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 127.0,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": -0.2,
+      "priceLatest": 144.71,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": 13.7,
       "priceHistory": [
         [
           "2026-08-13",
@@ -4106,6 +5220,18 @@
         [
           "2026-08-25",
           127.0
+        ],
+        [
+          "2026-08-26",
+          125.8
+        ],
+        [
+          "2026-08-27",
+          138.43
+        ],
+        [
+          "2026-08-28",
+          144.71
         ]
       ],
       "catalyst": "",
@@ -4133,9 +5259,9 @@
       "priceAtTransaction": 178.33,
       "priceAtDisclosure": 185.94,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 188.49,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": 1.4,
+      "priceLatest": 191.77,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": 3.1,
       "priceHistory": [
         [
           "2026-08-13",
@@ -4172,6 +5298,18 @@
         [
           "2026-08-25",
           188.49
+        ],
+        [
+          "2026-08-26",
+          187.87
+        ],
+        [
+          "2026-08-27",
+          191.02
+        ],
+        [
+          "2026-08-28",
+          191.77
         ]
       ],
       "catalyst": "",
@@ -4183,7 +5321,7 @@
       "id": "amzn-2026-06-03",
       "ticker": "AMZN",
       "companyKo": "아마존",
-      "companyEn": "Amazon.com, Inc.",
+      "companyEn": "AMAZON COM INC",
       "sector": "빅테크",
       "instrumentType": "stock",
       "action": "buy",
@@ -4199,9 +5337,9 @@
       "priceAtTransaction": 250.02,
       "priceAtDisclosure": 265.13,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 261.06,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": -1.5,
+      "priceLatest": 266.43,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": 0.5,
       "priceHistory": [
         [
           "2026-08-13",
@@ -4238,6 +5376,18 @@
         [
           "2026-08-25",
           261.06
+        ],
+        [
+          "2026-08-26",
+          260.28
+        ],
+        [
+          "2026-08-27",
+          256.26
+        ],
+        [
+          "2026-08-28",
+          266.43
         ]
       ],
       "catalyst": "",
@@ -4265,9 +5415,9 @@
       "priceAtTransaction": 42.61,
       "priceAtDisclosure": 60.59,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 62.27,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": 2.8,
+      "priceLatest": 53.66,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": -11.4,
       "priceHistory": [
         [
           "2026-08-13",
@@ -4304,6 +5454,18 @@
         [
           "2026-08-25",
           62.27
+        ],
+        [
+          "2026-08-26",
+          61.81
+        ],
+        [
+          "2026-08-27",
+          61.47
+        ],
+        [
+          "2026-08-28",
+          53.66
         ]
       ],
       "catalyst": "",
@@ -4315,7 +5477,7 @@
       "id": "ceg-2026-06-03",
       "ticker": "CEG",
       "companyKo": "콘스텔레이션 에너지",
-      "companyEn": "Constellation Energy Corp.",
+      "companyEn": "Constellation Energy Corp",
       "sector": "에너지/유틸",
       "instrumentType": "stock",
       "action": "sell",
@@ -4331,9 +5493,9 @@
       "priceAtTransaction": 267.24,
       "priceAtDisclosure": 278.64,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 278.42,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": -0.1,
+      "priceLatest": 276.75,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": -0.7,
       "priceHistory": [
         [
           "2026-08-13",
@@ -4370,6 +5532,18 @@
         [
           "2026-08-25",
           278.42
+        ],
+        [
+          "2026-08-26",
+          279.52
+        ],
+        [
+          "2026-08-27",
+          282.41
+        ],
+        [
+          "2026-08-28",
+          276.75
         ]
       ],
       "catalyst": "",
@@ -4381,7 +5555,7 @@
       "id": "cme-2026-06-03",
       "ticker": "CME",
       "companyKo": "CME 그룹",
-      "companyEn": "CME Group Inc.",
+      "companyEn": "CME GROUP INC.",
       "sector": "금융",
       "instrumentType": "stock",
       "action": "sell",
@@ -4397,9 +5571,9 @@
       "priceAtTransaction": 252.64,
       "priceAtDisclosure": 267.21,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 277.32,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": 3.8,
+      "priceLatest": 285.8,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": 7.0,
       "priceHistory": [
         [
           "2026-08-13",
@@ -4436,6 +5610,18 @@
         [
           "2026-08-25",
           277.32
+        ],
+        [
+          "2026-08-26",
+          280.98
+        ],
+        [
+          "2026-08-27",
+          280.94
+        ],
+        [
+          "2026-08-28",
+          285.8
         ]
       ],
       "catalyst": "",
@@ -4447,7 +5633,7 @@
       "id": "syk-2026-06-03",
       "ticker": "SYK",
       "companyKo": "스트라이커",
-      "companyEn": "Stryker Corp.",
+      "companyEn": "STRYKER CORP",
       "sector": "헬스케어",
       "instrumentType": "stock",
       "action": "sell",
@@ -4463,9 +5649,9 @@
       "priceAtTransaction": 295.0,
       "priceAtDisclosure": 341.09,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 330.59,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": -3.1,
+      "priceLatest": 330.69,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": -3.0,
       "priceHistory": [
         [
           "2026-08-13",
@@ -4502,6 +5688,18 @@
         [
           "2026-08-25",
           330.59
+        ],
+        [
+          "2026-08-26",
+          329.67
+        ],
+        [
+          "2026-08-27",
+          322.12
+        ],
+        [
+          "2026-08-28",
+          330.69
         ]
       ],
       "catalyst": "",
@@ -4513,7 +5711,7 @@
       "id": "gpc-2026-06-22",
       "ticker": "GPC",
       "companyKo": "제뉴인 파츠",
-      "companyEn": "Genuine Parts Company",
+      "companyEn": "GENUINE PARTS CO",
       "sector": "산업재",
       "instrumentType": "stock",
       "action": "buy",
@@ -4529,9 +5727,9 @@
       "priceAtTransaction": 105.11,
       "priceAtDisclosure": 135.35,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 137.95,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": 1.9,
+      "priceLatest": 137.51,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": 1.6,
       "priceHistory": [
         [
           "2026-08-13",
@@ -4568,6 +5766,18 @@
         [
           "2026-08-25",
           137.95
+        ],
+        [
+          "2026-08-26",
+          139.49
+        ],
+        [
+          "2026-08-27",
+          136.7
+        ],
+        [
+          "2026-08-28",
+          137.51
         ]
       ],
       "catalyst": "",
@@ -4595,9 +5805,9 @@
       "priceAtTransaction": 23.52,
       "priceAtDisclosure": 23.52,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 22.36,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": -4.9,
+      "priceLatest": 22.29,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": -5.2,
       "priceHistory": [
         [
           "2026-08-13",
@@ -4634,6 +5844,18 @@
         [
           "2026-08-25",
           22.36
+        ],
+        [
+          "2026-08-26",
+          22.4
+        ],
+        [
+          "2026-08-27",
+          22.405
+        ],
+        [
+          "2026-08-28",
+          22.29
         ]
       ],
       "catalyst": "",
@@ -4645,7 +5867,7 @@
       "id": "indv-2026-06-04",
       "ticker": "INDV",
       "companyKo": "인디비어",
-      "companyEn": "Indivior PLC",
+      "companyEn": "Indivior Pharmaceuticals, Inc.",
       "sector": "바이오/제약",
       "instrumentType": "stock",
       "action": "buy",
@@ -4661,9 +5883,9 @@
       "priceAtTransaction": 37.45,
       "priceAtDisclosure": 38.22,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 35.97,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": -5.9,
+      "priceLatest": 34.87,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": -8.8,
       "priceHistory": [
         [
           "2026-08-13",
@@ -4700,6 +5922,18 @@
         [
           "2026-08-25",
           35.97
+        ],
+        [
+          "2026-08-26",
+          35.825
+        ],
+        [
+          "2026-08-27",
+          35.3
+        ],
+        [
+          "2026-08-28",
+          34.87
         ]
       ],
       "catalyst": "",
@@ -4711,7 +5945,7 @@
       "id": "uvv-2026-06-04",
       "ticker": "UVV",
       "companyKo": "유니버설",
-      "companyEn": "Universal Corp.",
+      "companyEn": "UNIVERSAL CORP /VA/",
       "sector": "소비재",
       "instrumentType": "stock",
       "action": "buy",
@@ -4727,9 +5961,9 @@
       "priceAtTransaction": 52.87,
       "priceAtDisclosure": 44.89,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 45.89,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": 2.2,
+      "priceLatest": 45.74,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": 1.9,
       "priceHistory": [
         [
           "2026-08-13",
@@ -4766,6 +6000,18 @@
         [
           "2026-08-25",
           45.89
+        ],
+        [
+          "2026-08-26",
+          46.66
+        ],
+        [
+          "2026-08-27",
+          45.96
+        ],
+        [
+          "2026-08-28",
+          45.74
         ]
       ],
       "catalyst": "",
@@ -4793,9 +6039,9 @@
       "priceAtTransaction": 5.41,
       "priceAtDisclosure": 5.24,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 5.0,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": -4.6,
+      "priceLatest": 4.94,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": -5.7,
       "priceHistory": [
         [
           "2026-08-13",
@@ -4832,6 +6078,18 @@
         [
           "2026-08-25",
           5.0
+        ],
+        [
+          "2026-08-26",
+          5.02
+        ],
+        [
+          "2026-08-27",
+          4.96
+        ],
+        [
+          "2026-08-28",
+          4.94
         ]
       ],
       "catalyst": "",
@@ -4843,7 +6101,7 @@
       "id": "lfst-2026-06-04",
       "ticker": "LFST",
       "companyKo": "라이프스탠스 헬스",
-      "companyEn": "LifeStance Health Group",
+      "companyEn": "LifeStance Health Group, Inc.",
       "sector": "헬스케어",
       "instrumentType": "stock",
       "action": "buy",
@@ -4859,9 +6117,9 @@
       "priceAtTransaction": 7.64,
       "priceAtDisclosure": 12.22,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 12.28,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": 0.5,
+      "priceLatest": 12.31,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": 0.7,
       "priceHistory": [
         [
           "2026-08-13",
@@ -4898,6 +6156,18 @@
         [
           "2026-08-25",
           12.28
+        ],
+        [
+          "2026-08-26",
+          12.15
+        ],
+        [
+          "2026-08-27",
+          12.3
+        ],
+        [
+          "2026-08-28",
+          12.31
         ]
       ],
       "catalyst": "",
@@ -4909,7 +6179,7 @@
       "id": "vrrm-2026-06-04",
       "ticker": "VRRM",
       "companyKo": "베라 모빌리티",
-      "companyEn": "Verra Mobility Corp.",
+      "companyEn": "VERRA MOBILITY Corp",
       "sector": "소프트웨어",
       "instrumentType": "stock",
       "action": "buy",
@@ -4925,9 +6195,9 @@
       "priceAtTransaction": 4.31,
       "priceAtDisclosure": 4.81,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 4.43,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": -7.9,
+      "priceLatest": 4.39,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": -8.7,
       "priceHistory": [
         [
           "2026-08-13",
@@ -4964,6 +6234,18 @@
         [
           "2026-08-25",
           4.43
+        ],
+        [
+          "2026-08-26",
+          4.42
+        ],
+        [
+          "2026-08-27",
+          4.41
+        ],
+        [
+          "2026-08-28",
+          4.39
         ]
       ],
       "catalyst": "",
@@ -4975,7 +6257,7 @@
       "id": "isrg-2026-06-24",
       "ticker": "ISRG",
       "companyKo": "인튜이티브 서지컬",
-      "companyEn": "Intuitive Surgical, Inc.",
+      "companyEn": "INTUITIVE SURGICAL INC",
       "sector": "헬스케어",
       "instrumentType": "stock",
       "action": "buy",
@@ -4991,9 +6273,9 @@
       "priceAtTransaction": 401.83,
       "priceAtDisclosure": 401.27,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 371.84,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": -7.3,
+      "priceLatest": 372.6,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": -7.1,
       "priceHistory": [
         [
           "2026-08-13",
@@ -5030,6 +6312,18 @@
         [
           "2026-08-25",
           371.84
+        ],
+        [
+          "2026-08-26",
+          370.42
+        ],
+        [
+          "2026-08-27",
+          367.07
+        ],
+        [
+          "2026-08-28",
+          372.6
         ]
       ],
       "catalyst": "",
@@ -5057,9 +6351,9 @@
       "priceAtTransaction": 181.25,
       "priceAtDisclosure": 213.34,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 213.78,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": 0.2,
+      "priceLatest": 205.63,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": -3.6,
       "priceHistory": [
         [
           "2026-08-13",
@@ -5096,6 +6390,18 @@
         [
           "2026-08-25",
           213.78
+        ],
+        [
+          "2026-08-26",
+          208.89
+        ],
+        [
+          "2026-08-27",
+          202.56
+        ],
+        [
+          "2026-08-28",
+          205.63
         ]
       ],
       "catalyst": "",
@@ -5107,7 +6413,7 @@
       "id": "shw-2026-06-24",
       "ticker": "SHW",
       "companyKo": "셔윈윌리엄스",
-      "companyEn": "The Sherwin-Williams Company",
+      "companyEn": "SHERWIN WILLIAMS CO",
       "sector": "소재",
       "instrumentType": "stock",
       "action": "buy",
@@ -5123,9 +6429,9 @@
       "priceAtTransaction": 333.13,
       "priceAtDisclosure": 361.55,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 350.45,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": -3.1,
+      "priceLatest": 344.86,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": -4.6,
       "priceHistory": [
         [
           "2026-08-13",
@@ -5162,6 +6468,96 @@
         [
           "2026-08-25",
           350.45
+        ],
+        [
+          "2026-08-26",
+          348.66
+        ],
+        [
+          "2026-08-27",
+          345.21
+        ],
+        [
+          "2026-08-28",
+          344.86
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "amt-2026-06-24",
+      "ticker": "AMT",
+      "companyKo": "AMT",
+      "companyEn": "AMERICAN TOWER CORP /MA/",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": true,
+      "verifiedSource": null,
+      "amountRange": [
+        50001,
+        100000
+      ],
+      "transactionDate": "2026-06-24",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-08-13",
+      "priceAtTransaction": 174.46,
+      "priceAtDisclosure": 174.19,
+      "priceAfter2mFromDisclosure": null,
+      "priceLatest": 176.23,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": 1.2,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          174.19
+        ],
+        [
+          "2026-08-14",
+          175.58
+        ],
+        [
+          "2026-08-17",
+          172.23
+        ],
+        [
+          "2026-08-18",
+          172.33
+        ],
+        [
+          "2026-08-19",
+          174.49
+        ],
+        [
+          "2026-08-20",
+          175.72
+        ],
+        [
+          "2026-08-21",
+          175.8
+        ],
+        [
+          "2026-08-24",
+          178.39
+        ],
+        [
+          "2026-08-25",
+          178.57
+        ],
+        [
+          "2026-08-26",
+          175.73
+        ],
+        [
+          "2026-08-27",
+          174.16
+        ],
+        [
+          "2026-08-28",
+          176.23
         ]
       ],
       "catalyst": "",
@@ -5173,7 +6569,7 @@
       "id": "cag-2026-06-24",
       "ticker": "CAG",
       "companyKo": "코나그라 브랜즈",
-      "companyEn": "Conagra Brands, Inc.",
+      "companyEn": "CONAGRA BRANDS INC.",
       "sector": "소비재",
       "instrumentType": "stock",
       "action": "buy",
@@ -5189,9 +6585,9 @@
       "priceAtTransaction": 13.61,
       "priceAtDisclosure": 15.39,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 16.27,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": 5.7,
+      "priceLatest": 16.09,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": 4.5,
       "priceHistory": [
         [
           "2026-08-13",
@@ -5228,6 +6624,18 @@
         [
           "2026-08-25",
           16.27
+        ],
+        [
+          "2026-08-26",
+          16.19
+        ],
+        [
+          "2026-08-27",
+          16.02
+        ],
+        [
+          "2026-08-28",
+          16.09
         ]
       ],
       "catalyst": "",
@@ -5239,7 +6647,7 @@
       "id": "tdg-2026-06-24",
       "ticker": "TDG",
       "companyKo": "트랜스다임",
-      "companyEn": "TransDigm Group",
+      "companyEn": "TransDigm Group INC",
       "sector": "항공/방산",
       "instrumentType": "stock",
       "action": "buy",
@@ -5255,9 +6663,9 @@
       "priceAtTransaction": 1322.67,
       "priceAtDisclosure": 1246.31,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 1192.6,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": -4.3,
+      "priceLatest": 1185.97,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": -4.8,
       "priceHistory": [
         [
           "2026-08-13",
@@ -5294,6 +6702,18 @@
         [
           "2026-08-25",
           1192.6
+        ],
+        [
+          "2026-08-26",
+          1207.06
+        ],
+        [
+          "2026-08-27",
+          1186.48
+        ],
+        [
+          "2026-08-28",
+          1185.97
         ]
       ],
       "catalyst": "",
@@ -5305,7 +6725,7 @@
       "id": "ttd-2026-06-24",
       "ticker": "TTD",
       "companyKo": "트레이드 데스크",
-      "companyEn": "The Trade Desk, Inc.",
+      "companyEn": "Trade Desk, Inc.",
       "sector": "소프트웨어",
       "instrumentType": "stock",
       "action": "buy",
@@ -5321,9 +6741,9 @@
       "priceAtTransaction": 17.7,
       "priceAtDisclosure": 14.56,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 13.25,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": -9.0,
+      "priceLatest": 13.57,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": -6.8,
       "priceHistory": [
         [
           "2026-08-13",
@@ -5360,6 +6780,18 @@
         [
           "2026-08-25",
           13.25
+        ],
+        [
+          "2026-08-26",
+          13.03
+        ],
+        [
+          "2026-08-27",
+          13.42
+        ],
+        [
+          "2026-08-28",
+          13.57
         ]
       ],
       "catalyst": "",
@@ -5371,7 +6803,7 @@
       "id": "cmg-2026-06-24",
       "ticker": "CMG",
       "companyKo": "치폴레",
-      "companyEn": "Chipotle Mexican Grill, Inc.",
+      "companyEn": "CHIPOTLE MEXICAN GRILL INC",
       "sector": "소비재",
       "instrumentType": "stock",
       "action": "buy",
@@ -5387,9 +6819,9 @@
       "priceAtTransaction": 31.69,
       "priceAtDisclosure": 32.61,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 37.43,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": 14.8,
+      "priceLatest": 38.03,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": 16.6,
       "priceHistory": [
         [
           "2026-08-13",
@@ -5426,6 +6858,18 @@
         [
           "2026-08-25",
           37.43
+        ],
+        [
+          "2026-08-26",
+          37.34
+        ],
+        [
+          "2026-08-27",
+          37.22
+        ],
+        [
+          "2026-08-28",
+          38.03
         ]
       ],
       "catalyst": "",
@@ -5437,7 +6881,7 @@
       "id": "jpm-2026-06-24",
       "ticker": "JPM",
       "companyKo": "JP모건",
-      "companyEn": "JPMorgan Chase & Co.",
+      "companyEn": "JPMORGAN CHASE & CO",
       "sector": "금융",
       "instrumentType": "stock",
       "action": "buy",
@@ -5453,9 +6897,9 @@
       "priceAtTransaction": 333.45,
       "priceAtDisclosure": 363.11,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 356.69,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": -1.8,
+      "priceLatest": 357.62,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": -1.5,
       "priceHistory": [
         [
           "2026-08-13",
@@ -5492,6 +6936,18 @@
         [
           "2026-08-25",
           356.69
+        ],
+        [
+          "2026-08-26",
+          356.5
+        ],
+        [
+          "2026-08-27",
+          354.22
+        ],
+        [
+          "2026-08-28",
+          357.62
         ]
       ],
       "catalyst": "",
@@ -5503,7 +6959,7 @@
       "id": "kmb-2026-06-24",
       "ticker": "KMB",
       "companyKo": "킴벌리클라크",
-      "companyEn": "Kimberly-Clark Corp.",
+      "companyEn": "KIMBERLY CLARK CORP",
       "sector": "소비재",
       "instrumentType": "stock",
       "action": "buy",
@@ -5519,9 +6975,9 @@
       "priceAtTransaction": 106.73,
       "priceAtDisclosure": 110.7,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 111.02,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": 0.3,
+      "priceLatest": 109.55,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": -1.0,
       "priceHistory": [
         [
           "2026-08-13",
@@ -5558,6 +7014,18 @@
         [
           "2026-08-25",
           111.02
+        ],
+        [
+          "2026-08-26",
+          110.34
+        ],
+        [
+          "2026-08-27",
+          109.98
+        ],
+        [
+          "2026-08-28",
+          109.55
         ]
       ],
       "catalyst": "",
@@ -5585,9 +7053,9 @@
       "priceAtTransaction": 276.7,
       "priceAtDisclosure": 222.18,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 240.38,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": 8.2,
+      "priceLatest": 216.62,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": -2.5,
       "priceHistory": [
         [
           "2026-08-13",
@@ -5624,6 +7092,18 @@
         [
           "2026-08-25",
           240.38
+        ],
+        [
+          "2026-08-26",
+          245.11
+        ],
+        [
+          "2026-08-27",
+          241.45
+        ],
+        [
+          "2026-08-28",
+          216.62
         ]
       ],
       "catalyst": "",
@@ -5647,13 +7127,62 @@
       "transactionDate": "2026-06-12",
       "transactionDateApprox": false,
       "disclosureDate": "2026-08-13",
-      "priceAtTransaction": null,
-      "priceAtDisclosure": null,
+      "priceAtTransaction": 550.33,
+      "priceAtDisclosure": 574.74,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": null,
-      "priceLatestDate": null,
-      "trackingReturnPct": null,
-      "priceHistory": [],
+      "priceLatest": 545.57,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": -5.1,
+      "priceHistory": [
+        [
+          "2026-08-13",
+          574.74
+        ],
+        [
+          "2026-08-14",
+          585.87
+        ],
+        [
+          "2026-08-17",
+          570.2
+        ],
+        [
+          "2026-08-18",
+          589.14
+        ],
+        [
+          "2026-08-19",
+          582.84
+        ],
+        [
+          "2026-08-20",
+          563.86
+        ],
+        [
+          "2026-08-21",
+          551.03
+        ],
+        [
+          "2026-08-24",
+          549.28
+        ],
+        [
+          "2026-08-25",
+          542.52
+        ],
+        [
+          "2026-08-26",
+          549.95
+        ],
+        [
+          "2026-08-27",
+          545.13
+        ],
+        [
+          "2026-08-28",
+          545.57
+        ]
+      ],
       "catalyst": "",
       "closed": false,
       "closeDate": null,
@@ -5676,13 +7205,138 @@
       "transactionDate": "2026-03-02",
       "transactionDateApprox": false,
       "disclosureDate": "2026-05-14",
-      "priceAtTransaction": null,
-      "priceAtDisclosure": null,
-      "priceAfter2mFromDisclosure": null,
-      "priceLatest": null,
-      "priceLatestDate": null,
-      "trackingReturnPct": null,
-      "priceHistory": [],
+      "priceAtTransaction": 264.72,
+      "priceAtDisclosure": 298.21,
+      "priceAfter2mFromDisclosure": 317.31,
+      "priceLatest": 319.7,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": 7.2,
+      "priceHistory": [
+        [
+          "2026-05-14",
+          298.21
+        ],
+        [
+          "2026-05-18",
+          297.84
+        ],
+        [
+          "2026-05-20",
+          302.25
+        ],
+        [
+          "2026-05-26",
+          308.33
+        ],
+        [
+          "2026-05-28",
+          312.51
+        ],
+        [
+          "2026-06-02",
+          315.2
+        ],
+        [
+          "2026-06-04",
+          311.23
+        ],
+        [
+          "2026-06-09",
+          290.55
+        ],
+        [
+          "2026-06-11",
+          295.63
+        ],
+        [
+          "2026-06-16",
+          299.24
+        ],
+        [
+          "2026-06-18",
+          298.01
+        ],
+        [
+          "2026-06-24",
+          293.08
+        ],
+        [
+          "2026-06-26",
+          283.78
+        ],
+        [
+          "2026-07-01",
+          294.38
+        ],
+        [
+          "2026-07-06",
+          312.66
+        ],
+        [
+          "2026-07-09",
+          316.22
+        ],
+        [
+          "2026-07-13",
+          317.31
+        ],
+        [
+          "2026-07-15",
+          327.5
+        ],
+        [
+          "2026-07-20",
+          326.59
+        ],
+        [
+          "2026-07-22",
+          325.89
+        ],
+        [
+          "2026-07-27",
+          336.91
+        ],
+        [
+          "2026-07-29",
+          338.19
+        ],
+        [
+          "2026-08-03",
+          303.42
+        ],
+        [
+          "2026-08-05",
+          311.0
+        ],
+        [
+          "2026-08-10",
+          308.26
+        ],
+        [
+          "2026-08-12",
+          302.25
+        ],
+        [
+          "2026-08-17",
+          305.59
+        ],
+        [
+          "2026-08-19",
+          316.83
+        ],
+        [
+          "2026-08-24",
+          310.34
+        ],
+        [
+          "2026-08-26",
+          313.45
+        ],
+        [
+          "2026-08-28",
+          319.7
+        ]
+      ],
       "catalyst": "",
       "closed": false,
       "closeDate": null,
@@ -5705,13 +7359,138 @@
       "transactionDate": "2026-02-10",
       "transactionDateApprox": false,
       "disclosureDate": "2026-05-14",
-      "priceAtTransaction": null,
-      "priceAtDisclosure": null,
-      "priceAfter2mFromDisclosure": null,
-      "priceLatest": null,
-      "priceLatestDate": null,
-      "trackingReturnPct": null,
-      "priceHistory": [],
+      "priceAtTransaction": 446.97,
+      "priceAtDisclosure": 388.19,
+      "priceAfter2mFromDisclosure": 547.03,
+      "priceLatest": 600.73,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": 54.8,
+      "priceHistory": [
+        [
+          "2026-05-14",
+          388.19
+        ],
+        [
+          "2026-05-18",
+          399.37
+        ],
+        [
+          "2026-05-20",
+          398.44
+        ],
+        [
+          "2026-05-26",
+          385.3
+        ],
+        [
+          "2026-05-28",
+          439.32
+        ],
+        [
+          "2026-06-02",
+          490.12
+        ],
+        [
+          "2026-06-04",
+          513.2
+        ],
+        [
+          "2026-06-09",
+          452.51
+        ],
+        [
+          "2026-06-11",
+          446.2
+        ],
+        [
+          "2026-06-16",
+          435.39
+        ],
+        [
+          "2026-06-18",
+          423.4
+        ],
+        [
+          "2026-06-24",
+          456.73
+        ],
+        [
+          "2026-06-26",
+          464.83
+        ],
+        [
+          "2026-07-01",
+          593.96
+        ],
+        [
+          "2026-07-06",
+          622.35
+        ],
+        [
+          "2026-07-09",
+          582.0
+        ],
+        [
+          "2026-07-13",
+          547.03
+        ],
+        [
+          "2026-07-15",
+          541.12
+        ],
+        [
+          "2026-07-20",
+          527.48
+        ],
+        [
+          "2026-07-22",
+          491.49
+        ],
+        [
+          "2026-07-27",
+          525.48
+        ],
+        [
+          "2026-07-29",
+          531.2
+        ],
+        [
+          "2026-08-03",
+          575.88
+        ],
+        [
+          "2026-08-05",
+          609.49
+        ],
+        [
+          "2026-08-10",
+          596.33
+        ],
+        [
+          "2026-08-12",
+          599.78
+        ],
+        [
+          "2026-08-17",
+          604.32
+        ],
+        [
+          "2026-08-19",
+          645.72
+        ],
+        [
+          "2026-08-24",
+          597.59
+        ],
+        [
+          "2026-08-26",
+          607.48
+        ],
+        [
+          "2026-08-28",
+          600.73
+        ]
+      ],
       "catalyst": "",
       "closed": false,
       "closeDate": null,
@@ -5734,13 +7513,138 @@
       "transactionDate": "2026-02-10",
       "transactionDateApprox": false,
       "disclosureDate": "2026-05-14",
-      "priceAtTransaction": null,
-      "priceAtDisclosure": null,
-      "priceAfter2mFromDisclosure": null,
-      "priceLatest": null,
-      "priceLatestDate": null,
-      "trackingReturnPct": null,
-      "priceHistory": [],
+      "priceAtTransaction": 126.01,
+      "priceAtDisclosure": 247.89,
+      "priceAfter2mFromDisclosure": 427.11,
+      "priceLatest": 456.24,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": 84.0,
+      "priceHistory": [
+        [
+          "2026-05-14",
+          247.89
+        ],
+        [
+          "2026-05-18",
+          238.03
+        ],
+        [
+          "2026-05-20",
+          242.93
+        ],
+        [
+          "2026-05-26",
+          305.08
+        ],
+        [
+          "2026-05-28",
+          317.05
+        ],
+        [
+          "2026-06-02",
+          435.31
+        ],
+        [
+          "2026-06-04",
+          422.05
+        ],
+        [
+          "2026-06-09",
+          381.78
+        ],
+        [
+          "2026-06-11",
+          391.45
+        ],
+        [
+          "2026-06-16",
+          404.08
+        ],
+        [
+          "2026-06-18",
+          409.5
+        ],
+        [
+          "2026-06-24",
+          434.06
+        ],
+        [
+          "2026-06-26",
+          399.49
+        ],
+        [
+          "2026-07-01",
+          425.25
+        ],
+        [
+          "2026-07-06",
+          411.8
+        ],
+        [
+          "2026-07-09",
+          450.22
+        ],
+        [
+          "2026-07-13",
+          427.11
+        ],
+        [
+          "2026-07-15",
+          412.68
+        ],
+        [
+          "2026-07-20",
+          381.88
+        ],
+        [
+          "2026-07-22",
+          441.8
+        ],
+        [
+          "2026-07-27",
+          426.91
+        ],
+        [
+          "2026-07-29",
+          369.64
+        ],
+        [
+          "2026-08-03",
+          429.02
+        ],
+        [
+          "2026-08-05",
+          462.7
+        ],
+        [
+          "2026-08-10",
+          457.88
+        ],
+        [
+          "2026-08-12",
+          484.5
+        ],
+        [
+          "2026-08-17",
+          479.81
+        ],
+        [
+          "2026-08-19",
+          437.55
+        ],
+        [
+          "2026-08-24",
+          433.19
+        ],
+        [
+          "2026-08-26",
+          463.82
+        ],
+        [
+          "2026-08-28",
+          456.24
+        ]
+      ],
       "catalyst": "",
       "closed": false,
       "closeDate": null,
@@ -5763,13 +7667,138 @@
       "transactionDate": "2026-05-14",
       "transactionDateApprox": true,
       "disclosureDate": "2026-05-14",
-      "priceAtTransaction": null,
-      "priceAtDisclosure": null,
-      "priceAfter2mFromDisclosure": null,
-      "priceLatest": null,
-      "priceLatestDate": null,
-      "trackingReturnPct": null,
-      "priceHistory": [],
+      "priceAtTransaction": 195.61,
+      "priceAtDisclosure": 195.61,
+      "priceAfter2mFromDisclosure": 131.54,
+      "priceLatest": 150.85,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": -22.9,
+      "priceHistory": [
+        [
+          "2026-05-14",
+          195.61
+        ],
+        [
+          "2026-05-18",
+          186.61
+        ],
+        [
+          "2026-05-20",
+          188.16
+        ],
+        [
+          "2026-05-26",
+          193.06
+        ],
+        [
+          "2026-05-28",
+          203.7
+        ],
+        [
+          "2026-06-02",
+          244.58
+        ],
+        [
+          "2026-06-04",
+          236.34
+        ],
+        [
+          "2026-06-09",
+          205.81
+        ],
+        [
+          "2026-06-11",
+          184.1
+        ],
+        [
+          "2026-06-16",
+          188.33
+        ],
+        [
+          "2026-06-18",
+          184.29
+        ],
+        [
+          "2026-06-24",
+          157.53
+        ],
+        [
+          "2026-06-26",
+          148.53
+        ],
+        [
+          "2026-07-01",
+          142.5
+        ],
+        [
+          "2026-07-06",
+          143.76
+        ],
+        [
+          "2026-07-09",
+          144.22
+        ],
+        [
+          "2026-07-13",
+          131.54
+        ],
+        [
+          "2026-07-15",
+          132.49
+        ],
+        [
+          "2026-07-20",
+          121.38
+        ],
+        [
+          "2026-07-22",
+          125.84
+        ],
+        [
+          "2026-07-27",
+          119.9
+        ],
+        [
+          "2026-07-29",
+          117.74
+        ],
+        [
+          "2026-08-03",
+          141.85
+        ],
+        [
+          "2026-08-05",
+          144.39
+        ],
+        [
+          "2026-08-10",
+          151.05
+        ],
+        [
+          "2026-08-12",
+          153.28
+        ],
+        [
+          "2026-08-17",
+          146.65
+        ],
+        [
+          "2026-08-19",
+          143.81
+        ],
+        [
+          "2026-08-24",
+          142.45
+        ],
+        [
+          "2026-08-26",
+          148.87
+        ],
+        [
+          "2026-08-28",
+          150.85
+        ]
+      ],
       "catalyst": "",
       "closed": false,
       "closeDate": null,
@@ -5792,13 +7821,138 @@
       "transactionDate": "2026-05-14",
       "transactionDateApprox": true,
       "disclosureDate": "2026-05-14",
-      "priceAtTransaction": null,
-      "priceAtDisclosure": null,
-      "priceAfter2mFromDisclosure": null,
-      "priceLatest": null,
-      "priceLatestDate": null,
-      "trackingReturnPct": null,
-      "priceHistory": [],
+      "priceAtTransaction": 401.07,
+      "priceAtDisclosure": 401.07,
+      "priceAfter2mFromDisclosure": 352.51,
+      "priceLatest": 346.59,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": -13.6,
+      "priceHistory": [
+        [
+          "2026-05-14",
+          401.07
+        ],
+        [
+          "2026-05-18",
+          396.94
+        ],
+        [
+          "2026-05-20",
+          388.91
+        ],
+        [
+          "2026-05-26",
+          388.88
+        ],
+        [
+          "2026-05-28",
+          390.13
+        ],
+        [
+          "2026-06-02",
+          361.85
+        ],
+        [
+          "2026-06-04",
+          372.19
+        ],
+        [
+          "2026-06-09",
+          364.26
+        ],
+        [
+          "2026-06-11",
+          357.77
+        ],
+        [
+          "2026-06-16",
+          373.25
+        ],
+        [
+          "2026-06-18",
+          368.03
+        ],
+        [
+          "2026-06-24",
+          345.29
+        ],
+        [
+          "2026-06-26",
+          337.39
+        ],
+        [
+          "2026-07-01",
+          361.21
+        ],
+        [
+          "2026-07-06",
+          366.46
+        ],
+        [
+          "2026-07-09",
+          358.89
+        ],
+        [
+          "2026-07-13",
+          352.51
+        ],
+        [
+          "2026-07-15",
+          370.92
+        ],
+        [
+          "2026-07-20",
+          351.99
+        ],
+        [
+          "2026-07-22",
+          342.09
+        ],
+        [
+          "2026-07-27",
+          326.56
+        ],
+        [
+          "2026-07-29",
+          336.71
+        ],
+        [
+          "2026-08-03",
+          373.51
+        ],
+        [
+          "2026-08-05",
+          362.43
+        ],
+        [
+          "2026-08-10",
+          357.52
+        ],
+        [
+          "2026-08-12",
+          343.54
+        ],
+        [
+          "2026-08-17",
+          344.0
+        ],
+        [
+          "2026-08-19",
+          344.72
+        ],
+        [
+          "2026-08-24",
+          348.06
+        ],
+        [
+          "2026-08-26",
+          342.0
+        ],
+        [
+          "2026-08-28",
+          346.59
+        ]
+      ],
       "catalyst": "",
       "closed": false,
       "closeDate": null,
@@ -5821,13 +7975,138 @@
       "transactionDate": "2026-05-14",
       "transactionDateApprox": true,
       "disclosureDate": "2026-05-14",
-      "priceAtTransaction": null,
-      "priceAtDisclosure": null,
-      "priceAfter2mFromDisclosure": null,
-      "priceLatest": null,
-      "priceLatestDate": null,
-      "trackingReturnPct": null,
-      "priceHistory": [],
+      "priceAtTransaction": 237.01,
+      "priceAtDisclosure": 237.01,
+      "priceAfter2mFromDisclosure": 230.61,
+      "priceLatest": 291.52,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": 23.0,
+      "priceHistory": [
+        [
+          "2026-05-14",
+          237.01
+        ],
+        [
+          "2026-05-18",
+          255.64
+        ],
+        [
+          "2026-05-20",
+          253.37
+        ],
+        [
+          "2026-05-26",
+          240.49
+        ],
+        [
+          "2026-05-28",
+          241.44
+        ],
+        [
+          "2026-06-02",
+          262.11
+        ],
+        [
+          "2026-06-04",
+          258.42
+        ],
+        [
+          "2026-06-09",
+          237.88
+        ],
+        [
+          "2026-06-11",
+          218.8
+        ],
+        [
+          "2026-06-16",
+          207.32
+        ],
+        [
+          "2026-06-18",
+          195.16
+        ],
+        [
+          "2026-06-24",
+          196.57
+        ],
+        [
+          "2026-06-26",
+          202.73
+        ],
+        [
+          "2026-07-01",
+          210.98
+        ],
+        [
+          "2026-07-06",
+          218.07
+        ],
+        [
+          "2026-07-09",
+          222.65
+        ],
+        [
+          "2026-07-13",
+          230.61
+        ],
+        [
+          "2026-07-15",
+          224.56
+        ],
+        [
+          "2026-07-20",
+          234.74
+        ],
+        [
+          "2026-07-22",
+          218.36
+        ],
+        [
+          "2026-07-27",
+          237.75
+        ],
+        [
+          "2026-07-29",
+          263.43
+        ],
+        [
+          "2026-08-03",
+          251.34
+        ],
+        [
+          "2026-08-05",
+          259.32
+        ],
+        [
+          "2026-08-10",
+          272.96
+        ],
+        [
+          "2026-08-12",
+          258.75
+        ],
+        [
+          "2026-08-17",
+          254.04
+        ],
+        [
+          "2026-08-19",
+          272.47
+        ],
+        [
+          "2026-08-24",
+          276.27
+        ],
+        [
+          "2026-08-26",
+          273.47
+        ],
+        [
+          "2026-08-28",
+          291.52
+        ]
+      ],
       "catalyst": "",
       "closed": false,
       "closeDate": null,
@@ -5850,13 +8129,138 @@
       "transactionDate": "2026-05-14",
       "transactionDateApprox": true,
       "disclosureDate": "2026-05-14",
-      "priceAtTransaction": null,
-      "priceAtDisclosure": null,
-      "priceAfter2mFromDisclosure": null,
-      "priceLatest": null,
-      "priceLatestDate": null,
-      "trackingReturnPct": null,
-      "priceHistory": [],
+      "priceAtTransaction": 352.84,
+      "priceAtDisclosure": 352.84,
+      "priceAfter2mFromDisclosure": 377.92,
+      "priceLatest": 340.39,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": -3.5,
+      "priceHistory": [
+        [
+          "2026-05-14",
+          352.84
+        ],
+        [
+          "2026-05-18",
+          345.99
+        ],
+        [
+          "2026-05-20",
+          350.89
+        ],
+        [
+          "2026-05-26",
+          381.75
+        ],
+        [
+          "2026-05-28",
+          373.85
+        ],
+        [
+          "2026-06-02",
+          416.39
+        ],
+        [
+          "2026-06-04",
+          411.68
+        ],
+        [
+          "2026-06-09",
+          390.9
+        ],
+        [
+          "2026-06-11",
+          383.74
+        ],
+        [
+          "2026-06-16",
+          387.85
+        ],
+        [
+          "2026-06-18",
+          387.39
+        ],
+        [
+          "2026-06-24",
+          372.4
+        ],
+        [
+          "2026-06-26",
+          377.27
+        ],
+        [
+          "2026-07-01",
+          377.73
+        ],
+        [
+          "2026-07-06",
+          375.77
+        ],
+        [
+          "2026-07-09",
+          385.95
+        ],
+        [
+          "2026-07-13",
+          377.92
+        ],
+        [
+          "2026-07-15",
+          371.5
+        ],
+        [
+          "2026-07-20",
+          329.93
+        ],
+        [
+          "2026-07-22",
+          337.01
+        ],
+        [
+          "2026-07-27",
+          338.61
+        ],
+        [
+          "2026-07-29",
+          332.76
+        ],
+        [
+          "2026-08-03",
+          336.15
+        ],
+        [
+          "2026-08-05",
+          337.07
+        ],
+        [
+          "2026-08-10",
+          331.91
+        ],
+        [
+          "2026-08-12",
+          323.13
+        ],
+        [
+          "2026-08-17",
+          323.47
+        ],
+        [
+          "2026-08-19",
+          314.98
+        ],
+        [
+          "2026-08-24",
+          315.92
+        ],
+        [
+          "2026-08-26",
+          334.68
+        ],
+        [
+          "2026-08-28",
+          340.39
+        ]
+      ],
       "catalyst": "",
       "closed": false,
       "closeDate": null,
@@ -5879,13 +8283,138 @@
       "transactionDate": "2026-05-14",
       "transactionDateApprox": true,
       "disclosureDate": "2026-05-14",
-      "priceAtTransaction": null,
-      "priceAtDisclosure": null,
-      "priceAfter2mFromDisclosure": null,
-      "priceLatest": null,
-      "priceLatestDate": null,
-      "trackingReturnPct": null,
-      "priceHistory": [],
+      "priceAtTransaction": 74.69,
+      "priceAtDisclosure": 74.69,
+      "priceAfter2mFromDisclosure": 74.26,
+      "priceLatest": 78.82,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": 5.5,
+      "priceHistory": [
+        [
+          "2026-05-14",
+          74.69
+        ],
+        [
+          "2026-05-18",
+          75.08
+        ],
+        [
+          "2026-05-20",
+          74.6
+        ],
+        [
+          "2026-05-26",
+          70.12
+        ],
+        [
+          "2026-05-28",
+          70.92
+        ],
+        [
+          "2026-06-02",
+          71.62
+        ],
+        [
+          "2026-06-04",
+          72.21
+        ],
+        [
+          "2026-06-09",
+          70.38
+        ],
+        [
+          "2026-06-11",
+          69.55
+        ],
+        [
+          "2026-06-16",
+          73.25
+        ],
+        [
+          "2026-06-18",
+          71.64
+        ],
+        [
+          "2026-06-24",
+          73.85
+        ],
+        [
+          "2026-06-26",
+          76.2
+        ],
+        [
+          "2026-07-01",
+          72.66
+        ],
+        [
+          "2026-07-06",
+          72.42
+        ],
+        [
+          "2026-07-09",
+          74.35
+        ],
+        [
+          "2026-07-13",
+          74.26
+        ],
+        [
+          "2026-07-15",
+          72.67
+        ],
+        [
+          "2026-07-20",
+          72.17
+        ],
+        [
+          "2026-07-22",
+          70.33
+        ],
+        [
+          "2026-07-27",
+          68.18
+        ],
+        [
+          "2026-07-29",
+          71.2
+        ],
+        [
+          "2026-08-03",
+          71.61
+        ],
+        [
+          "2026-08-05",
+          68.18
+        ],
+        [
+          "2026-08-10",
+          78.03
+        ],
+        [
+          "2026-08-12",
+          75.36
+        ],
+        [
+          "2026-08-17",
+          74.99
+        ],
+        [
+          "2026-08-19",
+          78.04
+        ],
+        [
+          "2026-08-24",
+          79.29
+        ],
+        [
+          "2026-08-26",
+          78.49
+        ],
+        [
+          "2026-08-28",
+          78.82
+        ]
+      ],
       "catalyst": "",
       "closed": false,
       "closeDate": null,
@@ -5908,13 +8437,138 @@
       "transactionDate": "2026-05-14",
       "transactionDateApprox": true,
       "disclosureDate": "2026-05-14",
-      "priceAtTransaction": null,
-      "priceAtDisclosure": null,
-      "priceAfter2mFromDisclosure": null,
-      "priceLatest": null,
-      "priceLatestDate": null,
-      "trackingReturnPct": null,
-      "priceHistory": [],
+      "priceAtTransaction": 49.85,
+      "priceAtDisclosure": 49.85,
+      "priceAfter2mFromDisclosure": 59.5,
+      "priceLatest": 62.32,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": 25.0,
+      "priceHistory": [
+        [
+          "2026-05-14",
+          49.85
+        ],
+        [
+          "2026-05-18",
+          50.69
+        ],
+        [
+          "2026-05-20",
+          51.23
+        ],
+        [
+          "2026-05-26",
+          52.2
+        ],
+        [
+          "2026-05-28",
+          50.77
+        ],
+        [
+          "2026-06-02",
+          52.48
+        ],
+        [
+          "2026-06-04",
+          54.17
+        ],
+        [
+          "2026-06-09",
+          54.42
+        ],
+        [
+          "2026-06-11",
+          55.16
+        ],
+        [
+          "2026-06-16",
+          56.84
+        ],
+        [
+          "2026-06-18",
+          56.2
+        ],
+        [
+          "2026-06-24",
+          57.73
+        ],
+        [
+          "2026-06-26",
+          57.88
+        ],
+        [
+          "2026-07-01",
+          58.36
+        ],
+        [
+          "2026-07-06",
+          59.9
+        ],
+        [
+          "2026-07-09",
+          59.25
+        ],
+        [
+          "2026-07-13",
+          59.5
+        ],
+        [
+          "2026-07-15",
+          61.59
+        ],
+        [
+          "2026-07-20",
+          60.42
+        ],
+        [
+          "2026-07-22",
+          61.62
+        ],
+        [
+          "2026-07-27",
+          62.13
+        ],
+        [
+          "2026-07-29",
+          61.07
+        ],
+        [
+          "2026-08-03",
+          62.48
+        ],
+        [
+          "2026-08-05",
+          63.25
+        ],
+        [
+          "2026-08-10",
+          63.86
+        ],
+        [
+          "2026-08-12",
+          64.81
+        ],
+        [
+          "2026-08-17",
+          63.89
+        ],
+        [
+          "2026-08-19",
+          63.17
+        ],
+        [
+          "2026-08-24",
+          62.33
+        ],
+        [
+          "2026-08-26",
+          62.23
+        ],
+        [
+          "2026-08-28",
+          62.32
+        ]
+      ],
       "catalyst": "",
       "closed": false,
       "closeDate": null,
@@ -5925,7 +8579,7 @@
       "id": "gis-2026-05-12",
       "ticker": "GIS",
       "companyKo": "제너럴 밀스",
-      "companyEn": "General Mills, Inc.",
+      "companyEn": "GENERAL MILLS INC",
       "sector": "소비재",
       "instrumentType": "stock",
       "action": "buy",
@@ -5941,9 +8595,9 @@
       "priceAtTransaction": 34.13,
       "priceAtDisclosure": 34.13,
       "priceAfter2mFromDisclosure": 36.6,
-      "priceLatest": 39.78,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": 16.6,
+      "priceLatest": 41.55,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": 21.7,
       "priceHistory": [
         [
           "2026-05-12",
@@ -5954,84 +8608,80 @@
           33.13
         ],
         [
-          "2026-05-18",
-          33.45
+          "2026-05-19",
+          33.77
         ],
         [
           "2026-05-21",
           33.47
         ],
         [
-          "2026-05-26",
-          33.16
+          "2026-05-27",
+          33.65
         ],
         [
           "2026-05-29",
           33.81
         ],
         [
-          "2026-06-02",
-          33.07
+          "2026-06-03",
+          32.17
         ],
         [
           "2026-06-05",
           33.15
         ],
         [
-          "2026-06-09",
-          33.72
-        ],
-        [
-          "2026-06-11",
+          "2026-06-10",
           33.82
         ],
         [
-          "2026-06-16",
-          34.4
+          "2026-06-12",
+          34.51
         ],
         [
-          "2026-06-18",
-          33.42
+          "2026-06-17",
+          33.36
         ],
         [
-          "2026-06-24",
-          34.8
+          "2026-06-22",
+          33.34
         ],
         [
-          "2026-06-26",
-          36.01
+          "2026-06-25",
+          35.4
         ],
         [
-          "2026-07-01",
-          37.77
+          "2026-06-29",
+          36.38
         ],
         [
-          "2026-07-06",
-          36.12
+          "2026-07-02",
+          37.57
         ],
         [
           "2026-07-08",
           36.33
         ],
         [
-          "2026-07-13",
-          36.6
+          "2026-07-10",
+          36.22
         ],
         [
           "2026-07-15",
           37.22
         ],
         [
-          "2026-07-20",
-          37.58
+          "2026-07-17",
+          37.97
         ],
         [
           "2026-07-22",
           36.91
         ],
         [
-          "2026-07-27",
-          36.61
+          "2026-07-24",
+          36.03
         ],
         [
           "2026-07-29",
@@ -6066,8 +8716,12 @@
           39.97
         ],
         [
-          "2026-08-25",
-          39.78
+          "2026-08-26",
+          40.08
+        ],
+        [
+          "2026-08-28",
+          41.55
         ]
       ],
       "catalyst": "",
@@ -6079,7 +8733,7 @@
       "id": "cat-2026-05-12",
       "ticker": "CAT",
       "companyKo": "캐터필러",
-      "companyEn": "Caterpillar Inc.",
+      "companyEn": "CATERPILLAR INC",
       "sector": "산업재",
       "instrumentType": "stock",
       "action": "buy",
@@ -6095,9 +8749,9 @@
       "priceAtTransaction": 912.14,
       "priceAtDisclosure": 912.14,
       "priceAfter2mFromDisclosure": 931.47,
-      "priceLatest": 811.29,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": -11.1,
+      "priceLatest": 800.25,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": -12.3,
       "priceHistory": [
         [
           "2026-05-12",
@@ -6108,84 +8762,80 @@
           920.22
         ],
         [
-          "2026-05-18",
-          863.95
+          "2026-05-19",
+          860.15
         ],
         [
           "2026-05-21",
           865.95
         ],
         [
-          "2026-05-26",
-          908.55
+          "2026-05-27",
+          909.93
         ],
         [
           "2026-05-29",
           875.87
         ],
         [
-          "2026-06-02",
-          909.81
+          "2026-06-03",
+          926.18
         ],
         [
           "2026-06-05",
           904.28
         ],
         [
-          "2026-06-09",
-          914.7
+          "2026-06-10",
+          856.16
         ],
         [
-          "2026-06-11",
-          897.63
+          "2026-06-12",
+          910.57
         ],
         [
-          "2026-06-16",
-          945.46
+          "2026-06-17",
+          955.92
         ],
         [
-          "2026-06-18",
-          985.82
+          "2026-06-22",
+          1022.28
         ],
         [
-          "2026-06-24",
-          994.45
+          "2026-06-25",
+          1057.01
         ],
         [
-          "2026-06-26",
-          997.47
+          "2026-06-29",
+          1033.19
         ],
         [
-          "2026-07-01",
-          991.41
-        ],
-        [
-          "2026-07-06",
-          969.92
+          "2026-07-02",
+          963.53
         ],
         [
           "2026-07-08",
           948.08
         ],
         [
-          "2026-07-13",
-          931.47
+          "2026-07-10",
+          952.41
         ],
         [
           "2026-07-15",
           914.3
         ],
         [
-          "2026-07-20",
-          864.3
+          "2026-07-17",
+          880.28
         ],
         [
           "2026-07-22",
           889.31
         ],
         [
-          "2026-07-27",
-          873.28
+          "2026-07-24",
+          888.73
         ],
         [
           "2026-07-29",
@@ -6220,8 +8870,12 @@
           827.9
         ],
         [
-          "2026-08-25",
-          811.29
+          "2026-08-26",
+          821.93
+        ],
+        [
+          "2026-08-28",
+          800.25
         ]
       ],
       "catalyst": "",
@@ -6233,7 +8887,7 @@
       "id": "carr-2026-05-12",
       "ticker": "CARR",
       "companyKo": "캐리어",
-      "companyEn": "Carrier Global Corp.",
+      "companyEn": "CARRIER GLOBAL Corp",
       "sector": "산업재",
       "instrumentType": "stock",
       "action": "buy",
@@ -6249,9 +8903,9 @@
       "priceAtTransaction": 65.56,
       "priceAtDisclosure": 65.56,
       "priceAfter2mFromDisclosure": 68.61,
-      "priceLatest": 58.52,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": -10.7,
+      "priceLatest": 58.79,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": -10.3,
       "priceHistory": [
         [
           "2026-05-12",
@@ -6262,84 +8916,80 @@
           66.73
         ],
         [
-          "2026-05-18",
-          64.51
+          "2026-05-19",
+          61.44
         ],
         [
           "2026-05-21",
           62.18
         ],
         [
-          "2026-05-26",
-          64.89
+          "2026-05-27",
+          64.51
         ],
         [
           "2026-05-29",
           63.87
         ],
         [
-          "2026-06-02",
-          66.42
+          "2026-06-03",
+          67.58
         ],
         [
           "2026-06-05",
           67.16
         ],
         [
-          "2026-06-09",
-          71.24
+          "2026-06-10",
+          67.97
         ],
         [
-          "2026-06-11",
-          69.74
+          "2026-06-12",
+          69.91
         ],
         [
-          "2026-06-16",
-          71.15
+          "2026-06-17",
+          69.49
         ],
         [
-          "2026-06-18",
-          71.81
+          "2026-06-22",
+          71.85
         ],
         [
-          "2026-06-24",
-          74.06
+          "2026-06-25",
+          76.0
         ],
         [
-          "2026-06-26",
-          73.59
+          "2026-06-29",
+          73.43
         ],
         [
-          "2026-07-01",
-          72.07
-        ],
-        [
-          "2026-07-06",
-          70.1
+          "2026-07-02",
+          70.07
         ],
         [
           "2026-07-08",
           66.74
         ],
         [
-          "2026-07-13",
-          68.61
+          "2026-07-10",
+          69.34
         ],
         [
           "2026-07-15",
           68.74
         ],
         [
-          "2026-07-20",
-          66.98
+          "2026-07-17",
+          68.69
         ],
         [
           "2026-07-22",
           68.1
         ],
         [
-          "2026-07-27",
-          69.33
+          "2026-07-24",
+          68.88
         ],
         [
           "2026-07-29",
@@ -6374,8 +9024,12 @@
           60.37
         ],
         [
-          "2026-08-25",
-          58.52
+          "2026-08-26",
+          58.74
+        ],
+        [
+          "2026-08-28",
+          58.79
         ]
       ],
       "catalyst": "",
@@ -6387,7 +9041,7 @@
       "id": "cmcsa-2026-03-30",
       "ticker": "CMCSA",
       "companyKo": "컴캐스트",
-      "companyEn": "Comcast Corporation",
+      "companyEn": "COMCAST CORP",
       "sector": "미디어/통신",
       "instrumentType": "stock",
       "action": "buy",
@@ -6403,9 +9057,9 @@
       "priceAtTransaction": 28.9,
       "priceAtDisclosure": 24.9,
       "priceAfter2mFromDisclosure": 23.97,
-      "priceLatest": 27.1,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": 8.8,
+      "priceLatest": 27.06,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": 8.7,
       "priceHistory": [
         [
           "2026-05-12",
@@ -6416,84 +9070,80 @@
           25.17
         ],
         [
-          "2026-05-18",
-          24.93
+          "2026-05-19",
+          24.8
         ],
         [
           "2026-05-21",
           25.08
         ],
         [
-          "2026-05-26",
-          25.15
+          "2026-05-27",
+          25.22
         ],
         [
           "2026-05-29",
           24.87
         ],
         [
-          "2026-06-02",
-          24.85
+          "2026-06-03",
+          23.52
         ],
         [
           "2026-06-05",
           23.82
         ],
         [
-          "2026-06-09",
-          23.85
-        ],
-        [
-          "2026-06-11",
+          "2026-06-10",
           23.97
         ],
         [
-          "2026-06-16",
-          23.66
+          "2026-06-12",
+          24.5
         ],
         [
-          "2026-06-18",
-          22.43
+          "2026-06-17",
+          22.69
         ],
         [
-          "2026-06-24",
-          22.64
+          "2026-06-22",
+          22.32
         ],
         [
-          "2026-06-26",
-          23.17
+          "2026-06-25",
+          22.69
         ],
         [
-          "2026-07-01",
-          23.73
+          "2026-06-29",
+          24.22
         ],
         [
-          "2026-07-06",
-          23.38
+          "2026-07-02",
+          23.79
         ],
         [
           "2026-07-08",
           23.19
         ],
         [
-          "2026-07-13",
-          23.97
+          "2026-07-10",
+          23.57
         ],
         [
           "2026-07-15",
           23.49
         ],
         [
-          "2026-07-20",
-          23.78
+          "2026-07-17",
+          23.79
         ],
         [
           "2026-07-22",
           23.52
         ],
         [
-          "2026-07-27",
-          22.8
+          "2026-07-24",
+          22.295
         ],
         [
           "2026-07-29",
@@ -6528,8 +9178,12 @@
           26.85
         ],
         [
-          "2026-08-25",
-          27.1
+          "2026-08-26",
+          27.2
+        ],
+        [
+          "2026-08-28",
+          27.06
         ]
       ],
       "catalyst": "",
@@ -6541,7 +9195,7 @@
       "id": "gehc-2026-05-12",
       "ticker": "GEHC",
       "companyKo": "GE 헬스케어",
-      "companyEn": "GE HealthCare Technologies",
+      "companyEn": "GE HealthCare Technologies Inc.",
       "sector": "헬스케어",
       "instrumentType": "stock",
       "action": "buy",
@@ -6557,9 +9211,9 @@
       "priceAtTransaction": 62.29,
       "priceAtDisclosure": 62.29,
       "priceAfter2mFromDisclosure": 65.31,
-      "priceLatest": 73.91,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": 18.7,
+      "priceLatest": 71.725,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": 15.1,
       "priceHistory": [
         [
           "2026-05-12",
@@ -6570,84 +9224,80 @@
           62.67
         ],
         [
-          "2026-05-18",
-          61.51
+          "2026-05-19",
+          61.58
         ],
         [
           "2026-05-21",
           64.33
         ],
         [
-          "2026-05-26",
-          64.18
+          "2026-05-27",
+          63.88
         ],
         [
           "2026-05-29",
           62.34
         ],
         [
-          "2026-06-02",
-          61.99
+          "2026-06-03",
+          62.03
         ],
         [
           "2026-06-05",
           64.67
         ],
         [
-          "2026-06-09",
-          66.01
+          "2026-06-10",
+          63.76
         ],
         [
-          "2026-06-11",
-          64.51
+          "2026-06-12",
+          65.18
         ],
         [
-          "2026-06-16",
-          63.23
+          "2026-06-17",
+          61.15
         ],
         [
-          "2026-06-18",
-          61.59
+          "2026-06-22",
+          60.64
         ],
         [
-          "2026-06-24",
-          64.88
+          "2026-06-25",
+          64.94
         ],
         [
-          "2026-06-26",
-          65.76
+          "2026-06-29",
+          65.05
         ],
         [
-          "2026-07-01",
-          64.86
-        ],
-        [
-          "2026-07-06",
-          64.84
+          "2026-07-02",
+          65.565
         ],
         [
           "2026-07-08",
           64.68
         ],
         [
-          "2026-07-13",
-          65.31
+          "2026-07-10",
+          64.7
         ],
         [
           "2026-07-15",
           63.2
         ],
         [
-          "2026-07-20",
-          62.83
+          "2026-07-17",
+          63.07
         ],
         [
           "2026-07-22",
           61.41
         ],
         [
-          "2026-07-27",
-          61.12
+          "2026-07-24",
+          60.58
         ],
         [
           "2026-07-29",
@@ -6682,8 +9332,12 @@
           74.82
         ],
         [
-          "2026-08-25",
-          73.91
+          "2026-08-26",
+          73.31
+        ],
+        [
+          "2026-08-28",
+          71.725
         ]
       ],
       "catalyst": "",
@@ -6711,9 +9365,9 @@
       "priceAtTransaction": 603.0,
       "priceAtDisclosure": 603.0,
       "priceAfter2mFromDisclosure": 656.73,
-      "priceLatest": 570.05,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": -5.5,
+      "priceLatest": 578.02,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": -4.1,
       "priceHistory": [
         [
           "2026-05-12",
@@ -6724,84 +9378,80 @@
           618.43
         ],
         [
-          "2026-05-18",
-          611.21
+          "2026-05-19",
+          602.61
         ],
         [
           "2026-05-21",
           607.38
         ],
         [
-          "2026-05-26",
-          612.34
+          "2026-05-27",
+          635.255
         ],
         [
           "2026-05-29",
           632.51
         ],
         [
-          "2026-06-02",
-          597.63
+          "2026-06-03",
+          622.98
         ],
         [
           "2026-06-05",
           593.0
         ],
         [
-          "2026-06-09",
-          584.59
+          "2026-06-10",
+          570.98
         ],
         [
-          "2026-06-11",
-          568.43
+          "2026-06-12",
+          566.98
         ],
         [
-          "2026-06-16",
-          600.21
+          "2026-06-17",
+          567.58
         ],
         [
-          "2026-06-18",
-          577.22
+          "2026-06-22",
+          563.85
         ],
         [
-          "2026-06-24",
-          557.67
+          "2026-06-25",
+          542.87
         ],
         [
-          "2026-06-26",
-          550.25
+          "2026-06-29",
+          562.6
         ],
         [
-          "2026-07-01",
-          612.91
-        ],
-        [
-          "2026-07-06",
-          600.29
+          "2026-07-02",
+          582.9
         ],
         [
           "2026-07-08",
           603.12
         ],
         [
-          "2026-07-13",
-          656.73
+          "2026-07-10",
+          669.21
         ],
         [
           "2026-07-15",
           681.31
         ],
         [
-          "2026-07-20",
-          645.85
+          "2026-07-17",
+          646.01
         ],
         [
           "2026-07-22",
           627.17
         ],
         [
-          "2026-07-27",
-          593.87
+          "2026-07-24",
+          595.19
         ],
         [
           "2026-07-29",
@@ -6836,8 +9486,12 @@
           549.9
         ],
         [
-          "2026-08-25",
-          570.05
+          "2026-08-26",
+          576.14
+        ],
+        [
+          "2026-08-28",
+          578.02
         ]
       ],
       "catalyst": "",
@@ -6849,7 +9503,7 @@
       "id": "mnro-2026-05-12",
       "ticker": "MNRO",
       "companyKo": "먼로",
-      "companyEn": "Monro, Inc.",
+      "companyEn": "MONRO, INC.",
       "sector": "소비재",
       "instrumentType": "stock",
       "action": "buy",
@@ -6865,9 +9519,9 @@
       "priceAtTransaction": 16.16,
       "priceAtDisclosure": 16.16,
       "priceAfter2mFromDisclosure": 16.51,
-      "priceLatest": 13.96,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": -13.6,
+      "priceLatest": 12.96,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": -19.8,
       "priceHistory": [
         [
           "2026-05-12",
@@ -6878,84 +9532,80 @@
           16.32
         ],
         [
-          "2026-05-18",
-          15.74
+          "2026-05-19",
+          15.28
         ],
         [
           "2026-05-21",
           16.38
         ],
         [
-          "2026-05-26",
-          16.56
+          "2026-05-27",
+          16.22
         ],
         [
           "2026-05-29",
           16.45
         ],
         [
-          "2026-06-02",
-          15.77
+          "2026-06-03",
+          15.57
         ],
         [
           "2026-06-05",
           14.53
         ],
         [
-          "2026-06-09",
-          14.66
+          "2026-06-10",
+          14.21
         ],
         [
-          "2026-06-11",
-          16.08
+          "2026-06-12",
+          15.95
         ],
         [
-          "2026-06-16",
-          16.0
+          "2026-06-17",
+          15.19
         ],
         [
-          "2026-06-18",
-          15.55
+          "2026-06-22",
+          15.35
         ],
         [
-          "2026-06-24",
-          15.71
+          "2026-06-25",
+          16.05
         ],
         [
-          "2026-06-26",
-          17.22
+          "2026-06-29",
+          16.96
         ],
         [
-          "2026-07-01",
-          17.15
-        ],
-        [
-          "2026-07-06",
-          17.22
+          "2026-07-02",
+          17.21
         ],
         [
           "2026-07-08",
           16.54
         ],
         [
-          "2026-07-13",
-          16.51
+          "2026-07-10",
+          16.81
         ],
         [
           "2026-07-15",
           17.21
         ],
         [
-          "2026-07-20",
-          16.79
+          "2026-07-17",
+          16.96
         ],
         [
           "2026-07-22",
           16.83
         ],
         [
-          "2026-07-27",
-          16.94
+          "2026-07-24",
+          16.79
         ],
         [
           "2026-07-29",
@@ -6990,8 +9640,12 @@
           12.55
         ],
         [
-          "2026-08-25",
-          13.96
+          "2026-08-26",
+          12.61
+        ],
+        [
+          "2026-08-28",
+          12.96
         ]
       ],
       "catalyst": "",
@@ -7003,7 +9657,7 @@
       "id": "dva-2026-05-12",
       "ticker": "DVA",
       "companyKo": "다비타",
-      "companyEn": "DaVita Inc.",
+      "companyEn": "DAVITA INC.",
       "sector": "헬스케어",
       "instrumentType": "stock",
       "action": "buy",
@@ -7019,9 +9673,9 @@
       "priceAtTransaction": 200.54,
       "priceAtDisclosure": 200.54,
       "priceAfter2mFromDisclosure": 235.58,
-      "priceLatest": 177.8,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": -11.3,
+      "priceLatest": 180.68,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": -9.9,
       "priceHistory": [
         [
           "2026-05-12",
@@ -7032,84 +9686,80 @@
           192.58
         ],
         [
-          "2026-05-18",
-          199.52
+          "2026-05-19",
+          194.61
         ],
         [
           "2026-05-21",
           198.66
         ],
         [
-          "2026-05-26",
-          195.57
+          "2026-05-27",
+          194.92
         ],
         [
           "2026-05-29",
           194.36
         ],
         [
-          "2026-06-02",
-          187.89
+          "2026-06-03",
+          195.03
         ],
         [
           "2026-06-05",
           192.16
         ],
         [
-          "2026-06-09",
-          198.19
+          "2026-06-10",
+          198.54
         ],
         [
-          "2026-06-11",
-          203.83
+          "2026-06-12",
+          208.66
         ],
         [
-          "2026-06-16",
-          208.98
+          "2026-06-17",
+          210.58
         ],
         [
-          "2026-06-18",
-          207.91
+          "2026-06-22",
+          209.68
         ],
         [
-          "2026-06-24",
-          213.04
+          "2026-06-25",
+          213.36
         ],
         [
-          "2026-06-26",
-          217.04
+          "2026-06-29",
+          219.7
         ],
         [
-          "2026-07-01",
-          228.03
-        ],
-        [
-          "2026-07-06",
-          235.71
+          "2026-07-02",
+          234.91
         ],
         [
           "2026-07-08",
           230.72
         ],
         [
-          "2026-07-13",
-          235.58
+          "2026-07-10",
+          232.8
         ],
         [
           "2026-07-15",
           231.61
         ],
         [
-          "2026-07-20",
-          234.1
+          "2026-07-17",
+          236.97
         ],
         [
           "2026-07-22",
           232.08
         ],
         [
-          "2026-07-27",
-          236.31
+          "2026-07-24",
+          235.44
         ],
         [
           "2026-07-29",
@@ -7144,8 +9794,166 @@
           173.82
         ],
         [
-          "2026-08-25",
-          177.8
+          "2026-08-26",
+          180.05
+        ],
+        [
+          "2026-08-28",
+          180.68
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "amt-2026-05-12",
+      "ticker": "AMT",
+      "companyKo": "AMT",
+      "companyEn": "AMERICAN TOWER CORP /MA/",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": false,
+      "verifiedSource": null,
+      "amountRange": [
+        1001,
+        15000
+      ],
+      "transactionDate": "2026-05-12",
+      "transactionDateApprox": true,
+      "disclosureDate": "2026-05-12",
+      "priceAtTransaction": 178.82,
+      "priceAtDisclosure": 178.82,
+      "priceAfter2mFromDisclosure": 169.5,
+      "priceLatest": 176.23,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": -1.4,
+      "priceHistory": [
+        [
+          "2026-05-12",
+          178.82
+        ],
+        [
+          "2026-05-14",
+          170.5
+        ],
+        [
+          "2026-05-19",
+          183.0
+        ],
+        [
+          "2026-05-21",
+          183.78
+        ],
+        [
+          "2026-05-27",
+          184.98
+        ],
+        [
+          "2026-05-29",
+          186.96
+        ],
+        [
+          "2026-06-03",
+          182.24
+        ],
+        [
+          "2026-06-05",
+          194.12
+        ],
+        [
+          "2026-06-10",
+          192.5
+        ],
+        [
+          "2026-06-12",
+          187.18
+        ],
+        [
+          "2026-06-17",
+          181.09
+        ],
+        [
+          "2026-06-22",
+          176.43
+        ],
+        [
+          "2026-06-25",
+          168.72
+        ],
+        [
+          "2026-06-29",
+          168.67
+        ],
+        [
+          "2026-07-02",
+          166.03
+        ],
+        [
+          "2026-07-08",
+          165.04
+        ],
+        [
+          "2026-07-10",
+          168.59
+        ],
+        [
+          "2026-07-15",
+          168.63
+        ],
+        [
+          "2026-07-17",
+          170.06
+        ],
+        [
+          "2026-07-22",
+          166.06
+        ],
+        [
+          "2026-07-24",
+          166.67
+        ],
+        [
+          "2026-07-29",
+          179.26
+        ],
+        [
+          "2026-07-31",
+          173.36
+        ],
+        [
+          "2026-08-05",
+          168.07
+        ],
+        [
+          "2026-08-07",
+          172.54
+        ],
+        [
+          "2026-08-12",
+          170.43
+        ],
+        [
+          "2026-08-14",
+          175.58
+        ],
+        [
+          "2026-08-19",
+          174.49
+        ],
+        [
+          "2026-08-21",
+          175.8
+        ],
+        [
+          "2026-08-26",
+          175.73
+        ],
+        [
+          "2026-08-28",
+          176.23
         ]
       ],
       "catalyst": "",
@@ -7157,7 +9965,7 @@
       "id": "pfgc-2026-05-12",
       "ticker": "PFGC",
       "companyKo": "퍼포먼스 푸드",
-      "companyEn": "Performance Food Group",
+      "companyEn": "Performance Food Group Co",
       "sector": "소비재",
       "instrumentType": "stock",
       "action": "buy",
@@ -7173,9 +9981,9 @@
       "priceAtTransaction": 95.03,
       "priceAtDisclosure": 95.03,
       "priceAfter2mFromDisclosure": 113.31,
-      "priceLatest": 104.94,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": 10.4,
+      "priceLatest": 100.85,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": 6.1,
       "priceHistory": [
         [
           "2026-05-12",
@@ -7186,84 +9994,80 @@
           96.79
         ],
         [
-          "2026-05-18",
-          96.14
+          "2026-05-19",
+          93.89
         ],
         [
           "2026-05-21",
           95.18
         ],
         [
-          "2026-05-26",
-          93.91
+          "2026-05-27",
+          96.6
         ],
         [
           "2026-05-29",
           98.19
         ],
         [
-          "2026-06-02",
-          96.21
+          "2026-06-03",
+          96.54
         ],
         [
           "2026-06-05",
           97.12
         ],
         [
-          "2026-06-09",
-          99.76
+          "2026-06-10",
+          100.74
         ],
         [
-          "2026-06-11",
-          104.06
+          "2026-06-12",
+          104.07
         ],
         [
-          "2026-06-16",
-          104.51
+          "2026-06-17",
+          103.41
         ],
         [
-          "2026-06-18",
-          103.62
+          "2026-06-22",
+          102.61
         ],
         [
-          "2026-06-24",
-          106.43
+          "2026-06-25",
+          107.27
         ],
         [
-          "2026-06-26",
-          110.44
+          "2026-06-29",
+          112.65
         ],
         [
-          "2026-07-01",
-          112.54
-        ],
-        [
-          "2026-07-06",
-          113.74
+          "2026-07-02",
+          113.09
         ],
         [
           "2026-07-08",
           111.53
         ],
         [
-          "2026-07-13",
-          113.31
+          "2026-07-10",
+          113.36
         ],
         [
           "2026-07-15",
           110.41
         ],
         [
-          "2026-07-20",
-          109.32
+          "2026-07-17",
+          111.76
         ],
         [
           "2026-07-22",
           111.37
         ],
         [
-          "2026-07-27",
-          114.3
+          "2026-07-24",
+          111.49
         ],
         [
           "2026-07-29",
@@ -7298,8 +10102,12 @@
           104.98
         ],
         [
-          "2026-08-25",
-          104.94
+          "2026-08-26",
+          102.47
+        ],
+        [
+          "2026-08-28",
+          100.85
         ]
       ],
       "catalyst": "",
@@ -7311,7 +10119,7 @@
       "id": "app-2026-03-26",
       "ticker": "APP",
       "companyKo": "앱러빈",
-      "companyEn": "AppLovin Corp.",
+      "companyEn": "AppLovin Corp",
       "sector": "소프트웨어",
       "instrumentType": "stock",
       "action": "buy",
@@ -7327,9 +10135,9 @@
       "priceAtTransaction": 391.21,
       "priceAtDisclosure": 490.69,
       "priceAfter2mFromDisclosure": 442.85,
-      "priceLatest": 310.54,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": -36.7,
+      "priceLatest": 317.76,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": -35.2,
       "priceHistory": [
         [
           "2026-05-12",
@@ -7340,84 +10148,80 @@
           485.16
         ],
         [
-          "2026-05-18",
-          492.38
+          "2026-05-19",
+          476.9
         ],
         [
           "2026-05-21",
           485.89
         ],
         [
-          "2026-05-26",
-          514.24
+          "2026-05-27",
+          567.83
         ],
         [
           "2026-05-29",
           613.09
         ],
         [
-          "2026-06-02",
-          605.63
+          "2026-06-03",
+          570.83
         ],
         [
           "2026-06-05",
           557.2
         ],
         [
-          "2026-06-09",
-          520.84
+          "2026-06-10",
+          492.98
         ],
         [
-          "2026-06-11",
-          478.57
+          "2026-06-12",
+          496.77
         ],
         [
-          "2026-06-16",
-          515.2
+          "2026-06-17",
+          479.49
         ],
         [
-          "2026-06-18",
-          469.71
+          "2026-06-22",
+          469.39
         ],
         [
-          "2026-06-24",
-          464.96
+          "2026-06-25",
+          445.93
         ],
         [
-          "2026-06-26",
-          477.08
+          "2026-06-29",
+          498.76
         ],
         [
-          "2026-07-01",
-          564.61
-        ],
-        [
-          "2026-07-06",
-          543.79
+          "2026-07-02",
+          527.06
         ],
         [
           "2026-07-08",
           522.18
         ],
         [
-          "2026-07-13",
-          442.85
+          "2026-07-10",
+          506.98
         ],
         [
           "2026-07-15",
           452.73
         ],
         [
-          "2026-07-20",
-          424.6
+          "2026-07-17",
+          424.54
         ],
         [
           "2026-07-22",
           412.48
         ],
         [
-          "2026-07-27",
-          412.73
+          "2026-07-24",
+          391.98
         ],
         [
           "2026-07-29",
@@ -7452,8 +10256,12 @@
           305.77
         ],
         [
-          "2026-08-25",
-          310.54
+          "2026-08-26",
+          308.11
+        ],
+        [
+          "2026-08-28",
+          317.76
         ]
       ],
       "catalyst": "",
@@ -7465,7 +10273,7 @@
       "id": "pg-2026-05-12",
       "ticker": "PG",
       "companyKo": "P&G",
-      "companyEn": "The Procter & Gamble Company",
+      "companyEn": "PROCTER & GAMBLE Co",
       "sector": "소비재",
       "instrumentType": "stock",
       "action": "buy",
@@ -7481,9 +10289,9 @@
       "priceAtTransaction": 143.91,
       "priceAtDisclosure": 143.91,
       "priceAfter2mFromDisclosure": 148.37,
-      "priceLatest": 145.4,
-      "priceLatestDate": "2026-08-25",
-      "trackingReturnPct": 1.0,
+      "priceLatest": 143.78,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": -0.1,
       "priceHistory": [
         [
           "2026-05-12",
@@ -7494,84 +10302,80 @@
           142.71
         ],
         [
-          "2026-05-18",
-          142.39
+          "2026-05-19",
+          141.3
         ],
         [
           "2026-05-21",
           143.4
         ],
         [
-          "2026-05-26",
-          142.96
+          "2026-05-27",
+          147.49
         ],
         [
           "2026-05-29",
           143.56
         ],
         [
-          "2026-06-02",
-          140.82
+          "2026-06-03",
+          140.19
         ],
         [
           "2026-06-05",
           146.54
         ],
         [
-          "2026-06-09",
-          148.67
+          "2026-06-10",
+          149.05
         ],
         [
-          "2026-06-11",
-          148.34
+          "2026-06-12",
+          149.61
         ],
         [
-          "2026-06-16",
-          152.49
+          "2026-06-17",
+          150.56
         ],
         [
-          "2026-06-18",
-          150.38
+          "2026-06-22",
+          147.68
         ],
         [
-          "2026-06-24",
-          152.04
+          "2026-06-25",
+          148.5
         ],
         [
-          "2026-06-26",
-          149.02
+          "2026-06-29",
+          148.45
         ],
         [
-          "2026-07-01",
-          147.43
-        ],
-        [
-          "2026-07-06",
-          149.31
+          "2026-07-02",
+          151.41
         ],
         [
           "2026-07-08",
           148.4
         ],
         [
-          "2026-07-13",
-          148.37
+          "2026-07-10",
+          147.04
         ],
         [
           "2026-07-15",
           148.05
         ],
         [
-          "2026-07-20",
-          149.13
+          "2026-07-17",
+          149.98
         ],
         [
           "2026-07-22",
           149.13
         ],
         [
-          "2026-07-27",
-          148.63
+          "2026-07-24",
+          147.41
         ],
         [
           "2026-07-29",
@@ -7606,8 +10410,12 @@
           144.68
         ],
         [
-          "2026-08-25",
-          145.4
+          "2026-08-26",
+          145.0
+        ],
+        [
+          "2026-08-28",
+          143.78
         ]
       ],
       "catalyst": "",
@@ -7619,7 +10427,7 @@
       "id": "brk-b-2026-05-12",
       "ticker": "BRK-B",
       "companyKo": "버크셔 해서웨이",
-      "companyEn": "Berkshire Hathaway Inc.",
+      "companyEn": "BERKSHIRE HATHAWAY INC",
       "sector": "금융",
       "instrumentType": "stock",
       "action": "buy",
@@ -7639,6 +10447,314 @@
       "priceLatestDate": null,
       "trackingReturnPct": null,
       "priceHistory": [],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "bac-2026-03-28",
+      "ticker": "BAC",
+      "companyKo": "BAC",
+      "companyEn": "BANK OF AMERICA CORP /DE/",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": false,
+      "verifiedSource": null,
+      "amountRange": [
+        50001,
+        100000
+      ],
+      "transactionDate": "2026-03-28",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-04-23",
+      "priceAtTransaction": 47.23,
+      "priceAtDisclosure": 52.47,
+      "priceAfter2mFromDisclosure": 57.37,
+      "priceLatest": 62.32,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": 18.8,
+      "priceHistory": [
+        [
+          "2026-04-23",
+          52.47
+        ],
+        [
+          "2026-04-27",
+          52.63
+        ],
+        [
+          "2026-04-30",
+          53.46
+        ],
+        [
+          "2026-05-05",
+          53.12
+        ],
+        [
+          "2026-05-08",
+          51.31
+        ],
+        [
+          "2026-05-13",
+          49.84
+        ],
+        [
+          "2026-05-18",
+          50.69
+        ],
+        [
+          "2026-05-21",
+          51.49
+        ],
+        [
+          "2026-05-27",
+          51.1
+        ],
+        [
+          "2026-06-01",
+          51.51
+        ],
+        [
+          "2026-06-04",
+          54.17
+        ],
+        [
+          "2026-06-09",
+          54.42
+        ],
+        [
+          "2026-06-12",
+          56.02
+        ],
+        [
+          "2026-06-17",
+          56.53
+        ],
+        [
+          "2026-06-23",
+          57.91
+        ],
+        [
+          "2026-06-26",
+          57.88
+        ],
+        [
+          "2026-07-01",
+          58.36
+        ],
+        [
+          "2026-07-07",
+          59.86
+        ],
+        [
+          "2026-07-10",
+          59.67
+        ],
+        [
+          "2026-07-15",
+          61.59
+        ],
+        [
+          "2026-07-20",
+          60.42
+        ],
+        [
+          "2026-07-23",
+          61.28
+        ],
+        [
+          "2026-07-28",
+          62.62
+        ],
+        [
+          "2026-07-31",
+          61.95
+        ],
+        [
+          "2026-08-05",
+          63.25
+        ],
+        [
+          "2026-08-10",
+          63.86
+        ],
+        [
+          "2026-08-13",
+          64.09
+        ],
+        [
+          "2026-08-18",
+          64.23
+        ],
+        [
+          "2026-08-21",
+          61.69
+        ],
+        [
+          "2026-08-26",
+          62.23
+        ],
+        [
+          "2026-08-28",
+          62.32
+        ]
+      ],
+      "catalyst": "",
+      "closed": false,
+      "closeDate": null,
+      "note": "OGE 278-T 공시 자동 파싱(스캔본 OCR). 촉매/매도 정보는 수동 보완 권장."
+    },
+    {
+      "id": "bac-2026-03-04",
+      "ticker": "BAC",
+      "companyKo": "BAC",
+      "companyEn": "BANK OF AMERICA CORP /DE/",
+      "sector": "기타",
+      "instrumentType": "stock",
+      "action": "buy",
+      "actionInferred": false,
+      "verifiedSource": null,
+      "amountRange": [
+        15001,
+        50000
+      ],
+      "transactionDate": "2026-03-04",
+      "transactionDateApprox": false,
+      "disclosureDate": "2026-04-23",
+      "priceAtTransaction": 50.3,
+      "priceAtDisclosure": 52.47,
+      "priceAfter2mFromDisclosure": 57.37,
+      "priceLatest": 62.32,
+      "priceLatestDate": "2026-08-28",
+      "trackingReturnPct": 18.8,
+      "priceHistory": [
+        [
+          "2026-04-23",
+          52.47
+        ],
+        [
+          "2026-04-27",
+          52.63
+        ],
+        [
+          "2026-04-30",
+          53.46
+        ],
+        [
+          "2026-05-05",
+          53.12
+        ],
+        [
+          "2026-05-08",
+          51.31
+        ],
+        [
+          "2026-05-13",
+          49.84
+        ],
+        [
+          "2026-05-18",
+          50.69
+        ],
+        [
+          "2026-05-21",
+          51.49
+        ],
+        [
+          "2026-05-27",
+          51.1
+        ],
+        [
+          "2026-06-01",
+          51.51
+        ],
+        [
+          "2026-06-04",
+          54.17
+        ],
+        [
+          "2026-06-09",
+          54.42
+        ],
+        [
+          "2026-06-12",
+          56.02
+        ],
+        [
+          "2026-06-17",
+          56.53
+        ],
+        [
+          "2026-06-23",
+          57.91
+        ],
+        [
+          "2026-06-26",
+          57.88
+        ],
+        [
+          "2026-07-01",
+          58.36
+        ],
+        [
+          "2026-07-07",
+          59.86
+        ],
+        [
+          "2026-07-10",
+          59.67
+        ],
+        [
+          "2026-07-15",
+          61.59
+        ],
+        [
+          "2026-07-20",
+          60.42
+        ],
+        [
+          "2026-07-23",
+          61.28
+        ],
+        [
+          "2026-07-28",
+          62.62
+        ],
+        [
+          "2026-07-31",
+          61.95
+        ],
+        [
+          "2026-08-05",
+          63.25
+        ],
+        [
+          "2026-08-10",
+          63.86
+        ],
+        [
+          "2026-08-13",
+          64.09
+        ],
+        [
+          "2026-08-18",
+          64.23
+        ],
+        [
+          "2026-08-21",
+          61.69
+        ],
+        [
+          "2026-08-26",
+          62.23
+        ],
+        [
+          "2026-08-28",
+          62.32
+        ]
+      ],
       "catalyst": "",
       "closed": false,
       "closeDate": null,
