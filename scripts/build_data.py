@@ -1199,16 +1199,33 @@ PRICE_PROVIDERS = (
 )
 
 
+def _ticker_symbol_variants(ticker: str):
+    """클래스 주식(BRK-B 등) 표기가 제공처마다 달라 후보를 여러 개 만든다.
+
+    SEC 목록은 하이픈(BRK-B)을 쓰지만 일부 시세 제공처는 마침표(BRK.B)나
+    구분자 없는 형태(BRKB)를 기대한다. 실측: BRK-B가 모든 제공처에서
+    가격 조회 0건으로 실패했다 — 하이픈 표기를 아예 못 알아듣는 제공처가
+    있다는 뜻. 원래 표기를 먼저 시도하고, 하이픈이 있으면 변형을 덧붙인다.
+    """
+    variants = [ticker]
+    if "-" in ticker:
+        variants.append(ticker.replace("-", "."))
+        variants.append(ticker.replace("-", ""))
+    return variants
+
+
 def fetch_stooq_daily(ticker: str):
-    """[(date, close)] 오름차순. 제공처를 순서대로 시도, 전부 실패 시 []."""
-    for name, fn in PRICE_PROVIDERS:
-        try:
-            series = fn(ticker)
-            print(f"  · 시세 {ticker}: {name} OK ({len(series)}일, 최신 {series[-1][0]})",
-                  file=sys.stderr)
-            return series
-        except Exception as e:  # noqa: BLE001
-            print(f"  · 시세 {ticker}: {name} 실패 — {e}", file=sys.stderr)
+    """[(date, close)] 오름차순. 제공처×심볼표기를 순서대로 시도, 전부 실패 시 []."""
+    for sym in _ticker_symbol_variants(ticker):
+        for name, fn in PRICE_PROVIDERS:
+            try:
+                series = fn(sym)
+                tag = name if sym == ticker else f"{name}, 표기 {sym}"
+                print(f"  · 시세 {ticker}: {tag} OK ({len(series)}일, 최신 {series[-1][0]})",
+                      file=sys.stderr)
+                return series
+            except Exception as e:  # noqa: BLE001
+                print(f"  · 시세 {ticker} ({sym}): {name} 실패 — {e}", file=sys.stderr)
     print(f"  ! 시세 조회 전부 실패: {ticker}", file=sys.stderr)
     return []
 
@@ -1891,6 +1908,12 @@ Filer's Name: Donald J. Trump
               "actionInferred": True}
     apply_verified_type(_vrow2, {"ADBE": {"action": "sell", "source": "x"}})
     check("검증에 없는 종목은 그대로", _vrow2["action"] == "buy" and _vrow2["actionInferred"] is True)
+
+    # 실측: BRK-B가 모든 시세 제공처에서 실패 — 클래스주 하이픈 표기 문제로 추정
+    check("클래스주 표기 변형 생성(BRK-B → BRK.B/BRKB)",
+          _ticker_symbol_variants("BRK-B") == ["BRK-B", "BRK.B", "BRKB"])
+    check("하이픈 없는 티커는 변형 없음",
+          _ticker_symbol_variants("AAPL") == ["AAPL"])
 
     # 실측: 2026 Q2 스캔본(199dpi, psm4+sharp). 표의 거래유형(purchase) 칸이
     # OCR에서 대부분 사라지고, 종목명·날짜·금액이 여러 줄에 흩어진다.
