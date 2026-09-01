@@ -815,6 +815,10 @@ def parse_ptr_text(text: str, disclosure_date=None, window=8):
 MIN_CHARS_PER_PAGE = 200
 OCR_CACHE_DIR = os.environ.get("FT_OCR_CACHE", ".cache/ocr")
 
+# 다운로드/OCR 캐시가 실제로 건너뛰고 있는지 로그로 보여주기 위한 집계.
+# build_from_ptrs() 시작할 때마다 초기화한다.
+CACHE_STATS = {"pdf_hit": 0, "pdf_miss": 0, "ocr_hit": 0, "ocr_miss": 0}
+
 
 def _text_layer(data: bytes) -> str:
     from pypdf import PdfReader
@@ -973,7 +977,10 @@ def ocr_pdf(data: bytes, dpi=None, lang="eng", progress=True,
         with open(cache, encoding="utf-8") as f:
             txt = f.read()
         print(f"    (OCR 캐시 사용: {len(txt):,}자)", file=sys.stderr)
+        CACHE_STATS["ocr_hit"] += 1
         return txt
+    if cache:
+        CACHE_STATS["ocr_miss"] += 1
 
     try:
         import pytesseract
@@ -1054,9 +1061,11 @@ def fetch_bytes(source: str) -> bytes:
     key = hashlib.sha256(source.encode("utf-8")).hexdigest()[:32]
     cached = os.path.join(PDF_CACHE_DIR, f"{key}.pdf")
     if os.path.exists(cached):
+        CACHE_STATS["pdf_hit"] += 1
         with open(cached, "rb") as f:
             return f.read()
 
+    CACHE_STATS["pdf_miss"] += 1
     req = urllib.request.Request(encode_url(source), headers=UA)
     with urllib.request.urlopen(req, timeout=90) as r:
         data = r.read()
@@ -1072,71 +1081,6 @@ def fetch_bytes(source: str) -> bytes:
 # ---------------------------------------------------------------------------
 # 3) 가격 보강 (Stooq, 무료·키 불필요)
 # ---------------------------------------------------------------------------
-
-# Yahoo는 쿠키 없는 요청을 429(Too Many Requests)로 막는다(실측).
-# 세션 쿠키를 한 번 받아두면 통과한다.
-_YAHOO_OPENER = None
-
-
-def _yahoo_opener():
-    global _YAHOO_OPENER
-    if _YAHOO_OPENER is not None:
-        return _YAHOO_OPENER
-    import http.cookiejar
-    jar = http.cookiejar.CookieJar()
-    op = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(jar))
-    op.addheaders = list(UA.items()) + [
-        ("Accept", "text/html,application/json,*/*"),
-        ("Accept-Language", "en-US,en;q=0.9"),
-    ]
-    for seed in ("https://fc.yahoo.com/", "https://finance.yahoo.com/"):
-        try:
-            op.open(seed, timeout=20).read(2048)
-        except Exception:  # noqa: BLE001
-            pass  # 쿠키만 얻으면 되므로 실패해도 계속
-    _YAHOO_OPENER = op
-    return op
-
-
-def _parse_yahoo_chart(body):
-    doc = json.loads(body)
-    res = (doc.get("chart") or {}).get("result") or []
-    if not res:
-        err = (doc.get("chart") or {}).get("error")
-        raise ValueError(f"빈 응답{f' ({err})' if err else ''}")
-    r = res[0]
-    stamps = r.get("timestamp") or []
-    quote = ((r.get("indicators") or {}).get("quote") or [{}])[0]
-    closes = quote.get("close") or []
-    out = []
-    for ts, c in zip(stamps, closes):
-        if c is None:
-            continue
-        out.append((datetime.fromtimestamp(ts, timezone.utc).strftime("%Y-%m-%d"), float(c)))
-    if not out:
-        raise ValueError("종가 없음")
-    return out
-
-
-def _fetch_yahoo(host):
-    """Yahoo 차트 API. 쿠키 세션을 쓰고, 429면 잠시 쉬었다 다시 시도한다."""
-    def fn(ticker):
-        url = encode_url(f"https://{host}/v8/finance/chart/"
-                         f"{urllib.parse.quote(ticker)}?range=5y&interval=1d")
-        op = _yahoo_opener()
-        last = None
-        for attempt in range(3):
-            try:
-                with op.open(url, timeout=45) as r:
-                    return _parse_yahoo_chart(r.read().decode("utf-8", "replace"))
-            except urllib.error.HTTPError as e:
-                last = f"HTTP {e.code} {e.reason}"
-                if e.code == 429 and attempt < 2:
-                    time.sleep(2 * (attempt + 1))
-                    continue
-                raise RuntimeError(last) from None
-        raise RuntimeError(last or "실패")
-    return fn
 
 
 def _fetch_nasdaq_daily(ticker: str):
@@ -1192,8 +1136,8 @@ def _fetch_stooq_daily(ticker: str):
 
 
 PRICE_PROVIDERS = (
-    ("yahoo(query1)", _fetch_yahoo("query1.finance.yahoo.com")),
-    ("yahoo(query2)", _fetch_yahoo("query2.finance.yahoo.com")),
+    # Yahoo는 쿠키 없는 요청을 429(Too Many Requests)로 거의 항상 막아서
+    # (실측) 제외했다. Nasdaq이 안정적으로 통과해서 그걸 우선으로 쓴다.
     ("nasdaq", _fetch_nasdaq_daily),
     ("stooq", _fetch_stooq_daily),
 )
@@ -1347,6 +1291,7 @@ def apply_verified_type(row, verified):
 def build_from_ptrs(sources, enrich=True, use_ocr=True, dpi=300):
     load_ticker_index()          # 회사명 → 티커 해석 준비(SEC 목록)
     verified = load_verified_types()   # 뉴스·원문 검증 레이어
+    CACHE_STATS.update(pdf_hit=0, pdf_miss=0, ocr_hit=0, ocr_miss=0)
     raw_rows = []
     n_ocr = n_text = n_empty = 0
     for src in sources:
@@ -1369,6 +1314,9 @@ def build_from_ptrs(sources, enrich=True, use_ocr=True, dpi=300):
         raw_rows.extend(parsed)
     print(f"· 문서 {len(sources)}건 — 텍스트 {n_text} / OCR {n_ocr} / 판독실패 {n_empty}",
           file=sys.stderr)
+    print(f"· 캐시: PDF 다운로드 생략 {CACHE_STATS['pdf_hit']}건(새로 받음 {CACHE_STATS['pdf_miss']}건) "
+          f"/ OCR 생략 {CACHE_STATS['ocr_hit']}건(새로 OCR {CACHE_STATS['ocr_miss']}건) "
+          "— 이미 처리한 문서는 다시 하지 않습니다", file=sys.stderr)
 
     # 개별 종목만 남기고 티커 부여
     kept = []
@@ -2015,17 +1963,6 @@ Yes! $1,000,001 - $5,000,000
         check("자동 추출 시 dataSource=oge-278t", got3["meta"]["dataSource"] == "oge-278t")
 
     # 시세 응답 파서 (네트워크 없이 합성 응답으로 검증)
-    yser = _parse_yahoo_chart(json.dumps({"chart": {"result": [{
-        "timestamp": [1767225600, 1767312000],
-        "indicators": {"quote": [{"close": [26.4, 174.38]}]}}]}}))
-    check(f"Yahoo 응답 파싱 2일 (실제 {len(yser)})", len(yser) == 2)
-    check("Yahoo 종가", yser[-1][1] == 174.38)
-    try:
-        _parse_yahoo_chart(json.dumps({"chart": {"result": []}}))
-        check("Yahoo 빈 응답은 오류로 처리", False)
-    except ValueError:
-        check("Yahoo 빈 응답은 오류로 처리", True)
-
     nas = _parse_nasdaq(json.dumps({"data": {"tradesTable": {"rows": [
         {"date": "08/19/2026", "close": "$174.38"},
         {"date": "05/12/2026", "close": "$26.40"},

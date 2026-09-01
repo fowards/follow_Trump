@@ -89,7 +89,7 @@ schtasks /delete /tn "TrumpFollow_Daily" /f
 |------|-----------|
 | `OCR 의존성 없음` | `pip install -r scripts\requirements.txt` 재실행 |
 | OCR 시험 "건너뜀" | Tesseract 미설치 또는 경로 오류 → `TESSERACT_CMD` 확인 |
-| `시세 조회 전부 실패` | 네트워크 확인. Yahoo가 막히면 Stooq로 자동 폴백 |
+| `시세 조회 전부 실패` | 네트워크 확인. Nasdaq이 막히면 Stooq로 자동 폴백 (Yahoo는 429 차단이 잦아 사용하지 않음) |
 | OCR이 너무 느림 | `--ocr-dpi 200` 으로 낮추기(정확도는 조금 떨어짐) |
 | git push 실패 | `git config --global user.name/user.email` 설정, 자격증명 확인 |
 
