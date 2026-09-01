@@ -329,5 +329,6 @@ section { margin: 40px 0; }
 .news-source { font-size: 12px; font-weight: 700; color: var(--accent); }
 .news-date { font-size: 12px; color: var(--muted); white-space: nowrap; }
 .news-title { font-size: 15px; font-weight: 600; color: var(--text); line-height: 1.5; }
+.news-title-en { font-size: 12px; color: var(--muted); margin-top: 3px; line-height: 1.4; }
 .news-go { display: inline-block; margin-top: 8px; font-size: 12px; color: var(--muted); }
 .news-item:hover .news-go { color: var(--accent); }

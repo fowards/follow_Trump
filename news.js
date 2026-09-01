@@ -12,13 +12,17 @@
   }
 
   function itemHTML(it) {
+    // 제목만 번역(본문은 다루지 않음). 번역 실패 시 영어 원문이 메인으로 대체.
+    var main = it.titleKo || it.title;
+    var sub = it.titleKo ? esc(it.title) : "";
     return (
       '<a class="news-item" href="' + esc(it.link) + '" target="_blank" rel="noopener noreferrer">' +
         '<div class="news-top">' +
           '<span class="news-source">' + esc(it.source) + "</span>" +
           '<span class="news-date">' + esc(it.publishedAt || "") + "</span>" +
         "</div>" +
-        '<div class="news-title">' + esc(it.title) + "</div>" +
+        '<div class="news-title">' + esc(main) + "</div>" +
+        (sub ? '<div class="news-title-en">' + sub + "</div>" : "") +
         '<span class="news-go">원문 보기 →</span>' +
       "</a>"
     );

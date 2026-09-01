@@ -80,6 +80,38 @@ def parse_rss(body: bytes):
     return items
 
 
+MYMEMORY_URL = "https://api.mymemory.translated.net/get"
+
+
+def translate_ko(text: str) -> str:
+    """제목만 한국어로 옮긴다(본문은 다루지 않음).
+
+    번역도 저작권 대상이지만, 미국 저작권청 규정(37 CFR 202.1)은
+    "제목·짧은 문구"를 보호 대상에서 제외한다 — 독창적 표현으로 보기엔
+    너무 짧다는 것. 그래서 헤드라인 번역은 안전하고, 본문을 문장째
+    옮기는 것과는 다르다. MyMemory는 번역 용도로 공개된 무료 API라
+    스크래핑이 아니다(공식 문서화된 엔드포인트, 키 불필요).
+
+    실패하면(네트워크 문제·일일 한도 등) None을 돌려주고, 호출부가
+    영어 원문을 그대로 쓰게 한다 — 번역 실패가 전체 수집을 막지 않는다.
+    """
+    if not text:
+        return None
+    try:
+        url = (MYMEMORY_URL + "?q=" + urllib.parse.quote(text) + "&langpair=en|ko")
+        req = urllib.request.Request(url, headers=UA)
+        with urllib.request.urlopen(req, timeout=15) as r:
+            data = json.loads(r.read().decode("utf-8", "replace"))
+        translated = (data.get("responseData") or {}).get("translatedText")
+        # MyMemory는 실패해도 200을 주고 원문을 그대로 돌려줄 때가 있다 —
+        # 그러면 "번역됨"으로 잘못 표시하지 않게 원문과 같으면 버린다.
+        if translated and translated.strip().lower() != text.strip().lower():
+            return translated.strip()
+    except Exception as e:  # noqa: BLE001
+        print(f"  ! 번역 실패({text[:30]}...): {e}", file=sys.stderr)
+    return None
+
+
 def load_existing(path: str):
     try:
         with open(path, encoding="utf-8") as f:
@@ -96,6 +128,8 @@ def main():
     ap.add_argument("--out", default=NEWS_JSON)
     ap.add_argument("--keep", type=int, default=60,
                     help="news.json에 보관할 최대 총 건수(기본 60, 오래된 것부터 정리)")
+    ap.add_argument("--no-translate", action="store_true",
+                    help="제목 한국어 번역 생략(영어 원문만)")
     args = ap.parse_args()
 
     try:
@@ -112,6 +146,8 @@ def main():
     for it in fresh:
         if it["link"] in seen_links:
             continue
+        if not args.no_translate:
+            it["titleKo"] = translate_ko(it["title"])
         added.append(it)
         seen_links.add(it["link"])
         if len(added) >= args.limit:
@@ -134,7 +170,8 @@ def main():
 
     print(f"· 새 헤드라인 {len(added)}건 추가 (전체 {len(merged)}건 보관)", file=sys.stderr)
     for it in added:
-        print(f"  - [{it['source']}] {it['title']}", file=sys.stderr)
+        shown = it.get("titleKo") or it["title"]
+        print(f"  - [{it['source']}] {shown}", file=sys.stderr)
     return 0
 
 
