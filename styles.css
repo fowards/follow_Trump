@@ -316,3 +316,18 @@ section { margin: 40px 0; }
 .badge-inline.approx { color: var(--muted); border: 1px solid var(--border); }
 .table-note { margin-top: 12px; line-height: 1.7; }
 .hstat-note { grid-column: 1 / -1; margin: 6px 0 0; }
+
+/* ── 뉴스 (제목·출처·날짜만, 본문 없음) ────────────────────────── */
+.news-list { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
+.news-item {
+  display: block; padding: 16px 18px; background: var(--bg-card);
+  border: 1px solid var(--border); border-radius: var(--radius);
+  transition: border-color .15s, transform .15s;
+}
+.news-item:hover { border-color: var(--accent); transform: translateY(-1px); }
+.news-top { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; margin-bottom: 6px; }
+.news-source { font-size: 12px; font-weight: 700; color: var(--accent); }
+.news-date { font-size: 12px; color: var(--muted); white-space: nowrap; }
+.news-title { font-size: 15px; font-weight: 600; color: var(--text); line-height: 1.5; }
+.news-go { display: inline-block; margin-top: 8px; font-size: 12px; color: var(--muted); }
+.news-item:hover .news-go { color: var(--accent); }

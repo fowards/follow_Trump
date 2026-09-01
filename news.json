@@ -1,0 +1,8 @@
+{
+  "meta": {
+    "source": "Google News RSS (제목·출처·링크만 — 본문 재게시 없음)",
+    "query": "\"Trump\" (stock OR shares OR trade OR portfolio OR disclosure OR \"periodic transaction\")",
+    "lastFetched": null
+  },
+  "items": []
+}
