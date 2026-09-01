@@ -2,7 +2,22 @@
   "meta": {
     "source": "Google News RSS (제목·출처·링크만 — 본문 재게시 없음)",
     "query": "\"Trump\" (stock OR shares OR trade OR portfolio OR disclosure OR \"periodic transaction\")",
-    "lastFetched": null
+    "lastFetched": "2026-09-01"
   },
-  "items": []
+  "items": [
+    {
+      "title": "Shein Stock Waited Years to IPO Only to Flop. Blame Trump.",
+      "source": "Barron's",
+      "link": "https://news.google.com/rss/articles/CBMicEFVX3lxTE5iMFpsZGpjOC1ndmFMYUYtVDJldmlMUHRDcVlRcFVteFBkbkRESzZBcVFDWkVmb0ViVHZHUzFRbE5hNmduNGdPZXpFaHF3WklXX1oyQVZYZEJ2R2tqQWtmLS1JdGJBT2ZGbmNCbk55Zi0?oc=5",
+      "publishedAt": "2026-09-01",
+      "titleKo": "Shein Stock은 IPO를 위해 수년을 기다렸습니다. Flop에게만. 트럼프를 비난하십시오."
+    },
+    {
+      "title": "In the Trump-voting town of Ontario, lake’s new name splits Republicans",
+      "source": "washingtonpost.com",
+      "link": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxNOHNkazVIeVNsb0o1NjZxaGRqMVlUb29tQXd3amdDSi16a25LZzY3R0tNRGpvZjU2M2J6OG45UGlTY3EyWktyR3VZWmVVSWQxTi1OS2VPTVAtcmVEZlYtdGFienNFZkdxR2VkQXhsMVZ4ZGZuMjVEM1JDbDlJdm9TWkZCTjNEMGVDbmh3STZ4QzhlR05YUVBUWjh1eG40MFl4ZHNCRTZsTEJqSkRKS21INnRucTVPOThQVHpvY0hoVGhseEEtYTBwTw?oc=5",
+      "publishedAt": "2026-09-01",
+      "titleKo": "온타리오의 트럼프 투표 마을에서 호수의 새로운 이름은 공화당원들을 갈라놓습니다."
+    }
+  ]
 }
