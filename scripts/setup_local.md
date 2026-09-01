@@ -51,6 +51,18 @@ python scripts\build_data.py --self-test
 run_local.bat
 ```
 
+`run_local.bat`은 실행할 때마다 맨 먼저 `git pull`로 최신 코드를 받아옵니다
+(Claude가 원격에서 고친 내용이 내 PC에 반영되도록). **지금 쓰는 `run_local.bat`이
+이 pull 단계가 생기기 전 버전이라면** 뉴스 기능처럼 나중에 추가된 파일이
+아예 없을 수 있습니다 — 한 번만 아래로 직접 최신화하세요:
+
+```cmd
+cd C:\경로\follow_Trump
+git pull origin claude/funny-darwin-b1k2s1
+```
+
+이후로는 `run_local.bat`이 매번 알아서 받아옵니다.
+
 처음 실행은 오래 걸립니다(스캔 PDF OCR, 문서당 수 분).
 한 번 읽은 PDF는 `.cache/ocr`에 저장되어 다음부터는 건너뜁니다.
 

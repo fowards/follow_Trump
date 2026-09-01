@@ -47,7 +47,16 @@ echo [LOG] 실행 기록: %LOG%
 echo. > "%LOG%"
 echo.
 
-echo [1/5] 파이프라인 자체 검증
+echo [1/6] 최신 코드 받기 (Claude가 원격에서 고친 내용 반영)
+call :run git pull origin claude/funny-darwin-b1k2s1 --ff-only
+if errorlevel 1 (
+  echo    git pull 실패 - 로컬에 커밋 안 된 변경이 있거나 충돌일 수 있습니다.
+  echo    이 창을 닫지 말고 아래를 확인하세요: git status
+  goto :end
+)
+
+echo.
+echo [2/6] 파이프라인 자체 검증
 call :run python scripts\build_data.py --self-test
 if errorlevel 1 (
   echo    검증 실패 - 중단합니다.
@@ -55,12 +64,12 @@ if errorlevel 1 (
 )
 
 echo.
-echo [2/5] 새 공시 수집 + OCR + 파싱
+echo [3/6] 새 공시 수집 + OCR + 파싱
 call :run python scripts\build_data.py --from-sources --out data.json
 if errorlevel 1 echo    (공시 단계 실패 - 시세 갱신은 계속합니다)
 
 echo.
-echo [3/5] 시세 / 추적 수익률 갱신
+echo [4/6] 시세 / 추적 수익률 갱신
 call :run python scripts\build_data.py --refresh-prices --out data.json
 if errorlevel 1 (
   echo    시세 갱신 실패 - 중단합니다.
@@ -68,12 +77,12 @@ if errorlevel 1 (
 )
 
 echo.
-echo [4/5] 뉴스 헤드라인 수집 (제목·출처·링크만, 하루 최대 2건)
+echo [5/6] 뉴스 헤드라인 수집 (제목·출처·링크만, 하루 최대 2건)
 call :run python scripts\fetch_news.py --limit 2
 if errorlevel 1 echo    (뉴스 수집 실패 - 나머지는 계속 배포합니다)
 
 echo.
-echo [5/5] 변경분 배포
+echo [6/6] 변경분 배포
 git diff --quiet -- data.json sitemap.xml news.json
 if errorlevel 1 (
   git add data.json sitemap.xml news.json
