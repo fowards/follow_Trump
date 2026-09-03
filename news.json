@@ -2,9 +2,23 @@
   "meta": {
     "source": "Google News RSS (제목·출처·링크만 — 본문 재게시 없음)",
     "query": "\"Trump\" (stock OR shares OR trade OR portfolio OR disclosure OR \"periodic transaction\")",
-    "lastFetched": "2026-09-01"
+    "lastFetched": "2026-09-03"
   },
   "items": [
+    {
+      "title": "Newfoundland welcomed them after 9/11. They’re heartbroken by Trump’s trade war",
+      "source": "Fraser Valley Today",
+      "link": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxOTkd0MjF5X1lHaUdhek92cGNZMTRyRVBIOGtHRGNjSkVjcTFrWFRlSUtjTDdRUUV3YjNsLTFPNG42RVRxNTZsdzNNNEk3MXNNdGZyVnl4UTFYZlF4Y1JFdEduMlRHbTFiclZuV2VoY0tCeHVQZlRVeXQtYVlyNzRhWU1JTHd5VnFqTDlRN0FkOVM3b19COTcyZDJOZ1d4QU5sSm9aVW8yNkx1blJSaFc4NkFMTUhjV2t2?oc=5",
+      "publishedAt": "2026-09-03",
+      "titleKo": "뉴펀들랜드는 9/11 테러 이후 그들을 환영했습니다. 그들은 트럼프의 무역전쟁에 가슴 아파한다."
+    },
+    {
+      "title": "’THIS IS KILLING US’: WI Democrat sounds the alarm on Trump’s Canada trade war",
+      "source": "Modern Ghana",
+      "link": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE1FU0ZJdTgtZ0F0OUJsT2wzWHJCTEpHNVVwWFlXdFRjS0FXd3d0S2l0M0FkekZNS1NzOHlQUWdPRnE1YTZqUmRZd1RzajB3VXAzOG8zTGJ0b2tIdXdubi0w0gFcQVVfeXFMTlRpMGdILVdiVS0wYldEMndwWnVReDE3VFAzTENpMnNZX1Q4cWxZSUI4a3hGSjlMMHZmV2RIN1QzdVdWLUVEdGtQXzZGVUlOQlRsYXd0V2pUMzZDdXk?oc=5",
+      "publishedAt": "2026-09-03",
+      "titleKo": "’THIS IS KILLING US’: WI 민주당은 트럼프의 캐나다 무역 전쟁에 경종을 울린다."
+    },
     {
       "title": "Carney says Trump and his cabinet should stop 'throwing shade' and get serious about a deal",
       "source": "CBC",

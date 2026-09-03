@@ -12,7 +12,7 @@
       "매수/매도 대부분은 공시 원문에서 직접 읽었습니다. 원문에서 그 칸이 훼손된 32건은, 해당 분기 공시가 언론 보도상 '수백 종목 대량 매수'였다는 사실에 근거해 매수로 표기했습니다(개별 확인이 필요한 건은 검증 후 출처를 답니다).",
       "거래일이 스캔에서 훼손된 26건은 공시일로 대체(근사)했습니다."
     ],
-    "lastUpdated": "2026-09-01",
+    "lastUpdated": "2026-09-03",
     "parseStats": {
       "documents": 17,
       "readByText": 11,
@@ -21,9 +21,9 @@
       "rawRows": 1061,
       "individualStocks": 99,
       "filteredOut": 962,
-      "ranAt": "2026-09-01"
+      "ranAt": "2026-09-03"
     },
-    "pricesRefreshedAt": "2026-09-01",
+    "pricesRefreshedAt": "2026-09-03",
     "priceSource": "stooq"
   },
   "trades": [
@@ -46,9 +46,9 @@
       "priceAtTransaction": 170.85,
       "priceAtDisclosure": 207.4,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 201.79,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": -2.7,
+      "priceLatest": 198.09,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": -4.5,
       "priceHistory": [
         [
           "2026-08-24",
@@ -73,6 +73,14 @@
         [
           "2026-08-31",
           201.79
+        ],
+        [
+          "2026-09-01",
+          200.59
+        ],
+        [
+          "2026-09-02",
+          198.09
         ]
       ],
       "catalyst": "",
@@ -100,9 +108,9 @@
       "priceAtTransaction": 327.24,
       "priceAtDisclosure": 382.41,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 379.37,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": -0.8,
+      "priceLatest": 378.4,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": -1.0,
       "priceHistory": [
         [
           "2026-08-24",
@@ -127,6 +135,14 @@
         [
           "2026-08-31",
           379.37
+        ],
+        [
+          "2026-09-01",
+          372.67
+        ],
+        [
+          "2026-09-02",
+          378.4
         ]
       ],
       "catalyst": "",
@@ -154,9 +170,9 @@
       "priceAtTransaction": 489.79,
       "priceAtDisclosure": 599.86,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 589.31,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": -1.8,
+      "priceLatest": 588.14,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": -2.0,
       "priceHistory": [
         [
           "2026-08-24",
@@ -181,6 +197,14 @@
         [
           "2026-08-31",
           589.31
+        ],
+        [
+          "2026-09-01",
+          581.1
+        ],
+        [
+          "2026-09-02",
+          588.14
         ]
       ],
       "catalyst": "",
@@ -208,9 +232,9 @@
       "priceAtTransaction": 489.46,
       "priceAtDisclosure": 504.32,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 504.03,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": -0.1,
+      "priceLatest": 505.24,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": 0.2,
       "priceHistory": [
         [
           "2026-08-24",
@@ -235,6 +259,14 @@
         [
           "2026-08-31",
           504.03
+        ],
+        [
+          "2026-09-01",
+          502.33
+        ],
+        [
+          "2026-09-02",
+          505.24
         ]
       ],
       "catalyst": "",
@@ -262,9 +294,9 @@
       "priceAtTransaction": 577.22,
       "priceAtDisclosure": 559.02,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 572.34,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": 2.4,
+      "priceLatest": 592.85,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": 6.1,
       "priceHistory": [
         [
           "2026-08-24",
@@ -289,6 +321,14 @@
         [
           "2026-08-31",
           572.34
+        ],
+        [
+          "2026-09-01",
+          578.54
+        ],
+        [
+          "2026-09-02",
+          592.85
         ]
       ],
       "catalyst": "",
@@ -316,9 +356,9 @@
       "priceAtTransaction": 395.17,
       "priceAtDisclosure": 481.52,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 485.3,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": 0.8,
+      "priceLatest": 478.92,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": -0.5,
       "priceHistory": [
         [
           "2026-08-24",
@@ -343,6 +383,14 @@
         [
           "2026-08-31",
           485.3
+        ],
+        [
+          "2026-09-01",
+          491.24
+        ],
+        [
+          "2026-09-02",
+          478.92
         ]
       ],
       "catalyst": "",
@@ -370,9 +418,9 @@
       "priceAtTransaction": 348.95,
       "priceAtDisclosure": 348.95,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 367.95,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": 5.4,
+      "priceLatest": 357.01,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": 2.3,
       "priceHistory": [
         [
           "2026-08-24",
@@ -397,6 +445,14 @@
         [
           "2026-08-31",
           367.95
+        ],
+        [
+          "2026-09-01",
+          356.09
+        ],
+        [
+          "2026-09-02",
+          357.01
         ]
       ],
       "catalyst": "",
@@ -424,9 +480,9 @@
       "priceAtTransaction": 80.34,
       "priceAtDisclosure": 80.01,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 81.05,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": 1.3,
+      "priceLatest": 82.73,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": 3.4,
       "priceHistory": [
         [
           "2026-08-24",
@@ -451,6 +507,14 @@
         [
           "2026-08-31",
           81.05
+        ],
+        [
+          "2026-09-01",
+          80.81
+        ],
+        [
+          "2026-09-02",
+          82.73
         ]
       ],
       "catalyst": "",
@@ -478,9 +542,9 @@
       "priceAtTransaction": 77.38,
       "priceAtDisclosure": 80.01,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 81.05,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": 1.3,
+      "priceLatest": 82.73,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": 3.4,
       "priceHistory": [
         [
           "2026-08-24",
@@ -505,6 +569,14 @@
         [
           "2026-08-31",
           81.05
+        ],
+        [
+          "2026-09-01",
+          80.81
+        ],
+        [
+          "2026-09-02",
+          82.73
         ]
       ],
       "catalyst": "",
@@ -532,9 +604,9 @@
       "priceAtTransaction": 78.72,
       "priceAtDisclosure": 80.01,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 81.05,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": 1.3,
+      "priceLatest": 82.73,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": 3.4,
       "priceHistory": [
         [
           "2026-08-24",
@@ -559,6 +631,14 @@
         [
           "2026-08-31",
           81.05
+        ],
+        [
+          "2026-09-01",
+          80.81
+        ],
+        [
+          "2026-09-02",
+          82.73
         ]
       ],
       "catalyst": "",
@@ -586,9 +666,9 @@
       "priceAtTransaction": 71.84,
       "priceAtDisclosure": 80.01,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 81.05,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": 1.3,
+      "priceLatest": 82.73,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": 3.4,
       "priceHistory": [
         [
           "2026-08-24",
@@ -613,6 +693,14 @@
         [
           "2026-08-31",
           81.05
+        ],
+        [
+          "2026-09-01",
+          80.81
+        ],
+        [
+          "2026-09-02",
+          82.73
         ]
       ],
       "catalyst": "",
@@ -641,9 +729,9 @@
       "priceAtTransaction": 1042.63,
       "priceAtDisclosure": 1042.63,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 1025.9,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": -1.6,
+      "priceLatest": 1004.42,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": -3.7,
       "priceHistory": [
         [
           "2026-08-13",
@@ -696,6 +784,14 @@
         [
           "2026-08-31",
           1025.9
+        ],
+        [
+          "2026-09-01",
+          1002.56
+        ],
+        [
+          "2026-09-02",
+          1004.42
         ]
       ],
       "catalyst": "",
@@ -723,9 +819,9 @@
       "priceAtTransaction": 984.24,
       "priceAtDisclosure": 854.6,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 797.47,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": -6.7,
+      "priceLatest": 792.28,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": -7.3,
       "priceHistory": [
         [
           "2026-08-13",
@@ -778,6 +874,14 @@
         [
           "2026-08-31",
           797.47
+        ],
+        [
+          "2026-09-01",
+          779.16
+        ],
+        [
+          "2026-09-02",
+          792.28
         ]
       ],
       "catalyst": "",
@@ -805,9 +909,9 @@
       "priceAtTransaction": 392.6139,
       "priceAtDisclosure": 422.67,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 435.84,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": 3.1,
+      "priceLatest": 431.71,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": 2.1,
       "priceHistory": [
         [
           "2026-08-13",
@@ -860,6 +964,14 @@
         [
           "2026-08-31",
           435.84
+        ],
+        [
+          "2026-09-01",
+          440.21
+        ],
+        [
+          "2026-09-02",
+          431.71
         ]
       ],
       "catalyst": "",
@@ -887,9 +999,9 @@
       "priceAtTransaction": 355.2,
       "priceAtDisclosure": 417.84,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 429.88,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": 2.9,
+      "priceLatest": 442.84,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": 6.0,
       "priceHistory": [
         [
           "2026-08-13",
@@ -942,6 +1054,14 @@
         [
           "2026-08-31",
           429.88
+        ],
+        [
+          "2026-09-01",
+          438.12
+        ],
+        [
+          "2026-09-02",
+          442.84
         ]
       ],
       "catalyst": "",
@@ -969,9 +1089,9 @@
       "priceAtTransaction": 56.02,
       "priceAtDisclosure": 64.09,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 61.94,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": -3.4,
+      "priceLatest": 62.6,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": -2.3,
       "priceHistory": [
         [
           "2026-08-13",
@@ -1024,6 +1144,14 @@
         [
           "2026-08-31",
           61.94
+        ],
+        [
+          "2026-09-01",
+          61.99
+        ],
+        [
+          "2026-09-02",
+          62.6
         ]
       ],
       "catalyst": "",
@@ -1051,9 +1179,9 @@
       "priceAtTransaction": 360.22,
       "priceAtDisclosure": 392.96,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 371.35,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": -5.5,
+      "priceLatest": 364.07,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": -7.4,
       "priceHistory": [
         [
           "2026-08-13",
@@ -1106,6 +1234,14 @@
         [
           "2026-08-31",
           371.35
+        ],
+        [
+          "2026-09-01",
+          369.41
+        ],
+        [
+          "2026-09-02",
+          364.07
         ]
       ],
       "catalyst": "",
@@ -1133,9 +1269,9 @@
       "priceAtTransaction": 390.74,
       "priceAtDisclosure": 496.88,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 507.29,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": 2.1,
+      "priceLatest": 496.82,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": -0.0,
       "priceHistory": [
         [
           "2026-08-13",
@@ -1188,6 +1324,14 @@
         [
           "2026-08-31",
           507.29
+        ],
+        [
+          "2026-09-01",
+          501.02
+        ],
+        [
+          "2026-09-02",
+          496.82
         ]
       ],
       "catalyst": "",
@@ -1215,9 +1359,9 @@
       "priceAtTransaction": 41.53,
       "priceAtDisclosure": 60.59,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 52.665,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": -13.1,
+      "priceLatest": 54.67,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": -9.8,
       "priceHistory": [
         [
           "2026-08-13",
@@ -1270,6 +1414,14 @@
         [
           "2026-08-31",
           52.665
+        ],
+        [
+          "2026-09-01",
+          52.4
+        ],
+        [
+          "2026-09-02",
+          54.67
         ]
       ],
       "catalyst": "",
@@ -1297,9 +1449,9 @@
       "priceAtTransaction": 125.47,
       "priceAtDisclosure": 119.75,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 110.12,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": -8.0,
+      "priceLatest": 111.09,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": -7.2,
       "priceHistory": [
         [
           "2026-08-13",
@@ -1352,6 +1504,14 @@
         [
           "2026-08-31",
           110.12
+        ],
+        [
+          "2026-09-01",
+          109.51
+        ],
+        [
+          "2026-09-02",
+          111.09
         ]
       ],
       "catalyst": "",
@@ -1379,9 +1539,9 @@
       "priceAtTransaction": 47.03,
       "priceAtDisclosure": 46.84,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 45.86,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": -2.1,
+      "priceLatest": 46.29,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": -1.2,
       "priceHistory": [
         [
           "2026-08-13",
@@ -1434,6 +1594,14 @@
         [
           "2026-08-31",
           45.86
+        ],
+        [
+          "2026-09-01",
+          46.16
+        ],
+        [
+          "2026-09-02",
+          46.29
         ]
       ],
       "catalyst": "",
@@ -1461,9 +1629,9 @@
       "priceAtTransaction": 43.32,
       "priceAtDisclosure": 50.02,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 46.9,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": -6.2,
+      "priceLatest": 45.36,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": -9.3,
       "priceHistory": [
         [
           "2026-08-13",
@@ -1516,6 +1684,14 @@
         [
           "2026-08-31",
           46.9
+        ],
+        [
+          "2026-09-01",
+          45.43
+        ],
+        [
+          "2026-09-02",
+          45.36
         ]
       ],
       "catalyst": "",
@@ -1544,7 +1720,7 @@
       "priceAtDisclosure": 70.51,
       "priceAfter2mFromDisclosure": null,
       "priceLatest": 68.06,
-      "priceLatestDate": "2026-08-31",
+      "priceLatestDate": "2026-09-02",
       "trackingReturnPct": -3.5,
       "priceHistory": [
         [
@@ -1598,6 +1774,14 @@
         [
           "2026-08-31",
           68.06
+        ],
+        [
+          "2026-09-01",
+          67.96
+        ],
+        [
+          "2026-09-02",
+          68.06
         ]
       ],
       "catalyst": "",
@@ -1625,9 +1809,9 @@
       "priceAtTransaction": 189.1,
       "priceAtDisclosure": 183.38,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 180.44,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": -1.6,
+      "priceLatest": 187.3,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": 2.1,
       "priceHistory": [
         [
           "2026-08-13",
@@ -1680,6 +1864,14 @@
         [
           "2026-08-31",
           180.44
+        ],
+        [
+          "2026-09-01",
+          182.16
+        ],
+        [
+          "2026-09-02",
+          187.3
         ]
       ],
       "catalyst": "",
@@ -1707,9 +1899,9 @@
       "priceAtTransaction": 73.11,
       "priceAtDisclosure": 70.2,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 67.98,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": -3.2,
+      "priceLatest": 67.74,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": -3.5,
       "priceHistory": [
         [
           "2026-08-13",
@@ -1762,6 +1954,14 @@
         [
           "2026-08-31",
           67.98
+        ],
+        [
+          "2026-09-01",
+          67.92
+        ],
+        [
+          "2026-09-02",
+          67.74
         ]
       ],
       "catalyst": "",
@@ -1789,9 +1989,9 @@
       "priceAtTransaction": 412.25,
       "priceAtDisclosure": 465.04,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 485.3,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": 4.4,
+      "priceLatest": 478.92,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": 3.0,
       "priceHistory": [
         [
           "2026-08-13",
@@ -1844,6 +2044,14 @@
         [
           "2026-08-31",
           485.3
+        ],
+        [
+          "2026-09-01",
+          491.24
+        ],
+        [
+          "2026-09-02",
+          478.92
         ]
       ],
       "catalyst": "",
@@ -1871,9 +2079,9 @@
       "priceAtTransaction": 129.62,
       "priceAtDisclosure": 137.81,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 137.38,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": -0.3,
+      "priceLatest": 137.21,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": -0.4,
       "priceHistory": [
         [
           "2026-08-13",
@@ -1926,6 +2134,14 @@
         [
           "2026-08-31",
           137.38
+        ],
+        [
+          "2026-09-01",
+          137.13
+        ],
+        [
+          "2026-09-02",
+          137.21
         ]
       ],
       "catalyst": "",
@@ -1953,9 +2169,9 @@
       "priceAtTransaction": 304.46,
       "priceAtDisclosure": 370.0,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 365.93,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": -1.1,
+      "priceLatest": 366.18,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": -1.0,
       "priceHistory": [
         [
           "2026-08-13",
@@ -2008,6 +2224,14 @@
         [
           "2026-08-31",
           365.93
+        ],
+        [
+          "2026-09-01",
+          363.92
+        ],
+        [
+          "2026-09-02",
+          366.18
         ]
       ],
       "catalyst": "",
@@ -2035,9 +2259,9 @@
       "priceAtTransaction": 269.53,
       "priceAtDisclosure": 267.21,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 285.5,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": 6.8,
+      "priceLatest": 277.77,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": 4.0,
       "priceHistory": [
         [
           "2026-08-13",
@@ -2090,6 +2314,14 @@
         [
           "2026-08-31",
           285.5
+        ],
+        [
+          "2026-09-01",
+          286.45
+        ],
+        [
+          "2026-09-02",
+          277.77
         ]
       ],
       "catalyst": "",
@@ -2117,9 +2349,9 @@
       "priceAtTransaction": 230.33,
       "priceAtDisclosure": 230.33,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 207.78,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": -9.8,
+      "priceLatest": 208.87,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": -9.3,
       "priceHistory": [
         [
           "2026-08-13",
@@ -2172,6 +2404,14 @@
         [
           "2026-08-31",
           207.78
+        ],
+        [
+          "2026-09-01",
+          205.66
+        ],
+        [
+          "2026-09-02",
+          208.87
         ]
       ],
       "catalyst": "",
@@ -2199,9 +2439,9 @@
       "priceAtTransaction": 328.95,
       "priceAtDisclosure": 328.95,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 372.22,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": 13.2,
+      "priceLatest": 374.88,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": 14.0,
       "priceHistory": [
         [
           "2026-08-13",
@@ -2254,6 +2494,14 @@
         [
           "2026-08-31",
           372.22
+        ],
+        [
+          "2026-09-01",
+          376.43
+        ],
+        [
+          "2026-09-02",
+          374.88
         ]
       ],
       "catalyst": "",
@@ -2281,9 +2529,9 @@
       "priceAtTransaction": 125.4,
       "priceAtDisclosure": 125.4,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 127.34,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": 1.5,
+      "priceLatest": 124.0,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": -1.1,
       "priceHistory": [
         [
           "2026-08-13",
@@ -2336,6 +2584,14 @@
         [
           "2026-08-31",
           127.34
+        ],
+        [
+          "2026-09-01",
+          125.64
+        ],
+        [
+          "2026-09-02",
+          124.0
         ]
       ],
       "catalyst": "",
@@ -2363,9 +2619,9 @@
       "priceAtTransaction": 341.09,
       "priceAtDisclosure": 341.09,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 323.8,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": -5.1,
+      "priceLatest": 312.19,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": -8.5,
       "priceHistory": [
         [
           "2026-08-13",
@@ -2418,6 +2674,14 @@
         [
           "2026-08-31",
           323.8
+        ],
+        [
+          "2026-09-01",
+          317.4
+        ],
+        [
+          "2026-09-02",
+          312.19
         ]
       ],
       "catalyst": "",
@@ -2445,9 +2709,9 @@
       "priceAtTransaction": 144.26,
       "priceAtDisclosure": 144.26,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 145.12,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": 0.6,
+      "priceLatest": 147.64,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": 2.3,
       "priceHistory": [
         [
           "2026-08-13",
@@ -2500,6 +2764,14 @@
         [
           "2026-08-31",
           145.12
+        ],
+        [
+          "2026-09-01",
+          146.21
+        ],
+        [
+          "2026-09-02",
+          147.64
         ]
       ],
       "catalyst": "",
@@ -2527,9 +2799,9 @@
       "priceAtTransaction": 111.77,
       "priceAtDisclosure": 119.56,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 120.26,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": 0.6,
+      "priceLatest": 120.07,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": 0.4,
       "priceHistory": [
         [
           "2026-08-13",
@@ -2582,6 +2854,14 @@
         [
           "2026-08-31",
           120.26
+        ],
+        [
+          "2026-09-01",
+          118.0
+        ],
+        [
+          "2026-09-02",
+          120.07
         ]
       ],
       "catalyst": "",
@@ -2609,9 +2889,9 @@
       "priceAtTransaction": 50.72,
       "priceAtDisclosure": 54.08,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 54.18,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": 0.2,
+      "priceLatest": 55.75,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": 3.1,
       "priceHistory": [
         [
           "2026-08-13",
@@ -2664,6 +2944,14 @@
         [
           "2026-08-31",
           54.18
+        ],
+        [
+          "2026-09-01",
+          55.59
+        ],
+        [
+          "2026-09-02",
+          55.75
         ]
       ],
       "catalyst": "",
@@ -2691,9 +2979,9 @@
       "priceAtTransaction": 30.12,
       "priceAtDisclosure": 33.05,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 32.07,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": -3.0,
+      "priceLatest": 31.26,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": -5.4,
       "priceHistory": [
         [
           "2026-08-13",
@@ -2746,6 +3034,14 @@
         [
           "2026-08-31",
           32.07
+        ],
+        [
+          "2026-09-01",
+          31.98
+        ],
+        [
+          "2026-09-02",
+          31.26
         ]
       ],
       "catalyst": "",
@@ -2773,9 +3069,9 @@
       "priceAtTransaction": 163.26,
       "priceAtDisclosure": 153.9,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 188.12,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": 22.2,
+      "priceLatest": 174.96,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": 13.7,
       "priceHistory": [
         [
           "2026-08-13",
@@ -2828,6 +3124,14 @@
         [
           "2026-08-31",
           188.12
+        ],
+        [
+          "2026-09-01",
+          176.82
+        ],
+        [
+          "2026-09-02",
+          174.96
         ]
       ],
       "catalyst": "",
@@ -2855,9 +3159,9 @@
       "priceAtTransaction": 42.51,
       "priceAtDisclosure": 60.59,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 52.665,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": -13.1,
+      "priceLatest": 54.67,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": -9.8,
       "priceHistory": [
         [
           "2026-08-13",
@@ -2910,6 +3214,14 @@
         [
           "2026-08-31",
           52.665
+        ],
+        [
+          "2026-09-01",
+          52.4
+        ],
+        [
+          "2026-09-02",
+          54.67
         ]
       ],
       "catalyst": "",
@@ -2937,9 +3249,9 @@
       "priceAtTransaction": 171.78,
       "priceAtDisclosure": 213.34,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 199.09,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": -6.7,
+      "priceLatest": 199.6,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": -6.4,
       "priceHistory": [
         [
           "2026-08-13",
@@ -2992,6 +3304,14 @@
         [
           "2026-08-31",
           199.09
+        ],
+        [
+          "2026-09-01",
+          195.69
+        ],
+        [
+          "2026-09-02",
+          199.6
         ]
       ],
       "catalyst": "",
@@ -3019,9 +3339,9 @@
       "priceAtTransaction": 172.63,
       "priceAtDisclosure": 186.12,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 176.21,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": -5.3,
+      "priceLatest": 177.43,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": -4.7,
       "priceHistory": [
         [
           "2026-08-13",
@@ -3074,6 +3394,14 @@
         [
           "2026-08-31",
           176.21
+        ],
+        [
+          "2026-09-01",
+          176.0
+        ],
+        [
+          "2026-09-02",
+          177.43
         ]
       ],
       "catalyst": "",
@@ -3101,9 +3429,9 @@
       "priceAtTransaction": 212.45,
       "priceAtDisclosure": 225.3,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 220.78,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": -2.0,
+      "priceLatest": 224.41,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": -0.4,
       "priceHistory": [
         [
           "2026-08-13",
@@ -3156,6 +3484,14 @@
         [
           "2026-08-31",
           220.78
+        ],
+        [
+          "2026-09-01",
+          217.44
+        ],
+        [
+          "2026-09-02",
+          224.41
         ]
       ],
       "catalyst": "",
@@ -3183,9 +3519,9 @@
       "priceAtTransaction": 222.47,
       "priceAtDisclosure": 250.82,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 256.42,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": 2.2,
+      "priceLatest": 261.72,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": 4.3,
       "priceHistory": [
         [
           "2026-08-13",
@@ -3238,6 +3574,14 @@
         [
           "2026-08-31",
           256.42
+        ],
+        [
+          "2026-09-01",
+          259.99
+        ],
+        [
+          "2026-09-02",
+          261.72
         ]
       ],
       "catalyst": "",
@@ -3265,9 +3609,9 @@
       "priceAtTransaction": 148.5,
       "priceAtDisclosure": 141.21,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 139.92,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": -0.9,
+      "priceLatest": 136.59,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": -3.3,
       "priceHistory": [
         [
           "2026-08-13",
@@ -3320,6 +3664,14 @@
         [
           "2026-08-31",
           139.92
+        ],
+        [
+          "2026-09-01",
+          139.68
+        ],
+        [
+          "2026-09-02",
+          136.59
         ]
       ],
       "catalyst": "",
@@ -3347,9 +3699,9 @@
       "priceAtTransaction": 417.82,
       "priceAtDisclosure": 417.82,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 370.34,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": -11.4,
+      "priceLatest": 367.24,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": -12.1,
       "priceHistory": [
         [
           "2026-08-13",
@@ -3402,6 +3754,14 @@
         [
           "2026-08-31",
           370.34
+        ],
+        [
+          "2026-09-01",
+          369.68
+        ],
+        [
+          "2026-09-02",
+          367.24
         ]
       ],
       "catalyst": "",
@@ -3429,9 +3789,9 @@
       "priceAtTransaction": 120.82,
       "priceAtDisclosure": 115.72,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 104.87,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": -9.4,
+      "priceLatest": 106.09,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": -8.3,
       "priceHistory": [
         [
           "2026-08-13",
@@ -3484,6 +3844,14 @@
         [
           "2026-08-31",
           104.87
+        ],
+        [
+          "2026-09-01",
+          105.92
+        ],
+        [
+          "2026-09-02",
+          106.09
         ]
       ],
       "catalyst": "",
@@ -3511,9 +3879,9 @@
       "priceAtTransaction": 26.6,
       "priceAtDisclosure": 27.75,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 28.53,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": 2.8,
+      "priceLatest": 28.39,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": 2.3,
       "priceHistory": [
         [
           "2026-08-13",
@@ -3566,6 +3934,14 @@
         [
           "2026-08-31",
           28.53
+        ],
+        [
+          "2026-09-01",
+          28.32
+        ],
+        [
+          "2026-09-02",
+          28.39
         ]
       ],
       "catalyst": "",
@@ -3593,9 +3969,9 @@
       "priceAtTransaction": 216.97,
       "priceAtDisclosure": 310.78,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 321.96,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": 3.6,
+      "priceLatest": 325.165,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": 4.6,
       "priceHistory": [
         [
           "2026-08-13",
@@ -3648,6 +4024,14 @@
         [
           "2026-08-31",
           321.96
+        ],
+        [
+          "2026-09-01",
+          320.76
+        ],
+        [
+          "2026-09-02",
+          325.165
         ]
       ],
       "catalyst": "",
@@ -3675,9 +4059,9 @@
       "priceAtTransaction": 30.3,
       "priceAtDisclosure": 29.39,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 32.99,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": 12.2,
+      "priceLatest": 32.16,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": 9.4,
       "priceHistory": [
         [
           "2026-08-13",
@@ -3730,6 +4114,14 @@
         [
           "2026-08-31",
           32.99
+        ],
+        [
+          "2026-09-01",
+          32.465
+        ],
+        [
+          "2026-09-02",
+          32.16
         ]
       ],
       "catalyst": "",
@@ -3757,9 +4149,9 @@
       "priceAtTransaction": 162.89,
       "priceAtDisclosure": 163.81,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 135.29,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": -17.4,
+      "priceLatest": 131.31,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": -19.8,
       "priceHistory": [
         [
           "2026-08-13",
@@ -3812,6 +4204,14 @@
         [
           "2026-08-31",
           135.29
+        ],
+        [
+          "2026-09-01",
+          129.51
+        ],
+        [
+          "2026-09-02",
+          131.31
         ]
       ],
       "catalyst": "",
@@ -3839,9 +4239,9 @@
       "priceAtTransaction": 174.3,
       "priceAtDisclosure": 133.58,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 132.96,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": -0.5,
+      "priceLatest": 133.85,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": 0.2,
       "priceHistory": [
         [
           "2026-08-13",
@@ -3894,6 +4294,14 @@
         [
           "2026-08-31",
           132.96
+        ],
+        [
+          "2026-09-01",
+          132.27
+        ],
+        [
+          "2026-09-02",
+          133.85
         ]
       ],
       "catalyst": "",
@@ -3921,9 +4329,9 @@
       "priceAtTransaction": 259.82,
       "priceAtDisclosure": 206.56,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 196.72,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": -4.8,
+      "priceLatest": 187.67,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": -9.1,
       "priceHistory": [
         [
           "2026-08-13",
@@ -3976,6 +4384,14 @@
         [
           "2026-08-31",
           196.72
+        ],
+        [
+          "2026-09-01",
+          187.3
+        ],
+        [
+          "2026-09-02",
+          187.67
         ]
       ],
       "catalyst": "",
@@ -4003,9 +4419,9 @@
       "priceAtTransaction": 35.94,
       "priceAtDisclosure": 37.28,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 40.65,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": 9.0,
+      "priceLatest": 42.44,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": 13.8,
       "priceHistory": [
         [
           "2026-08-13",
@@ -4058,6 +4474,14 @@
         [
           "2026-08-31",
           40.65
+        ],
+        [
+          "2026-09-01",
+          41.91
+        ],
+        [
+          "2026-09-02",
+          42.44
         ]
       ],
       "catalyst": "",
@@ -4085,9 +4509,9 @@
       "priceAtTransaction": 90.68,
       "priceAtDisclosure": 92.58,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 88.8,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": -4.1,
+      "priceLatest": 86.97,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": -6.1,
       "priceHistory": [
         [
           "2026-08-13",
@@ -4140,6 +4564,14 @@
         [
           "2026-08-31",
           88.8
+        ],
+        [
+          "2026-09-01",
+          87.95
+        ],
+        [
+          "2026-09-02",
+          86.97
         ]
       ],
       "catalyst": "",
@@ -4167,9 +4599,9 @@
       "priceAtTransaction": 59.29,
       "priceAtDisclosure": 59.29,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 64.58,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": 8.9,
+      "priceLatest": 63.4,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": 6.9,
       "priceHistory": [
         [
           "2026-08-13",
@@ -4222,6 +4654,14 @@
         [
           "2026-08-31",
           64.58
+        ],
+        [
+          "2026-09-01",
+          63.39
+        ],
+        [
+          "2026-09-02",
+          63.4
         ]
       ],
       "catalyst": "",
@@ -4249,9 +4689,9 @@
       "priceAtTransaction": 191.26,
       "priceAtDisclosure": 226.74,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 240.1,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": 5.9,
+      "priceLatest": 230.87,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": 1.8,
       "priceHistory": [
         [
           "2026-08-13",
@@ -4304,6 +4744,14 @@
         [
           "2026-08-31",
           240.1
+        ],
+        [
+          "2026-09-01",
+          231.36
+        ],
+        [
+          "2026-09-02",
+          230.87
         ]
       ],
       "catalyst": "",
@@ -4331,9 +4779,9 @@
       "priceAtTransaction": 513.22,
       "priceAtDisclosure": 574.74,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 539.7,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": -6.1,
+      "priceLatest": 523.82,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": -8.9,
       "priceHistory": [
         [
           "2026-08-13",
@@ -4386,6 +4834,14 @@
         [
           "2026-08-31",
           539.7
+        ],
+        [
+          "2026-09-01",
+          532.91
+        ],
+        [
+          "2026-09-02",
+          523.82
         ]
       ],
       "catalyst": "",
@@ -4413,9 +4869,9 @@
       "priceAtTransaction": 234.11,
       "priceAtDisclosure": 265.13,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 259.77,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": -2.0,
+      "priceLatest": 254.98,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": -3.8,
       "priceHistory": [
         [
           "2026-08-13",
@@ -4468,6 +4924,14 @@
         [
           "2026-08-31",
           259.77
+        ],
+        [
+          "2026-09-01",
+          254.92
+        ],
+        [
+          "2026-09-02",
+          254.98
         ]
       ],
       "catalyst": "",
@@ -4495,9 +4959,9 @@
       "priceAtTransaction": 119.6,
       "priceAtDisclosure": 135.55,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 147.76,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": 9.0,
+      "priceLatest": 151.64,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": 11.9,
       "priceHistory": [
         [
           "2026-08-13",
@@ -4550,6 +5014,14 @@
         [
           "2026-08-31",
           147.76
+        ],
+        [
+          "2026-09-01",
+          149.86
+        ],
+        [
+          "2026-09-02",
+          151.64
         ]
       ],
       "catalyst": "",
@@ -4577,9 +5049,9 @@
       "priceAtTransaction": 81.35,
       "priceAtDisclosure": 165.98,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 194.17,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": 17.0,
+      "priceLatest": 186.44,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": 12.3,
       "priceHistory": [
         [
           "2026-08-13",
@@ -4632,6 +5104,14 @@
         [
           "2026-08-31",
           194.17
+        ],
+        [
+          "2026-09-01",
+          187.03
+        ],
+        [
+          "2026-09-02",
+          186.44
         ]
       ],
       "catalyst": "",
@@ -4659,9 +5139,9 @@
       "priceAtTransaction": 158.7,
       "priceAtDisclosure": 165.75,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 158.55,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": -4.3,
+      "priceLatest": 160.08,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": -3.4,
       "priceHistory": [
         [
           "2026-08-13",
@@ -4714,6 +5194,14 @@
         [
           "2026-08-31",
           158.55
+        ],
+        [
+          "2026-09-01",
+          163.18
+        ],
+        [
+          "2026-09-02",
+          160.08
         ]
       ],
       "catalyst": "",
@@ -4741,9 +5229,9 @@
       "priceAtTransaction": 503.67,
       "priceAtDisclosure": 598.01,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 561.23,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": -6.2,
+      "priceLatest": 531.55,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": -11.1,
       "priceHistory": [
         [
           "2026-08-13",
@@ -4796,6 +5284,14 @@
         [
           "2026-08-31",
           561.23
+        ],
+        [
+          "2026-09-01",
+          544.5
+        ],
+        [
+          "2026-09-02",
+          531.55
         ]
       ],
       "catalyst": "",
@@ -4823,9 +5319,9 @@
       "priceAtTransaction": 234.76,
       "priceAtDisclosure": 250.82,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 256.42,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": 2.2,
+      "priceLatest": 261.72,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": 4.3,
       "priceHistory": [
         [
           "2026-08-13",
@@ -4878,6 +5374,14 @@
         [
           "2026-08-31",
           256.42
+        ],
+        [
+          "2026-09-01",
+          259.99
+        ],
+        [
+          "2026-09-02",
+          261.72
         ]
       ],
       "catalyst": "",
@@ -4905,9 +5409,9 @@
       "priceAtTransaction": 386.92,
       "priceAtDisclosure": 411.74,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 414.45,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": 0.7,
+      "priceLatest": 402.06,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": -2.4,
       "priceHistory": [
         [
           "2026-08-13",
@@ -4960,6 +5464,14 @@
         [
           "2026-08-31",
           414.45
+        ],
+        [
+          "2026-09-01",
+          413.58
+        ],
+        [
+          "2026-09-02",
+          402.06
         ]
       ],
       "catalyst": "",
@@ -4987,9 +5499,9 @@
       "priceAtTransaction": 52.35,
       "priceAtDisclosure": 58.66,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 63.06,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": 7.5,
+      "priceLatest": 62.46,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": 6.5,
       "priceHistory": [
         [
           "2026-08-13",
@@ -5042,6 +5554,14 @@
         [
           "2026-08-31",
           63.06
+        ],
+        [
+          "2026-09-01",
+          62.6
+        ],
+        [
+          "2026-09-02",
+          62.46
         ]
       ],
       "catalyst": "",
@@ -5069,9 +5589,9 @@
       "priceAtTransaction": 283.03,
       "priceAtDisclosure": 350.88,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 342.06,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": -2.5,
+      "priceLatest": 346.68,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": -1.2,
       "priceHistory": [
         [
           "2026-08-13",
@@ -5124,6 +5644,14 @@
         [
           "2026-08-31",
           342.06
+        ],
+        [
+          "2026-09-01",
+          340.37
+        ],
+        [
+          "2026-09-02",
+          346.68
         ]
       ],
       "catalyst": "",
@@ -5151,9 +5679,9 @@
       "priceAtTransaction": 332.11,
       "priceAtDisclosure": 344.5,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 338.6,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": -1.7,
+      "priceLatest": 339.42,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": -1.5,
       "priceHistory": [
         [
           "2026-08-13",
@@ -5206,6 +5734,14 @@
         [
           "2026-08-31",
           338.6
+        ],
+        [
+          "2026-09-01",
+          338.74
+        ],
+        [
+          "2026-09-02",
+          339.42
         ]
       ],
       "catalyst": "",
@@ -5233,9 +5769,9 @@
       "priceAtTransaction": 258.05,
       "priceAtDisclosure": 358.29,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 359.3,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": 0.3,
+      "priceLatest": 342.94,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": -4.3,
       "priceHistory": [
         [
           "2026-08-13",
@@ -5288,6 +5824,14 @@
         [
           "2026-08-31",
           359.3
+        ],
+        [
+          "2026-09-01",
+          344.93
+        ],
+        [
+          "2026-09-02",
+          342.94
         ]
       ],
       "catalyst": "",
@@ -5315,9 +5859,9 @@
       "priceAtTransaction": 84.33,
       "priceAtDisclosure": 75.73,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 76.14,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": 0.5,
+      "priceLatest": 75.38,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": -0.5,
       "priceHistory": [
         [
           "2026-08-13",
@@ -5370,6 +5914,14 @@
         [
           "2026-08-31",
           76.14
+        ],
+        [
+          "2026-09-01",
+          75.84
+        ],
+        [
+          "2026-09-02",
+          75.38
         ]
       ],
       "catalyst": "",
@@ -5397,9 +5949,9 @@
       "priceAtTransaction": 22.8,
       "priceAtDisclosure": 26.18,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 26.62,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": 1.7,
+      "priceLatest": 26.81,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": 2.4,
       "priceHistory": [
         [
           "2026-08-13",
@@ -5452,6 +6004,14 @@
         [
           "2026-08-31",
           26.62
+        ],
+        [
+          "2026-09-01",
+          26.3
+        ],
+        [
+          "2026-09-02",
+          26.81
         ]
       ],
       "catalyst": "",
@@ -5479,9 +6039,9 @@
       "priceAtTransaction": 117.9,
       "priceAtDisclosure": 127.25,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 147.99,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": 16.3,
+      "priceLatest": 136.72,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": 7.4,
       "priceHistory": [
         [
           "2026-08-13",
@@ -5534,6 +6094,14 @@
         [
           "2026-08-31",
           147.99
+        ],
+        [
+          "2026-09-01",
+          142.9
+        ],
+        [
+          "2026-09-02",
+          136.72
         ]
       ],
       "catalyst": "",
@@ -5561,9 +6129,9 @@
       "priceAtTransaction": 178.33,
       "priceAtDisclosure": 185.94,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 193.78,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": 4.2,
+      "priceLatest": 188.16,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": 1.2,
       "priceHistory": [
         [
           "2026-08-13",
@@ -5616,6 +6184,14 @@
         [
           "2026-08-31",
           193.78
+        ],
+        [
+          "2026-09-01",
+          194.35
+        ],
+        [
+          "2026-09-02",
+          188.16
         ]
       ],
       "catalyst": "",
@@ -5643,9 +6219,9 @@
       "priceAtTransaction": 250.02,
       "priceAtDisclosure": 265.13,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 259.77,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": -2.0,
+      "priceLatest": 254.98,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": -3.8,
       "priceHistory": [
         [
           "2026-08-13",
@@ -5698,6 +6274,14 @@
         [
           "2026-08-31",
           259.77
+        ],
+        [
+          "2026-09-01",
+          254.92
+        ],
+        [
+          "2026-09-02",
+          254.98
         ]
       ],
       "catalyst": "",
@@ -5725,9 +6309,9 @@
       "priceAtTransaction": 42.61,
       "priceAtDisclosure": 60.59,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 52.665,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": -13.1,
+      "priceLatest": 54.67,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": -9.8,
       "priceHistory": [
         [
           "2026-08-13",
@@ -5780,6 +6364,14 @@
         [
           "2026-08-31",
           52.665
+        ],
+        [
+          "2026-09-01",
+          52.4
+        ],
+        [
+          "2026-09-02",
+          54.67
         ]
       ],
       "catalyst": "",
@@ -5807,9 +6399,9 @@
       "priceAtTransaction": 267.24,
       "priceAtDisclosure": 278.64,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 274.77,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": -1.4,
+      "priceLatest": 290.04,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": 4.1,
       "priceHistory": [
         [
           "2026-08-13",
@@ -5862,6 +6454,14 @@
         [
           "2026-08-31",
           274.77
+        ],
+        [
+          "2026-09-01",
+          280.31
+        ],
+        [
+          "2026-09-02",
+          290.04
         ]
       ],
       "catalyst": "",
@@ -5889,9 +6489,9 @@
       "priceAtTransaction": 252.64,
       "priceAtDisclosure": 267.21,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 285.5,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": 6.8,
+      "priceLatest": 277.77,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": 4.0,
       "priceHistory": [
         [
           "2026-08-13",
@@ -5944,6 +6544,14 @@
         [
           "2026-08-31",
           285.5
+        ],
+        [
+          "2026-09-01",
+          286.45
+        ],
+        [
+          "2026-09-02",
+          277.77
         ]
       ],
       "catalyst": "",
@@ -5971,9 +6579,9 @@
       "priceAtTransaction": 295.0,
       "priceAtDisclosure": 341.09,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 323.8,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": -5.1,
+      "priceLatest": 312.19,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": -8.5,
       "priceHistory": [
         [
           "2026-08-13",
@@ -6026,6 +6634,14 @@
         [
           "2026-08-31",
           323.8
+        ],
+        [
+          "2026-09-01",
+          317.4
+        ],
+        [
+          "2026-09-02",
+          312.19
         ]
       ],
       "catalyst": "",
@@ -6053,9 +6669,9 @@
       "priceAtTransaction": 105.11,
       "priceAtDisclosure": 135.35,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 135.67,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": 0.2,
+      "priceLatest": 137.15,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": 1.3,
       "priceHistory": [
         [
           "2026-08-13",
@@ -6108,6 +6724,14 @@
         [
           "2026-08-31",
           135.67
+        ],
+        [
+          "2026-09-01",
+          134.84
+        ],
+        [
+          "2026-09-02",
+          137.15
         ]
       ],
       "catalyst": "",
@@ -6135,9 +6759,9 @@
       "priceAtTransaction": 23.52,
       "priceAtDisclosure": 23.52,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 21.96,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": -6.6,
+      "priceLatest": 22.01,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": -6.4,
       "priceHistory": [
         [
           "2026-08-13",
@@ -6190,6 +6814,14 @@
         [
           "2026-08-31",
           21.96
+        ],
+        [
+          "2026-09-01",
+          21.5
+        ],
+        [
+          "2026-09-02",
+          22.01
         ]
       ],
       "catalyst": "",
@@ -6217,9 +6849,9 @@
       "priceAtTransaction": 37.45,
       "priceAtDisclosure": 38.22,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 34.93,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": -8.6,
+      "priceLatest": 35.05,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": -8.3,
       "priceHistory": [
         [
           "2026-08-13",
@@ -6272,6 +6904,14 @@
         [
           "2026-08-31",
           34.93
+        ],
+        [
+          "2026-09-01",
+          34.56
+        ],
+        [
+          "2026-09-02",
+          35.05
         ]
       ],
       "catalyst": "",
@@ -6299,9 +6939,9 @@
       "priceAtTransaction": 52.87,
       "priceAtDisclosure": 44.89,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 45.5,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": 1.4,
+      "priceLatest": 46.3,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": 3.1,
       "priceHistory": [
         [
           "2026-08-13",
@@ -6354,6 +6994,14 @@
         [
           "2026-08-31",
           45.5
+        ],
+        [
+          "2026-09-01",
+          46.13
+        ],
+        [
+          "2026-09-02",
+          46.3
         ]
       ],
       "catalyst": "",
@@ -6381,9 +7029,9 @@
       "priceAtTransaction": 5.41,
       "priceAtDisclosure": 5.24,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 4.93,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": -5.9,
+      "priceLatest": 5.03,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": -4.0,
       "priceHistory": [
         [
           "2026-08-13",
@@ -6436,6 +7084,14 @@
         [
           "2026-08-31",
           4.93
+        ],
+        [
+          "2026-09-01",
+          4.8
+        ],
+        [
+          "2026-09-02",
+          5.03
         ]
       ],
       "catalyst": "",
@@ -6463,9 +7119,9 @@
       "priceAtTransaction": 7.64,
       "priceAtDisclosure": 12.22,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 12.36,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": 1.1,
+      "priceLatest": 12.89,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": 5.5,
       "priceHistory": [
         [
           "2026-08-13",
@@ -6518,6 +7174,14 @@
         [
           "2026-08-31",
           12.36
+        ],
+        [
+          "2026-09-01",
+          12.6
+        ],
+        [
+          "2026-09-02",
+          12.89
         ]
       ],
       "catalyst": "",
@@ -6545,9 +7209,9 @@
       "priceAtTransaction": 4.31,
       "priceAtDisclosure": 4.81,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 4.43,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": -7.9,
+      "priceLatest": 4.2,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": -12.7,
       "priceHistory": [
         [
           "2026-08-13",
@@ -6600,6 +7264,14 @@
         [
           "2026-08-31",
           4.43
+        ],
+        [
+          "2026-09-01",
+          4.17
+        ],
+        [
+          "2026-09-02",
+          4.2
         ]
       ],
       "catalyst": "",
@@ -6627,9 +7299,9 @@
       "priceAtTransaction": 401.83,
       "priceAtDisclosure": 401.27,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 376.86,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": -6.1,
+      "priceLatest": 371.88,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": -7.3,
       "priceHistory": [
         [
           "2026-08-13",
@@ -6682,6 +7354,14 @@
         [
           "2026-08-31",
           376.86
+        ],
+        [
+          "2026-09-01",
+          369.25
+        ],
+        [
+          "2026-09-02",
+          371.88
         ]
       ],
       "catalyst": "",
@@ -6709,9 +7389,9 @@
       "priceAtTransaction": 181.25,
       "priceAtDisclosure": 213.34,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 199.09,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": -6.7,
+      "priceLatest": 199.6,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": -6.4,
       "priceHistory": [
         [
           "2026-08-13",
@@ -6764,6 +7444,14 @@
         [
           "2026-08-31",
           199.09
+        ],
+        [
+          "2026-09-01",
+          195.69
+        ],
+        [
+          "2026-09-02",
+          199.6
         ]
       ],
       "catalyst": "",
@@ -6791,9 +7479,9 @@
       "priceAtTransaction": 333.13,
       "priceAtDisclosure": 361.55,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 338.81,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": -6.3,
+      "priceLatest": 331.25,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": -8.4,
       "priceHistory": [
         [
           "2026-08-13",
@@ -6846,6 +7534,14 @@
         [
           "2026-08-31",
           338.81
+        ],
+        [
+          "2026-09-01",
+          329.95
+        ],
+        [
+          "2026-09-02",
+          331.25
         ]
       ],
       "catalyst": "",
@@ -6873,9 +7569,9 @@
       "priceAtTransaction": 174.46,
       "priceAtDisclosure": 174.19,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 175.7,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": 0.9,
+      "priceLatest": 172.92,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": -0.7,
       "priceHistory": [
         [
           "2026-08-13",
@@ -6928,6 +7624,14 @@
         [
           "2026-08-31",
           175.7
+        ],
+        [
+          "2026-09-01",
+          176.02
+        ],
+        [
+          "2026-09-02",
+          172.92
         ]
       ],
       "catalyst": "",
@@ -6955,9 +7659,9 @@
       "priceAtTransaction": 13.61,
       "priceAtDisclosure": 15.39,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 16.02,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": 4.1,
+      "priceLatest": 16.18,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": 5.1,
       "priceHistory": [
         [
           "2026-08-13",
@@ -7010,6 +7714,14 @@
         [
           "2026-08-31",
           16.02
+        ],
+        [
+          "2026-09-01",
+          16.11
+        ],
+        [
+          "2026-09-02",
+          16.18
         ]
       ],
       "catalyst": "",
@@ -7037,9 +7749,9 @@
       "priceAtTransaction": 1322.67,
       "priceAtDisclosure": 1246.31,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 1171.74,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": -6.0,
+      "priceLatest": 1153.75,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": -7.4,
       "priceHistory": [
         [
           "2026-08-13",
@@ -7092,6 +7804,14 @@
         [
           "2026-08-31",
           1171.74
+        ],
+        [
+          "2026-09-01",
+          1155.76
+        ],
+        [
+          "2026-09-02",
+          1153.75
         ]
       ],
       "catalyst": "",
@@ -7119,9 +7839,9 @@
       "priceAtTransaction": 17.7,
       "priceAtDisclosure": 14.56,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 13.72,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": -5.8,
+      "priceLatest": 14.55,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": -0.1,
       "priceHistory": [
         [
           "2026-08-13",
@@ -7174,6 +7894,14 @@
         [
           "2026-08-31",
           13.72
+        ],
+        [
+          "2026-09-01",
+          13.78
+        ],
+        [
+          "2026-09-02",
+          14.55
         ]
       ],
       "catalyst": "",
@@ -7201,9 +7929,9 @@
       "priceAtTransaction": 31.69,
       "priceAtDisclosure": 32.61,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 38.03,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": 16.6,
+      "priceLatest": 38.52,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": 18.1,
       "priceHistory": [
         [
           "2026-08-13",
@@ -7256,6 +7984,14 @@
         [
           "2026-08-31",
           38.03
+        ],
+        [
+          "2026-09-01",
+          37.51
+        ],
+        [
+          "2026-09-02",
+          38.52
         ]
       ],
       "catalyst": "",
@@ -7283,9 +8019,9 @@
       "priceAtTransaction": 333.45,
       "priceAtDisclosure": 363.11,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 356.02,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": -2.0,
+      "priceLatest": 356.22,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": -1.9,
       "priceHistory": [
         [
           "2026-08-13",
@@ -7338,6 +8074,14 @@
         [
           "2026-08-31",
           356.02
+        ],
+        [
+          "2026-09-01",
+          354.95
+        ],
+        [
+          "2026-09-02",
+          356.22
         ]
       ],
       "catalyst": "",
@@ -7365,9 +8109,9 @@
       "priceAtTransaction": 106.73,
       "priceAtDisclosure": 110.7,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 107.95,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": -2.5,
+      "priceLatest": 109.29,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": -1.3,
       "priceHistory": [
         [
           "2026-08-13",
@@ -7420,6 +8164,14 @@
         [
           "2026-08-31",
           107.95
+        ],
+        [
+          "2026-09-01",
+          107.08
+        ],
+        [
+          "2026-09-02",
+          109.29
         ]
       ],
       "catalyst": "",
@@ -7447,9 +8199,9 @@
       "priceAtTransaction": 276.7,
       "priceAtDisclosure": 222.18,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 211.66,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": -4.7,
+      "priceLatest": 206.48,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": -7.1,
       "priceHistory": [
         [
           "2026-08-13",
@@ -7502,6 +8254,14 @@
         [
           "2026-08-31",
           211.66
+        ],
+        [
+          "2026-09-01",
+          210.39
+        ],
+        [
+          "2026-09-02",
+          206.48
         ]
       ],
       "catalyst": "",
@@ -7528,9 +8288,9 @@
       "priceAtTransaction": 550.33,
       "priceAtDisclosure": 574.74,
       "priceAfter2mFromDisclosure": null,
-      "priceLatest": 539.7,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": -6.1,
+      "priceLatest": 523.82,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": -8.9,
       "priceHistory": [
         [
           "2026-08-13",
@@ -7583,6 +8343,14 @@
         [
           "2026-08-31",
           539.7
+        ],
+        [
+          "2026-09-01",
+          532.91
+        ],
+        [
+          "2026-09-02",
+          523.82
         ]
       ],
       "catalyst": "",
@@ -7610,9 +8378,9 @@
       "priceAtTransaction": 264.72,
       "priceAtDisclosure": 298.21,
       "priceAfter2mFromDisclosure": 317.31,
-      "priceLatest": 316.85,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": 6.3,
+      "priceLatest": 324.96,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": 9.0,
       "priceHistory": [
         [
           "2026-05-14",
@@ -7651,92 +8419,92 @@
           291.13
         ],
         [
-          "2026-06-16",
-          299.24
+          "2026-06-17",
+          295.95
         ],
         [
           "2026-06-22",
           297.01
         ],
         [
-          "2026-06-24",
-          293.08
+          "2026-06-25",
+          275.15
         ],
         [
           "2026-06-29",
           281.74
         ],
         [
-          "2026-07-01",
-          294.38
+          "2026-07-02",
+          308.63
         ],
         [
           "2026-07-07",
           310.66
         ],
         [
-          "2026-07-09",
-          316.22
+          "2026-07-10",
+          315.32
         ],
         [
-          "2026-07-14",
-          314.86
+          "2026-07-15",
+          327.5
         ],
         [
-          "2026-07-16",
-          333.26
+          "2026-07-17",
+          333.74
         ],
         [
-          "2026-07-21",
-          327.74
+          "2026-07-22",
+          325.89
         ],
         [
-          "2026-07-23",
-          321.66
+          "2026-07-24",
+          333.02
         ],
         [
-          "2026-07-28",
-          340.08
+          "2026-07-29",
+          338.19
         ],
         [
-          "2026-07-30",
-          333.43
+          "2026-07-31",
+          308.91
         ],
         [
-          "2026-08-04",
-          309.38
+          "2026-08-05",
+          311.0
         ],
         [
-          "2026-08-06",
-          312.41
+          "2026-08-10",
+          308.26
         ],
         [
-          "2026-08-11",
-          304.91
+          "2026-08-12",
+          302.25
         ],
         [
-          "2026-08-13",
-          305.26
+          "2026-08-17",
+          305.59
         ],
         [
-          "2026-08-18",
-          310.03
+          "2026-08-19",
+          316.83
         ],
         [
-          "2026-08-20",
-          311.3
+          "2026-08-24",
+          310.34
         ],
         [
-          "2026-08-25",
-          309.9
-        ],
-        [
-          "2026-08-27",
-          314.58
+          "2026-08-26",
+          313.45
         ],
         [
           "2026-08-31",
           316.85
+        ],
+        [
+          "2026-09-02",
+          324.96
         ]
       ],
       "catalyst": "",
@@ -7764,9 +8532,9 @@
       "priceAtTransaction": 446.97,
       "priceAtDisclosure": 388.19,
       "priceAfter2mFromDisclosure": 547.03,
-      "priceLatest": 566.56,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": 45.9,
+      "priceLatest": 506.98,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": 30.6,
       "priceHistory": [
         [
           "2026-05-14",
@@ -7805,92 +8573,92 @@
           441.73
         ],
         [
-          "2026-06-16",
-          435.39
+          "2026-06-17",
+          423.01
         ],
         [
           "2026-06-22",
           410.03
         ],
         [
-          "2026-06-24",
-          456.73
+          "2026-06-25",
+          444.73
         ],
         [
           "2026-06-29",
           510.6
         ],
         [
-          "2026-07-01",
-          593.96
+          "2026-07-02",
+          597.04
         ],
         [
           "2026-07-07",
           640.46
         ],
         [
-          "2026-07-09",
-          582.0
+          "2026-07-10",
+          565.8
         ],
         [
-          "2026-07-14",
-          547.26
+          "2026-07-15",
+          541.12
         ],
         [
-          "2026-07-16",
-          541.75
+          "2026-07-17",
+          510.28
         ],
         [
-          "2026-07-21",
-          511.17
+          "2026-07-22",
+          491.49
         ],
         [
-          "2026-07-23",
-          491.9
+          "2026-07-24",
+          502.34
         ],
         [
-          "2026-07-28",
-          547.65
+          "2026-07-29",
+          531.2
         ],
         [
-          "2026-07-30",
-          525.3
+          "2026-07-31",
+          527.76
         ],
         [
-          "2026-08-04",
-          607.2
+          "2026-08-05",
+          609.49
         ],
         [
-          "2026-08-06",
-          522.46
+          "2026-08-10",
+          596.33
         ],
         [
-          "2026-08-11",
-          636.31
+          "2026-08-12",
+          599.78
         ],
         [
-          "2026-08-13",
-          615.59
+          "2026-08-17",
+          604.32
         ],
         [
-          "2026-08-18",
-          619.85
+          "2026-08-19",
+          645.72
         ],
         [
-          "2026-08-20",
-          614.26
+          "2026-08-24",
+          597.59
         ],
         [
-          "2026-08-25",
-          613.26
-        ],
-        [
-          "2026-08-27",
-          611.2
+          "2026-08-26",
+          607.48
         ],
         [
           "2026-08-31",
           566.56
+        ],
+        [
+          "2026-09-02",
+          506.98
         ]
       ],
       "catalyst": "",
@@ -7918,9 +8686,9 @@
       "priceAtTransaction": 126.01,
       "priceAtDisclosure": 247.89,
       "priceAfter2mFromDisclosure": 427.11,
-      "priceLatest": 456.01,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": 84.0,
+      "priceLatest": 492.2,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": 98.6,
       "priceHistory": [
         [
           "2026-05-14",
@@ -7959,92 +8727,92 @@
           395.57
         ],
         [
-          "2026-06-16",
-          404.08
+          "2026-06-17",
+          419.32
         ],
         [
           "2026-06-22",
           418.71
         ],
         [
-          "2026-06-24",
-          434.06
+          "2026-06-25",
+          409.45
         ],
         [
           "2026-06-29",
           414.61
         ],
         [
-          "2026-07-01",
-          425.25
+          "2026-07-02",
+          394.32
         ],
         [
           "2026-07-07",
           417.28
         ],
         [
-          "2026-07-09",
-          450.22
+          "2026-07-10",
+          434.97
         ],
         [
-          "2026-07-14",
-          457.54
+          "2026-07-15",
+          412.68
         ],
         [
-          "2026-07-16",
-          391.38
+          "2026-07-17",
+          396.34
         ],
         [
-          "2026-07-21",
-          404.15
+          "2026-07-22",
+          441.8
         ],
         [
-          "2026-07-23",
-          439.34
+          "2026-07-24",
+          437.5
         ],
         [
-          "2026-07-28",
-          392.1
+          "2026-07-29",
+          369.64
         ],
         [
-          "2026-07-30",
-          404.81
+          "2026-07-31",
+          405.37
         ],
         [
-          "2026-08-04",
-          467.27
+          "2026-08-05",
+          462.7
         ],
         [
-          "2026-08-06",
-          437.65
+          "2026-08-10",
+          457.88
         ],
         [
-          "2026-08-11",
-          440.97
+          "2026-08-12",
+          484.5
         ],
         [
-          "2026-08-13",
-          494.51
+          "2026-08-17",
+          479.81
         ],
         [
-          "2026-08-18",
-          468.65
+          "2026-08-19",
+          437.55
         ],
         [
-          "2026-08-20",
-          434.78
+          "2026-08-24",
+          433.19
         ],
         [
-          "2026-08-25",
-          451.5
-        ],
-        [
-          "2026-08-27",
-          472.26
+          "2026-08-26",
+          463.82
         ],
         [
           "2026-08-31",
           456.01
+        ],
+        [
+          "2026-09-02",
+          492.2
         ]
       ],
       "catalyst": "",
@@ -8072,9 +8840,9 @@
       "priceAtTransaction": 195.61,
       "priceAtDisclosure": 195.61,
       "priceAfter2mFromDisclosure": 131.54,
-      "priceLatest": 149.12,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": -23.8,
+      "priceLatest": 145.75,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": -25.5,
       "priceHistory": [
         [
           "2026-05-14",
@@ -8113,92 +8881,92 @@
           184.13
         ],
         [
-          "2026-06-16",
-          188.33
+          "2026-06-17",
+          183.53
         ],
         [
           "2026-06-22",
           175.07
         ],
         [
-          "2026-06-24",
-          157.53
+          "2026-06-25",
+          152.46
         ],
         [
           "2026-06-29",
           147.76
         ],
         [
-          "2026-07-01",
-          142.5
+          "2026-07-02",
+          140.27
         ],
         [
           "2026-07-07",
           141.6
         ],
         [
-          "2026-07-09",
-          144.22
+          "2026-07-10",
+          140.64
         ],
         [
-          "2026-07-14",
-          127.94
+          "2026-07-15",
+          132.49
         ],
         [
-          "2026-07-16",
-          124.21
+          "2026-07-17",
+          126.41
         ],
         [
-          "2026-07-21",
-          127.05
+          "2026-07-22",
+          125.84
         ],
         [
-          "2026-07-23",
-          120.04
+          "2026-07-24",
+          114.99
         ],
         [
-          "2026-07-28",
-          119.96
+          "2026-07-29",
+          117.74
         ],
         [
-          "2026-07-30",
-          127.56
+          "2026-07-31",
+          129.87
         ],
         [
-          "2026-08-04",
-          145.74
+          "2026-08-05",
+          144.39
         ],
         [
-          "2026-08-06",
-          143.47
+          "2026-08-10",
+          151.05
         ],
         [
-          "2026-08-11",
-          145.48
+          "2026-08-12",
+          153.28
         ],
         [
-          "2026-08-13",
-          156.22
+          "2026-08-17",
+          146.65
         ],
         [
-          "2026-08-18",
-          142.79
+          "2026-08-19",
+          143.81
         ],
         [
-          "2026-08-20",
-          142.07
+          "2026-08-24",
+          142.45
         ],
         [
-          "2026-08-25",
-          144.76
-        ],
-        [
-          "2026-08-27",
-          151.94
+          "2026-08-26",
+          148.87
         ],
         [
           "2026-08-31",
           149.12
+        ],
+        [
+          "2026-09-02",
+          145.75
         ]
       ],
       "catalyst": "",
@@ -8226,9 +8994,9 @@
       "priceAtTransaction": 401.07,
       "priceAtDisclosure": 401.07,
       "priceAfter2mFromDisclosure": 352.51,
-      "priceLatest": 339.35,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": -15.4,
+      "priceLatest": 337.12,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": -15.9,
       "priceHistory": [
         [
           "2026-05-14",
@@ -8267,92 +9035,92 @@
           359.68
         ],
         [
-          "2026-06-16",
-          373.25
+          "2026-06-17",
+          363.79
         ],
         [
           "2026-06-22",
           349.68
         ],
         [
-          "2026-06-24",
-          345.29
+          "2026-06-25",
+          343.71
         ],
         [
           "2026-06-29",
           353.65
         ],
         [
-          "2026-07-01",
-          361.21
+          "2026-07-02",
+          359.91
         ],
         [
           "2026-07-07",
           367.03
         ],
         [
-          "2026-07-09",
-          358.89
+          "2026-07-10",
+          357.18
         ],
         [
-          "2026-07-14",
-          359.51
+          "2026-07-15",
+          370.92
         ],
         [
-          "2026-07-16",
-          354.46
+          "2026-07-17",
+          346.77
         ],
         [
-          "2026-07-21",
-          347.15
+          "2026-07-22",
+          342.09
         ],
         [
-          "2026-07-23",
-          317.69
+          "2026-07-24",
+          319.74
         ],
         [
-          "2026-07-28",
-          333.71
+          "2026-07-29",
+          336.71
         ],
         [
-          "2026-07-30",
-          333.66
+          "2026-07-31",
+          356.13
         ],
         [
-          "2026-08-04",
-          377.65
+          "2026-08-05",
+          362.43
         ],
         [
-          "2026-08-06",
-          357.75
+          "2026-08-10",
+          357.52
         ],
         [
-          "2026-08-11",
-          343.8
+          "2026-08-12",
+          343.54
         ],
         [
-          "2026-08-13",
-          346.36
+          "2026-08-17",
+          344.0
         ],
         [
-          "2026-08-18",
-          344.2
+          "2026-08-19",
+          344.72
         ],
         [
-          "2026-08-20",
-          340.67
+          "2026-08-24",
+          348.06
         ],
         [
-          "2026-08-25",
-          346.96
-        ],
-        [
-          "2026-08-27",
-          340.65
+          "2026-08-26",
+          342.0
         ],
         [
           "2026-08-31",
           339.35
+        ],
+        [
+          "2026-09-02",
+          337.12
         ]
       ],
       "catalyst": "",
@@ -8380,9 +9148,9 @@
       "priceAtTransaction": 237.01,
       "priceAtDisclosure": 237.01,
       "priceAfter2mFromDisclosure": 230.61,
-      "priceLatest": 292.79,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": 23.5,
+      "priceLatest": 279.79,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": 18.0,
       "priceHistory": [
         [
           "2026-05-14",
@@ -8421,92 +9189,92 @@
           204.02
         ],
         [
-          "2026-06-16",
-          207.32
+          "2026-06-17",
+          196.28
         ],
         [
           "2026-06-22",
           194.9
         ],
         [
-          "2026-06-24",
-          196.57
+          "2026-06-25",
+          193.41
         ],
         [
           "2026-06-29",
           206.43
         ],
         [
-          "2026-07-01",
-          210.98
+          "2026-07-02",
+          219.72
         ],
         [
           "2026-07-07",
           221.54
         ],
         [
-          "2026-07-09",
-          222.65
+          "2026-07-10",
+          223.64
         ],
         [
-          "2026-07-14",
-          220.78
+          "2026-07-15",
+          224.56
         ],
         [
-          "2026-07-16",
-          235.31
+          "2026-07-17",
+          237.25
         ],
         [
-          "2026-07-21",
-          227.16
+          "2026-07-22",
+          218.36
         ],
         [
-          "2026-07-23",
-          212.17
+          "2026-07-24",
+          225.11
         ],
         [
-          "2026-07-28",
-          249.18
+          "2026-07-29",
+          263.43
         ],
         [
-          "2026-07-30",
-          247.9
+          "2026-07-31",
+          250.41
         ],
         [
-          "2026-08-04",
-          257.49
+          "2026-08-05",
+          259.32
         ],
         [
-          "2026-08-06",
-          260.24
+          "2026-08-10",
+          272.96
         ],
         [
-          "2026-08-11",
-          263.71
+          "2026-08-12",
+          258.75
         ],
         [
-          "2026-08-13",
-          270.49
+          "2026-08-17",
+          254.04
         ],
         [
-          "2026-08-18",
-          263.14
+          "2026-08-19",
+          272.47
         ],
         [
-          "2026-08-20",
-          272.22
+          "2026-08-24",
+          276.27
         ],
         [
-          "2026-08-25",
-          273.92
-        ],
-        [
-          "2026-08-27",
-          289.15
+          "2026-08-26",
+          273.47
         ],
         [
           "2026-08-31",
           292.79
+        ],
+        [
+          "2026-09-02",
+          279.79
         ]
       ],
       "catalyst": "",
@@ -8534,9 +9302,9 @@
       "priceAtTransaction": 352.84,
       "priceAtDisclosure": 352.84,
       "priceAfter2mFromDisclosure": 377.92,
-      "priceLatest": 338.78,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": -4.0,
+      "priceLatest": 306.67,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": -13.1,
       "priceHistory": [
         [
           "2026-05-14",
@@ -8575,92 +9343,92 @@
           384.96
         ],
         [
-          "2026-06-16",
-          387.85
+          "2026-06-17",
+          389.6
         ],
         [
           "2026-06-22",
           389.04
         ],
         [
-          "2026-06-24",
-          372.4
+          "2026-06-25",
+          368.23
         ],
         [
           "2026-06-29",
           372.72
         ],
         [
-          "2026-07-01",
-          377.73
+          "2026-07-02",
+          373.14
         ],
         [
           "2026-07-07",
           371.06
         ],
         [
-          "2026-07-09",
-          385.95
+          "2026-07-10",
+          384.17
         ],
         [
-          "2026-07-14",
-          376.8
+          "2026-07-15",
+          371.5
         ],
         [
-          "2026-07-16",
-          364.65
+          "2026-07-17",
+          330.11
         ],
         [
-          "2026-07-21",
-          344.64
+          "2026-07-22",
+          337.01
         ],
         [
-          "2026-07-23",
-          330.46
+          "2026-07-24",
+          326.24
         ],
         [
-          "2026-07-28",
-          344.72
+          "2026-07-29",
+          332.76
         ],
         [
-          "2026-07-30",
-          332.82
+          "2026-07-31",
+          340.02
         ],
         [
-          "2026-08-04",
-          340.62
+          "2026-08-05",
+          337.07
         ],
         [
-          "2026-08-06",
-          338.42
+          "2026-08-10",
+          331.91
         ],
         [
-          "2026-08-11",
-          327.53
+          "2026-08-12",
+          323.13
         ],
         [
-          "2026-08-13",
-          323.77
+          "2026-08-17",
+          323.47
         ],
         [
-          "2026-08-18",
-          316.52
+          "2026-08-19",
+          314.98
         ],
         [
-          "2026-08-20",
-          313.59
+          "2026-08-24",
+          315.92
         ],
         [
-          "2026-08-25",
-          331.9
-        ],
-        [
-          "2026-08-27",
-          347.55
+          "2026-08-26",
+          334.68
         ],
         [
           "2026-08-31",
           338.78
+        ],
+        [
+          "2026-09-02",
+          306.67
         ]
       ],
       "catalyst": "",
@@ -8688,9 +9456,9 @@
       "priceAtTransaction": 74.69,
       "priceAtDisclosure": 74.69,
       "priceAfter2mFromDisclosure": 74.26,
-      "priceLatest": 75.65,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": 1.3,
+      "priceLatest": 76.45,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": 2.4,
       "priceHistory": [
         [
           "2026-05-14",
@@ -8729,92 +9497,92 @@
           68.85
         ],
         [
-          "2026-06-16",
-          73.25
+          "2026-06-17",
+          70.91
         ],
         [
           "2026-06-22",
           71.43
         ],
         [
-          "2026-06-24",
-          73.85
+          "2026-06-25",
+          72.25
         ],
         [
           "2026-06-29",
           75.5
         ],
         [
-          "2026-07-01",
-          72.66
+          "2026-07-02",
+          74.43
         ],
         [
           "2026-07-07",
           74.33
         ],
         [
-          "2026-07-09",
-          74.35
+          "2026-07-10",
+          74.54
         ],
         [
-          "2026-07-14",
-          72.08
+          "2026-07-15",
+          72.67
         ],
         [
-          "2026-07-16",
-          74.04
+          "2026-07-17",
+          72.46
         ],
         [
-          "2026-07-21",
-          71.55
+          "2026-07-22",
+          70.33
         ],
         [
-          "2026-07-23",
-          68.91
+          "2026-07-24",
+          65.94
         ],
         [
-          "2026-07-28",
-          70.74
+          "2026-07-29",
+          71.2
         ],
         [
-          "2026-07-30",
-          70.37
+          "2026-07-31",
+          70.36
         ],
         [
-          "2026-08-04",
-          71.99
+          "2026-08-05",
+          68.18
         ],
         [
-          "2026-08-06",
-          70.47
+          "2026-08-10",
+          78.03
         ],
         [
-          "2026-08-11",
-          78.54
+          "2026-08-12",
+          75.36
         ],
         [
-          "2026-08-13",
-          75.88
+          "2026-08-17",
+          74.99
         ],
         [
-          "2026-08-18",
-          74.66
+          "2026-08-19",
+          78.04
         ],
         [
-          "2026-08-20",
-          78.55
+          "2026-08-24",
+          79.29
         ],
         [
-          "2026-08-25",
-          80.35
-        ],
-        [
-          "2026-08-27",
-          76.95
+          "2026-08-26",
+          78.49
         ],
         [
           "2026-08-31",
           75.65
+        ],
+        [
+          "2026-09-02",
+          76.45
         ]
       ],
       "catalyst": "",
@@ -8843,9 +9611,9 @@
       "priceAtTransaction": 34.13,
       "priceAtDisclosure": 34.13,
       "priceAfter2mFromDisclosure": 36.6,
-      "priceLatest": 41.2,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": 20.7,
+      "priceLatest": 40.58,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": 18.9,
       "priceHistory": [
         [
           "2026-05-12",
@@ -8868,19 +9636,19 @@
           33.65
         ],
         [
-          "2026-05-29",
-          33.81
+          "2026-06-01",
+          33.63
         ],
         [
           "2026-06-03",
           32.17
         ],
         [
-          "2026-06-05",
-          33.15
+          "2026-06-08",
+          33.14
         ],
         [
-          "2026-06-10",
+          "2026-06-11",
           33.82
         ],
         [
@@ -8888,88 +9656,88 @@
           34.27
         ],
         [
-          "2026-06-17",
-          33.36
+          "2026-06-18",
+          33.42
         ],
         [
           "2026-06-23",
           34.43
         ],
         [
-          "2026-06-25",
-          35.4
+          "2026-06-26",
+          36.01
         ],
         [
-          "2026-06-30",
-          34.8
+          "2026-07-01",
+          37.77
         ],
         [
-          "2026-07-02",
-          37.57
+          "2026-07-06",
+          36.12
         ],
         [
-          "2026-07-08",
-          36.33
+          "2026-07-09",
+          35.85
         ],
         [
-          "2026-07-13",
-          36.6
+          "2026-07-14",
+          36.46
         ],
         [
-          "2026-07-15",
-          37.22
+          "2026-07-16",
+          38.7
         ],
         [
-          "2026-07-20",
-          37.58
+          "2026-07-21",
+          37.15
         ],
         [
-          "2026-07-22",
-          36.91
+          "2026-07-24",
+          36.03
         ],
         [
-          "2026-07-27",
-          36.61
+          "2026-07-28",
+          37.65
         ],
         [
-          "2026-07-29",
-          37.92
+          "2026-07-31",
+          35.75
         ],
         [
-          "2026-08-03",
-          36.0
+          "2026-08-04",
+          36.19
         ],
         [
-          "2026-08-06",
-          36.07
+          "2026-08-07",
+          36.89
         ],
         [
-          "2026-08-10",
-          37.26
+          "2026-08-12",
+          38.18
         ],
         [
-          "2026-08-13",
-          38.91
+          "2026-08-14",
+          39.2
         ],
         [
-          "2026-08-17",
-          37.98
-        ],
-        [
-          "2026-08-20",
-          39.61
+          "2026-08-19",
+          39.99
         ],
         [
           "2026-08-24",
           40.92
         ],
         [
-          "2026-08-27",
-          40.44
+          "2026-08-26",
+          40.08
         ],
         [
           "2026-08-31",
           41.2
+        ],
+        [
+          "2026-09-02",
+          40.58
         ]
       ],
       "catalyst": "",
@@ -8997,9 +9765,9 @@
       "priceAtTransaction": 912.14,
       "priceAtDisclosure": 912.14,
       "priceAfter2mFromDisclosure": 931.47,
-      "priceLatest": 797.47,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": -12.6,
+      "priceLatest": 792.28,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": -13.1,
       "priceHistory": [
         [
           "2026-05-12",
@@ -9022,108 +9790,108 @@
           909.93
         ],
         [
-          "2026-05-29",
-          875.87
+          "2026-06-01",
+          865.36
         ],
         [
           "2026-06-03",
           926.18
         ],
         [
-          "2026-06-05",
-          904.28
+          "2026-06-08",
+          915.64
         ],
         [
-          "2026-06-10",
-          856.16
+          "2026-06-11",
+          897.63
         ],
         [
           "2026-06-15",
           933.93
         ],
         [
-          "2026-06-17",
-          955.92
+          "2026-06-18",
+          985.82
         ],
         [
           "2026-06-23",
           984.24
         ],
         [
-          "2026-06-25",
-          1057.01
+          "2026-06-26",
+          997.47
         ],
         [
-          "2026-06-30",
-          1064.9
+          "2026-07-01",
+          991.41
         ],
         [
-          "2026-07-02",
-          963.53
+          "2026-07-06",
+          969.92
         ],
         [
-          "2026-07-08",
-          948.08
+          "2026-07-09",
+          938.39
         ],
         [
-          "2026-07-13",
-          931.47
+          "2026-07-14",
+          933.34
         ],
         [
-          "2026-07-15",
-          914.3
+          "2026-07-16",
+          877.17
         ],
         [
-          "2026-07-20",
-          864.3
+          "2026-07-21",
+          889.97
         ],
         [
-          "2026-07-22",
-          889.31
+          "2026-07-24",
+          888.73
         ],
         [
-          "2026-07-27",
-          873.28
+          "2026-07-28",
+          840.85
         ],
         [
-          "2026-07-29",
-          782.71
+          "2026-07-31",
+          814.81
         ],
         [
-          "2026-08-03",
-          830.03
+          "2026-08-04",
+          876.54
         ],
         [
-          "2026-08-06",
-          856.96
+          "2026-08-07",
+          842.19
         ],
         [
-          "2026-08-10",
-          837.58
+          "2026-08-12",
+          855.6
         ],
         [
-          "2026-08-13",
-          854.6
+          "2026-08-14",
+          856.57
         ],
         [
-          "2026-08-17",
-          881.65
-        ],
-        [
-          "2026-08-20",
-          815.39
+          "2026-08-19",
+          816.15
         ],
         [
           "2026-08-24",
           811.02
         ],
         [
-          "2026-08-27",
-          817.0
+          "2026-08-26",
+          821.93
         ],
         [
           "2026-08-31",
           797.47
+        ],
+        [
+          "2026-09-02",
+          792.28
         ]
       ],
       "catalyst": "",
@@ -9151,9 +9919,9 @@
       "priceAtTransaction": 65.56,
       "priceAtDisclosure": 65.56,
       "priceAfter2mFromDisclosure": 68.61,
-      "priceLatest": 58.22,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": -11.2,
+      "priceLatest": 57.58,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": -12.2,
       "priceHistory": [
         [
           "2026-05-12",
@@ -9176,108 +9944,108 @@
           64.51
         ],
         [
-          "2026-05-29",
-          63.87
+          "2026-06-01",
+          65.11
         ],
         [
           "2026-06-03",
           67.58
         ],
         [
-          "2026-06-05",
-          67.16
+          "2026-06-08",
+          67.35
         ],
         [
-          "2026-06-10",
-          67.97
+          "2026-06-11",
+          69.74
         ],
         [
           "2026-06-15",
           71.13
         ],
         [
-          "2026-06-17",
-          69.49
+          "2026-06-18",
+          71.81
         ],
         [
           "2026-06-23",
           70.75
         ],
         [
-          "2026-06-25",
-          76.0
+          "2026-06-26",
+          73.59
         ],
         [
-          "2026-06-30",
-          73.35
+          "2026-07-01",
+          72.07
         ],
         [
-          "2026-07-02",
-          70.07
+          "2026-07-06",
+          70.1
         ],
         [
-          "2026-07-08",
-          66.74
+          "2026-07-09",
+          67.81
         ],
         [
-          "2026-07-13",
-          68.61
+          "2026-07-14",
+          69.76
         ],
         [
-          "2026-07-15",
-          68.74
+          "2026-07-16",
+          69.34
         ],
         [
-          "2026-07-20",
-          66.98
+          "2026-07-21",
+          66.69
         ],
         [
-          "2026-07-22",
-          68.1
+          "2026-07-24",
+          68.88
         ],
         [
-          "2026-07-27",
-          69.33
+          "2026-07-28",
+          63.16
         ],
         [
-          "2026-07-29",
-          59.92
+          "2026-07-31",
+          61.81
         ],
         [
-          "2026-08-03",
-          63.17
+          "2026-08-04",
+          65.69
         ],
         [
-          "2026-08-06",
-          63.96
+          "2026-08-07",
+          64.01
         ],
         [
-          "2026-08-10",
-          63.44
+          "2026-08-12",
+          63.08
         ],
         [
-          "2026-08-13",
-          63.35
+          "2026-08-14",
+          62.78
         ],
         [
-          "2026-08-17",
-          62.56
-        ],
-        [
-          "2026-08-20",
-          60.15
+          "2026-08-19",
+          61.2
         ],
         [
           "2026-08-24",
           59.97
         ],
         [
-          "2026-08-27",
-          58.84
+          "2026-08-26",
+          58.74
         ],
         [
           "2026-08-31",
           58.22
+        ],
+        [
+          "2026-09-02",
+          57.58
         ]
       ],
       "catalyst": "",
@@ -9305,9 +10073,9 @@
       "priceAtTransaction": 28.9,
       "priceAtDisclosure": 24.9,
       "priceAfter2mFromDisclosure": 23.97,
-      "priceLatest": 26.62,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": 6.9,
+      "priceLatest": 26.81,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": 7.7,
       "priceHistory": [
         [
           "2026-05-12",
@@ -9330,19 +10098,19 @@
           25.22
         ],
         [
-          "2026-05-29",
-          24.87
+          "2026-06-01",
+          25.05
         ],
         [
           "2026-06-03",
           23.52
         ],
         [
-          "2026-06-05",
-          23.82
+          "2026-06-08",
+          23.76
         ],
         [
-          "2026-06-10",
+          "2026-06-11",
           23.97
         ],
         [
@@ -9350,88 +10118,88 @@
           23.97
         ],
         [
-          "2026-06-17",
-          22.69
+          "2026-06-18",
+          22.43
         ],
         [
           "2026-06-23",
           22.8
         ],
         [
-          "2026-06-25",
-          22.69
+          "2026-06-26",
+          23.17
         ],
         [
-          "2026-06-30",
-          24.55
+          "2026-07-01",
+          23.73
         ],
         [
-          "2026-07-02",
-          23.79
+          "2026-07-06",
+          23.38
         ],
         [
-          "2026-07-08",
+          "2026-07-09",
+          23.345
+        ],
+        [
+          "2026-07-14",
           23.19
         ],
         [
-          "2026-07-13",
-          23.97
+          "2026-07-16",
+          24.1
         ],
         [
-          "2026-07-15",
-          23.49
+          "2026-07-21",
+          23.81
         ],
         [
-          "2026-07-20",
-          23.78
+          "2026-07-24",
+          22.295
         ],
         [
-          "2026-07-22",
-          23.52
+          "2026-07-28",
+          24.19
         ],
         [
-          "2026-07-27",
-          22.8
+          "2026-07-31",
+          23.96
         ],
         [
-          "2026-07-29",
-          24.61
+          "2026-08-04",
+          24.93
         ],
         [
-          "2026-08-03",
-          24.56
+          "2026-08-07",
+          25.36
         ],
         [
-          "2026-08-06",
-          25.17
+          "2026-08-12",
+          25.47
         ],
         [
-          "2026-08-10",
-          25.2
-        ],
-        [
-          "2026-08-13",
+          "2026-08-14",
           26.18
         ],
         [
-          "2026-08-17",
-          25.57
-        ],
-        [
-          "2026-08-20",
-          26.42
+          "2026-08-19",
+          26.59
         ],
         [
           "2026-08-24",
           27.02
         ],
         [
-          "2026-08-27",
-          26.41
+          "2026-08-26",
+          27.2
         ],
         [
           "2026-08-31",
           26.62
+        ],
+        [
+          "2026-09-02",
+          26.81
         ]
       ],
       "catalyst": "",
@@ -9459,9 +10227,9 @@
       "priceAtTransaction": 62.29,
       "priceAtDisclosure": 62.29,
       "priceAfter2mFromDisclosure": 65.31,
-      "priceLatest": 71.23,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": 14.4,
+      "priceLatest": 70.56,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": 13.3,
       "priceHistory": [
         [
           "2026-05-12",
@@ -9484,108 +10252,108 @@
           63.88
         ],
         [
-          "2026-05-29",
-          62.34
+          "2026-06-01",
+          62.69
         ],
         [
           "2026-06-03",
           62.03
         ],
         [
-          "2026-06-05",
+          "2026-06-08",
           64.67
         ],
         [
-          "2026-06-10",
-          63.76
+          "2026-06-11",
+          64.51
         ],
         [
           "2026-06-15",
           64.76
         ],
         [
-          "2026-06-17",
-          61.15
+          "2026-06-18",
+          61.59
         ],
         [
           "2026-06-23",
           63.72
         ],
         [
-          "2026-06-25",
-          64.94
+          "2026-06-26",
+          65.76
         ],
         [
-          "2026-06-30",
-          64.01
+          "2026-07-01",
+          64.86
         ],
         [
-          "2026-07-02",
-          65.565
+          "2026-07-06",
+          64.84
         ],
         [
-          "2026-07-08",
-          64.68
+          "2026-07-09",
+          64.7
         ],
         [
-          "2026-07-13",
-          65.31
+          "2026-07-14",
+          61.66
         ],
         [
-          "2026-07-15",
-          63.2
+          "2026-07-16",
+          65.7
         ],
         [
-          "2026-07-20",
-          62.83
+          "2026-07-21",
+          62.04
         ],
         [
-          "2026-07-22",
-          61.41
+          "2026-07-24",
+          60.58
         ],
         [
-          "2026-07-27",
-          61.12
+          "2026-07-28",
+          64.11
         ],
         [
-          "2026-07-29",
-          71.9
+          "2026-07-31",
+          68.02
         ],
         [
-          "2026-08-03",
-          69.73
+          "2026-08-04",
+          70.26
         ],
         [
-          "2026-08-06",
-          70.31
+          "2026-08-07",
+          71.77
         ],
         [
-          "2026-08-10",
-          72.94
+          "2026-08-12",
+          72.28
         ],
         [
-          "2026-08-13",
-          73.79
+          "2026-08-14",
+          73.69
         ],
         [
-          "2026-08-17",
-          72.37
-        ],
-        [
-          "2026-08-20",
-          74.06
+          "2026-08-19",
+          74.62
         ],
         [
           "2026-08-24",
           74.19
         ],
         [
-          "2026-08-27",
-          72.48
+          "2026-08-26",
+          73.31
         ],
         [
           "2026-08-31",
           71.23
+        ],
+        [
+          "2026-09-02",
+          70.56
         ]
       ],
       "catalyst": "",
@@ -9613,9 +10381,9 @@
       "priceAtTransaction": 603.0,
       "priceAtDisclosure": 603.0,
       "priceAfter2mFromDisclosure": 656.73,
-      "priceLatest": 572.34,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": -5.1,
+      "priceLatest": 592.85,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": -1.7,
       "priceHistory": [
         [
           "2026-05-12",
@@ -9638,108 +10406,108 @@
           635.255
         ],
         [
-          "2026-05-29",
-          632.51
+          "2026-06-01",
+          600.47
         ],
         [
           "2026-06-03",
           622.98
         ],
         [
-          "2026-06-05",
-          593.0
+          "2026-06-08",
+          585.39
         ],
         [
-          "2026-06-10",
-          570.98
+          "2026-06-11",
+          568.43
         ],
         [
           "2026-06-15",
           593.48
         ],
         [
-          "2026-06-17",
-          567.58
+          "2026-06-18",
+          577.22
         ],
         [
           "2026-06-23",
           562.2
         ],
         [
-          "2026-06-25",
-          542.87
+          "2026-06-26",
+          550.25
         ],
         [
-          "2026-06-30",
-          563.29
+          "2026-07-01",
+          612.91
         ],
         [
-          "2026-07-02",
-          582.9
+          "2026-07-06",
+          600.29
         ],
         [
-          "2026-07-08",
-          603.12
+          "2026-07-09",
+          631.48
         ],
         [
-          "2026-07-13",
-          656.73
+          "2026-07-14",
+          661.04
         ],
         [
-          "2026-07-15",
-          681.31
+          "2026-07-16",
+          664.54
         ],
         [
-          "2026-07-20",
-          645.85
+          "2026-07-21",
+          643.81
         ],
         [
-          "2026-07-22",
-          627.17
+          "2026-07-24",
+          595.19
         ],
         [
-          "2026-07-27",
-          593.87
+          "2026-07-28",
+          593.41
         ],
         [
-          "2026-07-29",
-          585.61
+          "2026-07-31",
+          556.71
         ],
         [
-          "2026-08-03",
-          590.24
+          "2026-08-04",
+          587.94
         ],
         [
-          "2026-08-06",
-          589.9
+          "2026-08-07",
+          592.1
         ],
         [
-          "2026-08-10",
-          594.92
+          "2026-08-12",
+          578.85
         ],
         [
-          "2026-08-13",
-          594.97
+          "2026-08-14",
+          589.85
         ],
         [
-          "2026-08-17",
-          568.97
-        ],
-        [
-          "2026-08-20",
-          545.83
+          "2026-08-19",
+          546.03
         ],
         [
           "2026-08-24",
           559.02
         ],
         [
-          "2026-08-27",
-          571.1
+          "2026-08-26",
+          576.14
         ],
         [
           "2026-08-31",
           572.34
+        ],
+        [
+          "2026-09-02",
+          592.85
         ]
       ],
       "catalyst": "",
@@ -9767,9 +10535,9 @@
       "priceAtTransaction": 16.16,
       "priceAtDisclosure": 16.16,
       "priceAfter2mFromDisclosure": 16.51,
-      "priceLatest": 12.46,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": -22.9,
+      "priceLatest": 12.41,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": -23.2,
       "priceHistory": [
         [
           "2026-05-12",
@@ -9792,108 +10560,108 @@
           16.22
         ],
         [
-          "2026-05-29",
-          16.45
+          "2026-06-01",
+          15.7
         ],
         [
           "2026-06-03",
           15.57
         ],
         [
-          "2026-06-05",
-          14.53
+          "2026-06-08",
+          14.68
         ],
         [
-          "2026-06-10",
-          14.21
+          "2026-06-11",
+          16.08
         ],
         [
           "2026-06-15",
           16.25
         ],
         [
-          "2026-06-17",
-          15.19
+          "2026-06-18",
+          15.55
         ],
         [
           "2026-06-23",
           15.42
         ],
         [
-          "2026-06-25",
-          16.05
+          "2026-06-26",
+          17.22
         ],
         [
-          "2026-06-30",
-          17.11
+          "2026-07-01",
+          17.15
         ],
         [
-          "2026-07-02",
-          17.21
+          "2026-07-06",
+          17.22
         ],
         [
-          "2026-07-08",
-          16.54
-        ],
-        [
-          "2026-07-13",
-          16.51
-        ],
-        [
-          "2026-07-15",
-          17.21
-        ],
-        [
-          "2026-07-20",
-          16.79
-        ],
-        [
-          "2026-07-22",
+          "2026-07-09",
           16.83
         ],
         [
-          "2026-07-27",
-          16.94
+          "2026-07-14",
+          17.33
         ],
         [
-          "2026-07-29",
-          13.255
+          "2026-07-16",
+          17.46
         ],
         [
-          "2026-08-03",
-          12.75
+          "2026-07-21",
+          17.07
         ],
         [
-          "2026-08-06",
-          12.41
+          "2026-07-24",
+          16.79
         ],
         [
-          "2026-08-10",
-          11.76
+          "2026-07-28",
+          17.2
         ],
         [
-          "2026-08-13",
-          11.27
+          "2026-07-31",
+          12.25
         ],
         [
-          "2026-08-17",
-          11.56
+          "2026-08-04",
+          13.1
         ],
         [
-          "2026-08-20",
-          11.96
+          "2026-08-07",
+          12.73
+        ],
+        [
+          "2026-08-12",
+          11.48
+        ],
+        [
+          "2026-08-14",
+          11.48
+        ],
+        [
+          "2026-08-19",
+          12.57
         ],
         [
           "2026-08-24",
           12.86
         ],
         [
-          "2026-08-27",
-          12.25
+          "2026-08-26",
+          12.61
         ],
         [
           "2026-08-31",
           12.46
+        ],
+        [
+          "2026-09-02",
+          12.41
         ]
       ],
       "catalyst": "",
@@ -9921,9 +10689,9 @@
       "priceAtTransaction": 200.54,
       "priceAtDisclosure": 200.54,
       "priceAfter2mFromDisclosure": 235.58,
-      "priceLatest": 176.01,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": -12.2,
+      "priceLatest": 179.39,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": -10.5,
       "priceHistory": [
         [
           "2026-05-12",
@@ -9946,108 +10714,108 @@
           194.92
         ],
         [
-          "2026-05-29",
-          194.36
+          "2026-06-01",
+          189.81
         ],
         [
           "2026-06-03",
           195.03
         ],
         [
-          "2026-06-05",
-          192.16
+          "2026-06-08",
+          192.08
         ],
         [
-          "2026-06-10",
-          198.54
+          "2026-06-11",
+          203.83
         ],
         [
           "2026-06-15",
           209.75
         ],
         [
-          "2026-06-17",
-          210.58
+          "2026-06-18",
+          207.91
         ],
         [
           "2026-06-23",
           210.93
         ],
         [
-          "2026-06-25",
-          213.36
+          "2026-06-26",
+          217.04
         ],
         [
-          "2026-06-30",
-          222.48
+          "2026-07-01",
+          228.03
         ],
         [
-          "2026-07-02",
-          234.91
+          "2026-07-06",
+          235.71
         ],
         [
-          "2026-07-08",
-          230.72
+          "2026-07-09",
+          229.48
         ],
         [
-          "2026-07-13",
-          235.58
+          "2026-07-14",
+          232.41
         ],
         [
-          "2026-07-15",
-          231.61
+          "2026-07-16",
+          234.01
         ],
         [
-          "2026-07-20",
-          234.1
+          "2026-07-21",
+          237.28
         ],
         [
-          "2026-07-22",
-          232.08
+          "2026-07-24",
+          235.44
         ],
         [
-          "2026-07-27",
-          236.31
+          "2026-07-28",
+          239.46
         ],
         [
-          "2026-07-29",
-          240.96
+          "2026-07-31",
+          240.09
         ],
         [
-          "2026-08-03",
-          233.68
+          "2026-08-04",
+          227.99
         ],
         [
-          "2026-08-06",
-          180.67
+          "2026-08-07",
+          183.77
         ],
         [
-          "2026-08-10",
-          183.69
+          "2026-08-12",
+          181.5
         ],
         [
-          "2026-08-13",
-          179.17
+          "2026-08-14",
+          180.06
         ],
         [
-          "2026-08-17",
-          176.7
-        ],
-        [
-          "2026-08-20",
-          175.24
+          "2026-08-19",
+          177.27
         ],
         [
           "2026-08-24",
           176.5
         ],
         [
-          "2026-08-27",
-          178.88
+          "2026-08-26",
+          180.05
         ],
         [
           "2026-08-31",
           176.01
+        ],
+        [
+          "2026-09-02",
+          179.39
         ]
       ],
       "catalyst": "",
@@ -10075,9 +10843,9 @@
       "priceAtTransaction": 178.82,
       "priceAtDisclosure": 178.82,
       "priceAfter2mFromDisclosure": 169.5,
-      "priceLatest": 175.7,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": -1.7,
+      "priceLatest": 172.92,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": -3.3,
       "priceHistory": [
         [
           "2026-05-12",
@@ -10100,108 +10868,108 @@
           184.98
         ],
         [
-          "2026-05-29",
-          186.96
+          "2026-06-01",
+          187.53
         ],
         [
           "2026-06-03",
           182.24
         ],
         [
-          "2026-06-05",
-          194.12
+          "2026-06-08",
+          189.1
         ],
         [
-          "2026-06-10",
-          192.5
+          "2026-06-11",
+          189.31
         ],
         [
           "2026-06-15",
           185.76
         ],
         [
-          "2026-06-17",
-          181.09
+          "2026-06-18",
+          176.05
         ],
         [
           "2026-06-23",
           179.38
         ],
         [
-          "2026-06-25",
-          168.72
+          "2026-06-26",
+          175.59
         ],
         [
-          "2026-06-30",
-          163.57
+          "2026-07-01",
+          166.08
         ],
         [
-          "2026-07-02",
-          166.03
+          "2026-07-06",
+          162.11
         ],
         [
-          "2026-07-08",
-          165.04
+          "2026-07-09",
+          165.0
         ],
         [
-          "2026-07-13",
-          169.5
+          "2026-07-14",
+          168.83
         ],
         [
-          "2026-07-15",
-          168.63
+          "2026-07-16",
+          168.92
         ],
         [
-          "2026-07-20",
-          167.06
+          "2026-07-21",
+          163.39
         ],
         [
-          "2026-07-22",
-          166.06
+          "2026-07-24",
+          166.67
         ],
         [
-          "2026-07-27",
-          166.74
+          "2026-07-28",
+          171.5
         ],
         [
-          "2026-07-29",
-          179.26
+          "2026-07-31",
+          173.36
         ],
         [
-          "2026-08-03",
-          173.0
+          "2026-08-04",
+          175.25
         ],
         [
-          "2026-08-06",
-          171.2
+          "2026-08-07",
+          172.54
         ],
         [
-          "2026-08-10",
-          169.11
+          "2026-08-12",
+          170.43
         ],
         [
-          "2026-08-13",
-          174.19
+          "2026-08-14",
+          175.58
         ],
         [
-          "2026-08-17",
-          172.23
-        ],
-        [
-          "2026-08-20",
-          175.72
+          "2026-08-19",
+          174.49
         ],
         [
           "2026-08-24",
           178.39
         ],
         [
-          "2026-08-27",
-          174.16
+          "2026-08-26",
+          175.73
         ],
         [
           "2026-08-31",
           175.7
+        ],
+        [
+          "2026-09-02",
+          172.92
         ]
       ],
       "catalyst": "",
@@ -10229,9 +10997,9 @@
       "priceAtTransaction": 95.03,
       "priceAtDisclosure": 95.03,
       "priceAfter2mFromDisclosure": 113.31,
-      "priceLatest": 99.17,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": 4.4,
+      "priceLatest": 99.32,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": 4.5,
       "priceHistory": [
         [
           "2026-05-12",
@@ -10254,108 +11022,108 @@
           96.6
         ],
         [
-          "2026-05-29",
-          98.19
+          "2026-06-01",
+          97.59
         ],
         [
           "2026-06-03",
           96.54
         ],
         [
-          "2026-06-05",
-          97.12
+          "2026-06-08",
+          97.37
         ],
         [
-          "2026-06-10",
-          100.74
+          "2026-06-11",
+          104.06
         ],
         [
           "2026-06-15",
           104.1
         ],
         [
-          "2026-06-17",
-          103.41
+          "2026-06-18",
+          103.62
         ],
         [
           "2026-06-23",
           104.39
         ],
         [
-          "2026-06-25",
-          107.27
+          "2026-06-26",
+          110.44
         ],
         [
-          "2026-06-30",
-          111.79
+          "2026-07-01",
+          112.54
         ],
         [
-          "2026-07-02",
-          113.09
+          "2026-07-06",
+          113.74
         ],
         [
-          "2026-07-08",
-          111.53
+          "2026-07-09",
+          112.04
         ],
         [
-          "2026-07-13",
-          113.31
+          "2026-07-14",
+          112.99
         ],
         [
-          "2026-07-15",
-          110.41
+          "2026-07-16",
+          113.17
         ],
         [
-          "2026-07-20",
-          109.32
+          "2026-07-21",
+          110.34
         ],
         [
-          "2026-07-22",
-          111.37
+          "2026-07-24",
+          111.49
         ],
         [
-          "2026-07-27",
-          114.3
+          "2026-07-28",
+          115.53
         ],
         [
-          "2026-07-29",
-          116.65
+          "2026-07-31",
+          114.39
         ],
         [
-          "2026-08-03",
-          114.36
+          "2026-08-04",
+          112.41
         ],
         [
-          "2026-08-06",
-          114.58
+          "2026-08-07",
+          114.9
         ],
         [
-          "2026-08-10",
-          113.79
+          "2026-08-12",
+          107.41
         ],
         [
-          "2026-08-13",
-          104.48
+          "2026-08-14",
+          107.25
         ],
         [
-          "2026-08-17",
-          104.68
-        ],
-        [
-          "2026-08-20",
-          103.98
+          "2026-08-19",
+          103.34
         ],
         [
           "2026-08-24",
           105.78
         ],
         [
-          "2026-08-27",
-          102.12
+          "2026-08-26",
+          102.47
         ],
         [
           "2026-08-31",
           99.17
+        ],
+        [
+          "2026-09-02",
+          99.32
         ]
       ],
       "catalyst": "",
@@ -10383,9 +11151,9 @@
       "priceAtTransaction": 391.21,
       "priceAtDisclosure": 490.69,
       "priceAfter2mFromDisclosure": 442.85,
-      "priceLatest": 312.06,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": -36.4,
+      "priceLatest": 319.05,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": -35.0,
       "priceHistory": [
         [
           "2026-05-12",
@@ -10408,108 +11176,108 @@
           567.83
         ],
         [
-          "2026-05-29",
-          613.09
+          "2026-06-01",
+          613.7
         ],
         [
           "2026-06-03",
           570.83
         ],
         [
-          "2026-06-05",
-          557.2
+          "2026-06-08",
+          563.69
         ],
         [
-          "2026-06-10",
-          492.98
+          "2026-06-11",
+          478.57
         ],
         [
           "2026-06-15",
           520.86
         ],
         [
-          "2026-06-17",
-          479.49
+          "2026-06-18",
+          469.71
         ],
         [
           "2026-06-23",
           467.02
         ],
         [
-          "2026-06-25",
-          445.93
+          "2026-06-26",
+          477.08
         ],
         [
-          "2026-06-30",
-          515.23
+          "2026-07-01",
+          564.61
         ],
         [
-          "2026-07-02",
-          527.06
+          "2026-07-06",
+          543.79
         ],
         [
-          "2026-07-08",
-          522.18
+          "2026-07-09",
+          520.43
         ],
         [
-          "2026-07-13",
-          442.85
+          "2026-07-14",
+          448.98
         ],
         [
-          "2026-07-15",
-          452.73
+          "2026-07-16",
+          434.48
         ],
         [
-          "2026-07-20",
-          424.6
+          "2026-07-21",
+          428.69
         ],
         [
-          "2026-07-22",
-          412.48
+          "2026-07-24",
+          391.98
         ],
         [
-          "2026-07-27",
-          412.73
+          "2026-07-28",
+          418.22
         ],
         [
-          "2026-07-29",
-          399.46
+          "2026-07-31",
+          395.9
         ],
         [
-          "2026-08-03",
-          406.16
+          "2026-08-04",
+          419.7
         ],
         [
-          "2026-08-06",
-          335.67
+          "2026-08-07",
+          346.8
         ],
         [
-          "2026-08-10",
-          339.0
+          "2026-08-12",
+          303.76
         ],
         [
-          "2026-08-13",
-          312.67
+          "2026-08-14",
+          315.44
         ],
         [
-          "2026-08-17",
-          311.98
-        ],
-        [
-          "2026-08-20",
-          308.77
+          "2026-08-19",
+          310.79
         ],
         [
           "2026-08-24",
           298.59
         ],
         [
-          "2026-08-27",
-          312.63
+          "2026-08-26",
+          308.11
         ],
         [
           "2026-08-31",
           312.06
+        ],
+        [
+          "2026-09-02",
+          319.05
         ]
       ],
       "catalyst": "",
@@ -10537,9 +11305,9 @@
       "priceAtTransaction": 143.91,
       "priceAtDisclosure": 143.91,
       "priceAfter2mFromDisclosure": 148.37,
-      "priceLatest": 145.12,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": 0.8,
+      "priceLatest": 147.64,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": 2.6,
       "priceHistory": [
         [
           "2026-05-12",
@@ -10562,108 +11330,108 @@
           147.49
         ],
         [
-          "2026-05-29",
-          143.56
+          "2026-06-01",
+          140.28
         ],
         [
           "2026-06-03",
           140.19
         ],
         [
-          "2026-06-05",
-          146.54
+          "2026-06-08",
+          145.1
         ],
         [
-          "2026-06-10",
-          149.05
+          "2026-06-11",
+          148.34
         ],
         [
           "2026-06-15",
           150.46
         ],
         [
-          "2026-06-17",
-          150.56
+          "2026-06-18",
+          150.38
         ],
         [
           "2026-06-23",
           150.86
         ],
         [
-          "2026-06-25",
-          148.5
+          "2026-06-26",
+          149.02
         ],
         [
-          "2026-06-30",
-          146.64
+          "2026-07-01",
+          147.43
         ],
         [
-          "2026-07-02",
-          151.41
+          "2026-07-06",
+          149.31
         ],
         [
-          "2026-07-08",
-          148.4
+          "2026-07-09",
+          146.85
         ],
         [
-          "2026-07-13",
-          148.37
+          "2026-07-14",
+          146.08
         ],
         [
-          "2026-07-15",
-          148.05
+          "2026-07-16",
+          151.5
         ],
         [
-          "2026-07-20",
-          149.13
+          "2026-07-21",
+          148.1
         ],
         [
-          "2026-07-22",
-          149.13
+          "2026-07-24",
+          147.41
         ],
         [
-          "2026-07-27",
-          148.63
+          "2026-07-28",
+          148.88
         ],
         [
-          "2026-07-29",
-          146.1
+          "2026-07-31",
+          144.49
         ],
         [
-          "2026-08-03",
-          144.97
+          "2026-08-04",
+          148.01
         ],
         [
-          "2026-08-06",
-          146.97
+          "2026-08-07",
+          145.79
         ],
         [
-          "2026-08-10",
-          146.44
+          "2026-08-12",
+          144.08
         ],
         [
-          "2026-08-13",
-          144.26
+          "2026-08-14",
+          144.55
         ],
         [
-          "2026-08-17",
-          143.12
-        ],
-        [
-          "2026-08-20",
-          142.97
+          "2026-08-19",
+          144.38
         ],
         [
           "2026-08-24",
           146.6
         ],
         [
-          "2026-08-27",
-          143.14
+          "2026-08-26",
+          145.0
         ],
         [
           "2026-08-31",
           145.12
+        ],
+        [
+          "2026-09-02",
+          147.64
         ]
       ],
       "catalyst": "",
@@ -10691,9 +11459,9 @@
       "priceAtTransaction": 484.96,
       "priceAtDisclosure": 484.96,
       "priceAfter2mFromDisclosure": 496.85,
-      "priceLatest": 504.03,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": 3.9,
+      "priceLatest": 505.24,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": 4.2,
       "priceHistory": [
         [
           "2026-05-12",
@@ -10716,108 +11484,108 @@
           479.92
         ],
         [
-          "2026-05-29",
-          474.48
+          "2026-06-01",
+          470.29
         ],
         [
           "2026-06-03",
           475.37
         ],
         [
-          "2026-06-05",
-          488.13
+          "2026-06-08",
+          487.0
         ],
         [
-          "2026-06-10",
-          483.68
+          "2026-06-11",
+          485.79
         ],
         [
           "2026-06-15",
           495.52
         ],
         [
-          "2026-06-17",
-          491.28
+          "2026-06-18",
+          489.46
         ],
         [
           "2026-06-23",
           492.81
         ],
         [
-          "2026-06-25",
-          487.81
+          "2026-06-26",
+          498.66
         ],
         [
-          "2026-06-30",
-          500.39
+          "2026-07-01",
+          499.74
         ],
         [
-          "2026-07-02",
-          507.78
+          "2026-07-06",
+          506.58
         ],
         [
-          "2026-07-08",
-          494.79
+          "2026-07-09",
+          495.45
         ],
         [
-          "2026-07-13",
-          496.85
+          "2026-07-14",
+          491.09
         ],
         [
-          "2026-07-15",
-          488.35
+          "2026-07-16",
+          493.12
         ],
         [
-          "2026-07-20",
-          491.25
+          "2026-07-21",
+          489.65
         ],
         [
-          "2026-07-22",
-          489.39
+          "2026-07-24",
+          494.93
         ],
         [
-          "2026-07-27",
-          497.18
+          "2026-07-28",
+          512.37
         ],
         [
-          "2026-07-29",
-          509.16
+          "2026-07-31",
+          511.54
         ],
         [
-          "2026-08-03",
-          513.14
+          "2026-08-04",
+          517.22
         ],
         [
-          "2026-08-06",
-          524.61
+          "2026-08-07",
+          521.8
         ],
         [
-          "2026-08-10",
-          529.42
+          "2026-08-12",
+          510.0
         ],
         [
-          "2026-08-13",
-          506.93
+          "2026-08-14",
+          504.03
         ],
         [
-          "2026-08-17",
-          498.23
-        ],
-        [
-          "2026-08-20",
-          496.86
+          "2026-08-19",
+          499.62
         ],
         [
           "2026-08-24",
           504.32
         ],
         [
-          "2026-08-27",
-          503.7
+          "2026-08-26",
+          504.91
         ],
         [
           "2026-08-31",
           504.03
+        ],
+        [
+          "2026-09-02",
+          505.24
         ]
       ],
       "catalyst": "",
@@ -10845,9 +11613,9 @@
       "priceAtTransaction": 47.23,
       "priceAtDisclosure": 52.47,
       "priceAfter2mFromDisclosure": 57.37,
-      "priceLatest": 61.94,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": 18.0,
+      "priceLatest": 62.6,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": 19.3,
       "priceHistory": [
         [
           "2026-04-23",
@@ -10910,68 +11678,68 @@
           57.73
         ],
         [
-          "2026-06-29",
-          57.88
+          "2026-06-30",
+          56.98
         ],
         [
-          "2026-07-02",
-          58.73
+          "2026-07-06",
+          59.9
         ],
         [
-          "2026-07-08",
-          58.3
+          "2026-07-09",
+          59.25
         ],
         [
-          "2026-07-13",
-          59.5
+          "2026-07-14",
+          60.62
         ],
         [
-          "2026-07-16",
-          61.49
+          "2026-07-17",
+          61.27
         ],
         [
-          "2026-07-21",
-          61.22
+          "2026-07-22",
+          61.62
         ],
         [
-          "2026-07-24",
-          62.05
+          "2026-07-27",
+          62.13
         ],
         [
-          "2026-07-29",
-          61.07
+          "2026-07-30",
+          61.73
         ],
         [
-          "2026-08-03",
-          62.48
+          "2026-08-04",
+          62.9
         ],
         [
-          "2026-08-06",
-          63.0
-        ],
-        [
-          "2026-08-11",
-          64.0
-        ],
-        [
-          "2026-08-14",
-          64.49
-        ],
-        [
-          "2026-08-19",
+          "2026-08-07",
           63.17
         ],
         [
-          "2026-08-24",
-          62.33
+          "2026-08-12",
+          64.81
         ],
         [
-          "2026-08-27",
-          61.17
+          "2026-08-17",
+          63.89
         ],
         [
-          "2026-08-31",
-          61.94
+          "2026-08-20",
+          61.86
+        ],
+        [
+          "2026-08-25",
+          62.43
+        ],
+        [
+          "2026-08-28",
+          62.32
+        ],
+        [
+          "2026-09-02",
+          62.6
         ]
       ],
       "catalyst": "",
@@ -10999,9 +11767,9 @@
       "priceAtTransaction": 50.3,
       "priceAtDisclosure": 52.47,
       "priceAfter2mFromDisclosure": 57.37,
-      "priceLatest": 61.94,
-      "priceLatestDate": "2026-08-31",
-      "trackingReturnPct": 18.0,
+      "priceLatest": 62.6,
+      "priceLatestDate": "2026-09-02",
+      "trackingReturnPct": 19.3,
       "priceHistory": [
         [
           "2026-04-23",
@@ -11064,68 +11832,68 @@
           57.73
         ],
         [
-          "2026-06-29",
-          57.88
+          "2026-06-30",
+          56.98
         ],
         [
-          "2026-07-02",
-          58.73
+          "2026-07-06",
+          59.9
         ],
         [
-          "2026-07-08",
-          58.3
+          "2026-07-09",
+          59.25
         ],
         [
-          "2026-07-13",
-          59.5
+          "2026-07-14",
+          60.62
         ],
         [
-          "2026-07-16",
-          61.49
+          "2026-07-17",
+          61.27
         ],
         [
-          "2026-07-21",
-          61.22
+          "2026-07-22",
+          61.62
         ],
         [
-          "2026-07-24",
-          62.05
+          "2026-07-27",
+          62.13
         ],
         [
-          "2026-07-29",
-          61.07
+          "2026-07-30",
+          61.73
         ],
         [
-          "2026-08-03",
-          62.48
+          "2026-08-04",
+          62.9
         ],
         [
-          "2026-08-06",
-          63.0
-        ],
-        [
-          "2026-08-11",
-          64.0
-        ],
-        [
-          "2026-08-14",
-          64.49
-        ],
-        [
-          "2026-08-19",
+          "2026-08-07",
           63.17
         ],
         [
-          "2026-08-24",
-          62.33
+          "2026-08-12",
+          64.81
         ],
         [
-          "2026-08-27",
-          61.17
+          "2026-08-17",
+          63.89
         ],
         [
-          "2026-08-31",
-          61.94
+          "2026-08-20",
+          61.86
+        ],
+        [
+          "2026-08-25",
+          62.43
+        ],
+        [
+          "2026-08-28",
+          62.32
+        ],
+        [
+          "2026-09-02",
+          62.6
         ]
       ],
       "catalyst": "",
