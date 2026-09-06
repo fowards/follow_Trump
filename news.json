@@ -2,9 +2,23 @@
   "meta": {
     "source": "Google News RSS (제목·출처·링크만 — 본문 재게시 없음)",
     "query": "\"Trump\" (stock OR shares OR trade OR portfolio OR disclosure OR \"periodic transaction\")",
-    "lastFetched": "2026-09-03"
+    "lastFetched": "2026-09-06"
   },
   "items": [
+    {
+      "title": "Trump Threatens to Cut Off Trade Unless Rates Fall—U.S. Cornered by $40 Trillion Debt",
+      "source": "finance.biggo.com",
+      "link": "https://news.google.com/rss/articles/CBMidkFVX3lxTE1wT3NybDRjb1AzdXpiQ3k4OVVsTWxHV1locFFjMDVsT3NjWGhjQktmVmhhdGsxaE80VEFiVWY5Qlp0Yk9tU2Q4dlYtSjNHSU5FRTFrZUdkS1h6c0JkUjBzaEhWTVBhYkxpNThRZHptbHJQM2M5OUE?oc=5",
+      "publishedAt": "2026-09-06",
+      "titleKo": "금리가 떨어지지 않는 한 무역을 중단하겠다고 위협하는 트럼프-미국, $ 40조 부채로 궁지에 몰려"
+    },
+    {
+      "title": "Trump Says His Stock and Asset Holdings Have Earned the US Hundreds of Billions, Not Himself",
+      "source": "bloomingbit",
+      "link": "https://news.google.com/rss/articles/CBMiVEFVX3lxTE1Lbk9yczZfWGZhbW9fWG9temZCU2RfVkdJY0ZZZEJmS2RrNVRuMlphMU9xbmhMZkJLUVFRSU5wNDlUYWF2R2E5dEZfeG1sUDZwREpDOQ?oc=5",
+      "publishedAt": "2026-09-06",
+      "titleKo": "트럼프는 자신의 주식과 자산 보유가 자신이 아닌 수천억 달러의 미국 수익을 올렸다고 말합니다."
+    },
     {
       "title": "WATCH — Lake Ontario? Lake America? Kids react to Trump’s name change | videoclip | Kids News",
       "source": "CBC",
