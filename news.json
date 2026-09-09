@@ -2,9 +2,23 @@
   "meta": {
     "source": "Google News RSS (제목·출처·링크만 — 본문 재게시 없음)",
     "query": "\"Trump\" (stock OR shares OR trade OR portfolio OR disclosure OR \"periodic transaction\")",
-    "lastFetched": "2026-09-06"
+    "lastFetched": "2026-09-09"
   },
   "items": [
+    {
+      "title": "US trade associations urge Trump Administration to restore ILO funding",
+      "source": "World Footwear",
+      "link": "https://news.google.com/rss/articles/CBMitwFBVV95cUxNWVI2eGVBRHpZUlkydXlKOGZvWEZMYXdHcFBsc2RuellZeXM5RlNwUU9XOFhrM1VfV2hVUUc4TE9oTFc3YldTb0ZCRGxYdktsb3kya3pJNmhRRkRZeGcwSk1PYUppd1Rwa25WTC1RRXZDMVdZa0VFZ21qa3FBZXRMc3FQTTBpWk1qbS0zTC1odU1KMHI1ZUxPVmFRS2daV202d1Jkc2xSUDF4TXVZVm15MG8teVpFZGc?oc=5",
+      "publishedAt": "2026-09-09",
+      "titleKo": "미국 무역 협회, 트럼프 행정부에 ILO 자금 회수 촉구"
+    },
+    {
+      "title": "How Mark Carney Became Leader of the Free World by Standing Up to Trump",
+      "source": "Rolling Stone",
+      "link": "https://news.google.com/rss/articles/CBMitgFBVV95cUxQbUJsZ3dhVzNXUjlLRzdXQXBKcy1tRHVfMXhRUEJudi1UTEh0NGJFd0s2VVRJZndxT1U5cUFDLUkxZWRnRmV0dmhpUnk3TV91cl8tWlQ5a0RSVUVYNHVna0c2eUR4Wm9nRUUzZE5mTXhzMnhnT0lKblJoSkRJU3N4RzlrdHU2Z1lvNVRRdXgyazE4VkxDOXBjYlhiOEd6S1RDZDhscnVrV3hmZ2prNlJXTEFpMmF6UQ?oc=5",
+      "publishedAt": "2026-09-09",
+      "titleKo": "마크 카니 (Mark Carney) 가 트럼프에 맞서 자유 세계의 리더가 된 방법"
+    },
     {
       "title": "Trump Threatens to Cut Off Trade Unless Rates Fall—U.S. Cornered by $40 Trillion Debt",
       "source": "finance.biggo.com",
