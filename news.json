@@ -2,9 +2,23 @@
   "meta": {
     "source": "Google News RSS (제목·출처·링크만 — 본문 재게시 없음)",
     "query": "\"Trump\" (stock OR shares OR trade OR portfolio OR disclosure OR \"periodic transaction\")",
-    "lastFetched": "2026-09-09"
+    "lastFetched": "2026-09-12"
   },
   "items": [
+    {
+      "title": "Trump suggests possibility of trade deal with Canada coming together 'fairly soon' | Carcasole-1600",
+      "source": "CBC",
+      "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE13UkNkYnVDbzRHU3BlczNZcWVDRlk5bVlBbEhxTjB6TTdrUWNhQmNYYV9LVGRRaXFRWlc2bkxYNms2QnZmYmxvYk9Zb3gteC1EV3hoSjVqQURGZw?oc=5",
+      "publishedAt": "2026-09-12",
+      "titleKo": "트럼프는 캐나다와의 무역 협상이 '상당히 빨리' 합쳐질 가능성을 시사합니다 | Carcasole-1600"
+    },
+    {
+      "title": "LILLEY: Winning polls is easy – selling a trade deal is not",
+      "source": "Toronto Sun",
+      "link": "https://news.google.com/rss/articles/CBMivAFBVV95cUxOV0FMM0dzOGxkS3p1dlNvVnBvdnBxV0Q1bWJWRjYyWGVKNHVfQlkxeV9tdmktdUN2QUFhazRrbWYxNVRiVUY3SlZTMW9EVnNfRlFNT2l4YzJBNUUzcGFycnlobVZZVS1fTWFyRHcwSndheDFIX2pjS0laeXVETk9ndFhZLXM1OHFmX1JySXQwY0xpa3p2OWNTeHdtRjlRUUR2ZHQ5dGFDUjdERlViUUlVSjV1R2R0NUh0aE1zSQ?oc=5",
+      "publishedAt": "2026-09-12",
+      "titleKo": "릴리: 여론조사에서 승리하는 것은 쉽습니다. 거래를 파는 것은 쉽지 않습니다."
+    },
     {
       "title": "US trade associations urge Trump Administration to restore ILO funding",
       "source": "World Footwear",
